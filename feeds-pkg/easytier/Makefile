@@ -28,6 +28,10 @@ define Package/easytier/description
   配置见 /etc/easytier/easytier.conf（EXTRA_ARGS 透传，填 easytier-core 参数）。
 endef
 
+# 二进制直装包，无需编译（空 recipe 覆盖默认的 make 调用，否则会因包内无 Makefile 而失败）
+define Build/Compile
+endef
+
 define Package/easytier/install
 	$(INSTALL_DIR) $(1)/usr/bin $(1)/etc/init.d $(1)/etc/easytier
 	$(INSTALL_BIN) $(PKG_BINDIR)/easytier-core $(1)/usr/bin/
