@@ -27,3 +27,11 @@
 - 插曲：增量后顶层 `make` 认不出 config 变了（"没活干"退出），显式 `make package/install` + `make target/install` 点名两阶段即过。
 - 结果：**完整版 img（50M）+ 商店全进**（rootfs 里 `store.lua`/`istore_backend.lua`/`taskd` + opkg status `luci-app-store 0.2.1-r1`，共 197 个包）。`.manifest` 生成了 0 字节空文件（已知小毛病，以 opkg status 为准）。
 - 发版：`v1-loongarch64`，5 个附件（img/rootfs/opkg-feed/sha256sums/version），Release 注明**未在真机验证、求测试**。
+
+## 2026-10-11 Full check（解开 img 逐项验）与首启网络修复
+
+- 分区：GPT + BIOS boot + 16M EFI + 232M rootfs + 2G overlay，标准。
+- EFI：`bootloongarch64.efi`。商店：rootfs 含 `store.lua`/`istore_backend.lua`/`taskd`，opkg 登记 197 包、`luci-app-store 0.2.1-r1`。
+- **bug：rootfs 无 `/etc/config/`，loongarch64 base-files 缺 x86 的 `board.d/99-default_network`，首启无网。**
+- 修：x86 原文件拷入 `target/linux/loongarch64/base-files/etc/board.d/`（见 `patches/99-default_network.loongarch64`），删 `.target_install` 戳后 `make target/install` 重打，复验 rootfs 含该文件。
+- Release 已更新 img + sha256sums（17:33 版）。rootfs.tar.gz（LXC 用，走宿主网络）不受影响，未更新。
