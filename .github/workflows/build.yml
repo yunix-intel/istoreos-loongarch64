@@ -31,6 +31,9 @@ jobs:
         working-directory: src
         run: |
           cp ../config/loongarch64-generic.config .config
+          echo "src-git store https://github.com/linkease/istore.git;main" >> feeds.conf.default
+          echo "src-git nasluci https://github.com/linkease/nas-packages-luci.git;main" >> feeds.conf.default
+          echo "src-git openclash https://github.com/vernesong/OpenClash.git;master" >> feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
           make defconfig
