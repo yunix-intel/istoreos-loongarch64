@@ -39,6 +39,12 @@ docs/      构建文档 + 构建日志 + 刷机教程
 - 固件源码：https://github.com/istoreos/istoreos（官方树自带 `target/linux/loongarch64`）
 - OpenWrt 官方 LA 镜像/软件源：https://downloads.openwrt.org/releases/24.10.2/（`targets/loongarch64` + `packages/loongarch64_generic`）
 
+## 联系 / 反馈
+
+- 报 bug、求适配：[Issues](https://github.com/yunix-intel/istoreos-loongarch64/issues)（附板子型号 + 日志）
+- 问问题、交流：[Discussions](https://github.com/yunix-intel/istoreos-loongarch64/discussions)
+- 要新功能：直接提 PR
+
 ## License
 
 GPL-3.0（与 OpenWrt / iStoreOS 一致）
