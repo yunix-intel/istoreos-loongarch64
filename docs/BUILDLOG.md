@@ -35,3 +35,10 @@
 - **bug：rootfs 无 `/etc/config/`，loongarch64 base-files 缺 x86 的 `board.d/99-default_network`，首启无网。**
 - 修：x86 原文件拷入 `target/linux/loongarch64/base-files/etc/board.d/`（见 `patches/99-default_network.loongarch64`），删 `.target_install` 戳后 `make target/install` 重打，复验 rootfs 含该文件。
 - Release 已更新 img + sha256sums（17:33 版）。rootfs.tar.gz（LXC 用，走宿主网络）不受影响，未更新。
+
+## 2026-10-11 发版校验乌龙：sha256sums 对不上
+
+- 现象：从 GitHub 下载 img.gz 一验，FAILED。
+- 病因：上传的 `sha256sums` 还是首版（17:05）的，没跟着 img 一起更新——发版流程漏了同步校验这步。
+- 处理：重生成全量 sums 后发现另一个问题：构建系统的 sums 含未上传的中间文件（buildinfo/kernel.bin），用户一验满屏 FAILED。于是改发**发版专用干净版**（只含 5 个附件），重新上传后下载全量复核通过。
+- 教训：发版 checklist 加一条——**sums 必须在所有附件定稿后最后生成**，且只覆盖上传的文件。
