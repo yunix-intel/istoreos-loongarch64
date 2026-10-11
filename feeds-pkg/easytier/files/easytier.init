@@ -8,8 +8,14 @@ start_service() {
 	[ -f /etc/easytier/easytier.conf ] && . /etc/easytier/easytier.conf
 	procd_open_instance easytier
 	procd_set_param command /usr/bin/easytier-core
-	# shellcheck disable=SC2086
-	procd_append_param command $EXTRA_ARGS
+	if [ -f /etc/easytier/network.toml ]; then
+		# TOML 整网配置优先（easytier 导出的网络配置文件直接放这里）
+		procd_append_param command --config-file /etc/easytier/network.toml
+	else
+		# 无 TOML 则用 EXTRA_ARGS 透传（见 easytier.conf）
+		# shellcheck disable=SC2086
+		procd_append_param command $EXTRA_ARGS
+	fi
 	procd_set_param respawn
 	procd_set_param stdout 1
 	procd_set_param stderr 1

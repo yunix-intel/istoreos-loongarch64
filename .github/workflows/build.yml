@@ -1,0 +1,99 @@
+# iStoreOS loongarch64 CI：nightly 整编 + tag 自动发版
+#
+# 策略（见 docs/BUILD.md）：
+# - push 到 main：只做"冒烟"（checkout + feeds + defconfig，不整编），快；
+# - 每周日 + 手动：整编，产物留 artifacts；
+# - 打 tag（24.10-laN）：整编 + 自动发 GitHub Release。
+# 注意：runner 只有 4 核，整编约 4-6 小时，卡 6h 上限；磁盘先瘦身（runner 预装占位大）。
+name: build-loongarch64
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 20 * * 0"   # 周一 04:00 CST
+  workflow_dispatch:
+  release:
+    types: [published]
+
+jobs:
+  smoke:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Clone upstream (pinned)
+        run: |
+          git clone --depth 1 --branch istoreos-24.10 \
+            https://github.com/istoreos/istoreos.git src
+          cd src && git log --oneline -1
+      - name: Feeds + defconfig check
+        working-directory: src
+        run: |
+          cp ../config/loongarch64-generic.config .config
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+          make defconfig
+          grep -c "CONFIG_PACKAGE_luci-app-store=y" .config
+
+  full:
+    if: github.event_name != 'push'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v5
+      - name: Free disk (runner 预装占位大)
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android \
+            /opt/ghc /opt/hostedtoolcache/CodeQL 2>/dev/null || true
+          sudo docker image prune -af 2>/dev/null || true
+          df -h /
+      - name: Deps
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential libncurses-dev gawk unzip file \
+            flex gettext python3 rsync git wget curl diffutils
+      - name: Clone upstream (pinned)
+        run: |
+          git clone --depth 1 --branch istoreos-24.10 \
+            https://github.com/istoreos/istoreos.git src
+          cd src && git log --oneline -1 | tee ../src-version.txt
+      - name: Feeds
+        working-directory: src
+        run: |
+          echo "src-git store https://github.com/linkease/istore.git;main" >> feeds.conf.default
+          echo "src-git nasluci https://github.com/linkease/nas-packages-luci.git;main" >> feeds.conf.default
+          echo "src-git openclash https://github.com/vernesong/OpenClash.git;master" >> feeds.conf.default
+          ./scripts/feeds update -a && ./scripts/feeds install -a
+      - name: Config (public：无预置、英文默认)
+        working-directory: src
+        run: |
+          cp ../config/loongarch64-generic.config .config
+          make defconfig
+      - name: Build
+        working-directory: src
+        run: |
+          export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+          make -j"$(nproc)" 2>&1 | tee ../build.log | tail -5
+      - name: Audit (public 版无密钥门禁：FILES-public 禁止含密钥模式)
+        run: |
+          ! grep -r -i -E "password\s*[:=]|secret\s*[:=][\"']?[^\"' ]|BEGIN.*PRIVATE KEY" \
+            config/ scripts/ patches/ docs/ files-public/ 2>/dev/null \
+            && echo AUDIT_PASS || (echo AUDIT_FAIL && exit 1)
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: istoreos-loongarch64-${{ github.ref_name }}
+          path: |
+            src/bin/targets/loongarch64/generic/*combined-efi.img.gz
+            src/bin/targets/loongarch64/generic/*rootfs.tar.gz
+            src/bin/targets/loongarch64/generic/sha256sums
+          retention-days: 14
+      - name: Release (only on tag)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            src/bin/targets/loongarch64/generic/*combined-efi.img.gz
+            src/bin/targets/loongarch64/generic/*rootfs.tar.gz
+            src/bin/targets/loongarch64/generic/sha256sums

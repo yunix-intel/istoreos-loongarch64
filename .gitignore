@@ -1,3 +1,7 @@
 release-v1/
 *.img.gz
 *.tar.gz
+
+istore-la-private/
+*secret*
+*.key
