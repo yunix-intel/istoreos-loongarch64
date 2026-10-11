@@ -32,8 +32,8 @@ endef
 
 define Package/tailscale/install
 	$(INSTALL_DIR) $(1)/usr/bin $(1)/etc/init.d $(1)/var/lib/tailscale
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/tailscaled $(1)/usr/bin/
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/tailscale $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BINDIR)/tailscaled $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BINDIR)/tailscale $(1)/usr/bin/
 	$(INSTALL_BIN) ./files/tailscaled.init $(1)/etc/init.d/tailscale
 endef
 
