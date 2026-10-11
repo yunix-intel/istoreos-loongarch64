@@ -5,3 +5,4 @@ release-v1/
 istore-la-private/
 *secret*
 *.key
+files/
