@@ -11,6 +11,7 @@ PKG_SOURCE_URL:=https://github.com/EasyTier/EasyTier/releases/download/v$(PKG_VE
 PKG_HASH:=skip
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
+PKG_BINDIR:=$(PKG_BUILD_DIR)/easytier-linux-loongarch64
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -29,8 +30,8 @@ endef
 
 define Package/easytier/install
 	$(INSTALL_DIR) $(1)/usr/bin $(1)/etc/init.d $(1)/etc/easytier
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/easytier-core $(1)/usr/bin/ 2>/dev/null || \
-		$(CP) $(PKG_BUILD_DIR)/easytier-* $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BINDIR)/easytier-core $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BINDIR)/easytier-cli $(1)/usr/bin/
 	$(INSTALL_BIN) ./files/easytier.init $(1)/etc/init.d/easytier
 	$(INSTALL_CONF) ./files/easytier.conf $(1)/etc/easytier/easytier.conf
 endef
