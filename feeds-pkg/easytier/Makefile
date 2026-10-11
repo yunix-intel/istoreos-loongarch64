@@ -11,7 +11,7 @@ PKG_SOURCE_URL:=https://github.com/EasyTier/EasyTier/releases/download/v$(PKG_VE
 PKG_HASH:=skip
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
-PKG_BINDIR:=$(PKG_BUILD_DIR)/easytier-linux-loongarch64
+PKG_BINDIR:=$(BUILD_DIR)/easytier-linux-loongarch64
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -26,6 +26,12 @@ endef
 define Package/easytier/description
   EasyTier 龙芯版直装包：官方 loongarch64 二进制 + init.d 自启。
   配置见 /etc/easytier/easytier.conf（EXTRA_ARGS 透传，填 easytier-core 参数）。
+endef
+
+# zip 包自带顶层目录，残留会导致 unzip 交互式询问而失败：先清后解
+define Build/Prepare
+	rm -rf $(BUILD_DIR)/easytier-linux-loongarch64
+	$(call Build/Prepare/Default)
 endef
 
 # 二进制直装包，无需编译（空 recipe 覆盖默认的 make 调用，否则会因包内无 Makefile 而失败）

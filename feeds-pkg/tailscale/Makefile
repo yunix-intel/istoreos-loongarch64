@@ -12,6 +12,8 @@ PKG_SOURCE_URL:=file:///home/yunix/istore-la-build/local-src/
 PKG_HASH:=skip
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)-la
+# tar 包内无顶层目录，解压后二进制直接落在 $(BUILD_DIR) 下（同 easytier 的教训）
+PKG_BINDIR:=$(BUILD_DIR)
 
 include $(INCLUDE_DIR)/package.mk
 
