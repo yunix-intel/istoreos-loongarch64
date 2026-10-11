@@ -54,3 +54,9 @@
 - EasyTier：官方 loongarch64 包直装，三个入门税——空 `Build/Compile`、unzip 残留预清理、zip 顶层目录落点（`PKG_BINDIR`）。`--config-file` 经 strings 实锤支持，init 优先 TOML。
 - OpenClash：feed 直装（`luci-app-openclash_0.47.156`），纯 Lua/shell；mihomo 内核运行时替换（官方 loong64 abi2，静态链接已验）。
 - 通病记录：feeds 增删包后必 `grep .config` 确认符号、清 `tmp/info` 残留元数据；`make -j32` 认不出变更就点名阶段（`package/install` + `make target/install`，先删戳）。
+
+## 2026-10-12 v2 双版与 24.10-la1 发版
+
+- 三件套全进（tailscale/easytier/openclash + store），另修：dnsmasq 二选一（留 -full）、rootfs 分区提到 512M、quickstart/istorex 因 DEPENDS 写死 x86/ARM 拿掉。
+- v2-personal（本机，109M）：EasyTier 整网 TOML + verge 配置（Meta/1500/双 mesh DIRECT 置顶）+ mihomo 内核 + 中文默认 + 三件套自启，解包复验全在。永不上传。
+- v2-public（`24.10-la1`）：同底、无预置、英文默认。发版前审计：解包 grep 密钥/域名/IP 全空；rootfs.tar.gz 与 opkg-feed 同查，v2preset ipk 已剔除。5 附件已传。
