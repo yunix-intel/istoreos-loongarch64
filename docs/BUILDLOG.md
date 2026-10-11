@@ -19,8 +19,11 @@
 - 病因：`find ... -execdir touch` 拒绝执行——WSL 继承的 Windows PATH 含 `Files/Git/mingw64/bin`（相对路径残留），GNU find 认为不安全。跟龙芯、代码无关。
 - 处理：构建 shell 首行 `export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin`，断点续跑即过。
 
-## 2026-10-11 第二轮：加商店件（进行中）
+## 2026-10-11 第二轮：加商店件（已完成，发版）
 
-- 首版 img（`istoreos-loongarch64-*-combined-efi.img.gz`，48M）已出，LuCI 中文齐，110 个 ipk，**缺商店**。
+- 首版 img（48M）已出，LuCI 中文齐，110 个 ipk，**缺商店**。
 - 商店源定位：`luci-app-store`（v0.2.1）+ `taskd`（纯 shell，无编译）+ `luci-lib-taskd` 在 **linkease/istore** 仓库 `luci/` 下；`luci-app-quickstart` + `luci-app-istorex` 在 nas-packages-luci feed。老 `is-opkg` 已被 `taskd` 取代，不用找了。
-- 动作：feeds.conf 加 `store`、`nasluci` 两行 → install 五个包 → config 打开 → `make -j32` 增量编（toolchain 现成，只编新包+重组装）。
+- 动作：feeds.conf 加 `store`、`nasluci` 两行 → install 五个包 → config 打开 → `make -j32` 增量编。
+- 插曲：增量后顶层 `make` 认不出 config 变了（"没活干"退出），显式 `make package/install` + `make target/install` 点名两阶段即过。
+- 结果：**完整版 img（50M）+ 商店全进**（rootfs 里 `store.lua`/`istore_backend.lua`/`taskd` + opkg status `luci-app-store 0.2.1-r1`，共 197 个包）。`.manifest` 生成了 0 字节空文件（已知小毛病，以 opkg status 为准）。
+- 发版：`v1-loongarch64`，5 个附件（img/rootfs/opkg-feed/sha256sums/version），Release 注明**未在真机验证、求测试**。

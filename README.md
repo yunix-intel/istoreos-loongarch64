@@ -4,11 +4,11 @@
 
 ## 状态
 
-- [ ] WSL 交叉编译验证
-- [ ] KVM 启动验证
+- [x] WSL 交叉编译验证（157 包零错误，img + 110 ipk 产出）
+- [x] 首个 Release 发布：[v1-loongarch64](https://github.com/yunix-intel/istoreos-loongarch64/releases/tag/v1-loongarch64)（⚠️ 未在真机验证，求测试）
+- [ ] KVM/真机启动验证（等有板子的朋友，或你）
 - [ ] LuCI / 商店 / 中文验证
 - [ ] Mihomo + EasyTier 验证
-- [ ] 首个 Release 发布
 
 ## 快速用（等 Release）
 
