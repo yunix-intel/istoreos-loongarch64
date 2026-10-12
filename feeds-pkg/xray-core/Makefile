@@ -5,8 +5,8 @@ PKG_NAME:=xray-core
 PKG_VERSION:=26.3.27
 PKG_RELEASE:=1
 
-PKG_SOURCE:=Xray-linux-loong64.zip
-PKG_SOURCE_URL:=https://github.com/XTLS/Xray-core/releases/download/v$(PKG_VERSION)/
+PKG_SOURCE:=xray-la-$(PKG_VERSION).zip
+PKG_SOURCE_URL:=file:///home/yunix/istore-la-build/local-src/
 PKG_HASH:=skip
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)-la
