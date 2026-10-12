@@ -1,0 +1,22 @@
+# 自建源 nginx 反代：all/* 回源官方，只自托管 loongarch64_generic/
+# 策略见 v3 报告（推荐②）：官方 all/ 更新自动跟进，自有包放本地目录。
+server {
+    listen 80;
+    server_name feed.example.com;
+
+    # 自有 LA 二进制包 + 自写 meta
+    location /loongarch64_generic/nas {
+        alias /srv/feed/loongarch64_generic/nas;
+        autoindex on;
+    }
+    location /all/meta {
+        alias /srv/feed/all/meta;
+        autoindex on;
+    }
+
+    # 其余 all/*（nas_luci/store/compat）反代官方，自动跟进
+    location /all/ {
+        proxy_pass https://istore.istoreos.com/repo/all/;
+        proxy_set_header Host istore.istoreos.com;
+    }
+}

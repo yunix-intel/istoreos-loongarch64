@@ -1,0 +1,3 @@
+# opkg 架构优先级：LA 放首位，防止误装 x86 包（见 v3 调研）
+arch all 100
+arch loongarch64_generic 200
