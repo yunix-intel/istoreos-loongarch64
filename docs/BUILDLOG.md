@@ -67,3 +67,8 @@
 - 24.10-la1：5 个附件全下回逐字节验，img/rootfs/opkg-feed/version **全部 OK**。
 - v2-personal（本机）：解包验过预置三件 + hostname；确认未进库、未进任何 Release。
 - CI：修了两次（冒烟缺 feed→断言挂；feed 重名→9 秒挂），待下次 push 变绿。
+
+## 2026-10-12 v3 batch 2：八个应用 ipk 全齐
+
+- alist / baidupcs-go / homebox / sunpanel / lucky / vlmcsd / rtp2httpd / openlist，8 个 ipk 全落地。
+- openlist 插曲：feed 版与本地版重名打架三回合（feed Go staging 坏 → 切本地 → 本地 init 文件在 feed 切换中丢失 → 重写恢复）。以后切 feed/本地路线时，`git status` 先确认文件齐。
