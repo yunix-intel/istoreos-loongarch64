@@ -60,3 +60,10 @@
 - 三件套全进（tailscale/easytier/openclash + store），另修：dnsmasq 二选一（留 -full）、rootfs 分区提到 512M、quickstart/istorex 因 DEPENDS 写死 x86/ARM 拿掉。
 - v2-personal（本机，109M）：EasyTier 整网 TOML + verge 配置（Meta/1500/双 mesh DIRECT 置顶）+ mihomo 内核 + 中文默认 + 三件套自启，解包复验全在。永不上传。
 - v2-public（`24.10-la1`）：同底、无预置、英文默认。发版前审计：解包 grep 密钥/域名/IP 全空；rootfs.tar.gz 与 opkg-feed 同查，v2preset ipk 已剔除。5 附件已传。
+
+## 2026-10-12 三版复查全绿
+
+- v1-loongarch64：此前已全量验过。
+- 24.10-la1：5 个附件全下回逐字节验，img/rootfs/opkg-feed/version **全部 OK**。
+- v2-personal（本机）：解包验过预置三件 + hostname；确认未进库、未进任何 Release。
+- CI：修了两次（冒烟缺 feed→断言挂；feed 重名→9 秒挂），待下次 push 变绿。
