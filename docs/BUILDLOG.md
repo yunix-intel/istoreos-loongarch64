@@ -77,3 +77,9 @@
 
 - 自建源 21 个包（17 自编/直装 + tailscale/easytier/openclash/store），`ipkg-make-index.sh` 需显式 `MKHASH=` 否则出空索引（已踩）。
 - 发版 `24.10-la2`：opkg-feed tarball（195M）+ sha256sums。LuCI 批量同步、app-meta JSON、Podman 本体、Rust/samba 判定后续跟进。
+
+## 出网走本机 Verge 代理（2026-10-13 起）
+
+- 本机 Verge (verge-mihomo) 实际监听 `127.0.0.1:7897`（非 Downloads 那份 config 的 17890，以 `netstat` 实测为准）。
+- Git Bash 侧：`export http_proxy=http://127.0.0.1:7897 https_proxy=... no_proxy=localhost,127.0.0.1`，被墙站走代理、其余由 Verge 规则分流。
+- WSL 侧暂直连（代理只绑 127.0.0.1，WSL 够不着；要通需 Verge 开允许局域网）。
