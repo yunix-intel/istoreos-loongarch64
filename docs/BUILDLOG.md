@@ -72,3 +72,8 @@
 
 - alist / baidupcs-go / homebox / sunpanel / lucky / vlmcsd / rtp2httpd / openlist，8 个 ipk 全落地。
 - openlist 插曲：feed 版与本地版重名打架三回合（feed Go staging 坏 → 切本地 → 本地 init 文件在 feed 切换中丢失 → 重写恢复）。以后切 feed/本地路线时，`git status` 先确认文件齐。
+
+## 2026-10-12 v3 首批进源，发 24.10-la2
+
+- 自建源 21 个包（17 自编/直装 + tailscale/easytier/openclash/store），`ipkg-make-index.sh` 需显式 `MKHASH=` 否则出空索引（已踩）。
+- 发版 `24.10-la2`：opkg-feed tarball（195M）+ sha256sums。LuCI 批量同步、app-meta JSON、Podman 本体、Rust/samba 判定后续跟进。
