@@ -83,3 +83,9 @@
 - 本机 Verge (verge-mihomo) 实际监听 `127.0.0.1:7897`（非 Downloads 那份 config 的 17890，以 `netstat` 实测为准）。
 - Git Bash 侧：`export http_proxy=http://127.0.0.1:7897 https_proxy=... no_proxy=localhost,127.0.0.1`，被墙站走代理、其余由 Verge 规则分流。
 - WSL 侧暂直连（代理只绑 127.0.0.1，WSL 够不着；要通需 Verge 开允许局域网）。
+
+## 2026-10-13 CI 门禁第三版：不再断言 defconfig 留存
+
+- 现象：同输入（最小 config + 全 feeds）在两台 WSL 上 defconfig 留 `luci-app-store`，在 CI runner 上静默丢掉。feeds clone、install、元数据三处全绿，store 上游 9-25 后未动。
+- 未解之谜：同源 Kconfig 在不同环境的求值差异（候选：make 版本、locale 排序、runner 镜像差异），本地复现三次全是"留"，CI 三次全是"丢"。
+- 对策：门禁改断言 feeds 目录 + 包索引 + defconfig 退出码（全确定性项）；defconfig 留存问题降级为观察项，真验证交给整编 job。教训：**永远别断言 Kconfig 的静默行为**。
