@@ -1,7 +1,7 @@
 # webdav = hacdias/webdav = iStore 的 gowebdav 上游 (Go) for loongarch64
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=webdav
+PKG_NAME:=gowebdav
 PKG_VERSION:=5.17.1
 PKG_RELEASE:=1
 
