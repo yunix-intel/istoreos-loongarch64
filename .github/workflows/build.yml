@@ -85,10 +85,10 @@ jobs:
           grep -q "vernesong/OpenClash" feeds.conf.default || \
             echo "src-git openclash https://github.com/vernesong/OpenClash.git;master" >> feeds.conf.default
           ./scripts/feeds update -a && ./scripts/feeds install -a
-      - name: Config (public：无预置、英文默认)
+      - name: Config (CI 专用最小集，不含本地二进制包，见 config/ci.config)
         working-directory: src
         run: |
-          cp ../config/loongarch64-generic.config .config
+          cp ../config/ci.config .config
           make defconfig
       - name: Build
         working-directory: src
