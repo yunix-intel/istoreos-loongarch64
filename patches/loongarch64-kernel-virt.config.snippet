@@ -1,0 +1,8 @@
+# 虚机支持：virtio 全家桶进内核（无 initrd 也能挂盘/联网），关掉 i8042
+# （它在无该硬件的虚机上 panic，不是优雅失败；真机走 USB HID 不受影响）
+CONFIG_VIRTIO_PCI=y
+CONFIG_VIRTIO_BLK=y
+CONFIG_VIRTIO_NET=y
+CONFIG_VIRTIO_CONSOLE=y
+CONFIG_VIRTIO_MMIO=y
+# CONFIG_SERIO_I8042 is not set
