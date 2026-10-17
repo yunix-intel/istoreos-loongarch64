@@ -95,3 +95,8 @@
 - tailscaled 1.80.3 / easytier-core 2.6.4 / mihomo v1.19.32-loong64 / rclone v1.75.2，`--version`/`-v` 全过。
 - 教训：scp 必须走 Windows 原生（WSL 到不了 192.168.8.x，还缺 key）；文件中转经 outputs/xfer-out/。
 - 机器：3A6000 4C8T/16G/37G盘/6.6.52，有/dev/kvm，有线+无线，无S80卡（Loongson集成显示），禁休眠已做（mask四件套+IdleAction=ignore）。
+
+## 2026-10-17 v2-personal-full：全量个人版一次成
+
+- 去掉 quickstart/istorex（x86 闭源死刑）后 world 一次过；rootfs 1G 分区，245 个包。
+- personal img（257M）含全部预置（network.toml/mihomo 核/99 中文自启）+ 全量应用，只存本机。
