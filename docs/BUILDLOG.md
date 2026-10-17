@@ -89,3 +89,9 @@
 - 现象：同输入（最小 config + 全 feeds）在两台 WSL 上 defconfig 留 `luci-app-store`，在 CI runner 上静默丢掉。feeds clone、install、元数据三处全绿，store 上游 9-25 后未动。
 - 未解之谜：同源 Kconfig 在不同环境的求值差异（候选：make 版本、locale 排序、runner 镜像差异），本地复现三次全是"留"，CI 三次全是"丢"。
 - 对策：门禁改断言 feeds 目录 + 包索引 + defconfig 退出码（全确定性项）；defconfig 留存问题降级为观察项，真验证交给整编 job。教训：**永远别断言 Kconfig 的静默行为**。
+
+## 2026-10-17 真机首验（3A6000）：四个二进制全跑起来
+
+- tailscaled 1.80.3 / easytier-core 2.6.4 / mihomo v1.19.32-loong64 / rclone v1.75.2，`--version`/`-v` 全过。
+- 教训：scp 必须走 Windows 原生（WSL 到不了 192.168.8.x，还缺 key）；文件中转经 outputs/xfer-out/。
+- 机器：3A6000 4C8T/16G/37G盘/6.6.52，有/dev/kvm，有线+无线，无S80卡（Loongson集成显示），禁休眠已做（mask四件套+IdleAction=ignore）。
