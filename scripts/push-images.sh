@@ -46,6 +46,7 @@ IMAGES=(
   kodexplorer
   kopia
   linkding
+  mariadb
   memos
   mihomo
   miniflux

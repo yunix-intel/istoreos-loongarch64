@@ -131,6 +131,19 @@ docker run -d --name redis -p 6379:6379 -v redis-data:/data \
 - 宿主建议 `sysctl vm.overcommit_memory=1`，否则日志会有 overcommit 警告。
 - 完整说明见 [../images/redis/BUILD.md](../images/redis/BUILD.md)。
 
+### MariaDB
+
+```bash
+docker run -d --name mariadb   -e MYSQL_ROOT_PASSWORD='change-me'   -e MYSQL_DATABASE=appdb -e MYSQL_USER=app -e MYSQL_PASSWORD='app-pass'   -p 3306:3306 -v mariadb-data:/var/lib/mysql   yunixintel/mariadb:loong64
+```
+
+- root 只允许容器内 `localhost` 登录；应用使用 `MYSQL_USER`。
+- `MYSQL_USER` 与 `MYSQL_DATABASE` 应成对设置，否则不会授予库权限。
+- 挂宿主目录需 `chown -R 27:27 <dir>`；命名卷无需处理。
+- 日志经 `/var/log/mariadb/mariadb.log -> /dev/stderr`，`docker logs` 可见。
+- 修改 `MYSQL_*` 不会改变已初始化数据目录中的账号。
+- 完整说明见 [../images/mariadb/BUILD.md](../images/mariadb/BUILD.md)。
+
 ### Mosquitto
 
 ```bash
@@ -245,7 +258,7 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 66 个镜像）
+## 3. 端口索引（全部 67 个镜像）
 
 | 镜像 | 端口 | 关键挂载/环境 | 备注 |
 |---|---|---|---|
@@ -254,6 +267,7 @@ docker run -d --name gatus -p 8080:8080 \
 | postgres | 5432 | `/var/lib/postgresql/data`；环境 `POSTGRES_*` | UID 26；日志走 stdout |
 | redis | 6379 | `/data`；环境 `REDIS_PASSWORD` | AOF+RDB；UID/GID 998:996 |
 | mosquitto | 1883 | `/mosquitto/config`、`/mosquitto/data` | 默认匿名；公网须配 passwd |
+| mariadb | 3306 | `/var/lib/mysql`；环境 `MYSQL_*` | root 仅 localhost；UID/GID 27 |
 | audiobookshelf | 13378 | `/audiobooks`、`/config`、`/metadata` | Node 22 |
 | bazarr | 6767 | `/config`、`/movies`、`/tv` | 含 ffmpeg |
 | calibre-web | 8083 | `/books`、`/config` | 书库挂载 |

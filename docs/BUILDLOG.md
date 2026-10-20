@@ -435,3 +435,9 @@
   - 健康检查用 bash `/dev/tcp`，不依赖客户端命令。
   - 验证：匿名 pub/sub 成功；retained 消息在容器重启后仍能订阅；健康检查 healthy。
   - 镜像 290MB；已推送 `yunixintel/mosquitto:loong64`/`24.10-la5`，digest `sha256:d55c5799…edce`。
+- MariaDB 10.11.18：openEuler 包构建，entrypoint 首次 `mariadb-install-db` 后起临时 `--skip-networking` 实例，用 socket 完成 root 密码、`MYSQL_DATABASE`、`MYSQL_USER` 与授权，再降权到 UID 27 启动。
+  - 踩坑：MariaDB 不接受 `IDENTIFIED BY 0x...` 十六进制字面量；改为 `SET SESSION sql_mode=...,NO_BACKSLASH_ESCAPES` + 单引号加倍，含引号/反斜杠/空格的密码均验证通过。
+  - 日志：`/var/log/mariadb/mariadb.log` 在镜像内软链到 `/dev/stderr`，避免 `--log-error=/dev/stderr` 触发 `/dev/stderr.err` 警告。
+  - 客户端 socket 统一为 `/run/mysqld/mysqld.sock`，镜像内 `container-client.cnf` 让 `mariadb` 命令无需额外参数。
+  - 验证：初始化、root/app TCP 登录、建表、重启持久化、健康检查 healthy。
+  - 镜像 549MB；已推送 `yunixintel/mariadb:loong64`/`24.10-la5`，digest `sha256:bf37b65e…5e00`。

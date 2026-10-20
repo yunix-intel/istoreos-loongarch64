@@ -394,5 +394,11 @@
     "size": "290MB",
     "verification": "匿名 pub/sub 成功；retained 消息在重启后仍可订阅；健康检查 healthy",
     "notes": "2.0.20（openEuler EPOL）；持久化 `/mosquitto/data`；1883；默认 allow_anonymous true，公网必须关匿名并配 passwd；含 mosquitto_pub/sub/passwd；UID/GID 998:996"
+  },
+  {
+    "image": "yunixintel/mariadb",
+    "size": "549MB",
+    "verification": "初始化成功；root/app TCP 登录；建表；重启持久化；特殊字符密码可登录；健康检查 healthy",
+    "notes": "10.11.18（openEuler 包）；`MYSQL_ROOT_PASSWORD/DATABASE/USER/PASSWORD/ALLOW_EMPTY_PASSWORD`；`/var/lib/mysql`；3306；root 仅 localhost；日志走 stderr；UID/GID 27"
   }
 ]
