@@ -102,6 +102,35 @@ docker run -d --name gotify -p 8080:8080 \
   yunixintel/gotify:loong64
 ```
 
+### PostgreSQL
+
+```bash
+docker run -d --name postgres \
+  -e POSTGRES_USER=app -e POSTGRES_PASSWORD='change-me' -e POSTGRES_DB=appdb \
+  -p 5432:5432 -v pgdata:/var/lib/postgresql/data \
+  yunixintel/postgres:loong64
+```
+
+- 连接串：`postgres://app:change-me@<host>:5432/appdb?sslmode=disable`。
+- 首启自动 `initdb`；`POSTGRES_HOST_AUTH_METHOD` 默认 `scram-sha-256`，可设 `trust`。
+- 挂宿主目录时要 `chown -R 26:26 <dir>`（openEuler 的 postgres UID/GID 为 26）。
+- 数据目录必须为空（可含 `lost+found`），ext4 分区建议挂子目录。
+- 日志已关闭 `logging_collector`，直接看 `docker logs postgres`。
+- 完整说明见 [../images/postgres/BUILD.md](../images/postgres/BUILD.md)。
+
+### Redis
+
+```bash
+docker run -d --name redis -p 6379:6379 -v redis-data:/data \
+  -e REDIS_PASSWORD='change-me' yunixintel/redis:loong64
+```
+
+- 默认开启 AOF（`/data/appendonlydir`）并保留 RDB 快照规则。
+- 不设 `REDIS_PASSWORD` 时无认证，只适合可信内网；公网必须设密码并加防火墙。
+- 挂宿主目录时要 `chown -R 998:996 <dir>`（openEuler 的 redis UID/GID）。
+- 宿主建议 `sysctl vm.overcommit_memory=1`，否则日志会有 overcommit 警告。
+- 完整说明见 [../images/redis/BUILD.md](../images/redis/BUILD.md)。
+
 ### Node Exporter
 
 ```bash
@@ -196,12 +225,14 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 63 个镜像）
+## 3. 端口索引（全部 65 个镜像）
 
 | 镜像 | 端口 | 关键挂载/环境 | 备注 |
 |---|---|---|---|
 | adguardhome | 53/tcp+udp, 3000 | `/opt/adguardhome/work`、`/opt/adguardhome/conf` | 用 host 网络；避让宿主 dnsmasq |
 | alertmanager | 9093, 9094 | `/etc/alertmanager/alertmanager.yml`、`/alertmanager` | 9094 为 gossip；数据卷需 UID 65534 可写 |
+| postgres | 5432 | `/var/lib/postgresql/data`；环境 `POSTGRES_*` | UID 26；日志走 stdout |
+| redis | 6379 | `/data`；环境 `REDIS_PASSWORD` | AOF+RDB；UID/GID 998:996 |
 | audiobookshelf | 13378 | `/audiobooks`、`/config`、`/metadata` | Node 22 |
 | bazarr | 6767 | `/config`、`/movies`、`/tv` | 含 ffmpeg |
 | calibre-web | 8083 | `/books`、`/config` | 书库挂载 |

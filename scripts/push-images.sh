@@ -60,10 +60,12 @@ IMAGES=(
   phpmyadmin
   pihole
   portainer
+  postgres
   prometheus
   prowlarr
   qbittorrent-ee
   radarr
+  redis
   shiori
   sonarr
   stirling-pdf

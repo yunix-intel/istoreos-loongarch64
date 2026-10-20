@@ -376,5 +376,17 @@
     "size": "274MB",
     "verification": "`/-/healthy` 与 `/-/ready` 200；UI 200；`/api/v2/status` 正常；`amtool alert add` 后 `/api/v2/alerts` 可查到",
     "notes": "0.34.1；Elm + Vite 前端在 x86 WSL2 构建后 `go:embed`；Go 静态编；openEuler + curl 健康检查；9093 Web / 9094 gossip；以 nobody 运行；默认配置只收不发，生产需挂载自己的 alertmanager.yml"
+  },
+  {
+    "image": "yunixintel/postgres",
+    "size": "378MB",
+    "verification": "`pg_isready` healthy；SCRAM TCP 登录；重启后数据仍在；miniflux 用它跑完 132 个迁移并返回 200",
+    "notes": "15.18（openEuler 包）；官方无 loong64；entrypoint 支持 POSTGRES_USER/PASSWORD/DB/HOST_AUTH_METHOD；PGDATA `/var/lib/postgresql/data`；5432；日志走 stdout"
+  },
+  {
+    "image": "yunixintel/redis",
+    "size": "296MB",
+    "verification": "`PING`；`SET/GET`；重启持久化；`REDIS_PASSWORD` 生效；健康检查 healthy",
+    "notes": "7.2.14（openEuler 包）；AOF+RDB；`/data`；6379；默认 protected-mode no，公网必须设 `REDIS_PASSWORD`；UID/GID 998:996"
   }
 ]

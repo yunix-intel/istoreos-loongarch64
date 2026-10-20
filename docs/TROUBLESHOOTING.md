@@ -180,6 +180,22 @@ docker run --rm -v "$PWD":/src -w /src openeuler/openeuler:24.03 bash -c '
 - 原因：容器以 `65534:65534`（nobody）运行，宿主挂载目录属主是 root。
 - 修复：`chown -R 65534:65534 /srv/alertmanager/data`，或改用命名卷。
 
+### PostgreSQL 首启报 `directory is not empty`
+
+- 原因：挂载目录里有 `lost+found` 之外的文件，`initdb` 拒绝初始化。
+- 修复：换空目录，或挂载 ext4 分区的子目录；已有数据目录不要清空。
+
+### PostgreSQL 重启慢或权限报错
+
+- 原因：entrypoint 只对顶层目录做非递归 chown，卷内文件属主不对时 postgres 无法读取。
+- 修复：一次性 `chown -R 26:26 /path/to/pgdata`，之后正常重启不会再遍历全部文件。
+
+### Redis 日志 `Memory overcommit must be enabled`
+
+- 原因：宿主 `vm.overcommit_memory` 不是 1，低内存时后台保存可能失败。
+- 修复：宿主执行 `sysctl -w vm.overcommit_memory=1` 并写入 `/etc/sysctl.d/`；
+  家用低负载可忽略。
+
 ## Docker Hub
 
 ### `denied: requested access to the resource is denied`

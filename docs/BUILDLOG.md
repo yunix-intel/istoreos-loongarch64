@@ -421,3 +421,12 @@
   - 镜像 openEuler 24.03 + curl + tzdata + CA，以 `65534:65534` 运行，274MB。
   - 验证：`/-/healthy`、`/-/ready` 200；UI 200；`/api/v2/status` 正常；`amtool alert add` 的告警在 `/api/v2/alerts` 可检索；首启 `gossip not settled` 十余秒后收敛。
   - 已推送 `yunixintel/alertmanager:loong64`/`24.10-la5`，digest `sha256:6f46a30d…8fca`。
+- PostgreSQL 15.18：官方镜像无 loong64，改用 openEuler 24.03 SP4 的 `postgresql-server` + `postgresql-contrib`。
+  - entrypoint 首次 `initdb`（UTF8/C.UTF-8），用临时 `--pwfile` 设置密码后立即删除；创建 `POSTGRES_DB`；追加 `host all all all` 认证规则；关闭 `logging_collector` 保持 stdout 日志。
+  - 用 util-linux `runuser` 降权到 UID 26；镜像 378MB；数据目录 `/var/lib/postgresql/data`。
+  - 验证：`pg_isready` healthy、SCRAM TCP 登录、重启后表数据仍在；miniflux 连接该库完成 132 个迁移，首页 200。
+  - 已推送 `yunixintel/postgres:loong64`/`24.10-la5`，digest `sha256:c94527ee…825b`。
+- Redis 7.2.14：openEuler 包构建，AOF+RDB，`/data` 持久化。
+  - entrypoint 支持 `REDIS_PASSWORD`（追加到临时配置副本），用 `runuser` 降权到 UID 998。
+  - 验证：`PING`、`SET/GET`、重启后值仍在、无密码时 `NOAUTH`、带密码 `PONG`、健康检查 healthy。
+  - 镜像 296MB；已推送 `yunixintel/redis:loong64`/`24.10-la5`，digest `sha256:424db4cd…3137`。

@@ -1,6 +1,6 @@
 # 应用镜像构建手册（loong64）
 
-本文件说明 63 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 53 个镜像的 Dockerfile；
+本文件说明 65 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 55 个镜像的 Dockerfile；
 其余 10 个早期镜像的 Dockerfile 未保留，但下方给出源码版本、关键步骤和构建日志入口。
 
 ## 0. 共同约定
@@ -87,6 +87,17 @@ Elm），产物 `dist` 被 Go `//go:embed app/dist` 嵌入。`ui/mantine-ui/` �
 - 镜像包含上游 `pihole` CLI、`gravity.sh`、`advanced/`，以及自定义 `pihole-adlist`
   （add/list/remove，add/remove 后自动 `pihole -g`）；Dockerfile/entrypoint/CLI 见 `images/pihole/`。
 
+### 1.6 直接使用 openEuler 系统包（PostgreSQL / Redis）
+
+上游官方镜像没有 loong64 资产，而 openEuler 24.03 SP4 已提供
+`postgresql-server 15.18`、`redis 7.2.14`。这类基础服务直接基于系统包构建，
+避免无收益的源码重编，并保证与镜像 glibc 2.38 一致。
+
+- PostgreSQL：`images/postgres/`，entrypoint 负责 initdb、创建用户/库、SCRAM 认证、
+  降权到 UID 26 并用 `runuser` 启动；详见 [../images/postgres/BUILD.md](../images/postgres/BUILD.md)。
+- Redis：`images/redis/`，entrypoint 负责 `/data` 权限、`REDIS_PASSWORD` 临时配置副本，
+  再降权到 UID 998 启动；详见 [../images/redis/BUILD.md](../images/redis/BUILD.md)。
+
 ## 2. 有 Dockerfile 的镜像
 
 `images/<app>/Dockerfile` 可直接作为构建入口；上下文要求：
@@ -101,6 +112,7 @@ Elm），产物 `dist` 被 Go `//go:embed app/dist` 嵌入。`ui/mantine-ui/` �
 | `dozzle` | 上游源码 + 预构建 `dist` |
 | `ntfy` / `gotify` | 上游源码 + 预构建 `web/build` / `ui/build` |
 | `alertmanager` | `alertmanager`/`amtool` 二进制 + `alertmanager.yml`；前端 `ui/app/dist`（x86 WSL2 编） |
+| `postgres` / `redis` | 仅 Dockerfile + entrypoint（+ `redis.conf`）；依赖 openEuler 系统包 |
 | 其余 | 见 Dockerfile 的 `COPY` 行；大目录不随仓库提交 |
 
 ## 3. 未保留 Dockerfile 的 10 个镜像
@@ -132,4 +144,4 @@ Elm），产物 `dist` 被 Go `//go:embed app/dist` 嵌入。`ui/mantine-ui/` �
 
 构建完成后记录：镜像大小、`docker inspect` 架构、启动日志、HTTP/健康检查、digest。
 统一推送到 `docker.io/yunixintel/<app>:loong64` 与 `:24.10-la5`。
-`scripts/push-images.sh`（私有库）覆盖全部 63 只。
+`scripts/push-images.sh`（私有库）覆盖全部 65 只。
