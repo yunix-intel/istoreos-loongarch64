@@ -133,6 +133,33 @@ scrape_configs:
       - targets: ["192.168.8.8:9100"]
 ```
 
+### Alertmanager
+
+```bash
+docker run -d --name alertmanager -p 9093:9093 -p 9094:9094 \
+  -v /srv/alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro \
+  -v /srv/alertmanager/data:/alertmanager \
+  yunixintel/alertmanager:loong64
+```
+
+- Web UI/API：`9093`；gossip 集群：`9094`。单机不需要 HA 时加
+  `--cluster.listen-address=` 可关闭 9094。
+- 数据目录必须以 UID 65534 可写：`chown -R 65534:65534 /srv/alertmanager/data`。
+- 默认配置只有一个空的 `default` receiver，只接收告警、不发送通知；生产必须挂载自己的
+  `alertmanager.yml`（webhook、邮件、企业微信等）。
+- 配置预检：`docker exec alertmanager amtool check-config /etc/alertmanager/alertmanager.yml`。
+- Prometheus 端对接：
+
+```yaml
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ["127.0.0.1:9093"]
+```
+
+- 首启日志出现 `gossip not settled` 是单节点等待收敛，十几秒后恢复，不影响使用。
+- 完整构建/验证记录见 [../images/alertmanager/BUILD.md](../images/alertmanager/BUILD.md)。
+
 ### Pi-hole
 
 ```bash
@@ -169,11 +196,12 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 62 个镜像）
+## 3. 端口索引（全部 63 个镜像）
 
 | 镜像 | 端口 | 关键挂载/环境 | 备注 |
 |---|---|---|---|
 | adguardhome | 53/tcp+udp, 3000 | `/opt/adguardhome/work`、`/opt/adguardhome/conf` | 用 host 网络；避让宿主 dnsmasq |
+| alertmanager | 9093, 9094 | `/etc/alertmanager/alertmanager.yml`、`/alertmanager` | 9094 为 gossip；数据卷需 UID 65534 可写 |
 | audiobookshelf | 13378 | `/audiobooks`、`/config`、`/metadata` | Node 22 |
 | bazarr | 6767 | `/config`、`/movies`、`/tv` | 含 ffmpeg |
 | calibre-web | 8083 | `/books`、`/config` | 书库挂载 |

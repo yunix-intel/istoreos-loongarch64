@@ -415,3 +415,9 @@
 - Gatus 5.37.0：Go 静态编，`web/static` 随仓库提供（无需 Node）；scratch + CA + 默认 config，镜像 35.5MB。
   - 验证：`/` 200、`/api/v1/endpoints/statuses` 200；默认配置监控 `http://127.0.0.1:9090/-/healthy`。
   - 已推送 `yunixintel/gatus:loong64`/`24.10-la5`，digest `sha256:335d7c74…92c6`。
+- Alertmanager 0.34.1：Web UI 是 Elm 0.19.1 + Vite 8（`ui/app`），Go 端 `//go:embed app/dist`；`ui/mantine-ui/` 在该 tag 未接入构建，忽略。
+  - 前端在 x86_64 WSL2（Node 22.23.3）执行 `npm ci && npm run build`，Elm 编译 84 个模块，Vite 只留 `.gz`/`.br` 压缩资源（`deleteOriginalAssets: true`）。
+  - 龙芯端 `CGO_ENABLED=0 -tags netgo` 编 `alertmanager`/`amtool`，ldflags 注入 0.34.1；`amtool check-config` 通过。
+  - 镜像 openEuler 24.03 + curl + tzdata + CA，以 `65534:65534` 运行，274MB。
+  - 验证：`/-/healthy`、`/-/ready` 200；UI 200；`/api/v2/status` 正常；`amtool alert add` 的告警在 `/api/v2/alerts` 可检索；首启 `gossip not settled` 十余秒后收敛。
+  - 已推送 `yunixintel/alertmanager:loong64`/`24.10-la5`，digest `sha256:6f46a30d…8fca`。

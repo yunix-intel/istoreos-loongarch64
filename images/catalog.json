@@ -370,5 +370,11 @@
     "size": "35MB",
     "verification": "`/` 200；`/api/v1/endpoints/statuses` 200",
     "notes": "5.37.0；Go 静态编；自带 `web/static`；scratch；默认配置监控 Prometheus；8080"
+  },
+  {
+    "image": "yunixintel/alertmanager",
+    "size": "274MB",
+    "verification": "`/-/healthy` 与 `/-/ready` 200；UI 200；`/api/v2/status` 正常；`amtool alert add` 后 `/api/v2/alerts` 可查到",
+    "notes": "0.34.1；Elm + Vite 前端在 x86 WSL2 构建后 `go:embed`；Go 静态编；openEuler + curl 健康检查；9093 Web / 9094 gossip；以 nobody 运行；默认配置只收不发，生产需挂载自己的 alertmanager.yml"
   }
 ]

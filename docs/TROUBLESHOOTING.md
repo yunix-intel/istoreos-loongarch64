@@ -169,6 +169,17 @@ docker run --rm -v "$PWD":/src -w /src openeuler/openeuler:24.03 bash -c '
 - 原因：`DeleteMountPointFromDB` 按 UUID + mount_point 过滤，旧 UUID 记录不会删。
 - 修复：上游建议按 mount_point 删除或 upsert；当前重启仍可挂载，但记录会累积。
 
+### Alertmanager 日志 `gossip not settled`
+
+- 原因：默认启用 9094 gossip 集群，单节点启动时要等收敛轮询。
+- 修复：属正常现象，十余秒后恢复；单机不需要 HA 时加
+  `--cluster.listen-address=` 关闭 9094。
+
+### Alertmanager 数据卷写入失败
+
+- 原因：容器以 `65534:65534`（nobody）运行，宿主挂载目录属主是 root。
+- 修复：`chown -R 65534:65534 /srv/alertmanager/data`，或改用命名卷。
+
 ## Docker Hub
 
 ### `denied: requested access to the resource is denied`

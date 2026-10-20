@@ -1,6 +1,6 @@
 # 应用镜像构建手册（loong64）
 
-本文件说明 62 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 52 个镜像的 Dockerfile；
+本文件说明 63 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 53 个镜像的 Dockerfile；
 其余 10 个早期镜像的 Dockerfile 未保留，但下方给出源码版本、关键步骤和构建日志入口。
 
 ## 0. 共同约定
@@ -56,6 +56,10 @@ npm ci && npm run build
 
 适用：dozzle、ntfy、gotify、prometheus、changedetection 的部分前端。
 
+Alertmanager 是 Elm + Vite：`ui/app` 用 `npm ci && npm run build`（`vite-plugin-elm` 编译
+Elm），产物 `dist` 被 Go `//go:embed app/dist` 嵌入。`ui/mantine-ui/` 在本版本未接入构建，
+不需要处理。完整命令见 [../images/alertmanager/BUILD.md](../images/alertmanager/BUILD.md)。
+
 ### 1.4 特殊补丁
 
 - **changedetection + jq 1.13**：内置 oniguruma 的旧 `config.sub` 不认 loongarch64；
@@ -96,6 +100,7 @@ npm ci && npm run build
 | `changedetection` | 源码 + `wheels/jq-*.whl` + `geckodriver` + 打过补丁的 fetcher |
 | `dozzle` | 上游源码 + 预构建 `dist` |
 | `ntfy` / `gotify` | 上游源码 + 预构建 `web/build` / `ui/build` |
+| `alertmanager` | `alertmanager`/`amtool` 二进制 + `alertmanager.yml`；前端 `ui/app/dist`（x86 WSL2 编） |
 | 其余 | 见 Dockerfile 的 `COPY` 行；大目录不随仓库提交 |
 
 ## 3. 未保留 Dockerfile 的 10 个镜像
@@ -127,4 +132,4 @@ npm ci && npm run build
 
 构建完成后记录：镜像大小、`docker inspect` 架构、启动日志、HTTP/健康检查、digest。
 统一推送到 `docker.io/yunixintel/<app>:loong64` 与 `:24.10-la5`。
-`scripts/push-images.sh`（私有库）覆盖全部 60 只。
+`scripts/push-images.sh`（私有库）覆盖全部 63 只。

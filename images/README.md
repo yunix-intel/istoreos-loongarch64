@@ -1,9 +1,9 @@
 # 应用镜像 Dockerfile 目录
 
-本目录是 62 个 `yunixintel/*:loong64` 镜像的构建材料索引。
+本目录是 63 个 `yunixintel/*:loong64` 镜像的构建材料索引。
 
-- `images/<app>/Dockerfile`：保留了 52 个镜像的 Dockerfile（部分带 `Dockerfile.*` 构建阶段）。
-- `catalog.json`：62 个镜像的名称、大小、验证结论、端口/限制说明，机读索引。
+- `images/<app>/Dockerfile`：保留了 53 个镜像的 Dockerfile（部分带 `Dockerfile.*` 构建阶段）。
+- `catalog.json`：63 个镜像的名称、大小、验证结论、端口/限制说明，机读索引。
 - 未保留 Dockerfile 的 10 个镜像：adguardhome、code-server、easytier、firefly-iii、
   gitea、memos、mihomo、miniflux、phpmyadmin、vaultwarden。它们的源码版本与重建步骤
   见 [../docs/IMAGE-BUILD.md](../docs/IMAGE-BUILD.md)。
@@ -25,6 +25,7 @@
 | prometheus | `prometheus`、`promtool`、`prometheus.yml`（UI 已 embed） |
 | pihole | `pihole-FTL`、`web/`、`cli/`（pihole/gravity.sh/advanced）、`pihole-adlist.sh`、`gravity.db.sql`、`docker-entrypoint.sh` |
 | gatus | `gatus` 二进制 + `config.yaml` |
+| alertmanager | `alertmanager`/`amtool` 二进制 + `alertmanager.yml`；UI 需 x86 WSL2 构建 `ui/app/dist` |
 | caddy/watchtower/node-exporter | 仅二进制 + CA |
 
 具体工具链、CGO/glibc、Vite 8 x86 构建、qpdf/jq/Firefox/OpenCV 补丁见
@@ -33,4 +34,4 @@
 ## 标签约定
 
 所有镜像同时打 `loong64` 与 `24.10-la5`，推送脚本在私有库
-`scripts/push-images.sh`，覆盖 60 只。
+`scripts/push-images.sh`，覆盖 63 只。
