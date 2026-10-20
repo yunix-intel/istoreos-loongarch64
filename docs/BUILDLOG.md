@@ -412,3 +412,6 @@
   - 完成：FTL 6.8 + web 6.6.1，nettle 3.10.2 静态编入；首启用干净 `gravity.db.sql` 创建 gravity.db；接入上游 `pihole` CLI/`gravity.sh` 和 `pihole-adlist` 管理脚本；镜像 287MB。
   - 验证：`/admin/` 200；`pihole -g` 拉取本地 adlist 并解析 1 条；`dig` 被拦截域名返回 NXDOMAIN，普通域名正常解析。
   - 已推送 `yunixintel/pihole:loong64`/`24.10-la5`，digest `sha256:67e543a2…2e2a`；FTL 自报 `UNKNOWN (not a GIT build)`（源码构建，不影响运行）。
+- Gatus 5.37.0：Go 静态编，`web/static` 随仓库提供（无需 Node）；scratch + CA + 默认 config，镜像 35.5MB。
+  - 验证：`/` 200、`/api/v1/endpoints/statuses` 200；默认配置监控 `http://127.0.0.1:9090/-/healthy`。
+  - 已推送 `yunixintel/gatus:loong64`/`24.10-la5`，digest `sha256:335d7c74…92c6`。

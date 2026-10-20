@@ -7,7 +7,7 @@
 - [x] WSL 交叉编译（la1–la5 连续发版）
 - [x] **最新公版：[24.10-la5](https://github.com/yunix-intel/istoreos-loongarch64/releases/tag/24.10-la5)**（内置 docker + podman，英文默认，无私人预置）
 - [x] 真机验证（3A6000：LuCI / 商店 / 中文 / EasyTier / Mihomo）
-- [x] **61 个 loong64 应用镜像已上架**：[docs/IMAGES.md](docs/IMAGES.md)（`docker pull yunixintel/<app>:loong64`）；含新增 `homer`、`paperless-ngx`、`dashy`、`watchtower`、`changedetection`、`caddy`、`dozzle`、`ntfy`、`gotify`、`node-exporter`、`prometheus`、`pihole`
+- [x] **62 个 loong64 应用镜像已上架**：[docs/IMAGES.md](docs/IMAGES.md)（`docker pull yunixintel/<app>:loong64`）；含新增 `homer`、`paperless-ngx`、`dashy`、`watchtower`、`changedetection`、`caddy`、`dozzle`、`ntfy`、`gotify`、`node-exporter`、`prometheus`、`pihole`、`gatus`
 - [x] podman 全链路（CGO podman + crun，嵌套 `--network=host/none` 跑通）
 - [x] dockermanager 可用（连本机 dockerd）
 - [x] CasaOS loong64 移植（应用管理/UI/systemd 真机验证；磁盘能力待独占盘）

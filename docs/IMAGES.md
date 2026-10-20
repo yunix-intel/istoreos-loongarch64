@@ -1,6 +1,6 @@
 # loongarch64 应用镜像
 
-共 61 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
+共 62 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
 `loong64`（浮动）与 `24.10-la5`（与 GitHub Release 对齐）。
 
 拉取：
@@ -72,8 +72,9 @@ docker pull yunixintel/jellyfin:loong64
 | `yunixintel/node-exporter` | 17MB | `/metrics` 200，含 `node_cpu_seconds_total` | 1.12.1；纯 Go 静态编；scratch + CA；9100；采集宿主指标需挂 `/proc`、`/sys`、`/` |
 | `yunixintel/prometheus` | 407MB | `/-/healthy` 200；UI 200；`/api/v1/status/buildinfo` 3.15.0 | 3.15.0；UI 用 Vite 8 在 x86 WSL2 构建，Go `-tags builtinassets` 嵌入；TSDB `/prometheus`；9090 |
 | `yunixintel/pihole` | 287MB | `/admin/` 200；`pihole -g` 拉取 1 条 adlist；`dig` 被拦截域名返回 NXDOMAIN | FTL 6.8 + web 6.6.1；C/C++，静态 nettle 3.10；上游 `pihole` CLI + `gravity.sh` + `pihole-adlist`（add/list/remove）；DNS 53 / Web 80；`/etc/pihole` |
+| `yunixintel/gatus` | 35MB | `/` 200；`/api/v1/endpoints/statuses` 200 | 5.37.0；Go 静态编；自带 `web/static`；scratch；默认配置监控 Prometheus；8080 |
 
-> 2026-10-20：新增 `homer`、`paperless-ngx`、`dashy`、`watchtower`、`changedetection`、`caddy`、`dozzle`、`ntfy`、`gotify`、`node-exporter`、`prometheus`、`pihole`，均已推送 Docker Hub，双 tag 均为 `linux/loong64`。
+> 2026-10-20：新增 `homer`、`paperless-ngx`、`dashy`、`watchtower`、`changedetection`、`caddy`、`dozzle`、`ntfy`、`gotify`、`node-exporter`、`prometheus`、`pihole`、`gatus`，均已推送 Docker Hub，双 tag 均为 `linux/loong64`。
 > OpenCV/SSIM 的可复用配方见 [OPENCV-SSIM.md](OPENCV-SSIM.md)。
 
 ## 运行示例

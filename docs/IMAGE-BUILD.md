@@ -1,6 +1,6 @@
 # 应用镜像构建手册（loong64）
 
-本文件说明 61 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 51 个镜像的 Dockerfile；
+本文件说明 62 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 52 个镜像的 Dockerfile；
 其余 10 个早期镜像的 Dockerfile 未保留，但下方给出源码版本、关键步骤和构建日志入口。
 
 ## 0. 共同约定

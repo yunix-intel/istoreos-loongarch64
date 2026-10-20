@@ -158,7 +158,18 @@ docker exec pihole pihole deny ads.example.com
 - 用 host 网络时宿主不能已有 dnsmasq 占用 53；否则改用端口映射并停宿主 DNS。
 - FTL 版本自报 `UNKNOWN (not a GIT build)` 是源码构建的正常现象。
 
-## 3. 端口索引（全部 61 个镜像）
+### Gatus
+
+```bash
+docker run -d --name gatus -p 8080:8080 \
+  -v /srv/gatus/config.yaml:/config/config.yaml:ro \
+  yunixintel/gatus:loong64
+```
+
+默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
+状态页 `/`，API `/api/v1/endpoints/statuses`。
+
+## 3. 端口索引（全部 62 个镜像）
 
 | 镜像 | 端口 | 关键挂载/环境 | 备注 |
 |---|---|---|---|
@@ -178,6 +189,7 @@ docker exec pihole pihole deny ads.example.com
 | filebrowser | 8080 | `/srv`、`/database.db` | |
 | firefly-iii | 8080 | `/var/www/html/storage` | PHP 8.5；SQLite |
 | freshrss | 8080 | `/var/www/FreshRSS/data` | 首次安装 admin/adminadmin |
+| gatus | 8080 | `config.yaml` | 状态页/监控 |
 | gitea | 3000 | `/data`、`/etc/gitea` | Go 1.27；SQLite |
 | gogs | 3000 | `/data` | |
 | gotify | 8080 | `/data` | SQLite |

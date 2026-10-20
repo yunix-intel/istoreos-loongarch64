@@ -111,6 +111,11 @@ iStoreOS 是 OpenWrt（opkg/procd/LuCI），CasaOS 是 Debian 系（apt/systemd/
 
 ## 10. 独占验证机复测（2026-10-20，A 机 192.168.8.8）
 
+> **P3 状态（2026-10-20）**：开发/系统集成完成——systemd 7 unit、CLI、安装/卸载、
+> NBD 挂载/卸载/服务重启自挂/格式化、helper 打包修复均已验证。
+> **未完成**：真实 SATA/USB 盘 SMART/udevil/真机重启验收、UI wizard 点击回归、
+> 设备映射/GPU、上游 PR 提交。**发布闸门仍关闭**，CasaOS 镜像和安装包不发布。
+
 A 机（3A6000，8 线程 / 15GiB，Loongnix 25）已成为唯一开发/验证机。原 `/restore` 空分区改为 `/build`，没有空闲物理盘，因此磁盘链路用 **8G 文件型 NBD 盘**（`qemu-nbd`）验证；它不是发布环境，但能覆盖 local-storage 的挂载/卸载/重启自挂/格式化代码路径。
 
 | 项 | 结果 |

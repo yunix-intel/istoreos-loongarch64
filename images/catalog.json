@@ -364,5 +364,11 @@
     "size": "287MB",
     "verification": "`/admin/` 200；`pihole -g` 拉取 1 条 adlist；`dig` 被拦截域名返回 NXDOMAIN",
     "notes": "FTL 6.8 + web 6.6.1；C/C++，静态 nettle 3.10；上游 `pihole` CLI + `gravity.sh` + `pihole-adlist`（add/list/remove）；DNS 53 / Web 80；`/etc/pihole`"
+  },
+  {
+    "image": "yunixintel/gatus",
+    "size": "35MB",
+    "verification": "`/` 200；`/api/v1/endpoints/statuses` 200",
+    "notes": "5.37.0；Go 静态编；自带 `web/static`；scratch；默认配置监控 Prometheus；8080"
   }
 ]

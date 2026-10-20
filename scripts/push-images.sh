@@ -29,6 +29,7 @@ IMAGES=(
   filebrowser
   firefly-iii
   freshrss
+  gatus
   gitea
   gogs
   gotify

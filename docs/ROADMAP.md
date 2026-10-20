@@ -21,11 +21,11 @@
 ## 进行中
 
 - [ ] 个人版 la5 镜像 U 盘真机验证（镜像已在盒子 `/var/tmp/personal-p1-20261019.img.gz`）
-- [ ] CasaOS P3（systemd + NBD 磁盘链路已验证；真实盘 SMART/USB 拔插/真机重启待测 + 上游 PR）
+- [ ] CasaOS P3 开发完成（systemd/CLI/安装卸载/NBD 磁盘链路）；真实盘验收与上游 PR 待做
 
 ## 开发完成后（冻结后执行）
 
-- [ ] **生产级全量测试**：61 镜像逐个业务验证 + 固件真机 + CasaOS 磁盘 + 24h 稳定性，见 [PRODUCTION-TEST.md](PRODUCTION-TEST.md)
+- [ ] **生产级全量测试**：62 镜像逐个业务验证 + 固件真机 + CasaOS 磁盘 + 24h 稳定性，见 [PRODUCTION-TEST.md](PRODUCTION-TEST.md)
 
 ## 待排期
 
