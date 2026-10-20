@@ -41,6 +41,7 @@
 | [IMAGE-BUILD.md](IMAGE-BUILD.md) | 每个镜像的构建方式、工具链、特殊补丁 |
 | [TROUBLESHOOTING.md](TROUBLESHOOTING.md) | 现象→原因→修复，按前端/CGO/应用/浏览器/容器分类 |
 | [BUILDLOG.md](BUILDLOG.md) | 按日期的完整构建/踩坑时间线 |
+| [RELEASES.md](RELEASES.md) | la1–la5/v1 的定位、差异与 Release 资产 |
 | [NAMING.md](NAMING.md) | 固件/镜像/私有版本命名规则 |
 | [PODMAN.md](PODMAN.md) | podman/crun/dockerman 栈与 OpenWrt 打包坑 |
 | [CASAOS-P3.md](CASAOS-P3.md) | CasaOS 组件、补丁、安装/运行、磁盘验证 |

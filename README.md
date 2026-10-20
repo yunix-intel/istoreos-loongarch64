@@ -32,6 +32,7 @@ docker run -d --name memos --network=host -v memos:/opt/memos/data yunixintel/me
 ## 文档
 
 - [项目大纲](docs/PROJECT-OUTLINE.md)：目标、交付物、仓库分工、路线
+- [固件发布记录](docs/RELEASES.md)：la1–la5/v1 的差异与资产
 - [运行手册](docs/RUNBOOK.md)：全部镜像的启动命令、端口、挂载、健康检查
 - [镜像构建手册](docs/IMAGE-BUILD.md)：工具链、CGO/glibc、Vite 8 x86 构建、特殊补丁
 - [故障排查](docs/TROUBLESHOOTING.md)：现象→原因→修复
