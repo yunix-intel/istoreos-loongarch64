@@ -131,6 +131,26 @@ docker run -d --name redis -p 6379:6379 -v redis-data:/data \
 - 宿主建议 `sysctl vm.overcommit_memory=1`，否则日志会有 overcommit 警告。
 - 完整说明见 [../images/redis/BUILD.md](../images/redis/BUILD.md)。
 
+### Mosquitto
+
+```bash
+docker run -d --name mosquitto -p 1883:1883   -v /srv/mosquitto/config:/mosquitto/config:ro   -v /srv/mosquitto/data:/mosquitto/data   yunixintel/mosquitto:loong64
+```
+
+- 默认配置允许匿名，仅适合可信内网；公网必须关闭匿名并配置密码。
+- 生成密码文件：
+
+```bash
+mkdir -p /srv/mosquitto/config
+docker run --rm -v /srv/mosquitto/config:/cfg --entrypoint mosquitto_passwd   yunixintel/mosquitto:loong64 -b -c /cfg/passwd mqtt 'change-me'
+```
+
+  配置中加 `allow_anonymous false` 和 `password_file /mosquitto/config/passwd`。
+- retained 消息持久化在 `/mosquitto/data/mosquitto.db`；挂宿主目录需
+  `chown -R 998:996`。
+- 需要 WebSocket 时追加 `listener 9001` + `protocol websockets` 并映射 9001。
+- 完整说明见 [../images/mosquitto/BUILD.md](../images/mosquitto/BUILD.md)。
+
 ### Node Exporter
 
 ```bash
@@ -225,7 +245,7 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 65 个镜像）
+## 3. 端口索引（全部 66 个镜像）
 
 | 镜像 | 端口 | 关键挂载/环境 | 备注 |
 |---|---|---|---|
@@ -233,6 +253,7 @@ docker run -d --name gatus -p 8080:8080 \
 | alertmanager | 9093, 9094 | `/etc/alertmanager/alertmanager.yml`、`/alertmanager` | 9094 为 gossip；数据卷需 UID 65534 可写 |
 | postgres | 5432 | `/var/lib/postgresql/data`；环境 `POSTGRES_*` | UID 26；日志走 stdout |
 | redis | 6379 | `/data`；环境 `REDIS_PASSWORD` | AOF+RDB；UID/GID 998:996 |
+| mosquitto | 1883 | `/mosquitto/config`、`/mosquitto/data` | 默认匿名；公网须配 passwd |
 | audiobookshelf | 13378 | `/audiobooks`、`/config`、`/metadata` | Node 22 |
 | bazarr | 6767 | `/config`、`/movies`、`/tv` | 含 ffmpeg |
 | calibre-web | 8083 | `/books`、`/config` | 书库挂载 |

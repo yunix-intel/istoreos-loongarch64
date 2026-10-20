@@ -388,5 +388,11 @@
     "size": "296MB",
     "verification": "`PING`；`SET/GET`；重启持久化；`REDIS_PASSWORD` 生效；健康检查 healthy",
     "notes": "7.2.14（openEuler 包）；AOF+RDB；`/data`；6379；默认 protected-mode no，公网必须设 `REDIS_PASSWORD`；UID/GID 998:996"
+  },
+  {
+    "image": "yunixintel/mosquitto",
+    "size": "290MB",
+    "verification": "匿名 pub/sub 成功；retained 消息在重启后仍可订阅；健康检查 healthy",
+    "notes": "2.0.20（openEuler EPOL）；持久化 `/mosquitto/data`；1883；默认 allow_anonymous true，公网必须关匿名并配 passwd；含 mosquitto_pub/sub/passwd；UID/GID 998:996"
   }
 ]

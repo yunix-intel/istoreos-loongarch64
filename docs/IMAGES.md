@@ -1,6 +1,6 @@
 # loongarch64 应用镜像
 
-共 65 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
+共 66 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
 `loong64`（浮动）与 `24.10-la5`（与 GitHub Release 对齐）。
 
 拉取：
@@ -76,8 +76,9 @@ docker pull yunixintel/jellyfin:loong64
 | `yunixintel/alertmanager` | 274MB | `/-/healthy`、`/-/ready` 200；UI/API 正常；amtool 推警成功 | 0.34.1；Elm + Vite 前端在 x86 WSL2 构建后 `go:embed`；Go 静态编；openEuler + curl 健康检查；9093 Web / 9094 gossip；nobody 运行；默认只收不发通知 |
 | `yunixintel/postgres` | 378MB | `pg_isready` healthy；SCRAM TCP 登录；重启持久化；miniflux 迁移 132 版后 200 | 15.18；openEuler 包；entrypoint 支持 `POSTGRES_USER/PASSWORD/DB/HOST_AUTH_METHOD`；`PGDATA=/var/lib/postgresql/data`；5432；日志走 stdout |
 | `yunixintel/redis` | 296MB | `PING`；`SET/GET`；重启持久化；密码认证通过 | 7.2.14；openEuler 包；AOF+RDB；`/data`；6379；默认 protected-mode no，公网必须设 `REDIS_PASSWORD` |
+| `yunixintel/mosquitto` | 290MB | 匿名 pub/sub；retained 消息重启后仍可订阅；健康检查 healthy | 2.0.20；openEuler EPOL；1883；默认 `allow_anonymous true`，公网须关匿名并配 passwd；含 pub/sub/passwd 工具；`/mosquitto/data` |
 
-> 2026-10-21：新增 `alertmanager`（Prometheus 告警路由）、`postgres`、`redis`，均已推送双 tag；digest 分别为 `sha256:6f46a30d…8fca`、`sha256:c94527ee…825b`、`sha256:424db4cd…3137`。
+> 2026-10-21：新增 `alertmanager`（Prometheus 告警路由）、`postgres`、`redis`、`mosquitto`，均已推送双 tag；digest 分别为 `sha256:6f46a30d…8fca`、`sha256:c94527ee…825b`、`sha256:424db4cd…3137`、`sha256:d55c5799…edce`。
 > 2026-10-20：新增 `homer`、`paperless-ngx`、`dashy`、`watchtower`、`changedetection`、`caddy`、`dozzle`、`ntfy`、`gotify`、`node-exporter`、`prometheus`、`pihole`、`gatus`，均已推送 Docker Hub，双 tag 均为 `linux/loong64`。
 > OpenCV/SSIM 的可复用配方见 [OPENCV-SSIM.md](OPENCV-SSIM.md)。
 

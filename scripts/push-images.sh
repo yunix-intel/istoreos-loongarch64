@@ -49,6 +49,7 @@ IMAGES=(
   memos
   mihomo
   miniflux
+  mosquitto
   navidrome
   nextcloud
   nginx-proxy-manager

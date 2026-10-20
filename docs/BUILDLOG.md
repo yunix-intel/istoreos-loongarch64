@@ -430,3 +430,8 @@
   - entrypoint 支持 `REDIS_PASSWORD`（追加到临时配置副本），用 `runuser` 降权到 UID 998。
   - 验证：`PING`、`SET/GET`、重启后值仍在、无密码时 `NOAUTH`、带密码 `PONG`、健康检查 healthy。
   - 镜像 296MB；已推送 `yunixintel/redis:loong64`/`24.10-la5`，digest `sha256:424db4cd…3137`。
+- Mosquitto 2.0.20：openEuler EPOL 包，`mosquitto` 包本身已包含 `mosquitto_pub`/`mosquitto_sub`/`mosquitto_passwd`（没有单独的 `mosquitto-clients` 包，写了会构建失败）。
+  - 默认配置 `persistence true` + `log_dest stdout` + `listener 1883` + `allow_anonymous true`；entrypoint 用 `runuser` 降权到 UID 998。
+  - 健康检查用 bash `/dev/tcp`，不依赖客户端命令。
+  - 验证：匿名 pub/sub 成功；retained 消息在容器重启后仍能订阅；健康检查 healthy。
+  - 镜像 290MB；已推送 `yunixintel/mosquitto:loong64`/`24.10-la5`，digest `sha256:d55c5799…edce`。
