@@ -164,6 +164,20 @@ docker run --rm -v /srv/mosquitto/config:/cfg --entrypoint mosquitto_passwd   yu
 - 需要 WebSocket 时追加 `listener 9001` + `protocol websockets` 并映射 9001。
 - 完整说明见 [../images/mosquitto/BUILD.md](../images/mosquitto/BUILD.md)。
 
+### Node-RED
+
+```bash
+docker run -d --name node-red -p 1880:1880   -v node-red-data:/data yunixintel/node-red:loong64
+```
+
+- 编辑器 `http://<host>:1880/`；数据、flows、settings 全在 `/data`。
+- 容器以 UID/GID 1001 运行；挂宿主目录需 `chown -R 1001:1001 <dir>`。
+- 首次启动会生成 `/data/settings.js`；改端口、`credentialSecret` 都在这里。
+- 默认 `uiPort` 取 `PORT` 环境变量，未设置时 1880；改映射端口时同步设 `PORT`。
+- 版本为 4.1.16：5.x 要求 Node ≥22.9，openEuler 只有 Node 20，暂不可用。
+- 安装原生依赖的 palette 节点需要自行加回 gcc/make，运行镜像未带编译工具。
+- 完整说明见 [../images/node-red/BUILD.md](../images/node-red/BUILD.md)。
+
 ### Node Exporter
 
 ```bash
@@ -258,7 +272,7 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 67 个镜像）
+## 3. 端口索引（全部 68 个镜像）
 
 | 镜像 | 端口 | 关键挂载/环境 | 备注 |
 |---|---|---|---|
@@ -268,6 +282,7 @@ docker run -d --name gatus -p 8080:8080 \
 | redis | 6379 | `/data`；环境 `REDIS_PASSWORD` | AOF+RDB；UID/GID 998:996 |
 | mosquitto | 1883 | `/mosquitto/config`、`/mosquitto/data` | 默认匿名；公网须配 passwd |
 | mariadb | 3306 | `/var/lib/mysql`；环境 `MYSQL_*` | root 仅 localhost；UID/GID 27 |
+| node-red | 1880 | `/data` | UID 1001；4.1.16；palette 需 npm |
 | audiobookshelf | 13378 | `/audiobooks`、`/config`、`/metadata` | Node 22 |
 | bazarr | 6767 | `/config`、`/movies`、`/tv` | 含 ffmpeg |
 | calibre-web | 8083 | `/books`、`/config` | 书库挂载 |

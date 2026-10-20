@@ -441,3 +441,8 @@
   - 客户端 socket 统一为 `/run/mysqld/mysqld.sock`，镜像内 `container-client.cnf` 让 `mariadb` 命令无需额外参数。
   - 验证：初始化、root/app TCP 登录、建表、重启持久化、健康检查 healthy。
   - 镜像 549MB；已推送 `yunixintel/mariadb:loong64`/`24.10-la5`，digest `sha256:bf37b65e…5e00`。
+- Node-RED 4.1.16：latest 5.0.8 要求 Node ≥22.9，openEuler 24.03 只有 Node 20.18.2，因此选 v4 维护线最新版。
+  - 多阶段：build 阶段装 gcc/make/python3 后 `npm install -g --unsafe-perm node-red@4.1.16`；运行阶段只保留 Node/npm 并复制 `/usr/local/lib/node_modules/node-red`，保留 npm 供 palette manager 使用。
+  - 踩坑：entrypoint 最初按 `/usr/lib/node_modules` 找 settings.js，openEuler 的 npm 全局前缀是 `/usr/local`，已修正。
+  - 验证：`/` 200、标题 Node-RED、`node-red --version` 4.1.16、`/data` 生成 settings.js/flows.json、重启后 200、健康检查 healthy。
+  - 镜像 439MB；已推送 `yunixintel/node-red:loong64`/`24.10-la5`，digest `sha256:0c548174…9bf8`。

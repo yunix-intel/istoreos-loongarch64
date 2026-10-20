@@ -55,6 +55,7 @@ IMAGES=(
   nextcloud
   nginx-proxy-manager
   node-exporter
+  node-red
   ntfy
   one-api
   openwebui

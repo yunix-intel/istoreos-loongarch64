@@ -400,5 +400,11 @@
     "size": "549MB",
     "verification": "初始化成功；root/app TCP 登录；建表；重启持久化；特殊字符密码可登录；健康检查 healthy",
     "notes": "10.11.18（openEuler 包）；`MYSQL_ROOT_PASSWORD/DATABASE/USER/PASSWORD/ALLOW_EMPTY_PASSWORD`；`/var/lib/mysql`；3306；root 仅 localhost；日志走 stderr；UID/GID 27"
+  },
+  {
+    "image": "yunixintel/node-red",
+    "size": "439MB",
+    "verification": "`/` 200；标题 Node-RED；`node-red --version` 4.1.16；`/data` 生成 settings/flows；重启后 200；健康检查 healthy",
+    "notes": "4.1.16（Node 5.x 需 Node22.9，openEuler 只有 20，故用 v4 维护线）；Node 20.18.2；多阶段构建；`/data`；1880；保留 npm 以支持 palette；UID 1001"
   }
 ]
