@@ -1,0 +1,119 @@
+# iStoreOS loongarch64 CI：nightly 整编 + tag 自动发版
+#
+# 策略（见 docs/BUILD.md）：
+# - push 到 main：只做"冒烟"（checkout + feeds + defconfig，不整编），快；
+# - 每周日 + 手动：整编，产物留 artifacts；
+# - 打 tag（24.10-laN）：整编 + 自动发 GitHub Release。
+# 注意：runner 只有 4 核，整编约 4-6 小时，卡 6h 上限；磁盘先瘦身（runner 预装占位大）。
+name: build-loongarch64
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 20 * * 0"   # 周一 04:00 CST
+  workflow_dispatch:
+  release:
+    types: [published]
+
+jobs:
+  smoke:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Clone upstream (pinned)
+        run: |
+          git clone --depth 1 --branch istoreos-24.10 \
+            https://github.com/istoreos/istoreos.git src
+          cd src && git log --oneline -1
+      - name: Feeds + defconfig check
+        working-directory: src
+        run: |
+          cp ../config/loongarch64-generic.config .config
+          # 注：24.10 分支自带 store/third feed，只补缺的两行（重复 feed 名会直接报错）
+          grep -q "^src-git store " feeds.conf.default || \
+            echo "src-git store https://github.com/linkease/istore.git;main" >> feeds.conf.default
+          grep -q "nas-packages-luci" feeds.conf.default || \
+            echo "src-git nasluci https://github.com/linkease/nas-packages-luci.git;main" >> feeds.conf.default
+          grep -q "vernesong/OpenClash" feeds.conf.default || \
+            echo "src-git openclash https://github.com/vernesong/OpenClash.git;master" >> feeds.conf.default
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+          make defconfig
+          echo "=== 1. target 是否还在（防 target 被重置） ==="
+          grep -E "CONFIG_TARGET_loongarch64=y|CONFIG_TARGET_loongarch64_generic=y|CONFIG_TARGET_loongarch64_generic_DEVICE_generic=y" .config
+          echo "=== 2. feed 在不在（防 clone 失败） ==="
+          ls -d feeds/store feeds/nasluci feeds/openclash
+          echo "=== 3. 包索引在不在（防 install 跳过） ==="
+          grep -m1 -A3 "config PACKAGE_luci-app-store" tmp/.config-package.in
+          grep -m1 -A3 "config PACKAGE_taskd" tmp/.config-package.in
+          echo "=== 4. 门禁：feeds+索引+defconfig 全绿即过 ==="
+          echo SMOKE_PASS
+
+  full:
+    if: github.event_name != 'push'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 355
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - name: Free disk (runner 预装占位大)
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android \
+            /opt/ghc /opt/hostedtoolcache/CodeQL 2>/dev/null || true
+          sudo docker image prune -af 2>/dev/null || true
+          df -h /
+      - name: Deps
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential libncurses-dev gawk unzip file \
+            flex gettext python3 rsync git wget curl diffutils
+      - name: Clone upstream (pinned)
+        run: |
+          git clone --depth 1 --branch istoreos-24.10 \
+            https://github.com/istoreos/istoreos.git src
+          cd src && git log --oneline -1 | tee ../src-version.txt
+      - name: Feeds
+        working-directory: src
+        run: |
+          grep -q "^src-git store " feeds.conf.default || \
+            echo "src-git store https://github.com/linkease/istore.git;main" >> feeds.conf.default
+          grep -q "nas-packages-luci" feeds.conf.default || \
+            echo "src-git nasluci https://github.com/linkease/nas-packages-luci.git;main" >> feeds.conf.default
+          grep -q "vernesong/OpenClash" feeds.conf.default || \
+            echo "src-git openclash https://github.com/vernesong/OpenClash.git;master" >> feeds.conf.default
+          ./scripts/feeds update -a && ./scripts/feeds install -a
+      - name: Config (CI 专用最小集，不含本地二进制包，见 config/ci.config)
+        working-directory: src
+        run: |
+          cp ../config/ci.config .config
+          make defconfig
+      - name: Build
+        working-directory: src
+        run: |
+          export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+          make -j"$(nproc)" 2>&1 | tee ../build.log | tail -5
+      - name: Audit (public 版无密钥门禁：FILES-public 禁止含密钥模式)
+        run: |
+          ! grep -r -i -E "password\s*[:=]|secret\s*[:=][\"']?[^\"' ]|BEGIN.*PRIVATE KEY" \
+            config/ scripts/ patches/ docs/ files-public/ 2>/dev/null \
+            && echo AUDIT_PASS || (echo AUDIT_FAIL && exit 1)
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: istoreos-loongarch64-${{ github.ref_name }}
+          path: |
+            src/bin/targets/loongarch64/generic/*combined-efi.img.gz
+            src/bin/targets/loongarch64/generic/*rootfs.tar.gz
+            src/bin/targets/loongarch64/generic/sha256sums
+          retention-days: 14
+      - name: Release (only on tag)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            src/bin/targets/loongarch64/generic/*combined-efi.img.gz
+            src/bin/targets/loongarch64/generic/*rootfs.tar.gz
+            src/bin/targets/loongarch64/generic/sha256sums

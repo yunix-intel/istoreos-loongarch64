@@ -1,0 +1,146 @@
+# iStore 龙芯应用 133 清单（整表）
+
+状态：✅=可用（自编/官方引用/自洽/库） ❌=死刑 ⏳=待定/需真机。
+
+| # | 应用 | 状态 | 说明 |
+|---|---|---|---|
+| 1 | app-meta-51ddns | ✅ | 官方引用；库/标配；自编 |
+| 2 | app-meta-agentflow | ❌ | 死刑：agentflow |
+| 3 | app-meta-airconnect | ❌ | 死刑：airconnect |
+| 4 | app-meta-airplay2 | ✅ | 官方引用；库/标配 |
+| 5 | app-meta-alist | ✅ | 官方引用；库/标配；自编 |
+| 6 | app-meta-aliyundrive-webdav | ✅ | 官方引用；库/标配；自编 |
+| 7 | app-meta-ap-modem | ✅ | 官方引用；库/标配 |
+| 8 | app-meta-arcadia | ✅ | 官方引用；库/标配 |
+| 9 | app-meta-aria2 | ✅ | 官方引用；库/标配 |
+| 10 | app-meta-arpbind | ✅ | 官方引用；库/标配 |
+| 11 | app-meta-autotimeset | ✅ | 官方引用；库/标配 |
+| 12 | app-meta-baidudrive | ❌ | 死刑：baidudrive |
+| 13 | app-meta-baidupcs-web | ❌ | 死刑：baidupcs-web |
+| 14 | app-meta-beeconmini | ❌ | 死刑：bxplug |
+| 15 | app-meta-chinesesubfinder | ✅ | 官方引用；库/标配 |
+| 16 | app-meta-clouddrive2 | ✅ | 官方引用；库/标配 |
+| 17 | app-meta-cloudreve | ✅ | 官方引用；库/标配 |
+| 18 | app-meta-codeserver | ✅ | 官方引用；库/标配 |
+| 19 | app-meta-cpulimit | ✅ | 官方引用；库/标配；自编 |
+| 20 | app-meta-cups | ❌ | 死刑：cups |
+| 21 | app-meta-ddnsgo | ✅ | 官方引用；库/标配；自编 |
+| 22 | app-meta-ddnsto | ❌ | 死刑：ddnsto |
+| 23 | app-meta-demon | ✅ | 官方引用；库/标配 |
+| 24 | app-meta-diskman | ✅ | 官方引用；库/标配 |
+| 25 | app-meta-dockermanager | ✅ | LuCI 页可用、可列宿主容器（真机验证） |
+| 26 | app-meta-dpanel | ✅ | 官方引用；库/标配 |
+| 27 | app-meta-drawio | ✅ | 官方引用；库/标配 |
+| 28 | app-meta-emby | ✅ | 官方引用；库/标配 |
+| 29 | app-meta-emmc-health | ✅ | 官方引用；库/标配 |
+| 30 | app-meta-eqos | ✅ | 官方引用；库/标配 |
+| 31 | app-meta-excalidraw | ✅ | 官方引用；库/标配 |
+| 32 | app-meta-fastnet | ❌ | 死刑：fastnet |
+| 33 | app-meta-feishunet | ✅ | 官方引用；库/标配 |
+| 34 | app-meta-floatip | ✅ | 官方引用；库/标配；自编 |
+| 35 | app-meta-frpc | ✅ | 官方引用；库/标配 |
+| 36 | app-meta-frps | ✅ | 官方引用；库/标配 |
+| 37 | app-meta-gogs | ✅ | 官方引用；库/标配 |
+| 38 | app-meta-gowebdav | ✅ | 官方引用；库/标配；自编 |
+| 39 | app-meta-hd-idle | ✅ | 官方引用；库/标配 |
+| 40 | app-meta-heimdall | ✅ | 官方引用；库/标配 |
+| 41 | app-meta-hermes | ✅ | 官方引用；库/标配 |
+| 42 | app-meta-homeassistant | ✅ | 官方引用；库/标配 |
+| 43 | app-meta-homebox | ✅ | 官方引用；库/标配；自编 |
+| 44 | app-meta-htreader | ✅ | 官方引用；库/标配 |
+| 45 | app-meta-immich | ✅ | 官方引用；库/标配 |
+| 46 | app-meta-istoredup | ✅ | 官方引用；库/标配 |
+| 47 | app-meta-istoreenhance | ❌ | 死刑：istoreenhance |
+| 48 | app-meta-istorepanel | ✅ | 官方引用；库/标配 |
+| 49 | app-meta-istorerouter | ✅ | 官方引用；库/标配 |
+| 50 | app-meta-istorex | ✅ | 官方引用；库/标配 |
+| 51 | app-meta-ittools | ✅ | 官方引用；库/标配 |
+| 52 | app-meta-jackett | ✅ | 官方引用；库/标配 |
+| 53 | app-meta-jellyfin | ✅ | 官方引用；库/标配 |
+| 54 | app-meta-kai | ❌ | 死刑：kai、kai_session、kai-agent |
+| 55 | app-meta-kodexplorer | ✅ | 官方引用；库/标配 |
+| 56 | app-meta-lan-scanner | ✅ | 官方引用；库/标配 |
+| 57 | app-meta-lan-wake | ✅ | 官方引用；库/标配 |
+| 58 | app-meta-lanraragi | ✅ | 官方引用；库/标配 |
+| 59 | app-meta-lingti-gameacc | ✅ | 官方引用；库/标配 |
+| 60 | app-meta-linkease | ❌ | 死刑：linkease、linkease-common-bin |
+| 61 | app-meta-linkeasefull | ❌ | 死刑：linkease-common-bin、linkeasefull |
+| 62 | app-meta-luci-app-picoclaw | ✅ | 官方引用；库/标配 |
+| 63 | app-meta-lucky | ✅ | 官方引用；库/标配；自编 |
+| 64 | app-meta-memos | ✅ | 官方引用；库/标配 |
+| 65 | app-meta-mfun | ✅ | 官方引用；库/标配 |
+| 66 | app-meta-miair-next | ✅ | 官方引用；库/标配 |
+| 67 | app-meta-modem | ✅ | 官方引用；库/标配；自编 |
+| 68 | app-meta-msd_lite | ✅ | 官方引用；库/标配；自编 |
+| 69 | app-meta-mtphotos | ✅ | 官方引用；库/标配 |
+| 70 | app-meta-multiaccountdial | ✅ | 官方引用；库/标配 |
+| 71 | app-meta-mymind | ✅ | 官方引用；库/标配 |
+| 72 | app-meta-natpierce | ✅ | 官方引用；库/标配 |
+| 73 | app-meta-navidrome | ✅ | 官方引用；库/标配 |
+| 74 | app-meta-netdata | ✅ | 官方引用；库/标配 |
+| 75 | app-meta-nextcloud | ✅ | 官方引用；库/标配 |
+| 76 | app-meta-nginx | ✅ | 官方引用；库/标配 |
+| 77 | app-meta-nlbwmon | ✅ | 官方引用；库/标配 |
+| 78 | app-meta-npc | ✅ | 官方引用；库/标配 |
+| 79 | app-meta-nps | ✅ | 官方引用；库/标配 |
+| 80 | app-meta-nut | ✅ | 官方引用；库/标配 |
+| 81 | app-meta-oneapi | ✅ | 官方引用；库/标配 |
+| 82 | app-meta-openclawmgr | ✅ | 官方引用；库/标配 |
+| 83 | app-meta-openfog | ✅ | 官方引用；库/标配 |
+| 84 | app-meta-openlist | ✅ | 官方引用；库/标配；自编 |
+| 85 | app-meta-openwebui | ✅ | 官方引用；库/标配 |
+| 86 | app-meta-owjdxb | ❌ | 死刑：owjdxb |
+| 87 | app-meta-owntone | ✅ | 官方引用；库/标配 |
+| 88 | app-meta-penpot | ✅ | 官方引用；库/标配 |
+| 89 | app-meta-pgyvpn | ❌ | 死刑：pgyvpn |
+| 90 | app-meta-photoprism | ✅ | 官方引用；库/标配 |
+| 91 | app-meta-plex | ✅ | 官方引用；库/标配 |
+| 92 | app-meta-poweroff | ✅ | 官方引用；库/标配 |
+| 93 | app-meta-pushbot | ✅ | 官方引用；库/标配 |
+| 94 | app-meta-pve | ✅ | 官方引用；库/标配 |
+| 95 | app-meta-qbittorrent | ❌ | 死刑：qBittorrent-static |
+| 96 | app-meta-qbittorrent-ee | ✅ | 官方引用；库/标配；自编 |
+| 97 | app-meta-qiyougamebooster | ❌ | 死刑：qiyougamebooster |
+| 98 | app-meta-rclone | ✅ | 官方引用；库/标配；自编 |
+| 99 | app-meta-rebatedog | ✅ | 官方引用；库/标配 |
+| 100 | app-meta-routerdog | ❌ | 死刑：routergo |
+| 101 | app-meta-rtbwmon | ✅ | 官方引用；库/标配 |
+| 102 | app-meta-rtp2httpd | ✅ | 官方引用；库/标配；自编 |
+| 103 | app-meta-runmynas | ✅ | 官方引用；库/标配 |
+| 104 | app-meta-serverchan | ✅ | 官方引用；库/标配 |
+| 105 | app-meta-sftp | ✅ | 官方引用；库/标配 |
+| 106 | app-meta-shadowrt | ✅ | 官方引用；库/标配 |
+| 107 | app-meta-smartdns | ✅ | 官方引用；库/标配 |
+| 108 | app-meta-socat | ✅ | 官方引用；库/标配 |
+| 109 | app-meta-sunpanel | ✅ | 官方引用；库/标配；自编 |
+| 110 | app-meta-syncdial | ✅ | 官方引用；库/标配 |
+| 111 | app-meta-systools | ✅ | 官方引用；库/标配 |
+| 112 | app-meta-tailscale | ✅ | 官方引用；库/标配；自编 |
+| 113 | app-meta-transmission | ✅ | 官方引用；库/标配；自编 |
+| 114 | app-meta-typecho | ✅ | 官方引用；库/标配 |
+| 115 | app-meta-ubuntu | ✅ | 官方引用；库/标配 |
+| 116 | app-meta-udpxy | ✅ | 官方引用；库/标配 |
+| 117 | app-meta-uhttpd | ✅ | 官方引用；库/标配 |
+| 118 | app-meta-unifi | ✅ | 官方引用；库/标配 |
+| 119 | app-meta-ups-manager | ✅ | 官方引用；库/标配 |
+| 120 | app-meta-uptimekuma | ✅ | 官方引用；库/标配 |
+| 121 | app-meta-uugamebooster | ❌ | 死刑：uugamebooster |
+| 122 | app-meta-vaultwarden | ✅ | 官方引用；库/标配 |
+| 123 | app-meta-virtualdog | ❌ | 死刑：virtualdog |
+| 124 | app-meta-vlmcsd | ✅ | 官方引用；库/标配；自编 |
+| 125 | app-meta-vsftpd | ✅ | 官方引用；库/标配；自编 |
+| 126 | app-meta-wan-mac | ✅ | 官方引用；库/标配 |
+| 127 | app-meta-webcontrol | ✅ | 官方引用；库/标配 |
+| 128 | app-meta-webvirtcloud | ✅ | 官方引用；库/标配 |
+| 129 | app-meta-xlnetacc | ✅ | 官方引用；库/标配 |
+| 130 | app-meta-xteve | ✅ | 官方引用；库/标配 |
+| 131 | app-meta-xunlei | ✅ | 官方引用；库/标配 |
+| 132 | app-meta-zdinnav | ❌ | 无源码，仅预构建 amd64/arm 镜像，无法移植 |
+| 133 | app-meta-zerotier | ✅ | 官方引用；库/标配 |
+
+合计：133 个，✅ 113，❌ 19，⏳ 1。
+## 口径说明（2026-10-13 定稿）
+
+- **133**：商店应用（app-meta 口径）：✅113（自编/官方引用/自洽/库）❌20（闭源/无源码，逐条有证据）⏳0。
+- **6**：容器基础设施（podman/runc/conmon + glib2/libffi/libpcre2），不进 133，单记。
+- 合计 139。dockermanager 已转正（LuCI 页与容器列表真机验证）。

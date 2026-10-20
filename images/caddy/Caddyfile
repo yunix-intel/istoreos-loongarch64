@@ -1,0 +1,7 @@
+{
+    admin off
+}
+
+:8080 {
+    respond "Caddy on LoongArch64" 200
+}

@@ -1,0 +1,5 @@
+# 自建 loongarch64 应用源（与官方 isfeeds.conf 同格式）
+# 用法：opkg 本地解压后，将下面两行写入 /etc/opkg/customfeeds.conf
+# （把 https://feed.example.com 换成实际地址；或本地 file:// 直接指目录）
+src/gz v3nas https://feed.example.com/loongarch64_generic/nas
+src/gz v3meta https://feed.example.com/all/meta

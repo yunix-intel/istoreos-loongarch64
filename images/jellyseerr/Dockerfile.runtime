@@ -1,0 +1,5 @@
+FROM jellyseerr:loong64
+USER root
+COPY patch/next.config.js /app/next.config.js
+RUN rm -f /app/next.config.ts
+USER 1000

@@ -1,0 +1,3 @@
+FROM changedetection:loong64
+COPY changedetectionio/content_fetchers/webdriver_selenium.py /app/changedetectionio/content_fetchers/webdriver_selenium.py
+COPY changedetectionio/content_fetchers/__init__.py /app/changedetectionio/content_fetchers/__init__.py

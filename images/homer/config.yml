@@ -1,0 +1,11 @@
+title: "Homer"
+subtitle: "LoongArch64"
+header: true
+footer: false
+columns: "3"
+connectivityCheck: true
+defaults:
+  layout: columns
+  colorTheme: auto
+  language: en
+services: []

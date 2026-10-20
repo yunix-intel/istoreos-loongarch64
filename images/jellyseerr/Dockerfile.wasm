@@ -1,0 +1,2 @@
+FROM jellyseerr:loong64
+COPY wasm/sharp /app/node_modules/@img/sharp-wasm32

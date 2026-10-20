@@ -1,0 +1,19 @@
+# 虚机支持：virtio 全家桶进内核（无 initrd 也能挂盘/联网）。
+# i8042 注：别想着关它——KEYBOARD_ATKBD/MOUSE_PS2 会 select SERIO_I8042
+#（ARCH_MIGHT_HAVE_PC_SERIO），真机 USB 键盘走 HID 不受影响；虚机启动时
+# 加内核参数 initcall_blacklist=i8042_init 绕过即可（真机 PS/2 保留）。
+# qemu virt 机的 PCI 是通用 ECAM 桥（pci-host-ecam-generic），不是龙芯真机桥：
+# 光有 VIRTIO_PCI 不够，桥驱动没编进就看不见整条 PCI 总线（症状：Waiting for
+# root device /dev/vda2，日志里一行 virtio 都没有）。教训 2026-10-17。
+CONFIG_PCI_HOST_COMMON=y
+CONFIG_PCI_HOST_GENERIC=y
+CONFIG_VIRTIO_PCI=y
+CONFIG_VIRTIO_BLK=y
+CONFIG_VIRTIO_NET=y
+CONFIG_VIRTIO_CONSOLE=y
+CONFIG_VIRTIO_MMIO=y
+# CONFIG_SERIO_I8042 is not set
+CONFIG_VIRTIO_VSOCKETS=y
+# CONFIG_VSOCKETS_DIAG is not set
+CONFIG_VSOCKETS_LOOPBACK=y
+# CONFIG_VIRTIO_PCI_LEGACY is not set

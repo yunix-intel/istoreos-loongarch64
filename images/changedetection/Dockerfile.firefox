@@ -1,0 +1,11 @@
+FROM changedetection:loong64
+RUN dnf install -y --setopt=install_weak_deps=False firefox && \
+    dnf clean all && rm -rf /var/cache/dnf
+COPY geckodriver /usr/bin/geckodriver
+COPY changedetectionio/content_fetchers/webdriver_selenium.py /app/changedetectionio/content_fetchers/webdriver_selenium.py
+RUN chmod +x /usr/bin/geckodriver
+ENV WEBDRIVER_BROWSER=firefox \
+    FIREFOX_BIN=/usr/bin/firefox \
+    GECKODRIVER_PATH=/usr/bin/geckodriver \
+    MOZ_DISABLE_CONTENT_SANDBOX=1 \
+    MOZ_DISABLE_GMP_SANDBOX=1

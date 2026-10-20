@@ -1,0 +1,11 @@
+FROM changedetection:loong64
+RUN dnf install -y --setopt=install_weak_deps=False opencv && \
+    dnf clean all && rm -rf /var/cache/dnf
+RUN /opt/venv/bin/pip install --no-cache-dir --prefer-binary \
+        -i https://lpypi.loongnix.cn/loongson/pypi/+simple \
+        --extra-index-url https://pypi.org/simple \
+        --trusted-host lpypi.loongnix.cn \
+        "numpy==1.26.4"
+RUN SP=$(/opt/venv/bin/python -c "import site; print(site.getsitepackages()[0])") && \
+    cp -a /usr/lib/python3.11/site-packages/cv2 "$SP/"
+ENV DISABLED_PROCESSORS=""
