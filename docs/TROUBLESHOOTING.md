@@ -196,6 +196,21 @@ docker run --rm -v "$PWD":/src -w /src openeuler/openeuler:24.03 bash -c '
 - 修复：宿主执行 `sysctl -w vm.overcommit_memory=1` 并写入 `/etc/sysctl.d/`；
   家用低负载可忽略。
 
+### Node 应用报 `Cannot find module '/usr/local/lib/cli'`
+
+- 原因：npm 全局 bin 是符号链接，Docker `COPY` 会解引用，`fs.realpathSync` 解析到错误目录。
+- 修复：运行阶段重新创建指向 `/opt/node22/lib/node_modules/...` 的符号链接；Homebridge 2 的入口是 `bin/homebridge.js`。
+
+### Homebridge UI 5 的 8581 不监听
+
+- 原因：Config UI 5 不再由插件自身启动，必须由 `hb-service` supervisor 运行。
+- 修复：默认命令改为 `hb-service run -U /homebridge --docker`，不要只运行 `homebridge`。
+
+### Homebridge UI 安装 node-pty 失败
+
+- 原因：`@homebridge/node-pty-prebuilt-multiarch` 没有 loong64 预编译，npm 包又不含 `src/unix`。
+- 修复：从 GitHub v0.14.1 源码 `node-gyp rebuild`，把 `build/Release/pty.node` 放回包内；不要试图在 npm 包目录里直接编译。
+
 ## Docker Hub
 
 ### `denied: requested access to the resource is denied`

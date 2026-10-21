@@ -10,7 +10,8 @@ if [ ! -f /homebridge/config.json ]; then
 fi
 
 if [ "$#" -eq 0 ]; then
-    set -- homebridge -U /homebridge
+    set -- node /opt/node22/lib/node_modules/homebridge-config-ui-x/dist/bin/hb-service.js \
+        run -U /homebridge --docker
 fi
 
 exec runuser -u homebridge -- "$@"

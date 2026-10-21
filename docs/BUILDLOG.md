@@ -467,3 +467,13 @@
   - entrypoint 默认开启认证并创建 `/data/.htpasswd`，首次需 `create_user` 后重启；支持 `DISABLE_AUTHENTICATION=1` 和追加参数（如 `--append-only`）。
   - 验证：`POST /repo/?create=true` 200、config 写入/读取 200、无认证 401、Basic 认证通过、`--version` 正常。
   - 镜像 250MB；已推送 `yunixintel/rest-server:loong64`/`24.10-la5`，digest `sha256:53624433…a19a`。
+- Node.js 22.23.3 linux-loong64 基础镜像：openEuler 24.03 只有 Node 20，改用 unofficial-builds 的 `node-v22.23.3-linux-loong64.tar.xz`（SHA256 `c5594c23…9599`）。二进制最高要求 `GLIBC_2.38`，在 openEuler 容器内验证可运行；镜像 417MB，运行时在 `/opt/node22`，npm 全局前缀也是 `/opt/node22`。
+  - 已推送 `yunixintel/node:22.23.3`/`loong64`/`24.10-la5`，digest `sha256:99d0b28f…9692`。
+- Node-RED 5.0.8：改用 Node 22 基础镜像构建，`npm install -g node-red@5.0.8`，运行阶段复制 `/opt/node22/{bin,lib}` 与 Node-RED 包，CLI 符号链接指向 `/opt/node22/bin/node-red`。
+  - 验证：`node -v` 22.23.3、`node-red --version` 5.0.8、UI 200、`/data` 初始化、重启后 200、健康检查 healthy；镜像 498MB。
+  - 已推送 `yunixintel/node-red:loong64`/`24.10-la5`，digest `sha256:6ccc5ada…6f11`。
+- Homebridge 2.4.0 + Config UI 5.29.0：升级到 Node 22。UI 5 的 npm 包只带 x64/arm 的 node-pty 预编译，且不发布 `src/unix`，无法直接从 npm 包源码编译；改为 clone `node-pty-prebuilt-multiarch` v0.14.1 源码，`node-gyp rebuild` 出 loong64 `pty.node`（78KB），再放回 UI 包内。
+  - UI 5 不再由插件自启，改用 `hb-service run -U /homebridge --docker` 同时拉起 UI 与 Homebridge；单独跑 `homebridge` 时 8581 不监听。
+  - Homebridge 2 的 bin 是 `bin/homebridge.js`，符号链接必须指向该文件，不能指向旧路径 `bin/homebridge`。
+  - 验证：Homebridge 2.4.0、UI 200、hb-service + homebridge 双进程、健康检查 healthy；镜像 582MB。
+  - 已推送 `yunixintel/homebridge:loong64`/`24.10-la5`，digest `sha256:93632682…30ee`。

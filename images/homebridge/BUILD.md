@@ -1,25 +1,41 @@
-# Homebridge 1.11.4 + Config UI 4.80.0 (loong64) 构建记录
+# Homebridge 2.4.0 + Config UI 5.29.0 (loong64) 构建记录
 
 ## 结论
 
 - 镜像：`yunixintel/homebridge:loong64` / `:24.10-la5`
-- 大小：449MB，`linux/loong64`
-- digest：`sha256:d90b3f1c3bed34dada1cf9508738a12cd673eaaa68ef80677053c5fce890e9e7`
-- 版本：Homebridge 1.11.4（HAP 0.14.3）+ Homebridge Config UI X 4.80.0
-- 验证：Homebridge 启动并输出配对码、UI `:8581` 返回 200、标题 Homebridge、
-  健康检查 healthy。
+- 大小：582MB，`linux/loong64`
+- digest：`sha256:93632682f3233daccc20a2d0ffa144b4571e1fbae5da0684a183ced5608c30ee`
+- 版本：Homebridge 2.4.0（HAP 2.2.2）+ Homebridge Config UI X 5.29.0 / Node.js 22.23.3
+- 验证：Homebridge 2.4.0 启动、UI `:8581` 返回 200、标题 Homebridge、
+  `hb-service` 同时拉起 UI 与 Homebridge、健康检查 healthy。
 
-## 版本边界（重要）
+## 运行时与架构变化
 
-Homebridge 2.x 与 Config UI 5.x 都要求 Node.js ≥22.9/22.12，而 openEuler 24.03
-只提供 Node.js 20.18.2。因此本镜像固定在仍支持 Node 20 的最后一档：
+openEuler 24.03 自带 Node 20，不满足 Homebridge 2.x / UI 5.x 的 Node ≥22.9/22.12。
+因此使用 unofficial-builds 的 Node 22.23.3 loong64 基础镜像
+`yunixintel/node:22.23.3`（见 [../node/BUILD.md](../node/BUILD.md)）。
 
-- `homebridge@1.11.4`
-- `homebridge-config-ui-x@4.80.0`
+Homebridge Config UI 5 不再由 Homebridge 插件自己启动 Web 服务；它由
+`hb-service` 作为 supervisor 同时运行 UI 和 Homebridge。单独运行
+`homebridge` 只会启动 HomeKit 核心，8581 不会监听。
 
-Node.js 20 已进入 EOL，Homebridge 1.x 也不是当前主线。这个镜像适合在龙芯上
-“能用、可管理”的场景；对安全更新有硬要求时，应等 loong64 Node 22 运行时可用后
-再升级到 Homebridge 2.x。
+## node-pty 的 loong64 处理
+
+Config UI 依赖 `@homebridge/node-pty-prebuilt-multiarch@0.14.1`。它的 npm 包：
+
+- 只带 `linux-x64/ia32/arm/arm64` 预编译；
+- `files` 字段刻意不包含 `src/unix`，所以无法从 npm 包直接源码编译。
+
+处理方式：
+
+1. `npm install -g --ignore-scripts` 安装 Homebridge/UI，跳过失败的预编译安装。
+2. clone `homebridge/node-pty-prebuilt-multiarch` 的 `v0.14.1` 源码。
+3. `npm install --ignore-scripts && npx node-gyp rebuild`，在 loong64 上编出
+   `build/Release/pty.node`（约 78KB）。
+4. 把 `pty.node` 复制到 UI 包内的
+   `@homebridge/node-pty-prebuilt-multiarch/build/Release/`。
+
+这样保留 Web 终端功能，同时运行镜像不需要 gcc/make。
 
 ## 构建
 
@@ -31,21 +47,14 @@ docker push yunixintel/homebridge:loong64
 docker push yunixintel/homebridge:24.10-la5
 ```
 
-多阶段构建：
-
-- `build` 阶段安装 `gcc-c++ make python3`，执行
-  `npm install -g --unsafe-perm homebridge@1.11.4 homebridge-config-ui-x@4.80.0`；
-  Config UI 的部分原生依赖在此阶段编译。
-- 运行阶段只保留 Node/npm，复制 `/usr/local/lib/node_modules`。
-
-**踩坑**：`/usr/local/bin/homebridge` 是 npm 创建的符号链接。直接
-`COPY --from=build` 会把符号链接解引用成普通文件，脚本里的
-`fs.realpathSync(__filename)` 于是解析到 `/usr/local/lib`，启动时报
-`Cannot find module '/usr/local/lib/cli'`。必须在运行阶段重新创建符号链接：
+**另一个踩坑**：Homebridge 2.4.0 的 npm bin 是 `bin/homebridge.js`，不是
+`bin/homebridge`。运行阶段必须创建：
 
 ```dockerfile
-RUN ln -s ../lib/node_modules/homebridge/bin/homebridge /usr/local/bin/homebridge
+RUN ln -s ../lib/node_modules/homebridge/bin/homebridge.js /opt/node22/bin/homebridge
 ```
+
+直接 `COPY` npm 生成的符号链接会被解引用，`fs.realpathSync` 解析到错误目录。
 
 ## 运行
 
@@ -57,9 +66,16 @@ docker run -d --name homebridge --network=host \
   yunixintel/homebridge:loong64
 ```
 
+entrypoint 默认执行：
+
+```text
+node /opt/node22/lib/node_modules/homebridge-config-ui-x/dist/bin/hb-service.js \
+  run -U /homebridge --docker
+```
+
 - Config UI：`http://<host>:8581/`。
 - HomeKit 端口：`51826`；host 网络下可直接被 iOS 发现。
-- 数据目录 `/homebridge`：`config.json`、持久化缓存、插件都在这里。
+- 数据目录 `/homebridge`：`config.json`、`homebridge.log`、持久化缓存、插件都在这里。
 - 容器以 UID 1000（`homebridge`）运行；挂宿主目录需
   `chown -R 1000:1000 <dir>`。
 - 首次启动会从镜像复制最小 `config.json`，其中已包含 Config UI 平台：
@@ -80,13 +96,13 @@ docker run -d --name homebridge --network=host \
 - 运行镜像保留 npm，可在 UI 里安装插件；但没有 gcc/make，带原生编译步骤的插件会失败。
   需要时基于本 Dockerfile 的 build 阶段自建带编译器的变体。
 - 升级 Homebridge 大版本前备份整个 `/homebridge`；插件与缓存不只在 config.json。
-- Homebridge 1.x / Node 20 的安全更新已结束，公网暴露 UI 时必须加反向代理认证。
+- Node 22 来自 unofficial-builds，审计时记录其 URL 与 SHA256（见 node 镜像文档）。
 
 ## 验证命令
 
 ```bash
 curl -fsS -o /dev/null -w '%{http_code}\n' http://127.0.0.1:8581/
-docker exec homebridge runuser -u homebridge -- homebridge -V
-docker logs homebridge | grep -E 'Homebridge v|Homebridge UI'
-docker exec homebridge ls -la /homebridge
+docker exec homebridge /opt/node22/bin/homebridge -V
+docker exec homebridge ps -ef | grep -E 'hb-service|homebridge'
+docker logs homebridge | grep -E 'Started Homebridge|Homebridge UI'
 ```

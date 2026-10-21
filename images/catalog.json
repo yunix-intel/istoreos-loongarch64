@@ -403,9 +403,9 @@
   },
   {
     "image": "yunixintel/node-red",
-    "size": "439MB",
-    "verification": "`/` 200；标题 Node-RED；`node-red --version` 4.1.16；`/data` 生成 settings/flows；重启后 200；健康检查 healthy",
-    "notes": "4.1.16（Node 5.x 需 Node22.9，openEuler 只有 20，故用 v4 维护线）；Node 20.18.2；多阶段构建；`/data`；1880；保留 npm 以支持 palette；UID 1001"
+    "size": "498MB",
+    "verification": "`/` 200；标题 Node-RED；`node-red --version` 5.0.8；`/data` 生成 settings/flows；重启后 200；健康检查 healthy",
+    "notes": "5.0.8 + Node 22.23.3；基于 `yunixintel/node`；多阶段构建；1880；`/data`；保留 npm 支持 palette；UID 1001"
   },
   {
     "image": "yunixintel/grafana",
@@ -421,14 +421,20 @@
   },
   {
     "image": "yunixintel/homebridge",
-    "size": "449MB",
-    "verification": "Homebridge 启动并输出配对码；UI :8581 200；标题 Homebridge；健康检查 healthy",
-    "notes": "1.11.4 + Config UI 4.80.0（2.x/UI5 需 Node22，openEuler 只有 20）；多阶段；host 网络建议；`/homebridge`；8581/51826；默认配对码 031-45-154；UID 1000；Node20 已 EOL"
+    "size": "582MB",
+    "verification": "Homebridge 2.4.0 启动；UI 8581 200；hb-service 同时拉起 UI 与核心；健康检查 healthy",
+    "notes": "2.4.0 + Config UI 5.29.0 + Node 22.23.3；基于 `yunixintel/node`；node-pty 由源码编 loong64；hb-service run；建议 host 网络；`/homebridge`；8581/51826；UID 1000"
   },
   {
     "image": "yunixintel/rest-server",
     "size": "250MB",
     "verification": "`?create=true` 建库 200；config 写入/读取；Basic 认证 401/200；版本 0.14.0",
     "notes": "0.14.0；Go 静态二进制 12MB；openEuler + httpd-tools（htpasswd）；`/data`；8000；默认开认证，先 create_user 再重启；可 DISABLE_AUTHENTICATION=1；无 TLS"
+  },
+  {
+    "image": "yunixintel/node",
+    "size": "417MB",
+    "verification": "`node -v` 22.23.3、`npm -v` 10.9.9、`corepack --version` 0.36.0；在 openEuler 24.03 容器内运行正常",
+    "notes": "Node.js 22.23.3 linux-loong64（unofficial-builds，SHA256 c5594c23…9599）；openEuler 24.03 + CA/tzdata/libstdc++；`/opt/node22`；供 Node-RED/Homebridge 构建使用"
   }
 ]

@@ -5,7 +5,7 @@ mkdir -p /data
 chown nodered:nodered /data
 
 if [ ! -f /data/settings.js ]; then
-    cp /usr/local/lib/node_modules/node-red/settings.js /data/settings.js
+    cp /opt/node22/lib/node_modules/node-red/settings.js /data/settings.js
     chown nodered:nodered /data/settings.js
 fi
 

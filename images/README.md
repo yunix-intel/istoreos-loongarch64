@@ -1,9 +1,9 @@
 # 应用镜像 Dockerfile 目录
 
-本目录是 72 个 `yunixintel/*:loong64` 镜像的构建材料索引。
+本目录是 73 个 `yunixintel/*:loong64` 镜像的构建材料索引。
 
-- `images/<app>/Dockerfile`：保留了 62 个镜像的 Dockerfile（部分带 `Dockerfile.*` 构建阶段）。
-- `catalog.json`：72 个镜像的名称、大小、验证结论、端口/限制说明，机读索引。
+- `images/<app>/Dockerfile`：保留了 71 个镜像的 Dockerfile（部分带 `Dockerfile.*` 构建阶段）。
+- `catalog.json`：73 个镜像的名称、大小、验证结论、端口/限制说明，机读索引。
 - 未保留 Dockerfile 的 10 个镜像：adguardhome、code-server、easytier、firefly-iii、
   gitea、memos、mihomo、miniflux、phpmyadmin、vaultwarden。它们的源码版本与重建步骤
   见 [../docs/IMAGE-BUILD.md](../docs/IMAGE-BUILD.md)。
@@ -30,10 +30,11 @@
 | redis | 仅 Dockerfile + entrypoint + `redis.conf`（openEuler `redis` 包） |
 | mosquitto | 仅 Dockerfile + entrypoint + `mosquitto.conf`（openEuler `mosquitto` 包） |
 | mariadb | 仅 Dockerfile + entrypoint + `client.cnf`（openEuler `mariadb-server` 包） |
-| node-red | 多阶段；构建阶段 npm 安装 Node-RED 4.1.16，运行阶段复制包 |
+| node-red | 多阶段；构建阶段 `node:22.23.3-loong64` 安装 Node-RED 5.0.8，运行阶段复制 Node 运行时与包 |
 | grafana | `grafana` 二进制 + 预构建 `public/` + `defaults.ini` + `grafana.ini`；前端需 x86 WSL2 |
 | memcached | 仅 Dockerfile + entrypoint（openEuler `memcached` 包） |
-| homebridge | 多阶段；`homebridge@1.11.4` + `homebridge-config-ui-x@4.80.0`，运行阶段重建 bin 符号链接 |
+| homebridge | 多阶段；`homebridge@2.4.0` + `homebridge-config-ui-x@5.29.0`；源码编译 node-pty；运行阶段重建 bin 符号链接 |
+| node | Node.js 22.23.3 linux-loong64 运行时基础镜像（unofficial-builds） |
 | rest-server | `rest-server` 静态二进制 + entrypoint/create_user/delete_user；依赖 openEuler `httpd-tools` |
 | caddy/watchtower/node-exporter | 仅二进制 + CA |
 
@@ -43,4 +44,4 @@
 ## 标签约定
 
 所有镜像同时打 `loong64` 与 `24.10-la5`，推送脚本在私有库
-`scripts/push-images.sh`，覆盖 72 只。
+`scripts/push-images.sh`，覆盖 73 只。

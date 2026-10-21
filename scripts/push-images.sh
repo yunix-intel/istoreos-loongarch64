@@ -57,6 +57,7 @@ IMAGES=(
   navidrome
   nextcloud
   nginx-proxy-manager
+  node
   node-exporter
   node-red
   ntfy
@@ -99,6 +100,12 @@ for img in "${IMAGES[@]}"; do
   docker push "${DOCKER_USER}/${img}:${TAG_RELEASE}"
   echo "OK    ${DOCKER_USER}/${img}:{${TAG_LOCAL},${TAG_RELEASE}}"
 done
+
+# Node 运行时额外保留精确版本 tag（Node-RED/Homebridge 的构建基线）
+if docker image inspect node:loong64 >/dev/null 2>&1; then
+  docker tag node:loong64 "${DOCKER_USER}/node:22.23.3"
+  docker push "${DOCKER_USER}/node:22.23.3"
+fi
 
 # istore 全系统镜像（可选，体积 847MB；私人预置版不建议公开推送）
 # docker tag istore:personal-new "${DOCKER_USER}/istore:${TAG_RELEASE}"

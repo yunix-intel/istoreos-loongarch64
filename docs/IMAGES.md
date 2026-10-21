@@ -1,6 +1,6 @@
 # loongarch64 应用镜像
 
-共 72 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
+共 73 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
 `loong64`（浮动）与 `24.10-la5`（与 GitHub Release 对齐）。
 
 拉取：
@@ -78,13 +78,14 @@ docker pull yunixintel/jellyfin:loong64
 | `yunixintel/redis` | 296MB | `PING`；`SET/GET`；重启持久化；密码认证通过 | 7.2.14；openEuler 包；AOF+RDB；`/data`；6379；默认 protected-mode no，公网必须设 `REDIS_PASSWORD` |
 | `yunixintel/mosquitto` | 290MB | 匿名 pub/sub；retained 消息重启后仍可订阅；健康检查 healthy | 2.0.20；openEuler EPOL；1883；默认 `allow_anonymous true`，公网须关匿名并配 passwd；含 pub/sub/passwd 工具；`/mosquitto/data` |
 | `yunixintel/mariadb` | 549MB | 初始化；root/app TCP 登录；建表；重启持久化；特殊字符密码通过 | 10.11.18；openEuler 包；`MYSQL_*` 初始化；`/var/lib/mysql`；3306；root 仅 localhost；日志走 stderr；UID/GID 27 |
-| `yunixintel/node-red` | 439MB | `/` 200；标题 Node-RED；版本 4.1.16；`/data` 生成 settings/flows；重启后 200 | 4.1.16 + Node 20.18.2；多阶段构建；1880；`/data`；保留 npm 支持 palette；UID 1001；5.x 需 Node 22.9，暂不可用 |
+| `yunixintel/node-red` | 498MB | `/` 200；标题 Node-RED；版本 5.0.8；`/data` 生成 settings/flows；重启后 200 | 5.0.8 + Node 22.23.3；基于 `yunixintel/node`；多阶段构建；1880；`/data`；保留 npm 支持 palette；UID 1001 |
 | `yunixintel/grafana` | 1.18GB | `/api/health` database ok；`/login` 200；登录页 JS 200；SQLite 迁移；健康检查 healthy | 13.2.4；前端 WSL Node22/Yarn4 webpack 构建并删 source map；Go 1.27/CGO0 `-tags oss`；UID/GID 472；`/var/lib/grafana`；3000；默认 admin/admin；不含 image renderer |
 | `yunixintel/memcached` | 354MB | 原始协议 `set/get`；`stats` 1.6.42；健康检查 healthy | 1.6.42；openEuler 包；默认 64MB/1024 连接/4 线程；`MEMCACHED_*` 可调；11211；无认证无持久化，禁止公网暴露 |
-| `yunixintel/homebridge` | 449MB | Homebridge 启动并输出配对码；UI 8581 200；健康检查 healthy | 1.11.4 + Config UI 4.80.0；2.x/UI5 需 Node22，openEuler 只有 Node20；多阶段；建议 host 网络；`/homebridge`；8581/51826；UID 1000；Node20 已 EOL |
+| `yunixintel/homebridge` | 582MB | Homebridge 2.4.0 启动；UI 8581 200；hb-service 同时拉起 UI 与核心；健康检查 healthy | 2.4.0 + Config UI 5.29.0 + Node 22.23.3；基于 `yunixintel/node`；node-pty 源码编 loong64；hb-service；建议 host 网络；`/homebridge`；8581/51826；UID 1000 |
+| `yunixintel/node` | 417MB | `node -v` 22.23.3、`npm -v` 10.9.9、`corepack` 0.36.0 正常 | Node.js 22.23.3 linux-loong64（unofficial-builds）；openEuler 24.03；`/opt/node22`；供 Node-RED/Homebridge 构建使用；版本 tag `22.23.3` |
 | `yunixintel/rest-server` | 250MB | `?create=true` 建库；config 写入/读取；Basic 认证 401/200 | 0.14.0；Go 静态二进制；openEuler + httpd-tools；`/data`；8000；默认开认证，先 create_user 再重启；无 TLS |
 
-> 2026-10-21：新增 `alertmanager`（Prometheus 告警路由）、`postgres`、`redis`、`mosquitto`、`mariadb`、`node-red`、`grafana`、`memcached`、`homebridge`、`rest-server`，均已推送双 tag；digest 分别为 `sha256:6f46a30d…8fca`、`sha256:c94527ee…825b`、`sha256:424db4cd…3137`、`sha256:d55c5799…edce`、`sha256:bf37b65e…5e00`、`sha256:0c548174…9bf8`、`sha256:5b4bd1fb…f282`、`sha256:085ae164…15ba`、`sha256:d90b3f1c…e9e7`、`sha256:53624433…a19a`。
+> 2026-10-21：新增 `alertmanager`、`postgres`、`redis`、`mosquitto`、`mariadb`、`node-red`、`grafana`、`memcached`、`homebridge`、`rest-server`、`node`，均已推送双 tag。Node-RED 5.0.8、Homebridge 2.4.0 已改用 Node 22.23.3；对应 digest 为 `6f46a30d…8fca`、`c94527ee…825b`、`424db4cd…3137`、`d55c5799…edce`、`bf37b65e…5e00`、`6ccc5ada…6f11`、`5b4bd1fb…f282`、`085ae164…15ba`、`93632682…30ee`、`53624433…a19a`、`99d0b28f…9692`。
 > 2026-10-20：新增 `homer`、`paperless-ngx`、`dashy`、`watchtower`、`changedetection`、`caddy`、`dozzle`、`ntfy`、`gotify`、`node-exporter`、`prometheus`、`pihole`、`gatus`，均已推送 Docker Hub，双 tag 均为 `linux/loong64`。
 > OpenCV/SSIM 的可复用配方见 [OPENCV-SSIM.md](OPENCV-SSIM.md)。
 

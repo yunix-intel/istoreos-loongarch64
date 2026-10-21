@@ -31,7 +31,7 @@
 ## D. 清单与索引
 
 - [ ] [IMAGES.md](IMAGES.md) 增加/更新一行：大小、验证结论、端口、限制。
-- [ ] `images/catalog.json` 同步（72 只时必须仍是 72 行）。
+- [ ] `images/catalog.json` 同步（73 只时必须仍是 73 行）。
 - [ ] [README.md](../README.md) 的镜像计数更新。
 - [ ] 如状态变化，更新 [ROADMAP.md](ROADMAP.md) / [GAPS.md](GAPS.md)。
 

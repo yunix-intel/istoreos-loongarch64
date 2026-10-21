@@ -1,6 +1,6 @@
 # 应用镜像构建手册（loong64）
 
-本文件说明 72 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 62 个镜像的 Dockerfile；
+本文件说明 73 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 71 个镜像的 Dockerfile；
 其余 10 个早期镜像的 Dockerfile 未保留，但下方给出源码版本、关键步骤和构建日志入口。
 
 ## 0. 共同约定
@@ -60,6 +60,19 @@ Alertmanager 是 Elm + Vite：`ui/app` 用 `npm ci && npm run build`（`vite-plu
 Elm），产物 `dist` 被 Go `//go:embed app/dist` 嵌入。`ui/mantine-ui/` 在本版本未接入构建，
 不需要处理。完整命令见 [../images/alertmanager/BUILD.md](../images/alertmanager/BUILD.md)。
 
+Node-RED 5 和 Homebridge 2 需要 Node ≥22.9/22.12，openEuler 24.03 只有 Node 20。
+使用 unofficial-builds 的 `node-v22.23.3-linux-loong64.tar.xz`（SHA256
+`c5594c23…9599`）构建 `yunixintel/node:22.23.3`：openEuler 的基础 + `/opt/node22`
+运行时。该二进制最高只要求 `GLIBC_2.38`，与镜像一致。注意 Node 22 的 npm 全局
+前缀是 `/opt/node22`，不是 `/usr/local`。
+
+`homebridge-config-ui-x` 的 `node-pty` 没有 loong64 预编译且 npm 包不含
+`src/unix`，需要从 GitHub `v0.14.1` 源码 `node-gyp rebuild` 出 `pty.node` 再放回包内。
+Config UI 5 由 `hb-service run` 同时启动 UI 和 Homebridge，单独跑 `homebridge`
+不会监听 8581。详见 [../images/node/BUILD.md](../images/node/BUILD.md)、
+[../images/node-red/BUILD.md](../images/node-red/BUILD.md)、
+[../images/homebridge/BUILD.md](../images/homebridge/BUILD.md)。
+
 ### 1.4 特殊补丁
 
 - **changedetection + jq 1.13**：内置 oniguruma 的旧 `config.sub` 不认 loongarch64；
@@ -113,10 +126,11 @@ Elm），产物 `dist` 被 Go `//go:embed app/dist` 嵌入。`ui/mantine-ui/` �
 | `ntfy` / `gotify` | 上游源码 + 预构建 `web/build` / `ui/build` |
 | `alertmanager` | `alertmanager`/`amtool` 二进制 + `alertmanager.yml`；前端 `ui/app/dist`（x86 WSL2 编） |
 | `postgres` / `redis` / `mosquitto` / `mariadb` | 仅 Dockerfile + entrypoint（+ 配置文件）；依赖 openEuler 系统包 |
-| `node-red` | 多阶段；构建阶段 `npm install -g node-red@4.1.16`，运行阶段复制 `/usr/local/lib/node_modules/node-red` |
+| `node-red` | 以 `node:22.23.3-loong64` 为构建阶段，`npm install -g node-red@5.0.8`；运行阶段复制 `/opt/node22/bin`、`lib` 和 Node-RED 包 |
 | `grafana` | `grafana` 二进制 + 预构建 `public/`（x86 WSL2 的 Yarn 4/webpack）+ `conf/defaults.ini` |
 | `memcached` | 仅 Dockerfile + entrypoint；依赖 openEuler `memcached` 包 |
-| `homebridge` | 多阶段；Node 20 下安装 Homebridge 1.11.4 + Config UI 4.80.0；运行阶段重建 `homebridge` 符号链接 |
+| `homebridge` | Node 22 下安装 Homebridge 2.4.0 + UI 5.29.0；源码编译 node-pty；`hb-service` 启动；运行阶段重建 `homebridge.js` 符号链接 |
+| `node` | Node.js 22.23.3 loong64 运行时基础镜像；从 unofficial-builds tarball 解压，`/opt/node22` |
 | `rest-server` | `rest-server` 静态二进制 + entrypoint/用户脚本；`htpasswd` 由 openEuler `httpd-tools` 提供 |
 | 其余 | 见 Dockerfile 的 `COPY` 行；大目录不随仓库提交 |
 
@@ -149,4 +163,4 @@ Elm），产物 `dist` 被 Go `//go:embed app/dist` 嵌入。`ui/mantine-ui/` �
 
 构建完成后记录：镜像大小、`docker inspect` 架构、启动日志、HTTP/健康检查、digest。
 统一推送到 `docker.io/yunixintel/<app>:loong64` 与 `:24.10-la5`。
-`scripts/push-images.sh`（私有库）覆盖全部 72 只。
+`scripts/push-images.sh`（私有库）覆盖全部 73 只。
