@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+PASSWORD_FILE="${PASSWORD_FILE:-/data/.htpasswd}"
+
+if [ -z "${1:-}" ]; then
+    echo "usage: delete_user <username>"
+    exit 1
+fi
+
+htpasswd -D "$PASSWORD_FILE" "$1"

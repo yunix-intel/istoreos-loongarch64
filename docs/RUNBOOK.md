@@ -222,6 +222,23 @@ docker run -d --name homebridge --network=host   -v homebridge-data:/homebridge 
 - 运行镜像保留 npm 但无 gcc/make，带原生编译的插件无法直接安装。
 - 完整说明见 [../images/homebridge/BUILD.md](../images/homebridge/BUILD.md)。
 
+### restic REST server
+
+```bash
+docker run -d --name rest-server -p 8000:8000   -v restic-data:/data yunixintel/rest-server:loong64
+docker exec rest-server create_user backup 'change-me'
+docker restart rest-server
+```
+
+- 仓库根目录 `/data`，端口 8000；认证默认开启，密码文件 `/data/.htpasswd`。
+- 先 `create_user` 再重启容器，htpasswd 才会被重新加载；完全内网可
+  `-e DISABLE_AUTHENTICATION=1` 关闭认证。
+- 客户端：`RESTIC_REPOSITORY=rest:http://backup:change-me@<host>:8000/myrepo/`，
+  注意末尾 `/`。
+- 只增不删：追加参数 `--append-only`。
+- 镜像不含 TLS，公网必须放在 Caddy/Nginx 反向代理后。
+- 完整说明见 [../images/rest-server/BUILD.md](../images/rest-server/BUILD.md)。
+
 ### Node Exporter
 
 ```bash
@@ -316,7 +333,7 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 71 个镜像）
+## 3. 端口索引（全部 72 个镜像）
 
 | 镜像 | 端口 | 关键挂载/环境 | 备注 |
 |---|---|---|---|
@@ -330,6 +347,7 @@ docker run -d --name gatus -p 8080:8080 \
 | grafana | 3000 | `/var/lib/grafana` | UID/GID 472；默认 admin/admin；SQLite |
 | memcached | 11211 | — | 无认证无持久化；仅内网 |
 | homebridge | 8581, 51826 | `/homebridge` | 建议 host 网络；UID 1000；默认配对码需改 |
+| rest-server | 8000 | `/data` | 默认 Basic 认证；无 TLS |
 | audiobookshelf | 13378 | `/audiobooks`、`/config`、`/metadata` | Node 22 |
 | bazarr | 6767 | `/config`、`/movies`、`/tv` | 含 ffmpeg |
 | calibre-web | 8083 | `/books`、`/config` | 书库挂载 |

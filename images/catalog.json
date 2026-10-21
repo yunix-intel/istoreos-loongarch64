@@ -424,5 +424,11 @@
     "size": "449MB",
     "verification": "Homebridge 启动并输出配对码；UI :8581 200；标题 Homebridge；健康检查 healthy",
     "notes": "1.11.4 + Config UI 4.80.0（2.x/UI5 需 Node22，openEuler 只有 20）；多阶段；host 网络建议；`/homebridge`；8581/51826；默认配对码 031-45-154；UID 1000；Node20 已 EOL"
+  },
+  {
+    "image": "yunixintel/rest-server",
+    "size": "250MB",
+    "verification": "`?create=true` 建库 200；config 写入/读取；Basic 认证 401/200；版本 0.14.0",
+    "notes": "0.14.0；Go 静态二进制 12MB；openEuler + httpd-tools（htpasswd）；`/data`；8000；默认开认证，先 create_user 再重启；可 DISABLE_AUTHENTICATION=1；无 TLS"
   }
 ]

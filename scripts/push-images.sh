@@ -72,6 +72,7 @@ IMAGES=(
   qbittorrent-ee
   radarr
   redis
+  rest-server
   shiori
   sonarr
   stirling-pdf

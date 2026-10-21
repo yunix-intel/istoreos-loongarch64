@@ -1,9 +1,9 @@
 # 应用镜像 Dockerfile 目录
 
-本目录是 71 个 `yunixintel/*:loong64` 镜像的构建材料索引。
+本目录是 72 个 `yunixintel/*:loong64` 镜像的构建材料索引。
 
-- `images/<app>/Dockerfile`：保留了 61 个镜像的 Dockerfile（部分带 `Dockerfile.*` 构建阶段）。
-- `catalog.json`：71 个镜像的名称、大小、验证结论、端口/限制说明，机读索引。
+- `images/<app>/Dockerfile`：保留了 62 个镜像的 Dockerfile（部分带 `Dockerfile.*` 构建阶段）。
+- `catalog.json`：72 个镜像的名称、大小、验证结论、端口/限制说明，机读索引。
 - 未保留 Dockerfile 的 10 个镜像：adguardhome、code-server、easytier、firefly-iii、
   gitea、memos、mihomo、miniflux、phpmyadmin、vaultwarden。它们的源码版本与重建步骤
   见 [../docs/IMAGE-BUILD.md](../docs/IMAGE-BUILD.md)。
@@ -34,6 +34,7 @@
 | grafana | `grafana` 二进制 + 预构建 `public/` + `defaults.ini` + `grafana.ini`；前端需 x86 WSL2 |
 | memcached | 仅 Dockerfile + entrypoint（openEuler `memcached` 包） |
 | homebridge | 多阶段；`homebridge@1.11.4` + `homebridge-config-ui-x@4.80.0`，运行阶段重建 bin 符号链接 |
+| rest-server | `rest-server` 静态二进制 + entrypoint/create_user/delete_user；依赖 openEuler `httpd-tools` |
 | caddy/watchtower/node-exporter | 仅二进制 + CA |
 
 具体工具链、CGO/glibc、Vite 8 x86 构建、qpdf/jq/Firefox/OpenCV 补丁见
@@ -42,4 +43,4 @@
 ## 标签约定
 
 所有镜像同时打 `loong64` 与 `24.10-la5`，推送脚本在私有库
-`scripts/push-images.sh`，覆盖 71 只。
+`scripts/push-images.sh`，覆盖 72 只。

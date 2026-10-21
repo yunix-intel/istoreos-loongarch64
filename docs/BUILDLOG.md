@@ -463,3 +463,7 @@
   - 踩坑二：Config UI 不会自动加载，必须在 config.json 的 `platforms` 中显式加入 `{ "platform": "config", "port": 8581 }`，否则 Homebridge 核心启动但 8581 无监听。
   - 验证：Homebridge v1.11.4 输出配对码、UI 200/标题 Homebridge、健康检查 healthy。
   - 镜像 449MB；已推送 `yunixintel/homebridge:loong64`/`24.10-la5`，digest `sha256:d90b3f1c…e9e7`。
+- rest-server 0.14.0：restic 的 REST 后端，Go 静态编 12MB；openEuler 无 `apache2-utils`，htpasswd 改由 `httpd-tools` 提供。
+  - entrypoint 默认开启认证并创建 `/data/.htpasswd`，首次需 `create_user` 后重启；支持 `DISABLE_AUTHENTICATION=1` 和追加参数（如 `--append-only`）。
+  - 验证：`POST /repo/?create=true` 200、config 写入/读取 200、无认证 401、Basic 认证通过、`--version` 正常。
+  - 镜像 250MB；已推送 `yunixintel/rest-server:loong64`/`24.10-la5`，digest `sha256:53624433…a19a`。
