@@ -207,6 +207,21 @@ docker run -d --name grafana -p 3000:3000   -v grafana-data:/var/lib/grafana yun
 - 升级前备份整个 `/var/lib/grafana`。
 - 完整说明见 [../images/grafana/BUILD.md](../images/grafana/BUILD.md)。
 
+### Homebridge
+
+```bash
+docker run -d --name homebridge --network=host   -v homebridge-data:/homebridge yunixintel/homebridge:loong64
+```
+
+- Config UI：`http://<host>:8581/`；HomeKit 端口 `51826`。
+- 必须用 host 网络才能正常 mDNS 发现；bridge 下 UI 可用但 HomeKit 常发现不了。
+- 数据、config、插件都在 `/homebridge`；挂宿主目录需 `chown -R 1000:1000`。
+- 默认配对码 `031-45-154`、MAC `0E:5A:2B:3C:4D:5E`，首次进入 UI 后应修改。
+- 版本为 Homebridge 1.11.4 + UI 4.80.0：2.x/UI5 需要 Node ≥22.9，openEuler 只有 20；
+  Node 20 已 EOL，公网暴露 UI 必须加认证。
+- 运行镜像保留 npm 但无 gcc/make，带原生编译的插件无法直接安装。
+- 完整说明见 [../images/homebridge/BUILD.md](../images/homebridge/BUILD.md)。
+
 ### Node Exporter
 
 ```bash
@@ -301,7 +316,7 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 70 个镜像）
+## 3. 端口索引（全部 71 个镜像）
 
 | 镜像 | 端口 | 关键挂载/环境 | 备注 |
 |---|---|---|---|
@@ -314,6 +329,7 @@ docker run -d --name gatus -p 8080:8080 \
 | node-red | 1880 | `/data` | UID 1001；4.1.16；palette 需 npm |
 | grafana | 3000 | `/var/lib/grafana` | UID/GID 472；默认 admin/admin；SQLite |
 | memcached | 11211 | — | 无认证无持久化；仅内网 |
+| homebridge | 8581, 51826 | `/homebridge` | 建议 host 网络；UID 1000；默认配对码需改 |
 | audiobookshelf | 13378 | `/audiobooks`、`/config`、`/metadata` | Node 22 |
 | bazarr | 6767 | `/config`、`/movies`、`/tv` | 含 ffmpeg |
 | calibre-web | 8083 | `/books`、`/config` | 书库挂载 |

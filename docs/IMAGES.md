@@ -1,6 +1,6 @@
 # loongarch64 应用镜像
 
-共 70 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
+共 71 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
 `loong64`（浮动）与 `24.10-la5`（与 GitHub Release 对齐）。
 
 拉取：
@@ -81,8 +81,9 @@ docker pull yunixintel/jellyfin:loong64
 | `yunixintel/node-red` | 439MB | `/` 200；标题 Node-RED；版本 4.1.16；`/data` 生成 settings/flows；重启后 200 | 4.1.16 + Node 20.18.2；多阶段构建；1880；`/data`；保留 npm 支持 palette；UID 1001；5.x 需 Node 22.9，暂不可用 |
 | `yunixintel/grafana` | 1.18GB | `/api/health` database ok；`/login` 200；登录页 JS 200；SQLite 迁移；健康检查 healthy | 13.2.4；前端 WSL Node22/Yarn4 webpack 构建并删 source map；Go 1.27/CGO0 `-tags oss`；UID/GID 472；`/var/lib/grafana`；3000；默认 admin/admin；不含 image renderer |
 | `yunixintel/memcached` | 354MB | 原始协议 `set/get`；`stats` 1.6.42；健康检查 healthy | 1.6.42；openEuler 包；默认 64MB/1024 连接/4 线程；`MEMCACHED_*` 可调；11211；无认证无持久化，禁止公网暴露 |
+| `yunixintel/homebridge` | 449MB | Homebridge 启动并输出配对码；UI 8581 200；健康检查 healthy | 1.11.4 + Config UI 4.80.0；2.x/UI5 需 Node22，openEuler 只有 Node20；多阶段；建议 host 网络；`/homebridge`；8581/51826；UID 1000；Node20 已 EOL |
 
-> 2026-10-21：新增 `alertmanager`（Prometheus 告警路由）、`postgres`、`redis`、`mosquitto`、`mariadb`、`node-red`、`grafana`、`memcached`，均已推送双 tag；digest 分别为 `sha256:6f46a30d…8fca`、`sha256:c94527ee…825b`、`sha256:424db4cd…3137`、`sha256:d55c5799…edce`、`sha256:bf37b65e…5e00`、`sha256:0c548174…9bf8`、`sha256:5b4bd1fb…f282`、`sha256:085ae164…15ba`。
+> 2026-10-21：新增 `alertmanager`（Prometheus 告警路由）、`postgres`、`redis`、`mosquitto`、`mariadb`、`node-red`、`grafana`、`memcached`、`homebridge`，均已推送双 tag；digest 分别为 `sha256:6f46a30d…8fca`、`sha256:c94527ee…825b`、`sha256:424db4cd…3137`、`sha256:d55c5799…edce`、`sha256:bf37b65e…5e00`、`sha256:0c548174…9bf8`、`sha256:5b4bd1fb…f282`、`sha256:085ae164…15ba`、`sha256:d90b3f1c…e9e7`。
 > 2026-10-20：新增 `homer`、`paperless-ngx`、`dashy`、`watchtower`、`changedetection`、`caddy`、`dozzle`、`ntfy`、`gotify`、`node-exporter`、`prometheus`、`pihole`、`gatus`，均已推送 Docker Hub，双 tag 均为 `linux/loong64`。
 > OpenCV/SSIM 的可复用配方见 [OPENCV-SSIM.md](OPENCV-SSIM.md)。
 

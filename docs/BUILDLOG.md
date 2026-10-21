@@ -457,3 +457,9 @@
   - 验证：Python 原始协议 `set/get` 成功、`stats` 返回 1.6.42、TCP 健康检查 healthy。
   - 推送时 Docker Hub 域名被 DNS 污染到错误 IP，A 机直连超时；未重启 Docker daemon，而是从 Windows 建反向 SSH 隧道（A:17897 → Windows:7897），用自编 `crane v0.20.6` 执行 `docker save` + `crane push`/`crane tag`，两 tag 校验通过。
   - 镜像 354MB；已推送 `yunixintel/memcached:loong64`/`24.10-la5`，digest `sha256:085ae164…15ba`。
+- Homebridge 1.11.4 + Config UI 4.80.0：Homebridge 2.x/UI 5.x 要求 Node ≥22.9，openEuler 只有 Node 20.18，因此固定在仍支持 Node 20 的最后一档。
+  - 多阶段：build 阶段装 gcc/make/python3 后全局安装 homebridge + config-ui；运行阶段复制 `/usr/local/lib/node_modules`。
+  - 踩坑一：直接 COPY `/usr/local/bin/homebridge` 会把 npm 的符号链接解引用，`fs.realpathSync` 解析到 `/usr/local/lib`，启动报 `Cannot find module '/usr/local/lib/cli'`；运行阶段必须重新 `ln -s ../lib/node_modules/homebridge/bin/homebridge`。
+  - 踩坑二：Config UI 不会自动加载，必须在 config.json 的 `platforms` 中显式加入 `{ "platform": "config", "port": 8581 }`，否则 Homebridge 核心启动但 8581 无监听。
+  - 验证：Homebridge v1.11.4 输出配对码、UI 200/标题 Homebridge、健康检查 healthy。
+  - 镜像 449MB；已推送 `yunixintel/homebridge:loong64`/`24.10-la5`，digest `sha256:d90b3f1c…e9e7`。

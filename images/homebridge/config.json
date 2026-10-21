@@ -1,0 +1,21 @@
+{
+  "bridge": {
+    "name": "Homebridge",
+    "username": "0E:5A:2B:3C:4D:5E",
+    "port": 51826,
+    "pin": "031-45-154",
+    "advertiser": "bonjour-hap"
+  },
+  "accessories": [],
+  "platforms": [
+    {
+      "platform": "config",
+      "name": "Config",
+      "port": 8581,
+      "log": {
+        "level": "info"
+      },
+      "sudo": false
+    }
+  ]
+}

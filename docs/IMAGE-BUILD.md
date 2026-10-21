@@ -1,6 +1,6 @@
 # 应用镜像构建手册（loong64）
 
-本文件说明 70 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 60 个镜像的 Dockerfile；
+本文件说明 71 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 61 个镜像的 Dockerfile；
 其余 10 个早期镜像的 Dockerfile 未保留，但下方给出源码版本、关键步骤和构建日志入口。
 
 ## 0. 共同约定
@@ -116,6 +116,7 @@ Elm），产物 `dist` 被 Go `//go:embed app/dist` 嵌入。`ui/mantine-ui/` �
 | `node-red` | 多阶段；构建阶段 `npm install -g node-red@4.1.16`，运行阶段复制 `/usr/local/lib/node_modules/node-red` |
 | `grafana` | `grafana` 二进制 + 预构建 `public/`（x86 WSL2 的 Yarn 4/webpack）+ `conf/defaults.ini` |
 | `memcached` | 仅 Dockerfile + entrypoint；依赖 openEuler `memcached` 包 |
+| `homebridge` | 多阶段；Node 20 下安装 Homebridge 1.11.4 + Config UI 4.80.0；运行阶段重建 `homebridge` 符号链接 |
 | 其余 | 见 Dockerfile 的 `COPY` 行；大目录不随仓库提交 |
 
 ## 3. 未保留 Dockerfile 的 10 个镜像
@@ -147,4 +148,4 @@ Elm），产物 `dist` 被 Go `//go:embed app/dist` 嵌入。`ui/mantine-ui/` �
 
 构建完成后记录：镜像大小、`docker inspect` 架构、启动日志、HTTP/健康检查、digest。
 统一推送到 `docker.io/yunixintel/<app>:loong64` 与 `:24.10-la5`。
-`scripts/push-images.sh`（私有库）覆盖全部 70 只。
+`scripts/push-images.sh`（私有库）覆盖全部 71 只。

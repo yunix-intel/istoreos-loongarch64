@@ -38,6 +38,7 @@ IMAGES=(
   heimdall
   homarr
   homeassistant
+  homebridge
   homer
   it-tools
   jackett
