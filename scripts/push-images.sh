@@ -48,6 +48,7 @@ IMAGES=(
   kopia
   linkding
   mariadb
+  memcached
   memos
   mihomo
   miniflux

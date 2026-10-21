@@ -144,6 +144,19 @@ docker run -d --name mariadb   -e MYSQL_ROOT_PASSWORD='change-me'   -e MYSQL_DAT
 - 修改 `MYSQL_*` 不会改变已初始化数据目录中的账号。
 - 完整说明见 [../images/mariadb/BUILD.md](../images/mariadb/BUILD.md)。
 
+### Memcached
+
+```bash
+docker run -d --name memcached -p 11211:11211   -e MEMCACHED_MEMORY=128 yunixintel/memcached:loong64
+```
+
+- 默认 64MB 内存、1024 连接、4 线程、监听 0.0.0.0:11211。
+- 可用 `MEMCACHED_MEMORY`、`MEMCACHED_PORT`、`MEMCACHED_MAX_CONN`、
+  `MEMCACHED_THREADS` 调整；自定义参数会覆盖默认命令。
+- 无认证、无持久化，重启即清空；只给可信内网或同一 Docker 网络使用。
+- PHP 应用需要镜像内已装 `memcached` 扩展；本镜像只提供服务端。
+- 完整说明见 [../images/memcached/BUILD.md](../images/memcached/BUILD.md)。
+
 ### Mosquitto
 
 ```bash
@@ -288,7 +301,7 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 69 个镜像）
+## 3. 端口索引（全部 70 个镜像）
 
 | 镜像 | 端口 | 关键挂载/环境 | 备注 |
 |---|---|---|---|
@@ -300,6 +313,7 @@ docker run -d --name gatus -p 8080:8080 \
 | mariadb | 3306 | `/var/lib/mysql`；环境 `MYSQL_*` | root 仅 localhost；UID/GID 27 |
 | node-red | 1880 | `/data` | UID 1001；4.1.16；palette 需 npm |
 | grafana | 3000 | `/var/lib/grafana` | UID/GID 472；默认 admin/admin；SQLite |
+| memcached | 11211 | — | 无认证无持久化；仅内网 |
 | audiobookshelf | 13378 | `/audiobooks`、`/config`、`/metadata` | Node 22 |
 | bazarr | 6767 | `/config`、`/movies`、`/tv` | 含 ffmpeg |
 | calibre-web | 8083 | `/books`、`/config` | 书库挂载 |

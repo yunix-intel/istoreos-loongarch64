@@ -453,3 +453,7 @@
   - 运行镜像基于 openEuler，UID/GID 472，最小 `grafana.ini` 关闭 analytics 和版本检查；SQLite 自动迁移。
   - 验证：`/api/health` database ok + 13.2.4、`/login` 200、登录页 JS 200、`grafana --version`、健康检查 healthy。
   - 镜像 1.18GB；已推送 `yunixintel/grafana:loong64`/`24.10-la5`，digest `sha256:5b4bd1fb…f282`。
+- Memcached 1.6.42：openEuler 包构建，entrypoint 支持 `MEMCACHED_MEMORY/PORT/MAX_CONN/THREADS`，固定 `-l 0.0.0.0 -o modern -u memcached`。
+  - 验证：Python 原始协议 `set/get` 成功、`stats` 返回 1.6.42、TCP 健康检查 healthy。
+  - 推送时 Docker Hub 域名被 DNS 污染到错误 IP，A 机直连超时；未重启 Docker daemon，而是从 Windows 建反向 SSH 隧道（A:17897 → Windows:7897），用自编 `crane v0.20.6` 执行 `docker save` + `crane push`/`crane tag`，两 tag 校验通过。
+  - 镜像 354MB；已推送 `yunixintel/memcached:loong64`/`24.10-la5`，digest `sha256:085ae164…15ba`。

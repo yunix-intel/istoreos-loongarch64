@@ -412,5 +412,11 @@
     "size": "1.18GB",
     "verification": "`/api/health` database ok/13.2.4；`/login` 200；登录页 JS 200；SQLite 迁移；健康检查 healthy",
     "notes": "13.2.4；前端 WSL Node22/Yarn4 webpack 构建，删 source map；Go 1.27/CGO0 `-tags oss`；UID/GID 472；`/var/lib/grafana`；3000；默认 admin/admin；不含 renderer 与额外 bundled 插件"
+  },
+  {
+    "image": "yunixintel/memcached",
+    "size": "354MB",
+    "verification": "原始协议 set/get 成功；`stats` 返回 1.6.42；健康检查 healthy",
+    "notes": "1.6.42（openEuler 包）；默认 64MB/1024 连接/4 线程；`MEMCACHED_*` 可调；11211；无认证、无持久化，禁止公网暴露；UID/GID 998:996"
   }
 ]
