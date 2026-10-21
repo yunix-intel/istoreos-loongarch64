@@ -446,3 +446,10 @@
   - 踩坑：entrypoint 最初按 `/usr/lib/node_modules` 找 settings.js，openEuler 的 npm 全局前缀是 `/usr/local`，已修正。
   - 验证：`/` 200、标题 Node-RED、`node-red --version` 4.1.16、`/data` 生成 settings.js/flows.json、重启后 200、健康检查 healthy。
   - 镜像 439MB；已推送 `yunixintel/node-red:loong64`/`24.10-la5`，digest `sha256:0c548174…9bf8`。
+- Grafana 13.2.4：前端要求 Node 22–24 + Yarn 4.17.1，在 x86_64 WSL2（Node 22.23.3、60GB 内存）执行 `yarn install --immutable` 与 `yarn build`，`public` 406MB。
+  - 189MB 是 `public/build/*.map`；镜像 assets 阶段用 `find -name '*.map' -delete` 清除，最终 `public` 约 217MB，镜像从 1.38GB 降到 1.18GB。
+  - Go 端 `go.work` 与 `-mod=mod` 冲突，必须 `unset GOFLAGS`；`/tmp` 8GB tmpfs 会被编译中间文件写满，改用 `GOCACHE=/build/gocache`、`GOTMPDIR=/build/gotmp`。
+  - 首次链接因 ldflags 写成 `main/buildBranch` 报 `-X flag requires argument`，改为 `main.buildBranch` 后链接成功；二进制约 347MB。
+  - 运行镜像基于 openEuler，UID/GID 472，最小 `grafana.ini` 关闭 analytics 和版本检查；SQLite 自动迁移。
+  - 验证：`/api/health` database ok + 13.2.4、`/login` 200、登录页 JS 200、`grafana --version`、健康检查 healthy。
+  - 镜像 1.18GB；已推送 `yunixintel/grafana:loong64`/`24.10-la5`，digest `sha256:5b4bd1fb…f282`。

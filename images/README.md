@@ -1,9 +1,9 @@
 # 应用镜像 Dockerfile 目录
 
-本目录是 68 个 `yunixintel/*:loong64` 镜像的构建材料索引。
+本目录是 69 个 `yunixintel/*:loong64` 镜像的构建材料索引。
 
-- `images/<app>/Dockerfile`：保留了 58 个镜像的 Dockerfile（部分带 `Dockerfile.*` 构建阶段）。
-- `catalog.json`：68 个镜像的名称、大小、验证结论、端口/限制说明，机读索引。
+- `images/<app>/Dockerfile`：保留了 59 个镜像的 Dockerfile（部分带 `Dockerfile.*` 构建阶段）。
+- `catalog.json`：69 个镜像的名称、大小、验证结论、端口/限制说明，机读索引。
 - 未保留 Dockerfile 的 10 个镜像：adguardhome、code-server、easytier、firefly-iii、
   gitea、memos、mihomo、miniflux、phpmyadmin、vaultwarden。它们的源码版本与重建步骤
   见 [../docs/IMAGE-BUILD.md](../docs/IMAGE-BUILD.md)。
@@ -31,6 +31,7 @@
 | mosquitto | 仅 Dockerfile + entrypoint + `mosquitto.conf`（openEuler `mosquitto` 包） |
 | mariadb | 仅 Dockerfile + entrypoint + `client.cnf`（openEuler `mariadb-server` 包） |
 | node-red | 多阶段；构建阶段 npm 安装 Node-RED 4.1.16，运行阶段复制包 |
+| grafana | `grafana` 二进制 + 预构建 `public/` + `defaults.ini` + `grafana.ini`；前端需 x86 WSL2 |
 | caddy/watchtower/node-exporter | 仅二进制 + CA |
 
 具体工具链、CGO/glibc、Vite 8 x86 构建、qpdf/jq/Firefox/OpenCV 补丁见
@@ -39,4 +40,4 @@
 ## 标签约定
 
 所有镜像同时打 `loong64` 与 `24.10-la5`，推送脚本在私有库
-`scripts/push-images.sh`，覆盖 68 只。
+`scripts/push-images.sh`，覆盖 69 只。

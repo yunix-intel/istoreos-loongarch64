@@ -178,6 +178,22 @@ docker run -d --name node-red -p 1880:1880   -v node-red-data:/data yunixintel/n
 - 安装原生依赖的 palette 节点需要自行加回 gcc/make，运行镜像未带编译工具。
 - 完整说明见 [../images/node-red/BUILD.md](../images/node-red/BUILD.md)。
 
+### Grafana
+
+```bash
+docker run -d --name grafana -p 3000:3000   -v grafana-data:/var/lib/grafana yunixintel/grafana:loong64
+```
+
+- 登录 `http://<host>:3000/`，默认 `admin/admin`，首次登录要求改密码。
+- 数据、SQLite、插件、PNG/PDF 导出都在 `/var/lib/grafana`；挂宿主目录需
+  `chown -R 472:472 <dir>`。
+- 添加 Prometheus 数据源时，容器内 `127.0.0.1:9090` 指向 Grafana 自己；
+  bridge 网络请填宿主 IP 或 `host.docker.internal`，compose 里填服务名。
+- 镜像不含 image renderer 和额外 bundled 插件；需要导出图片时另起 renderer。
+- 默认 SQLite 适合家用；多副本/高并发改用外部 PostgreSQL/MySQL。
+- 升级前备份整个 `/var/lib/grafana`。
+- 完整说明见 [../images/grafana/BUILD.md](../images/grafana/BUILD.md)。
+
 ### Node Exporter
 
 ```bash
@@ -272,7 +288,7 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 68 个镜像）
+## 3. 端口索引（全部 69 个镜像）
 
 | 镜像 | 端口 | 关键挂载/环境 | 备注 |
 |---|---|---|---|
@@ -283,6 +299,7 @@ docker run -d --name gatus -p 8080:8080 \
 | mosquitto | 1883 | `/mosquitto/config`、`/mosquitto/data` | 默认匿名；公网须配 passwd |
 | mariadb | 3306 | `/var/lib/mysql`；环境 `MYSQL_*` | root 仅 localhost；UID/GID 27 |
 | node-red | 1880 | `/data` | UID 1001；4.1.16；palette 需 npm |
+| grafana | 3000 | `/var/lib/grafana` | UID/GID 472；默认 admin/admin；SQLite |
 | audiobookshelf | 13378 | `/audiobooks`、`/config`、`/metadata` | Node 22 |
 | bazarr | 6767 | `/config`、`/movies`、`/tv` | 含 ffmpeg |
 | calibre-web | 8083 | `/books`、`/config` | 书库挂载 |

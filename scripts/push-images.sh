@@ -34,6 +34,7 @@ IMAGES=(
   gitea
   gogs
   gotify
+  grafana
   heimdall
   homarr
   homeassistant

@@ -406,5 +406,11 @@
     "size": "439MB",
     "verification": "`/` 200；标题 Node-RED；`node-red --version` 4.1.16；`/data` 生成 settings/flows；重启后 200；健康检查 healthy",
     "notes": "4.1.16（Node 5.x 需 Node22.9，openEuler 只有 20，故用 v4 维护线）；Node 20.18.2；多阶段构建；`/data`；1880；保留 npm 以支持 palette；UID 1001"
+  },
+  {
+    "image": "yunixintel/grafana",
+    "size": "1.18GB",
+    "verification": "`/api/health` database ok/13.2.4；`/login` 200；登录页 JS 200；SQLite 迁移；健康检查 healthy",
+    "notes": "13.2.4；前端 WSL Node22/Yarn4 webpack 构建，删 source map；Go 1.27/CGO0 `-tags oss`；UID/GID 472；`/var/lib/grafana`；3000；默认 admin/admin；不含 renderer 与额外 bundled 插件"
   }
 ]

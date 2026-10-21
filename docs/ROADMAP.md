@@ -25,7 +25,7 @@
 
 ## 开发完成后（冻结后执行）
 
-- [ ] **生产级全量测试**：68 镜像逐个业务验证 + 固件真机 + CasaOS 磁盘 + 24h 稳定性，见 [PRODUCTION-TEST.md](PRODUCTION-TEST.md)
+- [ ] **生产级全量测试**：69 镜像逐个业务验证 + 固件真机 + CasaOS 磁盘 + 24h 稳定性，见 [PRODUCTION-TEST.md](PRODUCTION-TEST.md)
 
 ## 待排期
 
