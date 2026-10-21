@@ -3,438 +3,518 @@
     "image": "yunixintel/jellyfin",
     "size": "1.46GB",
     "verification": "API 10.11.0 + Web 200",
-    "notes": ".NET 9 自编；**自 2026-10-19 起内置 ImageSharp 编码器**（缩略图/Trickplay/拼图/BlurHash 全可用，含 Noto CJK 字体）；代价：纯托管性能较 Skia 慢、无 ICC 色彩管理"
+    "notes": ".NET 9 自编；**自 2026-10-19 起内置 ImageSharp 编码器**（缩略图/Trickplay/拼图/BlurHash 全可用，含 Noto CJK 字体）；代价：纯托管性能较 Skia 慢、无 ICC 色彩管理",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/navidrome",
     "size": "1.18GB",
     "verification": "302 向导 + scanner",
-    "notes": "Go + 系统 taglib 2.0.2，**DSD 完整**"
+    "notes": "Go + 系统 taglib 2.0.2，**DSD 完整**",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/vaultwarden",
     "size": "357MB",
     "verification": "Rocket launched + Web 200",
-    "notes": "Rust；镜像内置宿主 glibc 2.41 闭包（显式 loader 启动）"
+    "notes": "Rust；镜像内置宿主 glibc 2.41 闭包（显式 loader 启动）",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/uptimekuma",
     "size": "664MB",
     "verification": "302→200",
-    "notes": "Node 20 + 源码编 sqlite3"
+    "notes": "Node 20 + 源码编 sqlite3",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/mihomo",
     "size": "59MB",
     "verification": "204 / 152ms",
-    "notes": "scratch 单二进制，配置需挂载"
+    "notes": "scratch 单二进制，配置需挂载",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/easytier",
     "size": "26MB",
     "verification": "进网 ping 通",
-    "notes": "scratch 单二进制，配置需挂载"
+    "notes": "scratch 单二进制，配置需挂载",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/syncthing",
     "size": "273MB",
     "verification": "HTTP 200",
-    "notes": "v2.1.6 官方 loong64 包；注意 v2 CLI 用双横线 `--home=`"
+    "notes": "v2.1.6 官方 loong64 包；注意 v2 CLI 用双横线 `--home=`",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/adguardhome",
     "size": "290MB",
     "verification": "302→200",
-    "notes": "官方无 loong64 资产，源码自编 + 官方前端；53 端口需映射避让宿主 dnsmasq"
+    "notes": "官方无 loong64 资产，源码自编 + 官方前端；53 端口需映射避让宿主 dnsmasq",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/memos",
     "size": "352MB",
     "verification": "`/` 200、`/healthz` 200",
-    "notes": "v0.31.0 源码编（官方无 loong64）；纯 Go sqlite；前端在 x64 上编（rolldown 无 loong64 binding），产物架构无关"
+    "notes": "v0.31.0 源码编（官方无 loong64）；纯 Go sqlite；前端在 x64 上编（rolldown 无 loong64 binding），产物架构无关",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/gogs",
     "size": "613MB",
     "verification": "302→200，安装与 SQLite 验证通过",
-    "notes": "v0.14.3 源码编；0.14 起 sqlite 已纯 Go（不需要 CGO）；镜像带 git"
+    "notes": "v0.14.3 源码编；0.14 起 sqlite 已纯 Go（不需要 CGO）；镜像带 git",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/filebrowser",
     "size": "290MB",
     "verification": "`/` 200、`/login` 200",
-    "notes": "v2.63.23 源码编；**上游 2026-09-01 已归档**，无后续安全修复；默认监听改 0.0.0.0（v2.63 默认 127.0.0.1）"
+    "notes": "v2.63.23 源码编；**上游 2026-09-01 已归档**，无后续安全修复；默认监听改 0.0.0.0（v2.63 默认 127.0.0.1）",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/qbittorrent-ee",
     "size": "289MB",
     "verification": "200（Host 需匹配端口）",
-    "notes": "v5.2.4.10 官方 loong64 静态包；Host header 校验会拒绝端口映射不一致的访问，建议 `--webui-port` 与映射端口一致"
+    "notes": "v5.2.4.10 官方 loong64 静态包；Host header 校验会拒绝端口映射不一致的访问，建议 `--webui-port` 与映射端口一致",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/it-tools",
     "size": "408MB",
     "verification": "200",
-    "notes": "纯静态站点 + nginx；Vite 4/rollup 3 可在龙芯本机直接编"
+    "notes": "纯静态站点 + nginx；Vite 4/rollup 3 可在龙芯本机直接编",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/excalidraw",
     "size": "439MB",
     "verification": "200（SPA 深路径 200）",
-    "notes": "v0.18.1；Vite 5 + rollup 4（自带 loongarch64 binding）；需 Node 22（用 /opt/node22-abi2）"
+    "notes": "v0.18.1；Vite 5 + rollup 4（自带 loongarch64 binding）；需 Node 22（用 /opt/node22-abi2）",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/kopia",
     "size": "317MB",
     "verification": "401（Basic 认证）→ 200",
-    "notes": "v0.23.1 源码编；为 loong64 打了 Stat_t.Dev/Rdev 类型补丁；Web UI 强制 Basic 认证（默认 admin/kopia）"
+    "notes": "v0.23.1 源码编；为 loong64 打了 Stat_t.Dev/Rdev 类型补丁；Web UI 强制 Basic 认证（默认 admin/kopia）",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/linkding",
     "size": "1.21GB",
     "verification": "`/login/` 200、`/health` 200",
-    "notes": "v1.47.0；Python 3.13 源码编 + uwsgi；cryptography 需 Rust 源码编；`UWSGI_MAX_FD=4096` 必设（否则 uwsgi 路由进程吃 8GB）"
+    "notes": "v1.47.0；Python 3.13 源码编 + uwsgi；cryptography 需 Rust 源码编；`UWSGI_MAX_FD=4096` 必设（否则 uwsgi 路由进程吃 8GB）",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/heimdall",
     "size": "691MB",
     "verification": "200",
-    "notes": "2.8.3；PHP 8.4.26 自编（源里只有 8.3）+ nginx/php-fpm；数据在 /config（.env/sqlite/storage）"
+    "notes": "2.8.3；PHP 8.4.26 自编（源里只有 8.3）+ nginx/php-fpm；数据在 /config（.env/sqlite/storage）",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/nextcloud",
     "size": "1.48GB",
     "verification": "`status.php` 200（installed=false，安装向导）",
-    "notes": "33.0.10；PHP 8.3 + nginx/php-fpm；SQLite（测试用，生产建议 MySQL/MariaDB）；首次启动生成 config.php"
+    "notes": "33.0.10；PHP 8.3 + nginx/php-fpm；SQLite（测试用，生产建议 MySQL/MariaDB）；首次启动生成 config.php",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/typecho",
     "size": "428MB",
     "verification": "`/install.php` 200，完整安装验证",
-    "notes": "v1.3.0；PHP 8.3 + nginx/php-fpm；**config.inc.php 与 typecho.db 在站点根目录**（不在挂载卷内，重建容器前需一并备份）"
+    "notes": "v1.3.0；PHP 8.3 + nginx/php-fpm；**config.inc.php 与 typecho.db 在站点根目录**（不在挂载卷内，重建容器前需一并备份）",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/wallabag",
     "size": "688MB",
     "verification": "`/login` 200，登录与 quickstart 验证",
-    "notes": "2.6.14；PHP 8.3 + nginx/php-fpm；2.6 起无网页安装向导，entrypoint 首次启动 CLI 安装（默认 wallabag/wallabag）"
+    "notes": "2.6.14；PHP 8.3 + nginx/php-fpm；2.6 起无网页安装向导，entrypoint 首次启动 CLI 安装（默认 wallabag/wallabag）",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/drawio",
     "size": "498MB",
     "verification": "200（app.min.js 10MB）",
-    "notes": "v32.5.5；直接取源码仓库预构建 `src/main/webapp`，无需 npm/maven；hash 路由"
+    "notes": "v32.5.5；直接取源码仓库预构建 `src/main/webapp`，无需 npm/maven；hash 路由",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/jackett",
     "size": "335MB",
     "verification": "301→302（登录）",
-    "notes": "v0.24.2867；.NET 9 源码编，自带运行时；需宿主 libstdc++ 6.0.33（已内置）"
+    "notes": "v0.24.2867；.NET 9 源码编，自带运行时；需宿主 libstdc++ 6.0.33（已内置）",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/xteve",
     "size": "1.13GB",
     "verification": "200",
-    "notes": "2.2.0.200；Go 静态编（升级 x/sys 支持 loong64）；自带 ffmpeg（占大头，可瘦身）"
+    "notes": "2.2.0.200；Go 静态编（升级 x/sys 支持 loong64）；自带 ffmpeg（占大头，可瘦身）",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/one-api",
     "size": "294MB",
     "verification": "`/` 200、`/api/status` 返回版本",
-    "notes": "v0.6.10；三套前端主题本机编；go-sqlite3 需 CGO 静态链接（`-linkmode external -extldflags -static`）"
+    "notes": "v0.6.10；三套前端主题本机编；go-sqlite3 需 CGO 静态链接（`-linkmode external -extldflags -static`）",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/code-server",
     "size": "1.11GB",
     "verification": "200（或 302 登录）",
-    "notes": "4.141.0 + VS Code 1.141；**必须 Node 24**（Node 20 缺 `module.registerHooks`）；自编静态 ripgrep 15.2"
+    "notes": "4.141.0 + VS Code 1.141；**必须 Node 24**（Node 20 缺 `module.registerHooks`）；自编静态 ripgrep 15.2",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/dpanel",
     "size": "566MB",
     "verification": "200",
-    "notes": "v1.11.1；Go + CGO sqlite（CGO=0 会 panic）；需 docker.sock；8807 端口"
+    "notes": "v1.11.1；Go + CGO sqlite（CGO=0 会 panic）；需 docker.sock；8807 端口",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/shiori",
     "size": "290MB",
     "verification": "200",
-    "notes": "v1.8.0；Go 静态编；8080 端口；生产建议设 `SHIORI_HTTP_SECRET_KEY`"
+    "notes": "v1.8.0；Go 静态编；8080 端口；生产建议设 `SHIORI_HTTP_SECRET_KEY`",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/jellyseerr",
     "size": "1.56GB",
     "verification": "307→`/setup` 200",
-    "notes": "v3.5.0；Next 16 用 WASM SWC（无 loong64 binding）；sharp 不可用 → `images.unoptimized`；5055 端口"
+    "notes": "v3.5.0；Next 16 用 WASM SWC（无 loong64 binding）；sharp 不可用 → `images.unoptimized`；5055 端口",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/audiobookshelf",
     "size": "1.50GB",
     "verification": "200",
-    "notes": "v2.37.1；Node 22 + sqlite3/nusqlite3 源码编；前端在 x64 构建（Tailwind oxide 无 loong64）；13378 端口"
+    "notes": "v2.37.1；Node 22 + sqlite3/nusqlite3 源码编；前端在 x64 构建（Tailwind oxide 无 loong64）；13378 端口",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/calibre-web",
     "size": "657MB",
     "verification": "302→`/login` 200",
-    "notes": "0.6.27；Python 3.11 + Rust 源码编 lxml/nh3/cryptography；8083 端口；书库挂 /books"
+    "notes": "0.6.27；Python 3.11 + Rust 源码编 lxml/nh3/cryptography；8083 端口；书库挂 /books",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/homarr",
     "size": "819MB",
     "verification": "307→`/init` 200",
-    "notes": "v2.6.0；Next 16 WASM SWC + Node 24 + redis；Bun/Turbo 无 loong64 改用 pnpm；7575 端口"
+    "notes": "v2.6.0；Next 16 WASM SWC + Node 24 + redis；Bun/Turbo 无 loong64 改用 pnpm；7575 端口",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/openwebui",
     "size": "1.8GB",
     "verification": "200，`/api/config` 200",
-    "notes": "v0.12.3 **轻量模式**：无 torch/onnxruntime/whisper/OCR，聊天对接 Ollama/OpenAI 正常；本地 RAG 需外部 pgvector"
+    "notes": "v0.12.3 **轻量模式**：无 torch/onnxruntime/whisper/OCR，聊天对接 Ollama/OpenAI 正常；本地 RAG 需外部 pgvector",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/kodexplorer",
     "size": "507MB",
     "verification": "302→登录 200",
-    "notes": "4.55；PHP 8.3 + nginx/php-fpm；首启为环境检查/设置管理员；默认 admin/admin"
+    "notes": "4.55；PHP 8.3 + nginx/php-fpm；首启为环境检查/设置管理员；默认 admin/admin",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/homeassistant",
     "size": "2.53GB",
     "verification": "302→`/onboarding.html` 200",
-    "notes": "Core 2026.10.2；Python 3.14 自编；cryptography/grpcio/Pillow/aiohttp 等全源码编；cloud/camera 集成需运行期编译器，未预装"
+    "notes": "Core 2026.10.2；Python 3.14 自编；cryptography/grpcio/Pillow/aiohttp 等全源码编；cloud/camera 集成需运行期编译器，未预装",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/sonarr",
     "size": "368MB",
     "verification": "200（API 401 未认证正常）",
-    "notes": "v4.0.20；.NET 9 运行时 + 自写 Mono.Posix loong64 兼容层；8989"
+    "notes": "v4.0.20；.NET 9 运行时 + 自写 Mono.Posix loong64 兼容层；8989",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/radarr",
     "size": "367MB",
     "verification": "200",
-    "notes": "v6.4.4；同上；自编译 e_sqlite3；7878"
+    "notes": "v6.4.4；同上；自编译 e_sqlite3；7878",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/tautulli",
     "size": "390MB",
     "verification": "303→`/welcome` 200",
-    "notes": "v2.18.2；纯 Python；8181"
+    "notes": "v2.18.2；纯 Python；8181",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/jellystat",
     "size": "833MB",
     "verification": "200，`/auth/isConfigured` 200",
-    "notes": "1.1.12；Node 20 + 降级 Vite 6；**需要外部 PostgreSQL**；3000"
+    "notes": "1.1.12；Node 20 + 降级 Vite 6；**需要外部 PostgreSQL**；3000",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/stirling-pdf",
     "size": "1.17GB",
     "verification": "200",
-    "notes": "v3.2.0；官方 jar + Java 25；精简版未装 LibreOffice/OCR，相关端点自动禁用；8080"
+    "notes": "v3.2.0；官方 jar + Java 25；精简版未装 LibreOffice/OCR，相关端点自动禁用；8080",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/wizarr",
     "size": "1.22GB",
     "verification": "302→`/setup/` 200",
-    "notes": "v2026.10.1；Python 3.13 自编；前端静态资源取自官方 amd64 镜像（架构无关）；5690"
+    "notes": "v2026.10.1；Python 3.13 自编；前端静态资源取自官方 amd64 镜像（架构无关）；5690",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/gitea",
     "size": "666MB",
     "verification": "200（安装页/SQLite 已验）",
-    "notes": "v28.2.0；Go 1.27 自编；modernc SQLite；入口脚本生成 app.ini；3000"
+    "notes": "v28.2.0；Go 1.27 自编；modernc SQLite；入口脚本生成 app.ini；3000",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/miniflux",
     "size": "290MB",
     "verification": "200（**仅 PostgreSQL**）",
-    "notes": "v2.3.3；上游已删 SQLite 支持，必须提供 PostgreSQL DSN；8080"
+    "notes": "v2.3.3；上游已删 SQLite 支持，必须提供 PostgreSQL DSN；8080",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/portainer",
     "size": "373MB",
     "verification": "200",
-    "notes": "2.45.2 LTS；Go 自编 + 前端本机 pnpm/webpack；需挂 docker.sock；9000"
+    "notes": "2.45.2 LTS；Go 自编 + 前端本机 pnpm/webpack；需挂 docker.sock；9000",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/nginx-proxy-manager",
     "size": "774MB",
     "verification": "200，`/api/` OK",
-    "notes": "v2.16.0；Node 22 + nginx；前端在 x64 编 dist；自写 entrypoint 替代 s6-overlay；81/443"
+    "notes": "v2.16.0；Node 22 + nginx；前端在 x64 编 dist；自写 entrypoint 替代 s6-overlay；81/443",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/firefly-iii",
     "size": "821MB",
     "verification": "302→`/install` 200",
-    "notes": "v6.7.9；PHP 8.5 自编（上游要求 ≥8.5）+ nginx；SQLite 自动迁移/种子；8080"
+    "notes": "v6.7.9；PHP 8.5 自编（上游要求 ≥8.5）+ nginx；SQLite 自动迁移/种子；8080",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/phpmyadmin",
     "size": "581MB",
     "verification": "200",
-    "notes": "5.2.3；PHP 8.3 + nginx/php-fpm；无需数据库即可开登录页；8080"
+    "notes": "5.2.3；PHP 8.3 + nginx/php-fpm；无需数据库即可开登录页；8080",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/freshrss",
     "size": "—（Hub 154MB 压缩）",
     "verification": "302→登录页",
-    "notes": "1.30.1；PHP 8.3 + nginx/php-fpm；SQLite 自动安装（admin/adminadmin）；8080"
+    "notes": "1.30.1；PHP 8.3 + nginx/php-fpm；SQLite 自动安装（admin/adminadmin）；8080",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/prowlarr",
     "size": "358MB",
     "verification": "200（API 401 正常）",
-    "notes": "2.6.5；.NET 9 + 自编 Mono.Posix/e_sqlite3；9696"
+    "notes": "2.6.5；.NET 9 + 自编 Mono.Posix/e_sqlite3；9696",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/bazarr",
     "size": "2.28GB",
     "verification": "200，API 版本 1.6.2",
-    "notes": "1.6.2；Python 3.11 + lxml/Pillow 源码编；webrtcvad 补 loongarch 分支；含 ffmpeg/7za；6767"
+    "notes": "1.6.2；Python 3.11 + lxml/Pillow 源码编；webrtcvad 补 loongarch 分支；含 ffmpeg/7za；6767",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/homer",
     "size": "371MB",
     "verification": "HTTP 200，title/config 正常",
-    "notes": "v26.08.3；openEuler nginx 1.24 + 官方静态包；8080"
+    "notes": "v26.08.3；openEuler nginx 1.24 + 官方静态包；8080",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/paperless-ngx",
     "size": "2.53GB",
     "verification": "302→登录 200；OCR、消费入库、重启持久化通过",
-    "notes": "3.3.2；qpdf 12.4.2 自编（pikepdf 10.17 要求）；tesseract eng/chi_sim/osd；AI 关闭、unpaper 无；单容器含 redis/celery worker/beat/consumer；8000"
+    "notes": "3.3.2；qpdf 12.4.2 自编（pikepdf 10.17 要求）；tesseract eng/chi_sim/osd；AI 关闭、unpaper 无；单容器含 redis/celery worker/beat/consumer；8000",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/dashy",
     "size": "379MB",
     "verification": "HTTP 200，title/conf 正常",
-    "notes": "4.8.0；官方预构建 `dist/` + nginx 1.24；配置挂载 `/usr/share/nginx/html/conf.yml`；8080"
+    "notes": "4.8.0；官方预构建 `dist/` + nginx 1.24；配置挂载 `/usr/share/nginx/html/conf.yml`；8080",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/watchtower",
     "size": "14.7MB",
     "verification": "`--help`；`--run-once --label-enable` 扫描 0 容器",
-    "notes": "v1.7.1；Go 静态二进制 + CA 证书；需挂 `/var/run/docker.sock`；`--label-enable` 只更新带标签容器"
+    "notes": "v1.7.1；Go 静态二进制 + CA 证书；需挂 `/var/run/docker.sock`；`--label-enable` 只更新带标签容器",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/changedetection",
     "size": "3.51GB",
     "verification": "HTTP 200；Firefox 截图落盘；`image_ssim_diff` baseline/二次比对通过；Selenium 4 步表单（输入/点击）执行成功",
-    "notes": "0.60.9；SQLite；内置 Firefox 140.11ESR + geckodriver 0.37.1；Selenium 步骤适配层支持 Goto/点击/输入/等待/选择/按键/滚动/JS/复选框等（不再依赖 Playwright）；OpenCV 4.5.2 + numpy 1.26.4，SSIM 可用；Chrome 远程仍可 `WEBDRIVER_BROWSER=chrome` + `WEBDRIVER_URL`；5000"
+    "notes": "0.60.9；SQLite；内置 Firefox 140.11ESR + geckodriver 0.37.1；Selenium 步骤适配层支持 Goto/点击/输入/等待/选择/按键/滚动/JS/复选框等（不再依赖 Playwright）；OpenCV 4.5.2 + numpy 1.26.4，SSIM 可用；Chrome 远程仍可 `WEBDRIVER_BROWSER=chrome` + `WEBDRIVER_URL`；5000",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/caddy",
     "size": "57MB",
     "verification": "`caddy version` 2.11.7；默认页 HTTP 200",
-    "notes": "纯 Go 静态编；scratch + CA；默认 Caddyfile 监听 8080；挂载自己的 Caddyfile 覆盖，80/443/8080"
+    "notes": "纯 Go 静态编；scratch + CA；默认 Caddyfile 监听 8080；挂载自己的 Caddyfile 覆盖，80/443/8080",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/dozzle",
     "size": "68MB",
     "verification": "v11.3.3；HTTP 200；日志 `Connected to Docker`",
-    "notes": "前端 Bun 1.4.3/Vite 在 x86 WSL2 构建（产物架构无关），Go 1.27.2 在 A 编 loong64；scratch；需挂 docker.sock；8080"
+    "notes": "前端 Bun 1.4.3/Vite 在 x86 WSL2 构建（产物架构无关），Go 1.27.2 在 A 编 loong64；scratch；需挂 docker.sock；8080",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/ntfy",
     "size": "274MB",
     "verification": "`/v1/health` healthy；UI 200；publish 成功",
-    "notes": "2.32.0；Go CGO（go-sqlite3）在 openEuler 容器编；前端 Vite 在 x86 WSL2 构建；8080；挂 `/var/cache/ntfy`、`/etc/ntfy`"
+    "notes": "2.32.0；Go CGO（go-sqlite3）在 openEuler 容器编；前端 Vite 在 x86 WSL2 构建；8080；挂 `/var/cache/ntfy`、`/etc/ntfy`",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/gotify",
     "size": "261MB",
     "verification": "`/health` green；UI 200；`/version` v3.1.1",
-    "notes": "3.1.1；Go CGO（go-sqlite3）在 openEuler 容器编；UI Vite 8 在 x86 WSL2 构建；8080；数据卷 `/data`"
+    "notes": "3.1.1；Go CGO（go-sqlite3）在 openEuler 容器编；UI Vite 8 在 x86 WSL2 构建；8080；数据卷 `/data`",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/node-exporter",
     "size": "17MB",
     "verification": "`/metrics` 200，含 `node_cpu_seconds_total`",
-    "notes": "1.12.1；纯 Go 静态编；scratch + CA；9100；采集宿主指标需挂 `/proc`、`/sys`、`/`"
+    "notes": "1.12.1；纯 Go 静态编；scratch + CA；9100；采集宿主指标需挂 `/proc`、`/sys`、`/`",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/prometheus",
     "size": "407MB",
     "verification": "`/-/healthy` 200；UI 200；`/api/v1/status/buildinfo` 3.15.0",
-    "notes": "3.15.0；UI 用 Vite 8 在 x86 WSL2 构建，Go `-tags builtinassets` 嵌入；TSDB `/prometheus`；9090"
+    "notes": "3.15.0；UI 用 Vite 8 在 x86 WSL2 构建，Go `-tags builtinassets` 嵌入；TSDB `/prometheus`；9090",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/pihole",
     "size": "287MB",
     "verification": "`/admin/` 200；`pihole -g` 拉取 1 条 adlist；`dig` 被拦截域名返回 NXDOMAIN",
-    "notes": "FTL 6.8 + web 6.6.1；C/C++，静态 nettle 3.10；上游 `pihole` CLI + `gravity.sh` + `pihole-adlist`（add/list/remove）；DNS 53 / Web 80；`/etc/pihole`"
+    "notes": "FTL 6.8 + web 6.6.1；C/C++，静态 nettle 3.10；上游 `pihole` CLI + `gravity.sh` + `pihole-adlist`（add/list/remove）；DNS 53 / Web 80；`/etc/pihole`",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/gatus",
     "size": "35MB",
     "verification": "`/` 200；`/api/v1/endpoints/statuses` 200",
-    "notes": "5.37.0；Go 静态编；自带 `web/static`；scratch；默认配置监控 Prometheus；8080"
+    "notes": "5.37.0；Go 静态编；自带 `web/static`；scratch；默认配置监控 Prometheus；8080",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/alertmanager",
     "size": "274MB",
     "verification": "`/-/healthy` 与 `/-/ready` 200；UI 200；`/api/v2/status` 正常；`amtool alert add` 后 `/api/v2/alerts` 可查到",
-    "notes": "0.34.1；Elm + Vite 前端在 x86 WSL2 构建后 `go:embed`；Go 静态编；openEuler + curl 健康检查；9093 Web / 9094 gossip；以 nobody 运行；默认配置只收不发，生产需挂载自己的 alertmanager.yml"
+    "notes": "0.34.1；Elm + Vite 前端在 x86 WSL2 构建后 `go:embed`；Go 静态编；openEuler + curl 健康检查；9093 Web / 9094 gossip；以 nobody 运行；默认配置只收不发，生产需挂载自己的 alertmanager.yml",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/postgres",
     "size": "378MB",
     "verification": "`pg_isready` healthy；SCRAM TCP 登录；重启后数据仍在；miniflux 用它跑完 132 个迁移并返回 200",
-    "notes": "15.18（openEuler 包）；官方无 loong64；entrypoint 支持 POSTGRES_USER/PASSWORD/DB/HOST_AUTH_METHOD；PGDATA `/var/lib/postgresql/data`；5432；日志走 stdout"
+    "notes": "15.18（openEuler 包）；官方无 loong64；entrypoint 支持 POSTGRES_USER/PASSWORD/DB/HOST_AUTH_METHOD；PGDATA `/var/lib/postgresql/data`；5432；日志走 stdout",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/redis",
     "size": "296MB",
     "verification": "`PING`；`SET/GET`；重启持久化；`REDIS_PASSWORD` 生效；健康检查 healthy",
-    "notes": "7.2.14（openEuler 包）；AOF+RDB；`/data`；6379；默认 protected-mode no，公网必须设 `REDIS_PASSWORD`；UID/GID 998:996"
+    "notes": "7.2.14（openEuler 包）；AOF+RDB；`/data`；6379；默认 protected-mode no，公网必须设 `REDIS_PASSWORD`；UID/GID 998:996",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/mosquitto",
     "size": "290MB",
     "verification": "匿名 pub/sub 成功；retained 消息在重启后仍可订阅；健康检查 healthy",
-    "notes": "2.0.20（openEuler EPOL）；持久化 `/mosquitto/data`；1883；默认 allow_anonymous true，公网必须关匿名并配 passwd；含 mosquitto_pub/sub/passwd；UID/GID 998:996"
+    "notes": "2.0.20（openEuler EPOL）；持久化 `/mosquitto/data`；1883；默认 allow_anonymous true，公网必须关匿名并配 passwd；含 mosquitto_pub/sub/passwd；UID/GID 998:996",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/mariadb",
     "size": "549MB",
     "verification": "初始化成功；root/app TCP 登录；建表；重启持久化；特殊字符密码可登录；健康检查 healthy",
-    "notes": "10.11.18（openEuler 包）；`MYSQL_ROOT_PASSWORD/DATABASE/USER/PASSWORD/ALLOW_EMPTY_PASSWORD`；`/var/lib/mysql`；3306；root 仅 localhost；日志走 stderr；UID/GID 27"
+    "notes": "10.11.18（openEuler 包）；`MYSQL_ROOT_PASSWORD/DATABASE/USER/PASSWORD/ALLOW_EMPTY_PASSWORD`；`/var/lib/mysql`；3306；root 仅 localhost；日志走 stderr；UID/GID 27",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/node-red",
     "size": "499MB",
     "verification": "`/` 200；标题 Node-RED；`node-red --version` 5.0.8；`/data` 生成 settings/flows；重启后 200；健康检查 healthy",
-    "notes": "5.0.8 + Node 24.22.1；基于 `yunixintel/node`；多阶段构建；1880；`/data`；保留 npm 支持 palette；UID 1001"
+    "notes": "5.0.8 + Node 24.22.1；基于 `yunixintel/node`；多阶段构建；1880；`/data`；保留 npm 支持 palette；UID 1001",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/grafana",
     "size": "1.18GB",
     "verification": "`/api/health` database ok/13.2.4；`/login` 200；登录页 JS 200；SQLite 迁移；健康检查 healthy",
-    "notes": "13.2.4；前端 WSL Node22/Yarn4 webpack 构建，删 source map；Go 1.27/CGO0 `-tags oss`；UID/GID 472；`/var/lib/grafana`；3000；默认 admin/admin；不含 renderer 与额外 bundled 插件"
+    "notes": "13.2.4；前端 WSL Node22/Yarn4 webpack 构建，删 source map；Go 1.27/CGO0 `-tags oss`；UID/GID 472；`/var/lib/grafana`；3000；默认 admin/admin；不含 renderer 与额外 bundled 插件",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/memcached",
     "size": "354MB",
     "verification": "原始协议 set/get 成功；`stats` 返回 1.6.42；健康检查 healthy",
-    "notes": "1.6.42（openEuler 包）；默认 64MB/1024 连接/4 线程；`MEMCACHED_*` 可调；11211；无认证、无持久化，禁止公网暴露；UID/GID 998:996"
+    "notes": "1.6.42（openEuler 包）；默认 64MB/1024 连接/4 线程；`MEMCACHED_*` 可调；11211；无认证、无持久化，禁止公网暴露；UID/GID 998:996",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/homebridge",
     "size": "583MB",
     "verification": "Homebridge 2.4.0 启动；UI 8581 200；hb-service 同时拉起 UI 与核心；健康检查 healthy",
-    "notes": "2.4.0 + Config UI 5.29.0 + Node 24.22.1；基于 `yunixintel/node`；node-pty 源码编 loong64；hb-service run；建议 host 网络；`/homebridge`；8581/51826；UID 1000"
+    "notes": "2.4.0 + Config UI 5.29.0 + Node 24.22.1；基于 `yunixintel/node`；node-pty 源码编 loong64；hb-service run；建议 host 网络；`/homebridge`；8581/51826；UID 1000",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/rest-server",
     "size": "250MB",
     "verification": "`?create=true` 建库 200；config 写入/读取；Basic 认证 401/200；版本 0.14.0",
-    "notes": "0.14.0；Go 静态二进制 12MB；openEuler + httpd-tools（htpasswd）；`/data`；8000；默认开认证，先 create_user 再重启；可 DISABLE_AUTHENTICATION=1；无 TLS"
+    "notes": "0.14.0；Go 静态二进制 12MB；openEuler + httpd-tools（htpasswd）；`/data`；8000；默认开认证，先 create_user 再重启；可 DISABLE_AUTHENTICATION=1；无 TLS",
+    "architecture": "linux/loong64"
   },
   {
     "image": "yunixintel/node",
     "size": "420MB",
     "verification": "`node -v` 24.22.1、`npm -v` 11.19.1、`corepack` 0.36.0；在 openEuler 24.03 容器内运行正常",
-    "notes": "Node.js 24.22.1 linux-loong64（unofficial-builds，SHA256 5653027b…6b58）；openEuler 24.03 + CA/tzdata/libstdc++；`/opt/node24`；Node 22.23.3 仍保留 `:22.23.3` tag"
+    "notes": "Node.js 24.22.1 linux-loong64（unofficial-builds，SHA256 5653027b…6b58）；openEuler 24.03 + CA/tzdata/libstdc++；`/opt/node24`；Node 22.23.3 仍保留 `:22.23.3` tag",
+    "architecture": "linux/loong64"
+  },
+  {
+    "image": "yunixintel/actual-budget",
+    "size": "554MB",
+    "architecture": "linux/loong64",
+    "verification": "数据库迁移完成；`/` 200；标题 Actual；`actual-server --version` v26.10.0；`/data` 初始化；健康检查 healthy",
+    "notes": "26.10.0（@actual-app/sync-server）+ Node 24.22.1；`/opt/node24`；`/data`；5006；UID 1002；better-sqlite3 需手动 node-gyp 编 loong64；无内置 TLS"
   }
 ]

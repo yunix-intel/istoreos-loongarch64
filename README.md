@@ -2,12 +2,14 @@
 
 给龙芯（LoongArch，新 3A5000 / 3A6000）用的 iStore 软路由固件：OpenWrt 官方 loongarch64 底 + iStore 商店插件，完整复刻 x86 版体验。
 
+> **架构说明**：本仓库所有应用镜像仅提供 `linux/loong64`，x86_64 / ARM 无法运行。Docker Hub 仓库名不带架构后缀，架构由 `:loong64` tag 和镜像 manifest 标识；`24.10-la5` 为同一 loong64 构建。机读索引 [images/catalog.json](images/catalog.json) 的每条记录都带 `"architecture": "linux/loong64"`。
+
 ## 状态
 
 - [x] WSL 交叉编译（la1–la5 连续发版）
 - [x] **最新公版：[24.10-la5](https://github.com/yunix-intel/istoreos-loongarch64/releases/tag/24.10-la5)**（内置 docker + podman，英文默认，无私人预置）
 - [x] 真机验证（3A6000：LuCI / 商店 / 中文 / EasyTier / Mihomo）
-- [x] **73 个 loong64 应用镜像已上架**：[docs/IMAGES.md](docs/IMAGES.md)（`docker pull yunixintel/<app>:loong64`）；含新增 `homer`、`paperless-ngx`、`dashy`、`watchtower`、`changedetection`、`caddy`、`dozzle`、`ntfy`、`gotify`、`node-exporter`、`prometheus`、`pihole`、`gatus`、`alertmanager`、`postgres`、`redis`、`mosquitto`、`mariadb`、`node-red`、`grafana`、`memcached`、`homebridge`、`rest-server`、`node`
+- [x] **74 个 loong64 应用镜像已上架**：[docs/IMAGES.md](docs/IMAGES.md)（`docker pull yunixintel/<app>:loong64`）；含新增 `homer`、`paperless-ngx`、`dashy`、`watchtower`、`changedetection`、`caddy`、`dozzle`、`ntfy`、`gotify`、`node-exporter`、`prometheus`、`pihole`、`gatus`、`alertmanager`、`postgres`、`redis`、`mosquitto`、`mariadb`、`node-red`、`grafana`、`memcached`、`homebridge`、`rest-server`、`node`、`actual-budget`
 - [x] podman 全链路（CGO podman + crun，嵌套 `--network=host/none` 跑通）
 - [x] dockermanager 可用（连本机 dockerd）
 - [x] CasaOS loong64 移植（应用管理/UI/systemd 真机验证；磁盘能力待独占盘）
@@ -39,7 +41,7 @@ docker run -d --name memos --network=host -v memos:/opt/memos/data yunixintel/me
 - [应用同步清单](docs/APP-SYNC-CHECKLIST.md)：新增镜像必须完成的文档/发布步骤
 - [Podman 栈](docs/PODMAN.md)、[CasaOS P3](docs/CASAOS-P3.md)、[EasyTier/mihomo](docs/EASYTIER-MIHOMO.md)
 - [OpenCV/SSIM 配方](docs/OPENCV-SSIM.md)、[生产测试计划](docs/PRODUCTION-TEST.md)
-- [镜像 Dockerfile 目录](images/)：63 个应用目录 / 71 个 Dockerfile + 73 只机读目录
+- [镜像 Dockerfile 目录](images/)：64 个应用目录 / 72 个 Dockerfile + 74 只机读目录
 
 ## 自己编（WSL2 Ubuntu，x86_64 主机交叉编译）
 

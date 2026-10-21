@@ -17,7 +17,7 @@
 |---|---|---|
 | 公版固件 la5 | GitHub Release `24.10-la5` | 已发布 |
 | 私人固件 p1 | 私有库 `/build/firmware/personal-p1-20261019.img.gz` | 已构建，U 盘待验 |
-| 73 个应用镜像 | Docker Hub `yunixintel/*` | 已推送，生产级全量测试待做 |
+| 74 个应用镜像 | Docker Hub `yunixintel/*` | 已推送，生产级全量测试待做 |
 | CasaOS P3 安装包 | 私有库 `casaos-p3/` + 构建机 tarball | 功能验证完成，真实盘待验 |
 | Podman/dockerman | la5 固件内 | 已真机验证 |
 | EasyTier/mihomo | 私有库模板 + 固件 feed | 已做稳定性/性能测试 |
@@ -50,7 +50,7 @@
 | [KVM-PLAN.md](KVM-PLAN.md) | KVM 路线与封存依据 |
 | [PRODUCTION-TEST.md](PRODUCTION-TEST.md) | 开发冻结后的全量生产测试计划 |
 | [GAPS.md](GAPS.md) / [ROADMAP.md](ROADMAP.md) | 缺口盘点与路线图 |
-| [../images/](../images/) | 63 个应用目录 / 71 个 Dockerfile + 73 只机读目录 `catalog.json` |
+| [../images/](../images/) | 64 个应用目录 / 72 个 Dockerfile + 74 只机读目录 `catalog.json` |
 | [APP-SYNC-CHECKLIST.md](APP-SYNC-CHECKLIST.md) | **新增/更新应用的强制同步清单** |
 | [PRIVACY-REVIEW.md](PRIVACY-REVIEW.md) | 转公开前的隐私/历史/大文件审计清单 |
 
@@ -71,8 +71,8 @@
 ## 6. 当前状态（2026-10-21）
 
 - 固件：la1–la5 连续发版；la5 内置 docker+podman；私人 p1 已构建。
-- 镜像：73 个仓库，全部 `loong64` + `24.10-la5`；新增 homer、paperless-ngx、dashy、
-  watchtower、changedetection、caddy、dozzle、ntfy、gotify、node-exporter、prometheus、pihole、gatus、alertmanager、postgres、redis、mosquitto、mariadb、node-red、grafana、memcached、homebridge、rest-server、node。
+- 镜像：74 个仓库，全部 `loong64` + `24.10-la5`；新增 homer、paperless-ngx、dashy、
+  watchtower、changedetection、caddy、dozzle、ntfy、gotify、node-exporter、prometheus、pihole、gatus、alertmanager、postgres、redis、mosquitto、mariadb、node-red、grafana、memcached、homebridge、rest-server、node、actual-budget。
 - CasaOS P3：systemd/CLI/安装卸载、NBD 挂载/卸载/重启自挂/格式化通过；真实盘待验。
 - Podman：host/none 网络真机通过；bridge 需宿主 nft_conntrack。
 - 已知缺口：CasaOS 真实盘 SMART/USB、固件 U 盘首启、生产级全量测试、10 个早期镜像

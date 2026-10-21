@@ -482,3 +482,7 @@
   - 已推送 `yunixintel/node:24.22.1`/`loong64`/`24.10-la5`，digest `sha256:0f4d19bb…4fb5`。
 - Node-RED 5.0.8 / Homebridge 2.4.0 改用 Node 24.22.1 重建（`/opt/node24`）。Node-RED 499MB，digest `sha256:f44460c6…8cfc`；Homebridge 583MB，digest `sha256:dafe9de5…ef83`。
   - 两者 UI/健康检查/版本均复测通过；node-pty 继续从源码编 loong64。
+- Actual Budget 26.10.0：基于 Node 24.22.1 构建 `@actual-app/sync-server`，运行阶段复制 `/opt/node24` 与包，entrypoint 以 UID 1002 启动，数据目录 `/data`、端口 5006。
+  - 原生依赖：argon2/bcrypt 有 install script 自行编译；`better-sqlite3` 没有 install script 且无 loong64 预编译，必须在其包目录额外 `npx node-gyp rebuild`，否则启动报缺少 `better_sqlite3.node`。
+  - 验证：迁移 DONE、`/` 200、标题 Actual、版本 v26.10.0、`/data` 生成 migrate/server-files/user-files、健康检查 healthy。
+  - 镜像 554MB；已推送 `yunixintel/actual-budget:loong64`/`24.10-la5`，digest `sha256:47dfba57…bc0b`。

@@ -270,6 +270,21 @@ scrape_configs:
       - targets: ["192.168.8.8:9100"]
 ```
 
+### Actual Budget
+
+```bash
+docker run -d --name actual-budget -p 5006:5006   -v actual-data:/data yunixintel/actual-budget:loong64
+```
+
+- Web UI：`http://<host>:5006/`，首次打开创建服务器密码/账号。
+- 数据目录 `/data`（SQLite、server-files、user-files）；挂宿主目录需
+  `chown -R 1002:1002`。
+- `ACTUAL_DATA_DIR`、`ACTUAL_PORT` 可覆盖默认值。
+- 镜像无内置 TLS，公网必须放在 Caddy/Nginx 反向代理后；反代时设置
+  `ACTUAL_TRUSTED_PROXIES`/`ACTUAL_HOSTNAME`。
+- 升级前备份整个 `/data`；数据库迁移单向，降级大版本可能打不开。
+- 完整说明见 [../images/actual-budget/BUILD.md](../images/actual-budget/BUILD.md)。
+
 ### Alertmanager
 
 ```bash
@@ -333,11 +348,12 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 73 个镜像）
+## 3. 端口索引（全部 74 个镜像）
 
 | 镜像 | 端口 | 关键挂载/环境 | 备注 |
 |---|---|---|---|
 | adguardhome | 53/tcp+udp, 3000 | `/opt/adguardhome/work`、`/opt/adguardhome/conf` | 用 host 网络；避让宿主 dnsmasq |
+| actual-budget | 5006 | `/data` | UID 1002；SQLite；无内置 TLS |
 | alertmanager | 9093, 9094 | `/etc/alertmanager/alertmanager.yml`、`/alertmanager` | 9094 为 gossip；数据卷需 UID 65534 可写 |
 | postgres | 5432 | `/var/lib/postgresql/data`；环境 `POSTGRES_*` | UID 26；日志走 stdout |
 | redis | 6379 | `/data`；环境 `REDIS_PASSWORD` | AOF+RDB；UID/GID 998:996 |
