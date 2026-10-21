@@ -199,7 +199,7 @@ docker run --rm -v "$PWD":/src -w /src openeuler/openeuler:24.03 bash -c '
 ### Node 应用报 `Cannot find module '/usr/local/lib/cli'`
 
 - 原因：npm 全局 bin 是符号链接，Docker `COPY` 会解引用，`fs.realpathSync` 解析到错误目录。
-- 修复：运行阶段重新创建指向 `/opt/node22/lib/node_modules/...` 的符号链接；Homebridge 2 的入口是 `bin/homebridge.js`。
+- 修复：运行阶段重新创建指向 `/opt/node24/lib/node_modules/...` 的符号链接；Homebridge 2 的入口是 `bin/homebridge.js`。
 
 ### Homebridge UI 5 的 8581 不监听
 

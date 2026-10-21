@@ -61,10 +61,10 @@ Elm），产物 `dist` 被 Go `//go:embed app/dist` 嵌入。`ui/mantine-ui/` �
 不需要处理。完整命令见 [../images/alertmanager/BUILD.md](../images/alertmanager/BUILD.md)。
 
 Node-RED 5 和 Homebridge 2 需要 Node ≥22.9/22.12，openEuler 24.03 只有 Node 20。
-使用 unofficial-builds 的 `node-v22.23.3-linux-loong64.tar.xz`（SHA256
-`c5594c23…9599`）构建 `yunixintel/node:22.23.3`：openEuler 的基础 + `/opt/node22`
-运行时。该二进制最高只要求 `GLIBC_2.38`，与镜像一致。注意 Node 22 的 npm 全局
-前缀是 `/opt/node22`，不是 `/usr/local`。
+使用 unofficial-builds 的 `node-v24.22.1-linux-loong64.tar.xz`（SHA256
+`5653027b…6b58`）构建 `yunixintel/node:24.22.1`：openEuler 的基础 + `/opt/node24`
+运行时；Node 22.23.3 仍保留为 `:22.23.3`。该二进制最高只要求 `GLIBC_2.38`，
+与镜像一致。注意 npm 全局前缀是 `/opt/node24`，不是 `/usr/local`。
 
 `homebridge-config-ui-x` 的 `node-pty` 没有 loong64 预编译且 npm 包不含
 `src/unix`，需要从 GitHub `v0.14.1` 源码 `node-gyp rebuild` 出 `pty.node` 再放回包内。
@@ -130,7 +130,7 @@ Config UI 5 由 `hb-service run` 同时启动 UI 和 Homebridge，单独跑 `hom
 | `grafana` | `grafana` 二进制 + 预构建 `public/`（x86 WSL2 的 Yarn 4/webpack）+ `conf/defaults.ini` |
 | `memcached` | 仅 Dockerfile + entrypoint；依赖 openEuler `memcached` 包 |
 | `homebridge` | Node 22 下安装 Homebridge 2.4.0 + UI 5.29.0；源码编译 node-pty；`hb-service` 启动；运行阶段重建 `homebridge.js` 符号链接 |
-| `node` | Node.js 22.23.3 loong64 运行时基础镜像；从 unofficial-builds tarball 解压，`/opt/node22` |
+| `node` | Node.js 24.22.1 loong64 运行时基础镜像；从 unofficial-builds tarball 解压，`/opt/node24` |
 | `rest-server` | `rest-server` 静态二进制 + entrypoint/用户脚本；`htpasswd` 由 openEuler `httpd-tools` 提供 |
 | 其余 | 见 Dockerfile 的 `COPY` 行；大目录不随仓库提交 |
 

@@ -477,3 +477,8 @@
   - Homebridge 2 的 bin 是 `bin/homebridge.js`，符号链接必须指向该文件，不能指向旧路径 `bin/homebridge`。
   - 验证：Homebridge 2.4.0、UI 200、hb-service + homebridge 双进程、健康检查 healthy；镜像 582MB。
   - 已推送 `yunixintel/homebridge:loong64`/`24.10-la5`，digest `sha256:93632682…30ee`。
+- Node.js 24.22.1 linux-loong64：Node 24 LTS（Krypton）的 unofficial-builds tarball（SHA256 `5653027b…6b58`），最高要求 `GLIBC_2.38`，在 openEuler 24.03 容器内验证通过。
+  - 基础镜像 420MB，运行时 `/opt/node24`；`node`/`npm`/`corepack` 分别为 24.22.1/11.19.1/0.36.0。`loong64`、`24.10-la5` 浮动 tag 已切到 24；22.23.3 保留在 `:22.23.3`。
+  - 已推送 `yunixintel/node:24.22.1`/`loong64`/`24.10-la5`，digest `sha256:0f4d19bb…4fb5`。
+- Node-RED 5.0.8 / Homebridge 2.4.0 改用 Node 24.22.1 重建（`/opt/node24`）。Node-RED 499MB，digest `sha256:f44460c6…8cfc`；Homebridge 583MB，digest `sha256:dafe9de5…ef83`。
+  - 两者 UI/健康检查/版本均复测通过；node-pty 继续从源码编 loong64。

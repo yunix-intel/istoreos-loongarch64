@@ -30,11 +30,11 @@
 | redis | 仅 Dockerfile + entrypoint + `redis.conf`（openEuler `redis` 包） |
 | mosquitto | 仅 Dockerfile + entrypoint + `mosquitto.conf`（openEuler `mosquitto` 包） |
 | mariadb | 仅 Dockerfile + entrypoint + `client.cnf`（openEuler `mariadb-server` 包） |
-| node-red | 多阶段；构建阶段 `node:22.23.3-loong64` 安装 Node-RED 5.0.8，运行阶段复制 Node 运行时与包 |
+| node-red | 多阶段；构建阶段 `node:24.22.1-loong64` 安装 Node-RED 5.0.8，运行阶段复制 Node 运行时与包 |
 | grafana | `grafana` 二进制 + 预构建 `public/` + `defaults.ini` + `grafana.ini`；前端需 x86 WSL2 |
 | memcached | 仅 Dockerfile + entrypoint（openEuler `memcached` 包） |
-| homebridge | 多阶段；`homebridge@2.4.0` + `homebridge-config-ui-x@5.29.0`；源码编译 node-pty；运行阶段重建 bin 符号链接 |
-| node | Node.js 22.23.3 linux-loong64 运行时基础镜像（unofficial-builds） |
+| homebridge | 多阶段；Node 24 下 `homebridge@2.4.0` + `homebridge-config-ui-x@5.29.0`；源码编译 node-pty；运行阶段重建 bin 符号链接 |
+| node | Node.js 24.22.1 linux-loong64 运行时基础镜像（unofficial-builds） |
 | rest-server | `rest-server` 静态二进制 + entrypoint/create_user/delete_user；依赖 openEuler `httpd-tools` |
 | caddy/watchtower/node-exporter | 仅二进制 + CA |
 

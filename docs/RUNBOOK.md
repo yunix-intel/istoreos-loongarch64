@@ -187,7 +187,7 @@ docker run -d --name node-red -p 1880:1880   -v node-red-data:/data yunixintel/n
 - 容器以 UID/GID 1001 运行；挂宿主目录需 `chown -R 1001:1001 <dir>`。
 - 首次启动会生成 `/data/settings.js`；改端口、`credentialSecret` 都在这里。
 - 默认 `uiPort` 取 `PORT` 环境变量，未设置时 1880；改映射端口时同步设 `PORT`。
-- 版本为 5.0.8 + Node 22.23.3；Node 运行时来自 `yunixintel/node` 基础镜像。
+- 版本为 5.0.8 + Node 24.22.1；Node 运行时来自 `yunixintel/node` 基础镜像。
 - 安装原生依赖的 palette 节点需要自行加回 gcc/make，运行镜像未带编译工具。
 - 完整说明见 [../images/node-red/BUILD.md](../images/node-red/BUILD.md)。
 
@@ -217,7 +217,7 @@ docker run -d --name homebridge --network=host   -v homebridge-data:/homebridge 
 - 必须用 host 网络才能正常 mDNS 发现；bridge 下 UI 可用但 HomeKit 常发现不了。
 - 数据、config、插件都在 `/homebridge`；挂宿主目录需 `chown -R 1000:1000`。
 - 默认配对码 `031-45-154`、MAC `0E:5A:2B:3C:4D:5E`，首次进入 UI 后应修改。
-- 版本为 Homebridge 2.4.0 + UI 5.29.0 + Node 22.23.3；UI 由 `hb-service` 同时拉起。
+- 版本为 Homebridge 2.4.0 + UI 5.29.0 + Node 24.22.1；UI 由 `hb-service` 同时拉起。
   公网暴露 UI 时仍应加反向代理认证。
 - 运行镜像保留 npm 但无 gcc/make，带原生编译的插件无法直接安装。
 - 完整说明见 [../images/homebridge/BUILD.md](../images/homebridge/BUILD.md)。
@@ -343,10 +343,10 @@ docker run -d --name gatus -p 8080:8080 \
 | redis | 6379 | `/data`；环境 `REDIS_PASSWORD` | AOF+RDB；UID/GID 998:996 |
 | mosquitto | 1883 | `/mosquitto/config`、`/mosquitto/data` | 默认匿名；公网须配 passwd |
 | mariadb | 3306 | `/var/lib/mysql`；环境 `MYSQL_*` | root 仅 localhost；UID/GID 27 |
-| node-red | 1880 | `/data` | UID 1001；5.0.8 + Node 22；palette 需 npm |
+| node-red | 1880 | `/data` | UID 1001；5.0.8 + Node 24；palette 需 npm |
 | grafana | 3000 | `/var/lib/grafana` | UID/GID 472；默认 admin/admin；SQLite |
 | memcached | 11211 | — | 无认证无持久化；仅内网 |
-| homebridge | 8581, 51826 | `/homebridge` | 建议 host 网络；UID 1000；2.4.0 + UI 5.29；默认配对码需改 |
+| homebridge | 8581, 51826 | `/homebridge` | 建议 host 网络；UID 1000；2.4.0 + UI 5.29 + Node 24；默认配对码需改 |
 | rest-server | 8000 | `/data` | 默认 Basic 认证；无 TLS |
 | audiobookshelf | 13378 | `/audiobooks`、`/config`、`/metadata` | Node 22 |
 | bazarr | 6767 | `/config`、`/movies`、`/tv` | 含 ffmpeg |
