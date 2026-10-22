@@ -270,6 +270,20 @@ scrape_configs:
       - targets: ["192.168.8.8:9100"]
 ```
 
+### Mealie
+
+```bash
+docker run -d --name mealie -p 9000:9000   -v mealie-data:/app/data yunixintel/mealie:loong64
+```
+
+- Web UI：`http://<host>:9000/`；健康检查 `/api/app/about`。
+- 数据目录 `/app/data`（SQLite、recipes、users、backups、日志）；挂宿主目录需
+  `chown -R 911:911`。
+- 首次访问完成管理员/家庭组初始化；`allowSignup` 默认 false。
+- 镜像无内置 TLS；SQLite 单实例，不适合多副本写同一目录。
+- **HEIF/HEIC 图片不支持**（loong64 缺 libheif，本镜像用 stub 禁用）。
+- 完整说明见 [../images/mealie/BUILD.md](../images/mealie/BUILD.md)。
+
 ### NocoDB
 
 ```bash
@@ -398,7 +412,7 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 78 个镜像）
+## 3. 端口索引（全部 79 个镜像）
 
 ### 从端口索引生成最小启动命令
 
@@ -433,6 +447,7 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | actual-budget | 5006 | `/data` | UID 1002；SQLite；无内置 TLS |
 | node | — | — | Node 运行时基础镜像，不直接对外服务 |
 | homebox | 7745 | `/data` | UID 1000；SQLite；默认允许注册 |
+| mealie | 9000 | `/app/data` | UID 911；SQLite；HEIF 不支持 |
 | nocodb | 8080 | `/data` | UID 1000；SQLite；`NC_DB` 用 `?d=` |
 | apprise-api | 8000 | `/config`、`/attach`、`/plugin` | 默认无认证/无 TLS |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |

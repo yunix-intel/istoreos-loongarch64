@@ -544,5 +544,12 @@
     "architecture": "linux/loong64",
     "verification": "`/` 200；`/status` 返回 OK；stateless `/notify/` 进入通知流程；健康检查 healthy",
     "notes": "2.0.1 + Python 3.11；系统 cryptography 42/gevent 22.10.2；pycares 需 cmake；nginx+supervisor+gunicorn；`/config`、`/attach`、`/plugin`；8000"
+  },
+  {
+    "image": "yunixintel/mealie",
+    "size": "2.17GB",
+    "architecture": "linux/loong64",
+    "verification": "`/` 200；`/api/app/about` version 3.29.0；SQLite/数据目录初始化；健康检查 healthy",
+    "notes": "3.29.0；Python 3.14.8 自编；Nuxt 前端 x86 构建；Rust 1.99 编 orjson/pydantic-core/curl-cffi；`/app/data`；9000；UID 911；HEIF/HEIC 不支持（libheif 缺失，stub）"
   }
 ]

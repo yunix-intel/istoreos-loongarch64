@@ -502,3 +502,9 @@
   - nginx 适配：补建 `/etc/nginx/{server,location}-override.conf`；supervisor 降权到 apprise 后需要可写的 `/var/log/nginx`，否则 nginx FATAL。
   - 验证：`/` 200、`/status` OK、stateless `/notify/` 进入通知流程、健康检查 healthy；镜像 1.03GB。
   - 已推送 `yunixintel/apprise-api:loong64`/`24.10-la5`，digest `sha256:6db7f092…9002`。
+- Mealie 3.29.0：要求 Python 3.14，使用 `Python-3.14.8.tgz` 在 openEuler 24.03 源码编 `/usr/local`；前端 Nuxt 3 在 x86 WSL2 用 pnpm 11 `generate`，产物放入 `mealie/frontend` 后打包。
+  - 原生依赖：Rust 1.99.1 编 orjson/pydantic-core/curl-cffi；cmake + autoconf/automake/libtool 编 python-3.14 的 numpy/patchelf；libxml2/libxslt 编 lxml；libcurl 编 curl-cffi。
+  - HEIF：openEuler 无 libheif-devel，loong64 无 pillow-heif wheel；安装最小 `pillow_heif` stub，`register_heif_opener()` 空实现，HEIC/HEIF 功能禁用。
+  - 版本：源码 `__version__="develop"`，镜像内改为 `3.29.0`。
+  - 验证：`/` 200、`/api/app/about` version 3.29.0、`/app/data` 初始化、健康检查 healthy；镜像 2.17GB。
+  - 已推送 `yunixintel/mealie:loong64`/`24.10-la5`，digest `sha256:807d9025…e673`。

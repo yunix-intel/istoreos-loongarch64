@@ -266,6 +266,21 @@ docker run --rm -v "$PWD":/src -w /src openeuler/openeuler:24.03 bash -c '
 - 原因：pycares 需要 CMake 编译。
 - 修复：构建阶段安装 `cmake`，并加系统 cryptography/gevent 的 constraints 避免重编。
 
+### Mealie 构建 Pillow 时报 libheif 头文件缺失
+
+- 原因：`pillow-heif` 需要 `libheif`，openEuler 24.03（含 EPOL）没有 `libheif-devel`。
+- 修复：当前 loong64 使用 `pillow_heif` stub 禁用 HEIF/HEIC；JPEG/PNG/WebP 正常。需要 HEIF 时必须先移植 libheif。
+
+### Mealie 构建 numpy 时报 `autoreconf: command not found`
+
+- 原因：numpy 构建后端依赖 patchelf，patchelf 又需要 autotools。
+- 修复：构建阶段安装 `autoconf automake libtool patch`。
+
+### Mealie 启动报 `PRODUCTION Field required`
+
+- 原因：Mealie 的 pydantic 设置在运行时不带默认 `PRODUCTION`。
+- 修复：设置 `PRODUCTION=true`（本镜像已内置）。
+
 ## Docker Hub
 
 ### `denied: requested access to the resource is denied`

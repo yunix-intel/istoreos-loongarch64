@@ -52,6 +52,7 @@ IMAGES=(
   kopia
   linkding
   mariadb
+  mealie
   memcached
   memos
   mihomo
