@@ -1,6 +1,6 @@
 # loongarch64 应用镜像
 
-共 74 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
+共 75 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
 `loong64`（浮动）与 `24.10-la5`（与 GitHub Release 对齐）。
 
 拉取：
@@ -73,6 +73,7 @@ docker pull yunixintel/jellyfin:loong64
 | `yunixintel/prometheus` | 407MB | `/-/healthy` 200；UI 200；`/api/v1/status/buildinfo` 3.15.0 | 3.15.0；UI 用 Vite 8 在 x86 WSL2 构建，Go `-tags builtinassets` 嵌入；TSDB `/prometheus`；9090 |
 | `yunixintel/pihole` | 287MB | `/admin/` 200；`pihole -g` 拉取 1 条 adlist；`dig` 被拦截域名返回 NXDOMAIN | FTL 6.8 + web 6.6.1；C/C++，静态 nettle 3.10；上游 `pihole` CLI + `gravity.sh` + `pihole-adlist`（add/list/remove）；DNS 53 / Web 80；`/etc/pihole` |
 | `yunixintel/gatus` | 35MB | `/` 200；`/api/v1/endpoints/statuses` 200 | 5.37.0；Go 静态编；自带 `web/static`；scratch；默认配置监控 Prometheus；8080 |
+| `yunixintel/minio` | 483MB | `/minio/health/live` 200；Console 9001 200；数据目录初始化；RELEASE 版本串；健康检查 healthy | RELEASE.2025-10-15T17-29-55Z；Go 源码编；`/data`；9000/9001；UID 1000；必须设 `MINIO_ROOT_USER/PASSWORD`；AGPLv3；单盘无纠删码 |
 | `yunixintel/actual-budget` | 554MB | 数据库迁移完成；`/` 200；标题 Actual；`actual-server --version` v26.10.0；`/data` 初始化；健康检查 healthy | 26.10.0 + Node 24.22.1；`/opt/node24`；`/data`；5006；UID 1002；better-sqlite3 手动编 loong64；无内置 TLS |
 | `yunixintel/alertmanager` | 274MB | `/-/healthy`、`/-/ready` 200；UI/API 正常；amtool 推警成功 | 0.34.1；Elm + Vite 前端在 x86 WSL2 构建后 `go:embed`；Go 静态编；openEuler + curl 健康检查；9093 Web / 9094 gossip；nobody 运行；默认只收不发通知 |
 | `yunixintel/postgres` | 378MB | `pg_isready` healthy；SCRAM TCP 登录；重启持久化；miniflux 迁移 132 版后 200 | 15.18；openEuler 包；entrypoint 支持 `POSTGRES_USER/PASSWORD/DB/HOST_AUTH_METHOD`；`PGDATA=/var/lib/postgresql/data`；5432；日志走 stdout |

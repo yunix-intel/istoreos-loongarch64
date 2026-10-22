@@ -1,11 +1,11 @@
 # 应用镜像 Dockerfile 目录
 
-本目录是 74 个 `yunixintel/*:loong64` 镜像的构建材料索引。
+本目录是 75 个 `yunixintel/*:loong64` 镜像的构建材料索引。
 
 > **仅支持 linux/loong64**。Docker Hub 仓库名统一为 `yunixintel/<app>`（不带架构后缀），架构由 `:loong64` / `:24.10-la5` tag 与 manifest 标识；`catalog.json` 每条记录包含 `"architecture": "linux/loong64"`。x86_64 / ARM 镜像不存在。
 
-- `images/<app>/Dockerfile`：保留了 72 个镜像的 Dockerfile（部分带 `Dockerfile.*` 构建阶段）。
-- `catalog.json`：74 个镜像的名称、大小、验证结论、端口/限制说明，机读索引。
+- `images/<app>/Dockerfile`：保留了 73 个镜像的 Dockerfile（部分带 `Dockerfile.*` 构建阶段）。
+- `catalog.json`：75 个镜像的名称、大小、验证结论、端口/限制说明，机读索引。
 - 未保留 Dockerfile 的 10 个镜像：adguardhome、code-server、easytier、firefly-iii、
   gitea、memos、mihomo、miniflux、phpmyadmin、vaultwarden。它们的源码版本与重建步骤
   见 [../docs/IMAGE-BUILD.md](../docs/IMAGE-BUILD.md)。
@@ -28,6 +28,7 @@
 | pihole | `pihole-FTL`、`web/`、`cli/`（pihole/gravity.sh/advanced）、`pihole-adlist.sh`、`gravity.db.sql`、`docker-entrypoint.sh` |
 | gatus | `gatus` 二进制 + `config.yaml` |
 | actual-budget | Node 24 构建阶段安装 `@actual-app/sync-server`；手动编 better-sqlite3；运行阶段复制 Node 运行时与包 |
+| minio | 仅 `minio` 静态二进制 + entrypoint；Go 源码 `-tags kqueue` 编 |
 | alertmanager | `alertmanager`/`amtool` 二进制 + `alertmanager.yml`；UI 需 x86 WSL2 构建 `ui/app/dist` |
 | postgres | 仅 Dockerfile + entrypoint（openEuler `postgresql-server` 包） |
 | redis | 仅 Dockerfile + entrypoint + `redis.conf`（openEuler `redis` 包） |
@@ -47,4 +48,4 @@
 ## 标签约定
 
 所有镜像同时打 `loong64` 与 `24.10-la5`，推送脚本在私有库
-`scripts/push-images.sh`，覆盖 74 只。
+`scripts/push-images.sh`，覆盖 75 只。

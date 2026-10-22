@@ -486,3 +486,7 @@
   - 原生依赖：argon2/bcrypt 有 install script 自行编译；`better-sqlite3` 没有 install script 且无 loong64 预编译，必须在其包目录额外 `npx node-gyp rebuild`，否则启动报缺少 `better_sqlite3.node`。
   - 验证：迁移 DONE、`/` 200、标题 Actual、版本 v26.10.0、`/data` 生成 migrate/server-files/user-files、健康检查 healthy。
   - 镜像 554MB；已推送 `yunixintel/actual-budget:loong64`/`24.10-la5`，digest `sha256:47dfba57…bc0b`。
+- MinIO RELEASE.2025-10-15T17-29-55Z：官方无 loong64 资产，Go 1.27.2 源码 `CGO_ENABLED=0 -tags kqueue` 构建。`gen-ldflags.go` 默认生成 `DEVELOPMENT.*`，本次显式覆盖 `Version`/`ReleaseTag`/`CommitID`，版本串为正式 `RELEASE.2025-10-15T17-29-55Z`。
+  - entrypoint 要求 `MINIO_ROOT_USER`/`MINIO_ROOT_PASSWORD`，以 UID 1000 运行，数据 `/data`，API 9000、Console 9001，`MINIO_UPDATE=off`。
+  - 验证：health live 200、Console 200、数据目录 `.minio` 初始化、版本串 RELEASE、健康检查 healthy、缺少凭据明确报错。
+  - 镜像 483MB；已推送 `yunixintel/minio:loong64`/`24.10-la5`，digest `sha256:df0708ed…9348`。

@@ -270,6 +270,19 @@ scrape_configs:
       - targets: ["192.168.8.8:9100"]
 ```
 
+### MinIO
+
+```bash
+docker run -d --name minio -p 9000:9000 -p 9001:9001   -e MINIO_ROOT_USER=admin   -e MINIO_ROOT_PASSWORD='change-me-123'   -v minio-data:/data yunixintel/minio:loong64
+```
+
+- S3 API：`9000`；Console：`9001`；数据目录 `/data`，UID 1000。
+- 必须设置 `MINIO_ROOT_USER` 和 `MINIO_ROOT_PASSWORD`，没有默认密码。
+- 单目录模式没有纠删码冗余；生产多盘/分布式部署并做好备份。
+- 镜像无内置 TLS，公网必须放反向代理后；Console 和 API 都要限制来源。
+- 软件许可证为 GNU AGPLv3。
+- 完整说明见 [../images/minio/BUILD.md](../images/minio/BUILD.md)。
+
 ### Actual Budget
 
 ```bash
@@ -348,12 +361,13 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 74 个镜像）
+## 3. 端口索引（全部 75 个镜像）
 
 | 镜像 | 端口 | 关键挂载/环境 | 备注 |
 |---|---|---|---|
 | adguardhome | 53/tcp+udp, 3000 | `/opt/adguardhome/work`、`/opt/adguardhome/conf` | 用 host 网络；避让宿主 dnsmasq |
 | actual-budget | 5006 | `/data` | UID 1002；SQLite；无内置 TLS |
+| minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |
 | alertmanager | 9093, 9094 | `/etc/alertmanager/alertmanager.yml`、`/alertmanager` | 9094 为 gossip；数据卷需 UID 65534 可写 |
 | postgres | 5432 | `/var/lib/postgresql/data`；环境 `POSTGRES_*` | UID 26；日志走 stdout |
 | redis | 6379 | `/data`；环境 `REDIS_PASSWORD` | AOF+RDB；UID/GID 998:996 |

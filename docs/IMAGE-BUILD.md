@@ -1,6 +1,6 @@
 # 应用镜像构建手册（loong64）
 
-本文件说明 74 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 72 个镜像的 Dockerfile；
+本文件说明 75 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 73 个镜像的 Dockerfile；
 其余 10 个早期镜像的 Dockerfile 未保留，但下方给出源码版本、关键步骤和构建日志入口。
 
 ## 0. 共同约定
@@ -133,6 +133,7 @@ Config UI 5 由 `hb-service run` 同时启动 UI 和 Homebridge，单独跑 `hom
 | `node` | Node.js 24.22.1 loong64 运行时基础镜像；从 unofficial-builds tarball 解压，`/opt/node24` |
 | `rest-server` | `rest-server` 静态二进制 + entrypoint/用户脚本；`htpasswd` 由 openEuler `httpd-tools` 提供 |
 | `actual-budget` | Node 24 构建阶段安装 `@actual-app/sync-server`；手动 `node-gyp rebuild` better-sqlite3；运行阶段复制 `/opt/node24` 与包 |
+| `minio` | Go 1.27 源码 `-tags kqueue` 静态编；显式设置 RELEASE ldflags；运行阶段仅二进制 + CA |
 | 其余 | 见 Dockerfile 的 `COPY` 行；大目录不随仓库提交 |
 
 ## 3. 未保留 Dockerfile 的 10 个镜像
@@ -164,4 +165,4 @@ Config UI 5 由 `hb-service run` 同时启动 UI 和 Homebridge，单独跑 `hom
 
 构建完成后记录：镜像大小、`docker inspect` 架构、启动日志、HTTP/健康检查、digest。
 统一推送到 `docker.io/yunixintel/<app>:loong64` 与 `:24.10-la5`。
-`scripts/push-images.sh`（私有库）覆盖全部 74 只。
+`scripts/push-images.sh`（私有库）覆盖全部 75 只。

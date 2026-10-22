@@ -54,6 +54,7 @@ IMAGES=(
   memos
   mihomo
   miniflux
+  minio
   mosquitto
   navidrome
   nextcloud
