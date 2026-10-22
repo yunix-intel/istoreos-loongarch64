@@ -490,3 +490,7 @@
   - entrypoint 要求 `MINIO_ROOT_USER`/`MINIO_ROOT_PASSWORD`，以 UID 1000 运行，数据 `/data`，API 9000、Console 9001，`MINIO_UPDATE=off`。
   - 验证：health live 200、Console 200、数据目录 `.minio` 初始化、版本串 RELEASE、健康检查 healthy、缺少凭据明确报错。
   - 镜像 483MB；已推送 `yunixintel/minio:loong64`/`24.10-la5`，digest `sha256:df0708ed…9348`。
+- Homebox v0.10.3：前端 Nuxt 3.6.5 在 x86 WSL2 用 pnpm 8 构建（必须 `--frozen-lockfile --shamefully-hoist`，否则 PWA 的 workbox-window 解析失败），产物 `.output/public` 1.2MB 放入 `backend/app/api/static/public` 供 `go:embed`。
+  - 后端 v0.10.3 自带 `modernc.org/sqlite v1.27` 没有 loong64 生成代码，升级到 v1.61.0 后 `CGO_ENABLED=0` 编译通过；Go 1.27.2。
+  - 运行以 UID 1000、数据 `/data`、端口 7745；健康检查 `/api/v1/status`。验证 UI 200、health=true、版本 v0.10.3、SQLite 初始化、healthy。
+  - 镜像 346MB；已推送 `yunixintel/homebox:loong64`/`24.10-la5`，digest `sha256:6aad7400…0c12`。

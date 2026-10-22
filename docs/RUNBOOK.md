@@ -270,6 +270,18 @@ scrape_configs:
       - targets: ["192.168.8.8:9100"]
 ```
 
+### Homebox
+
+```bash
+docker run -d --name homebox -p 7745:7745   -v homebox-data:/data yunixintel/homebox:loong64
+```
+
+- Web UI：`http://<host>:7745/`，首次打开注册管理员。
+- 数据目录 `/data`（SQLite + WAL/SHM）；挂宿主目录需 `chown -R 1000:1000`。
+- 默认允许注册；公网部署应在首次注册后关闭注册或加反代认证。
+- 镜像无内置 TLS；SQLite 单实例，不适合多副本写同一目录。
+- 完整说明见 [../images/homebox/BUILD.md](../images/homebox/BUILD.md)。
+
 ### MinIO
 
 ```bash
@@ -361,7 +373,7 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 75 个镜像）
+## 3. 端口索引（全部 76 个镜像）
 
 ### 从端口索引生成最小启动命令
 
@@ -395,6 +407,7 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | adguardhome | 53/tcp+udp, 3000 | `/opt/adguardhome/work`、`/opt/adguardhome/conf` | 用 host 网络；避让宿主 dnsmasq |
 | actual-budget | 5006 | `/data` | UID 1002；SQLite；无内置 TLS |
 | node | — | — | Node 运行时基础镜像，不直接对外服务 |
+| homebox | 7745 | `/data` | UID 1000；SQLite；默认允许注册 |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |
 | alertmanager | 9093, 9094 | `/etc/alertmanager/alertmanager.yml`、`/alertmanager` | 9094 为 gossip；数据卷需 UID 65534 可写 |
 | postgres | 5432 | `/var/lib/postgresql/data`；环境 `POSTGRES_*` | UID 26；日志走 stdout |

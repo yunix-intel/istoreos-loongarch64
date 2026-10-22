@@ -39,6 +39,7 @@ IMAGES=(
   heimdall
   homarr
   homeassistant
+  homebox
   homebridge
   homer
   it-tools

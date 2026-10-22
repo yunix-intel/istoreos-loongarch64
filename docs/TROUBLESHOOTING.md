@@ -231,6 +231,16 @@ docker run --rm -v "$PWD":/src -w /src openeuler/openeuler:24.03 bash -c '
 - 原因：单目录/单盘模式没有纠删码冗余，属于预期警告。
 - 修复：生产使用多盘或分布式部署，并做独立备份；不要把它当成高可用存储。
 
+### Homebox 构建报 workbox-window 无法解析
+
+- 原因：pnpm 严格 node_modules 布局下 PWA 依赖没有提升到顶层。
+- 修复：前端安装必须加 `--shamefully-hoist`，并使用与 lockfile v6 匹配的 pnpm 8。
+
+### Homebox 构建报 `undefined: sqlite3_index_constraint`
+
+- 原因：v0.10.3 自带 `modernc.org/sqlite v1.27` 没有 loong64 生成文件。
+- 修复：构建前 `go get modernc.org/sqlite@v1.61.0`，再 `CGO_ENABLED=0` 编译。
+
 ## Docker Hub
 
 ### `denied: requested access to the resource is denied`
