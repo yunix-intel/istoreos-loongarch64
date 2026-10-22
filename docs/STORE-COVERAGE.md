@@ -1,61 +1,82 @@
 # 原始 iStore 商店覆盖率（133 app-meta）
 
-对照源：[STORE-APP-LIST.md](STORE-APP-LIST.md)。统计时间：2026-10-22。
+对照源：[STORE-APP-LIST.md](STORE-APP-LIST.md)。统计时间：2026-10-23。
 
-口径：只统计原始商店 133 个 app-meta；我们的 79 个 Docker 镜像中，有一批是商店之外的补充应用。
+口径：只统计原始商店 133 个 app-meta。仓库镜像池包含一批商店之外的补充应用，
+因此“镜像数”与“商店覆盖数”不是同一个数字。
 
 ## 总览
 
 - 原始商店：**133** 个 app-meta
 - 可用：**113**；死刑：**20**；待定：**0**
-- 已有 Docker 镜像覆盖：**22**
+- 已有 Docker 镜像覆盖：**29**（原 22 + 本轮 7）
 - 固件内原生/LuCI 应用（不需要镜像）：**76**
-- 容器/混合、需逐条确认：**4**（`owntone`、`pve`、`ubuntu`、`hermes`）
-- **确认还差的容器应用：11；若 4 个待确认项也按容器计，最多 15**
-- 我们的镜像池共 79 个，其中商店之外的应用：**57** 个
+- 确认阻塞、无可靠 loong64 路径：**8**
+- 确认还差且可做：**0**
+- 我们的镜像池共 **87** 个镜像（新增 8 个：7 个应用，Penpot 拆 backend/frontend）
 
-## 已覆盖的 22 个
+## 本轮新增的 7 个应用
+
+| iStore 应用 | 镜像 | 状态 |
+|---|---|---|
+| `chinesesubfinder` | `yunixintel/chinesesubfinder` | 已发布，UI/健康检查通过 |
+| `lanraragi` | `yunixintel/lanraragi` | 已发布，UI/Redis/健康检查通过 |
+| `owntone` | `yunixintel/owntone` | 已发布，Web/健康检查通过 |
+| `mymind` | `yunixintel/mymind` | 已发布，静态站点/健康检查通过 |
+| `webvirtcloud` | `yunixintel/webvirtcloud` | 已发布，登录页/静态资源/健康检查通过 |
+| `penpot` | `yunixintel/penpot-backend` + `yunixintel/penpot-frontend` | 已发布，迁移/绘图 API/健康检查通过 |
+| `hermes` | `yunixintel/hermes` | 已发布，WebUI/健康检查通过 |
+
+构建细节见各自 `images/<app>/BUILD.md`。
+
+## 已覆盖的 29 个
 
 | iStore 应用 | 我们的镜像 |
 |---|---|
+| `chinesesubfinder` | `yunixintel/chinesesubfinder` |
 | `codeserver` | `yunixintel/code-server` |
 | `dpanel` | `yunixintel/dpanel` |
 | `drawio` | `yunixintel/drawio` |
 | `excalidraw` | `yunixintel/excalidraw` |
 | `gogs` | `yunixintel/gogs` |
 | `heimdall` | `yunixintel/heimdall` |
+| `hermes` | `yunixintel/hermes` |
 | `homeassistant` | `yunixintel/homeassistant` |
 | `homebox` | `yunixintel/homebox` |
 | `ittools` | `yunixintel/it-tools` |
 | `jackett` | `yunixintel/jackett` |
 | `jellyfin` | `yunixintel/jellyfin` |
 | `kodexplorer` | `yunixintel/kodexplorer` |
+| `lanraragi` | `yunixintel/lanraragi` |
 | `memos` | `yunixintel/memos` |
+| `mymind` | `yunixintel/mymind` |
 | `navidrome` | `yunixintel/navidrome` |
 | `nextcloud` | `yunixintel/nextcloud` |
 | `oneapi` | `yunixintel/one-api` |
 | `openwebui` | `yunixintel/openwebui` |
+| `owntone` | `yunixintel/owntone` |
+| `penpot` | `yunixintel/penpot-backend` + `yunixintel/penpot-frontend` |
 | `qbittorrent-ee` | `yunixintel/qbittorrent-ee` |
 | `typecho` | `yunixintel/typecho` |
 | `uptimekuma` | `yunixintel/uptimekuma` |
 | `vaultwarden` | `yunixintel/vaultwarden` |
+| `webvirtcloud` | `yunixintel/webvirtcloud` |
 | `xteve` | `yunixintel/xteve` |
 
-## 还差的 11 个容器应用
+## 8 个阻塞应用
 
-| iStore 应用 | 说明 | 结论 |
-|---|---|---|
-| `chinesesubfinder` | Go，需 qBittorrent 等配套，可移植 | 可做 |
-| `emby` | 闭源二进制，无 loong64 | 阻塞 |
-| `immich` | ML/ONNX 无 loong64，完整版受阻；可做无 ML 精简版 | 受限 |
-| `lanraragi` | Perl + Redis 可选，可移植 | 可做 |
-| `mtphotos` | 闭源/仅 x86/ARM 镜像，无源码 | 阻塞 |
-| `mymind` | 上游闭源/无 loong64，待确认 | 待确认 |
-| `penpot` | Clojure/Java + PostgreSQL + Redis，工程量大 | 可评估 |
-| `photoprism` | TensorFlow/ONNX，loong64 受阻 | 受限 |
-| `plex` | 闭源二进制，无 loong64 | 阻塞 |
-| `unifi` | Java Controller + MongoDB，工程量大 | 可评估 |
-| `webvirtcloud` | Python/Django + libvirt，可移植 | 可做 |
+证据与替代方案见 [BLOCKED-APPS.md](BLOCKED-APPS.md)。
+
+| iStore 应用 | 阻塞原因 |
+|---|---|
+| `emby` | 闭源二进制，上游仅 amd64/arm/arm64 |
+| `immich` | 需要 VectorChord/pgvecto.rs + ONNX Runtime，均无 loong64 |
+| `mtphotos` | 闭源，上游仅 amd64/arm64 |
+| `photoprism` | 编译期依赖 libvips 与 TensorFlow C 库，均无 loong64 |
+| `plex` | 闭源二进制，上游仅 amd64/arm/arm64 |
+| `pve` | `META_ARCH:=x86_64`，PVE 内核/KVM 为 x86 虚拟化 |
+| `ubuntu` | Kasm Ubuntu 镜像仅 amd64，KasmVNC 无 loong64 |
+| `unifi` | 强依赖 MongoDB，MongoDB 无 loong64 |
 
 ## 76 个固件内原生/LuCI 应用（不需要 Docker 镜像）
 
@@ -63,13 +84,10 @@
 
 > 这些应用由 la5 固件 feed/LuCI 提供，或已经是系统标配；不应按“缺镜像”计算。
 
-## 4 个待确认的容器/混合应用
-
-`owntone`、`pve`、`ubuntu`、`hermes` 在 iStore 里可能是原生包、容器或混合形态；
-需要核对 app-meta 定义后再决定是否补镜像。
-
-
 ## 结论
 
-- 按原始商店口径，113 个可用应用中，镜像覆盖 22 个；剩下 91 个里 76 个是固件原生应用、4 个待确认、**11 个确认需要补容器镜像（最多 15）**。
-- 11 个中可优先做的是 `chinesesubfinder`、`lanraragi`、`webvirtcloud`；`penpot`/`unifi` 可评估；`immich`/`photoprism` 受 ML 限制；`emby`/`plex`/`mtphotos`/`mymind` 受闭源或架构限制。
+- 按原始商店口径，113 个可用应用中：**29 个有 loong64 镜像**、**76 个由固件原生提供**、
+  **8 个有明确技术阻塞**。
+- 15 个原缺口应用已全部处理：7 个完成并发布，8 个给出可复现的阻塞证据。
+- 阻塞项如果未来出现 loong64 的 MongoDB / ONNX Runtime / TensorFlow / libvips /
+  KasmVNC 或上游闭源镜像，可按 [BLOCKED-APPS.md](BLOCKED-APPS.md) 重新评估。

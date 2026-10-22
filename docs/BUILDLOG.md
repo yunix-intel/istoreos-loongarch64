@@ -510,3 +510,13 @@
   - 已推送 `yunixintel/mealie:loong64`/`24.10-la5`，digest `sha256:807d9025…e673`。
 
 - CasaOS 真实 USB 只读测试（2026-10-22）：/dev/sda 为 58.2G Alcor 读卡器 + LOONGSONISO。udevil 识别并 ro 挂载到 /media/root/LOONGSONISO，卸载正常；local-storage 白名单不含 usb，未写入 o_disk；smartctl 因读卡器桥接不支持 SMART。未格式化、未写盘。
+
+- 2026-10-23 原始 iStore 15 个缺口应用收尾：7 个发布、8 个给出阻塞证据（见 [BLOCKED-APPS.md](BLOCKED-APPS.md)）。
+  - ChineseSubFinder v0.55.2 Lite：Go + Quasar；`go-webrtcvad` 补 LoongArch 分支；前端在 x86 WSL2 构建。镜像 1.04GB，digest `sha256:5b6367a3…809a`。
+  - LANraragi 0.9.81：126 个 CPAN 模块；`PERL5LIB` 需带 `loongarch64-linux-thread-multi`；`install.pl` libarchive 检查跳过。镜像 738MB，digest `sha256:374bd7e6…efed`。
+  - OwnTone 29.3：autoreconf 编；运行期需 dbus + avahi；`gettext-devel`/`openssl-devel` 补齐。镜像 980MB，digest `sha256:52c3e49c…b8f`。
+  - MyMind：iStore 内置静态站 + openEuler nginx；32 个文件，无后端。镜像约 330MB，digest `sha256:0db902f4…d5d6`。
+  - WebVirtCloud：Django 4.2 + Python 3.11 + libvirt + noVNC；自写 shell supervisor 替代 runit；bcrypt 需 Rust；GID 33 冲突用 `groupadd -o`。镜像约 600MB，digest `sha256:263e7da5…19ab`。
+  - Penpot 2.18.3：取官方 backend uberjar（Java 21 字节码）+ openEuler JDK 21；前端静态产物 + nginx 反代；PostgreSQL+Redis 下迁移到 0153。backend digest `sha256:96eb7b46…0bfe`，frontend `sha256:71153a40…ea96`。
+  - Hermes：Python 3.14.8（复用 Mealie 前缀）+ Hermes agent/webui；pip 的 browser-harness/Pillow 冲突用 `--no-deps` + 过滤依赖解决；`HERMES_NIX_BUILD=1` 才允许打 wheel；pillow-heif 因缺 libheif 跳过。
+  - 阻塞：Emby/Plex/MT Photos（闭源仅 amd64/arm）、UniFi（MongoDB）、Immich（VectorChord+ONNX）、PhotoPrism（libvips+TensorFlow）、PVE（x86）、Ubuntu（Kasm amd64）。

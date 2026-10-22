@@ -2,7 +2,7 @@
 
 状态：✅=可用（自编/官方引用/自洽/库） ❌=死刑 ⏳=待定/需真机。
 
-覆盖统计（镜像/原生/待补）见 [STORE-COVERAGE.md](STORE-COVERAGE.md)。
+覆盖统计（镜像/原生/待补）见 [STORE-COVERAGE.md](STORE-COVERAGE.md)；无法移植的 8 个应用及证据见 [BLOCKED-APPS.md](BLOCKED-APPS.md)。
 
 | # | 应用 | 状态 | 说明 |
 |---|---|---|---|

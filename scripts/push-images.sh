@@ -22,6 +22,7 @@ IMAGES=(
   caddy
   calibre-web
   changedetection
+  chinesesubfinder
   code-server
   dashy
   dpanel
@@ -38,6 +39,7 @@ IMAGES=(
   gotify
   grafana
   heimdall
+  hermes
   homarr
   homeassistant
   homebox
@@ -50,6 +52,7 @@ IMAGES=(
   jellystat
   kodexplorer
   kopia
+  lanraragi
   linkding
   mariadb
   mealie
@@ -59,6 +62,7 @@ IMAGES=(
   miniflux
   minio
   mosquitto
+  mymind
   navidrome
   nextcloud
   nginx-proxy-manager
@@ -69,7 +73,10 @@ IMAGES=(
   ntfy
   one-api
   openwebui
+  owntone
   paperless-ngx
+  penpot-backend
+  penpot-frontend
   phpmyadmin
   pihole
   portainer
@@ -90,6 +97,7 @@ IMAGES=(
   vaultwarden
   wallabag
   watchtower
+  webvirtcloud
   wizarr
   xteve
 )

@@ -1,6 +1,6 @@
 # loongarch64 应用镜像
 
-共 79 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
+共 87 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
 `loong64`（浮动）与 `24.10-la5`（与 GitHub Release 对齐）。
 
 拉取：
@@ -74,6 +74,14 @@ docker pull yunixintel/jellyfin:loong64
 | `yunixintel/pihole` | 287MB | `/admin/` 200；`pihole -g` 拉取 1 条 adlist；`dig` 被拦截域名返回 NXDOMAIN | FTL 6.8 + web 6.6.1；C/C++，静态 nettle 3.10；上游 `pihole` CLI + `gravity.sh` + `pihole-adlist`（add/list/remove）；DNS 53 / Web 80；`/etc/pihole` |
 | `yunixintel/gatus` | 35MB | `/` 200；`/api/v1/endpoints/statuses` 200 | 5.37.0；Go 静态编；自带 `web/static`；scratch；默认配置监控 Prometheus；8080 |
 | `yunixintel/mealie` | 2.17GB | `/` 200；`/api/app/about` version 3.29.0；SQLite 初始化；健康检查 healthy | 3.29.0；Python 3.14.8 自编；Nuxt 前端 x86 构建；Rust 1.99 编原生模块；`/app/data`；9000；UID 911；HEIF/HEIC 不支持 |
+| `yunixintel/chinesesubfinder` | 1.04GB（Hub 385MB） | `/` 200；健康检查 healthy | v0.55.2 Lite；Go + Quasar；go-webrtcvad 补 LoongArch；`/config`、`/media`；19035；内置 ffmpeg |
+| `yunixintel/lanraragi` | 738MB（Hub 273MB） | `/` 200、标题 LANraragi、Redis 启动；healthy | 0.9.81；Perl + 126 CPAN 模块；内置 Redis；PERL5LIB 需带 loongarch64 目录；3000 |
+| `yunixintel/owntone` | 980MB（Hub 355MB） | `/` 200；healthy | 29.3；DAAP/AirPlay；容器内 dbus + avahi；`/srv/music`；3689 |
+| `yunixintel/mymind` | 约 330MB（Hub 130MB） | `/` 200、全部静态资源 200；healthy | 纯静态思维导图 + nginx；无后端；80 |
+| `yunixintel/webvirtcloud` | 约 600MB（Hub 235MB） | 登录页 200、静态资源 200、migrate 完成；healthy | Django 4.2 + libvirt + noVNC；gunicorn/novncd/nginx；`data` 与 `.ssh` 需持久化；80 |
+| `yunixintel/penpot-backend` | 约 900MB（Hub 710MB） | 迁移至 0153、6060、`/api` 200 | 2.18.3；官方 uberjar + openEuler JDK 21；需 PostgreSQL/Redis；`PENPOT_SECRET_KEY` 必填 |
+| `yunixintel/penpot-frontend` | 约 350MB（Hub 274MB） | `/` 200、Penpot 标题、API 代理 200；healthy | 2.18.3 静态前端 + nginx；反代 backend；8080 |
+| `yunixintel/hermes` | 3.68GB（Hub 1.23GB） | `/` 200、`/health` 200、双进程；healthy | Hermes agent + WebUI；Python 3.14.8；8787；HEIC 不支持；镜像含 gcc/rust |
 | `yunixintel/nocodb` | 1.58GB | `/api/v1/health` 200；`/` 302→`/dashboard/` 200；SQLite 初始化；健康检查 healthy | 0.301.3 + Node 24；npm 需 `--ignore-scripts`；sqlite3 手动编 loong64；自定义 runner；`/data`；8080；UID 1000 |
 | `yunixintel/apprise-api` | 1.03GB | `/` 200；`/status` OK；stateless `/notify/` 进入通知流程；健康检查 healthy | 2.0.1 + Python 3.11；系统 cryptography/gevent；pycares 需 cmake；nginx+supervisor+gunicorn；`/config`、`/attach`、`/plugin`；8000 |
 | `yunixintel/homebox` | 346MB | `/` 200；`/api/v1/status` health=true；版本 v0.10.3；SQLite 初始化；健康检查 healthy | v0.10.3；Nuxt 静态前端 embed；Go 1.27；modernc sqlite 升到 1.61 支持 loong64；`/data`；7745；UID 1000；默认允许注册 |

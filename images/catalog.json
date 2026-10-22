@@ -551,5 +551,61 @@
     "architecture": "linux/loong64",
     "verification": "`/` 200；`/api/app/about` version 3.29.0；SQLite/数据目录初始化；健康检查 healthy",
     "notes": "3.29.0；Python 3.14.8 自编；Nuxt 前端 x86 构建；Rust 1.99 编 orjson/pydantic-core/curl-cffi；`/app/data`；9000；UID 911；HEIF/HEIC 不支持（libheif 缺失，stub）"
+  },
+  {
+    "image": "yunixintel/chinesesubfinder",
+    "size": "1.04GB (Hub 385MB)",
+    "architecture": "linux/loong64",
+    "verification": "`/` 200；UI 可访问；健康检查 healthy",
+    "notes": "v0.55.2 Lite；Go + Quasar 前端（x86 构建）；go-webrtcvad 补 LoongArch 分支；`/config`、`/media`；19035；UID 1026；内置 ffmpeg"
+  },
+  {
+    "image": "yunixintel/lanraragi",
+    "size": "738MB (Hub 273MB)",
+    "architecture": "linux/loong64",
+    "verification": "`/` 200；标题 LANraragi；Redis 启动；健康检查 healthy",
+    "notes": "0.9.81；Perl + 126 个 CPAN 模块；内置 Redis；需设置 PERL5LIB loongarch64 路径；`content`/`thumb`/`database`；3000；UID 9001"
+  },
+  {
+    "image": "yunixintel/owntone",
+    "size": "980MB (Hub 355MB)",
+    "architecture": "linux/loong64",
+    "verification": "`/` 200；Web UI 可访问；健康检查 healthy",
+    "notes": "29.3；DAAP/DACP/AirPlay；容器内启动 dbus + avahi；`/srv/music`、`/var/cache/owntone`；3689；UID 998"
+  },
+  {
+    "image": "yunixintel/mymind",
+    "size": "约 330MB (Hub 130MB)",
+    "architecture": "linux/loong64",
+    "verification": "`/` 200；editor.html/my-mind.js/图标/Pell 均 200；健康检查 healthy",
+    "notes": "纯静态思维导图；nginx；32 个文件；无后端/无持久化；80"
+  },
+  {
+    "image": "yunixintel/webvirtcloud",
+    "size": "约 600MB (Hub 235MB)",
+    "architecture": "linux/loong64",
+    "verification": "登录页 200；静态 CSS/JS 200；migrate 完成；health healthy",
+    "notes": "Django 4.2 + Python 3.11 + libvirt + noVNC；gunicorn/novncd/nginx 三进程；`/srv/webvirtcloud/data`、`/var/www/.ssh`；80；UID 33"
+  },
+  {
+    "image": "yunixintel/penpot-backend",
+    "size": "约 900MB (Hub 710MB)",
+    "architecture": "linux/loong64",
+    "verification": "PostgreSQL+Redis 下迁移至 0153；backend 6060；`/api` 200",
+    "notes": "2.18.3；复用官方 uberjar（Java 21 字节码）+ openEuler JDK 21；需外部 PostgreSQL/Redis；`PENPOT_SECRET_KEY` 必填；exporter 未移植"
+  },
+  {
+    "image": "yunixintel/penpot-frontend",
+    "size": "约 350MB (Hub 274MB)",
+    "architecture": "linux/loong64",
+    "verification": "`/` 200；标题 Penpot；main.js 200；API 代理 200；健康检查 healthy",
+    "notes": "2.18.3 静态前端；nginx + envsubst；`/api`/`/assets`/`/ws/notifications` 反代 backend；8080；需与 backend 同网络"
+  },
+  {
+    "image": "yunixintel/hermes",
+    "size": "3.68GB (Hub 1.23GB)",
+    "architecture": "linux/loong64",
+    "verification": "`/` 200；`/health` 200；gateway + WebUI 双进程；健康检查 healthy",
+    "notes": "Hermes agent/webui master；Python 3.14.8；browser-harness/Pillow 冲突用 --no-deps+过滤依赖；pillow-heif/HEIC 不支持；`/data/.hermes`、`/workspace`；8787；UID 1000"
   }
 ]

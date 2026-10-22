@@ -281,6 +281,74 @@ docker run --rm -v "$PWD":/src -w /src openeuler/openeuler:24.03 bash -c '
 - 原因：Mealie 的 pydantic 设置在运行时不带默认 `PRODUCTION`。
 - 修复：设置 `PRODUCTION=true`（本镜像已内置）。
 
+## 2026-10 新镜像的坑
+
+### ChineseSubFinder：`#error Please add support for your architecture`
+
+- 原因：`go-webrtcvad` 的 `arch.h` 没有 LoongArch 分支。
+- 修复：在 `arch.h` 增加：
+
+```c
+#elif defined(__loongarch__) || defined(__loongarch64__)
+#define WEBRTC_ARCH_64_BITS
+#define WEBRTC_ARCH_LITTLE_ENDIAN
+```
+
+- 运行期若报 `mkdir Logs: permission denied`，把 `WORKDIR` 设为 `/config`，
+  entrypoint `cd /config` 后再降权。
+
+### LANraragi：`Can't locate LANraragi/Utils/Config.pm`
+
+- 原因：CPAN 模块在 `local::lib` 下，Perl 默认不搜索。
+- 修复：`PERL5LIB` 同时包含通用与架构目录：
+
+```text
+/home/koyomi/perl5/lib/perl5:/home/koyomi/perl5/lib/perl5/loongarch64-linux-thread-multi
+```
+
+- `install.pl` 的 libarchive 检查会报 `Unsupported compile language "C"`；
+  该检查不影响链接，可直接跳过（第 137–138 行）。
+- 镜像必须含 `perl-local-lib`，否则运行时缺 `local/lib.pm`。
+
+### OwnTone：`mDNS init failed`
+
+- 原因：即使关闭 mDNS 公告，OwnTone 初始化仍要求 D-Bus/Avahi。
+- 修复：镜像内安装 `dbus avahi avahi-tools`，entrypoint 先启动
+  `dbus-daemon --system --fork` 与 `avahi-daemon --daemonize --no-chroot`。
+- 日志文件需在降权前 `touch` 并 `chown`。
+
+### WebVirtCloud：`bcrypt` 无 loong64 wheel
+
+- 原因：pip 回退源码编译，需要 Rust。
+- 修复：构建容器安装 `rust cargo`；或预装系统 `python3-bcrypt`。
+- `cryptography/cffi` 源码编译失败时，先装系统
+  `python3-cryptography python3-cffi libffi-devel`。
+- `numpy` 被 websockify 拉起会触发 CMake 源码构建，装系统 `python3-numpy` 跳过。
+- openEuler 的 GID 33 已被 `tape` 占用，创建 `www-data` 用
+  `groupadd -o -g 33 www-data`。
+
+### Penpot：官方 JRE 26 无法在 loong64 运行
+
+- 原因：官方 backend 镜像自带 x86 JRE 26；龙芯只有 OpenJDK 21。
+- 修复：只取官方 `penpot.jar`，确认 class major version 为 65（Java 21），
+  在 openEuler 上装 `java-21-openjdk-headless` 运行。
+- 不要直接用官方 `run.sh`：它包含 JDK 24+ 才认识的
+  `--sun-misc-unsafe-memory-access`，在 Java 21 会启动失败。
+- 前端 nginx 必须用变量 `proxy_pass` + Docker DNS `127.0.0.11`，
+  否则 backend 未启动时 nginx 直接退出。
+
+### Hermes：pip 解析 `browser-harness` 与 `Pillow` 冲突
+
+- 原因：Hermes 直接依赖 `Pillow==13.0.0`，`browser-harness` 又精确要求
+  `pillow==12.3.0`；pip 没有 uv 的 override 机制，报 `ResolutionImpossible`。
+- 修复：`browser-harness` 用 `--no-deps` 预装，再从
+  `importlib.metadata.requires("hermes-agent")` 生成顶层依赖列表，
+  跳过 `browser-harness`/`cryptography`/`pynacl`/`pillow-heif` 后安装。
+- `pillow-heif` 需要 `libheif-devel`，openEuler 无此包；Hermes 对它是软依赖，
+  跳过即可（HEIC/HEIF 图片不可用，JPEG/PNG/WebP 正常）。
+- Hermes 的 wheel 构建有保护：必须 `HERMES_NIX_BUILD=1 pip install --no-deps`
+  才能生成 wheel，否则报 “Building wheels or sdists for hermes-agent is not supported”。
+
 ## Docker Hub
 
 ### `denied: requested access to the resource is denied`

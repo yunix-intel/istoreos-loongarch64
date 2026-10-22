@@ -17,7 +17,7 @@
 |---|---|---|
 | 公版固件 la5 | GitHub Release `24.10-la5` | 已发布 |
 | 私人固件 p1 | 私有库 `/build/firmware/personal-p1-20261019.img.gz` | 已构建，U 盘待验 |
-| 79 个应用镜像 | Docker Hub `yunixintel/*` | 已推送，生产级全量测试待做 |
+| 87 个应用镜像 | Docker Hub `yunixintel/*` | 已推送，生产级全量测试待做 |
 | CasaOS P3 安装包 | 私有库 `casaos-p3/` + 构建机 tarball | 功能验证完成，真实盘待验 |
 | Podman/dockerman | la5 固件内 | 已真机验证 |
 | EasyTier/mihomo | 私有库模板 + 固件 feed | 已做稳定性/性能测试 |
@@ -43,6 +43,7 @@
 | [BUILDLOG.md](BUILDLOG.md) | 按日期的完整构建/踩坑时间线 |
 | [RELEASES.md](RELEASES.md) | la1–la5/v1 的定位、差异与 Release 资产 |
 | [STORE-COVERAGE.md](STORE-COVERAGE.md) | 原始 iStore 133 app-meta 的镜像/原生/待补覆盖统计 |
+| [BLOCKED-APPS.md](BLOCKED-APPS.md) | 8 个无法移植应用的证据、阻塞原因与替代方案 |
 | [NAMING.md](NAMING.md) | 固件/镜像/私有版本命名规则 |
 | [PODMAN.md](PODMAN.md) | podman/crun/dockerman 栈与 OpenWrt 打包坑 |
 | [CASAOS-P3.md](CASAOS-P3.md) | CasaOS 组件、补丁、安装/运行、磁盘验证 |
@@ -51,7 +52,7 @@
 | [KVM-PLAN.md](KVM-PLAN.md) | KVM 路线与封存依据 |
 | [PRODUCTION-TEST.md](PRODUCTION-TEST.md) | 开发冻结后的全量生产测试计划 |
 | [GAPS.md](GAPS.md) / [ROADMAP.md](ROADMAP.md) | 缺口盘点与路线图 |
-| [../images/](../images/) | 79 个应用目录 / 77 个 Dockerfile / 79 份 BUILD.md + 79 只机读目录 `catalog.json` |
+| [../images/](../images/) | 87 个应用目录 / 85 个 Dockerfile / 87 份 BUILD.md + 87 只机读目录 `catalog.json` |
 | [APP-SYNC-CHECKLIST.md](APP-SYNC-CHECKLIST.md) | **新增/更新应用的强制同步清单** |
 | [PRIVACY-REVIEW.md](PRIVACY-REVIEW.md) | 转公开前的隐私/历史/大文件审计清单 |
 
@@ -69,15 +70,17 @@
 
 禁止只推镜像不写文档；禁止把真实密钥/节点地址写入公开库。
 
-## 6. 当前状态（2026-10-21）
+## 6. 当前状态（2026-10-23）
 
 - 固件：la1–la5 连续发版；la5 内置 docker+podman；私人 p1 已构建。
-- 镜像：79 个仓库，全部 `loong64` + `24.10-la5`；新增 homer、paperless-ngx、dashy、
-  watchtower、changedetection、caddy、dozzle、ntfy、gotify、node-exporter、prometheus、pihole、gatus、alertmanager、postgres、redis、mosquitto、mariadb、node-red、grafana、memcached、homebridge、rest-server、node、actual-budget、minio、homebox、nocodb、apprise-api、mealie。
+- 镜像：87 个仓库，全部 `loong64` + `24.10-la5`；新增 homer、paperless-ngx、dashy、
+  watchtower、changedetection、caddy、dozzle、ntfy、gotify、node-exporter、prometheus、pihole、gatus、alertmanager、postgres、redis、mosquitto、mariadb、node-red、grafana、memcached、homebridge、rest-server、node、actual-budget、minio、homebox、nocodb、apprise-api、mealie、chinesesubfinder、lanraragi、owntone、mymind、webvirtcloud、penpot-backend、penpot-frontend、hermes。
+- 原始 iStore 133：29 个有镜像、76 个固件原生、8 个有明确阻塞证据；见
+  [STORE-COVERAGE.md](STORE-COVERAGE.md) 与 [BLOCKED-APPS.md](BLOCKED-APPS.md)。
 - CasaOS P3：systemd/CLI/安装卸载、NBD 挂载/卸载/重启自挂/格式化通过；真实盘待验。
 - Podman：host/none 网络真机通过；bridge 需宿主 nft_conntrack。
 - 已知缺口：CasaOS 真实盘 SMART/USB、固件 U 盘首启、生产级全量测试、10 个早期镜像
-  未保留 Dockerfile（配方已补）。
+  未保留 Dockerfile（配方已补）、Penpot exporter 未移植、Hermes 的 HEIC 支持缺失。
 
 ## 7. 下一步
 

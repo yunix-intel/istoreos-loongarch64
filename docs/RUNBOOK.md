@@ -284,6 +284,88 @@ docker run -d --name mealie -p 9000:9000   -v mealie-data:/app/data yunixintel/m
 - **HEIF/HEIC 图片不支持**（loong64 缺 libheif，本镜像用 stub 禁用）。
 - 完整说明见 [../images/mealie/BUILD.md](../images/mealie/BUILD.md)。
 
+### ChineseSubFinder
+
+```bash
+docker run -d --name chinesesubfinder -p 19035:19035   -v csf-config:/config -v /path/to/media:/media   yunixintel/chinesesubfinder:loong64
+```
+
+- Web UI：`http://<host>:19035/`。
+- `/config` 保存配置/数据库/日志；`/media` 挂影视目录。
+- Lite 模式，内置 ffmpeg；首次启动到 UI 配置字幕站点。
+- 完整说明见 [../images/chinesesubfinder/BUILD.md](../images/chinesesubfinder/BUILD.md)。
+
+### LANraragi
+
+```bash
+docker run -d --name lanraragi -p 3000:3000   -v lanraragi-content:/home/koyomi/lanraragi/content   -v lanraragi-thumb:/home/koyomi/lanraragi/thumb   -v lanraragi-db:/home/koyomi/lanraragi/database   yunixintel/lanraragi:loong64
+```
+
+- Web `3000`；内置 Redis，首次启动自动拉起。
+- 三个卷都建议持久化；数据库卷含索引。
+- 默认无认证，公网暴露前务必加密码或反代认证。
+- 完整说明见 [../images/lanraragi/BUILD.md](../images/lanraragi/BUILD.md)。
+
+### OwnTone
+
+```bash
+docker run -d --name owntone -p 3689:3689   -v /path/to/music:/srv/music -v owntone-cache:/var/cache/owntone   yunixintel/owntone:loong64
+```
+
+- Web/DAAP `3689`；首次启动扫描 `/srv/music`。
+- 容器内启动 dbus + avahi；AirPlay 发现建议 host 网络。
+- 完整说明见 [../images/owntone/BUILD.md](../images/owntone/BUILD.md)。
+
+### MyMind
+
+```bash
+docker run -d --name mymind -p 8080:80 yunixintel/mymind:loong64
+```
+
+- 纯静态思维导图；浏览器打开 `http://<host>:8080/`。
+- 无后端、无持久化；数据在浏览器 LocalStorage/导出文件。
+- 完整说明见 [../images/mymind/BUILD.md](../images/mymind/BUILD.md)。
+
+### WebVirtCloud
+
+```bash
+docker run -d --name webvirtcloud -p 8080:80   -v webvirt-data:/srv/webvirtcloud/data   -v webvirt-ssh:/var/www/.ssh   yunixintel/webvirtcloud:loong64
+```
+
+- 登录页 `http://<host>:8080/`；首次启动自动迁移并建管理员。
+- `data` 卷保存 SQLite 与 `secret_key`，必须持久化。
+- noVNC 走 `/novncd/`、`/websockify`，反代需 WebSocket。
+- 完整说明见 [../images/webvirtcloud/BUILD.md](../images/webvirtcloud/BUILD.md)。
+
+### Penpot（backend + frontend）
+
+```bash
+docker network create penpot
+# PostgreSQL / Redis 见 images/penpot-backend/BUILD.md
+docker run -d --name penpot-backend --network penpot   -e PENPOT_PUBLIC_URI=http://<host>:9001   -e PENPOT_SECRET_KEY='<64-byte-random>'   -e PENPOT_DATABASE_URI=postgresql://penpot-postgres/penpot   -e PENPOT_DATABASE_USERNAME=penpot   -e PENPOT_DATABASE_PASSWORD=penpot   -e PENPOT_REDIS_URI=redis://penpot-redis/0   -e PENPOT_FLAGS='disable-email-verification disable-secure-session-cookies'   -v penpot-assets:/opt/data/assets yunixintel/penpot-backend:loong64
+docker run -d --name penpot-frontend --network penpot -p 9001:8080   -e PENPOT_PUBLIC_URI=http://<host>:9001   -e PENPOT_BACKEND_URI=http://penpot-backend:6060   -e PENPOT_FLAGS='disable-email-verification disable-secure-session-cookies'   yunixintel/penpot-frontend:loong64
+```
+
+- Web `9001`；backend `6060`、frontend `8080` 仅容器网络内。
+- 需要外部 PostgreSQL 与 Redis；`PENPOT_PUBLIC_URI` 必须与浏览器地址一致。
+- 导出 PDF/PNG 需要 exporter（未移植），绘图/协作正常。
+- 完整说明见 [../images/penpot-backend/BUILD.md](../images/penpot-backend/BUILD.md)。
+
+### Hermes
+
+```bash
+docker run -d --name hermes -p 8787:8787 \
+  -v hermes-data:/data/.hermes -v hermes-workspace:/workspace \
+  yunixintel/hermes:loong64
+```
+
+- WebUI `http://<host>:8787/`；健康检查 `/health`。
+- 容器内同时跑 `hermes gateway` 与 WebUI；任一退出会清理另一个。
+- `data` 卷保存配置/会话/技能；`workspace` 是 agent 工作目录。
+- 默认无密码，对外暴露前设 `HERMES_WEBUI_PASSWORD` 或加反代认证。
+- HEIC/HEIF 图片不支持；`computer_use` 工具在 loongarch64 上不可用。
+- 完整说明见 [../images/hermes/BUILD.md](../images/hermes/BUILD.md)。
+
 ### NocoDB
 
 ```bash
@@ -412,7 +494,7 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 79 个镜像）
+## 3. 端口索引（全部 87 个镜像）
 
 ### 从端口索引生成最小启动命令
 
@@ -448,6 +530,14 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | node | — | — | Node 运行时基础镜像，不直接对外服务 |
 | homebox | 7745 | `/data` | UID 1000；SQLite；默认允许注册 |
 | mealie | 9000 | `/app/data` | UID 911；SQLite；HEIF 不支持 |
+| chinesesubfinder | 19035 | `/config`、`/media` | UID 1026；Lite；内置 ffmpeg |
+| lanraragi | 3000 | `content`、`thumb`、`database` | UID 9001；内置 Redis；默认无认证 |
+| owntone | 3689 | `/srv/music`、`/var/cache/owntone` | UID 998；容器内 avahi/dbus |
+| mymind | 80 | — | 纯静态；无持久化 |
+| webvirtcloud | 80 | `/srv/webvirtcloud/data`、`/var/www/.ssh` | UID 33；SQLite；noVNC WebSocket |
+| penpot-backend | 6060 | `/opt/data/assets` | 需 PostgreSQL/Redis；`PENPOT_SECRET_KEY` 必填 |
+| penpot-frontend | 8080 | — | 反代 penpot-backend；9001 对外 |
+| hermes | 8787 | `/data/.hermes`、`/workspace` | UID 1000；默认无密码；HEIC 不支持 |
 | nocodb | 8080 | `/data` | UID 1000；SQLite；`NC_DB` 用 `?d=` |
 | apprise-api | 8000 | `/config`、`/attach`、`/plugin` | 默认无认证/无 TLS |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |
