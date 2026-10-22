@@ -211,6 +211,26 @@ docker run --rm -v "$PWD":/src -w /src openeuler/openeuler:24.03 bash -c '
 - 原因：`@homebridge/node-pty-prebuilt-multiarch` 没有 loong64 预编译，npm 包又不含 `src/unix`。
 - 修复：从 GitHub v0.14.1 源码 `node-gyp rebuild`，把 `build/Release/pty.node` 放回包内；不要试图在 npm 包目录里直接编译。
 
+### Actual Budget 启动报缺少 better_sqlite3.node
+
+- 原因：`better-sqlite3` 没有 install script，npm 包只带 x64/arm 预编译。
+- 修复：构建阶段进入包目录执行 `npx node-gyp rebuild`，再复制 `build/Release/better_sqlite3.node`。
+
+### Actual Budget 反代后登录/cookie 异常
+
+- 原因：未正确传递可信代理头或 host。
+- 修复：设置 `ACTUAL_TRUSTED_PROXIES`、`ACTUAL_HOSTNAME`，并确保反向代理传递 `X-Forwarded-*`。
+
+### MinIO 启动立即退出
+
+- 原因：没有设置 `MINIO_ROOT_USER` / `MINIO_ROOT_PASSWORD`。
+- 修复：两者都提供；密码不要使用示例值，且不要在公网明文暴露。
+
+### MinIO 日志出现 host failure 警告
+
+- 原因：单目录/单盘模式没有纠删码冗余，属于预期警告。
+- 修复：生产使用多盘或分布式部署，并做独立备份；不要把它当成高可用存储。
+
 ## Docker Hub
 
 ### `denied: requested access to the resource is denied`

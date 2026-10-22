@@ -363,10 +363,38 @@ docker run -d --name gatus -p 8080:8080 \
 
 ## 3. 端口索引（全部 75 个镜像）
 
+### 从端口索引生成最小启动命令
+
+所有镜像名统一为 `yunixintel/<app>:loong64`。通用模板：
+
+```bash
+docker run -d --name <app>   -p <宿主端口>:<容器端口>   -v <宿主目录>:<容器目录>   -e <变量>=<值>   yunixintel/<app>:loong64
+```
+
+常见变体：
+
+```bash
+# 单端口
+docker run -d --name uptimekuma -p 3001:3001   -v /srv/uptimekuma:/app/data yunixintel/uptimekuma:loong64
+
+# 多端口
+docker run -d --name minio -p 9000:9000 -p 9001:9001   -e MINIO_ROOT_USER=admin -e MINIO_ROOT_PASSWORD='change-me'   -v /srv/minio:/data yunixintel/minio:loong64
+
+# DNS / mDNS 或需要宿主网络的
+docker run -d --name pihole --network=host --shm-size=1g   -v /srv/pihole/etc:/etc/pihole yunixintel/pihole:loong64
+
+# 需要 Docker socket 的
+docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/docker.sock yunixintel/dozzle:loong64
+```
+
+每个应用的具体端口、挂载和限制见下表；逐应用构建记录在
+`images/<app>/BUILD.md`。
+
 | 镜像 | 端口 | 关键挂载/环境 | 备注 |
 |---|---|---|---|
 | adguardhome | 53/tcp+udp, 3000 | `/opt/adguardhome/work`、`/opt/adguardhome/conf` | 用 host 网络；避让宿主 dnsmasq |
 | actual-budget | 5006 | `/data` | UID 1002；SQLite；无内置 TLS |
+| node | — | — | Node 运行时基础镜像，不直接对外服务 |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |
 | alertmanager | 9093, 9094 | `/etc/alertmanager/alertmanager.yml`、`/alertmanager` | 9094 为 gossip；数据卷需 UID 65534 可写 |
 | postgres | 5432 | `/var/lib/postgresql/data`；环境 `POSTGRES_*` | UID 26；日志走 stdout |

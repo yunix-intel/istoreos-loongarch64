@@ -5,10 +5,12 @@
 > **仅支持 linux/loong64**。Docker Hub 仓库名统一为 `yunixintel/<app>`（不带架构后缀），架构由 `:loong64` / `:24.10-la5` tag 与 manifest 标识；`catalog.json` 每条记录包含 `"architecture": "linux/loong64"`。x86_64 / ARM 镜像不存在。
 
 - `images/<app>/Dockerfile`：保留了 73 个镜像的 Dockerfile（部分带 `Dockerfile.*` 构建阶段）。
-- `catalog.json`：75 个镜像的名称、大小、验证结论、端口/限制说明，机读索引。
+- `images/<app>/BUILD.md`：75 个应用每个都有独立构建记录；无 Dockerfile 的 10 个镜像也在
+  对应目录的 BUILD.md 给出归档配方和上游版本。
+- `catalog.json`：75 个镜像的名称、大小、验证结论、端口/限制说明、`architecture`，机读索引。
 - 未保留 Dockerfile 的 10 个镜像：adguardhome、code-server、easytier、firefly-iii、
   gitea、memos、mihomo、miniflux、phpmyadmin、vaultwarden。它们的源码版本与重建步骤
-  见 [../docs/IMAGE-BUILD.md](../docs/IMAGE-BUILD.md)。
+  见各自的 `BUILD.md` 和 [../docs/IMAGE-BUILD.md](../docs/IMAGE-BUILD.md) 第 3 节。
 - 启动命令与端口/挂载索引见 [../docs/RUNBOOK.md](../docs/RUNBOOK.md)。
 
 ## 构建上下文说明

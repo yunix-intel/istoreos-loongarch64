@@ -41,7 +41,7 @@ docker run -d --name memos --network=host -v memos:/opt/memos/data yunixintel/me
 - [应用同步清单](docs/APP-SYNC-CHECKLIST.md)：新增镜像必须完成的文档/发布步骤
 - [Podman 栈](docs/PODMAN.md)、[CasaOS P3](docs/CASAOS-P3.md)、[EasyTier/mihomo](docs/EASYTIER-MIHOMO.md)
 - [OpenCV/SSIM 配方](docs/OPENCV-SSIM.md)、[生产测试计划](docs/PRODUCTION-TEST.md)
-- [镜像 Dockerfile 目录](images/)：65 个应用目录 / 73 个 Dockerfile + 75 只机读目录
+- [镜像 Dockerfile 目录](images/)：75 个应用目录 / 73 个 Dockerfile / 75 份 BUILD.md + 75 只机读目录
 
 ## 自己编（WSL2 Ubuntu，x86_64 主机交叉编译）
 
