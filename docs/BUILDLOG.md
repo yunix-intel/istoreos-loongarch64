@@ -494,3 +494,11 @@
   - 后端 v0.10.3 自带 `modernc.org/sqlite v1.27` 没有 loong64 生成代码，升级到 v1.61.0 后 `CGO_ENABLED=0` 编译通过；Go 1.27.2。
   - 运行以 UID 1000、数据 `/data`、端口 7745；健康检查 `/api/v1/status`。验证 UI 200、health=true、版本 v0.10.3、SQLite 初始化、healthy。
   - 镜像 346MB；已推送 `yunixintel/homebox:loong64`/`24.10-la5`，digest `sha256:6aad7400…0c12`。
+- NocoDB 0.301.3：Node 24 构建；npm 包 `preinstall` 强制 pnpm，用 `npm install -g --ignore-scripts` 跳过，再对 `sqlite3` 执行 `npx node-gyp rebuild` 编出 loong64 binding。npm 包不含 `docker/main`，但 `dist/bundle.js` 导出 `Noco`，补了等价 `docker-main.js` runner。
+  - `NC_DB` 的 SQLite 文件名必须用查询参数：`sqlite3://?d=/data/noco.db`；路径形式会报 missing SQLite file name。
+  - 验证：`/api/v1/health` 200、`/` 302→`/dashboard/` 200、SQLite 初始化、健康检查 healthy；镜像 1.58GB。
+  - 已推送 `yunixintel/nocodb:loong64`/`24.10-la5`，digest `sha256:19218f4a…6bc7`。
+- Apprise API 2.0.1：上游基于 Python 3.14，本镜像在 openEuler Python 3.11 上运行；系统 `python3-cryptography 42.0.2` + `python3-gevent 22.10.2`，用 constraints 固定避免 Rust/C 重编；pycares 需要 `cmake`。
+  - nginx 适配：补建 `/etc/nginx/{server,location}-override.conf`；supervisor 降权到 apprise 后需要可写的 `/var/log/nginx`，否则 nginx FATAL。
+  - 验证：`/` 200、`/status` OK、stateless `/notify/` 进入通知流程、健康检查 healthy；镜像 1.03GB。
+  - 已推送 `yunixintel/apprise-api:loong64`/`24.10-la5`，digest `sha256:6db7f092…9002`。

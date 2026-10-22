@@ -241,6 +241,31 @@ docker run --rm -v "$PWD":/src -w /src openeuler/openeuler:24.03 bash -c '
 - 原因：v0.10.3 自带 `modernc.org/sqlite v1.27` 没有 loong64 生成文件。
 - 修复：构建前 `go get modernc.org/sqlite@v1.61.0`，再 `CGO_ENABLED=0` 编译。
 
+### NocoDB 启动报 `Meta database configuration missing SQLite file name`
+
+- 原因：`NC_DB` 的 SQLite 文件名没有放在查询参数里。
+- 修复：使用 `NC_DB=sqlite3://?d=/data/noco.db`；不要用 `sqlite3:///data/noco.db`。
+
+### NocoDB npm 安装报 `only-allow pnpm`
+
+- 原因：包内 preinstall 脚本强制 pnpm。
+- 修复：`npm install -g --ignore-scripts nocodb@...`，再手动进入 `node_modules/sqlite3` 执行 `node-gyp rebuild`。
+
+### Apprise nginx 报缺 `server-override.conf`
+
+- 原因：openEuler 的 nginx 包不会预建上游 Debian 镜像里的 override 文件。
+- 修复：构建时 `touch /etc/nginx/server-override.conf /etc/nginx/location-override.conf`。
+
+### Apprise nginx 报 error.log 权限拒绝
+
+- 原因：supervisor 把 nginx 降权到 apprise 用户，`/var/log/nginx` 不可写。
+- 修复：构建时创建 `/var/log/nginx` 并设为 0777，或改 error_log 到 stdout。
+
+### Apprise `pycares` 构建报 CMake 缺失
+
+- 原因：pycares 需要 CMake 编译。
+- 修复：构建阶段安装 `cmake`，并加系统 cryptography/gevent 的 constraints 避免重编。
+
 ## Docker Hub
 
 ### `denied: requested access to the resource is denied`

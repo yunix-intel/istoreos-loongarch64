@@ -1,0 +1,2 @@
+gevent==22.10.2
+cryptography==42.0.2

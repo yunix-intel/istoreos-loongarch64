@@ -530,5 +530,19 @@
     "architecture": "linux/loong64",
     "verification": "`/` 200；`/api/v1/status` health=true；版本 v0.10.3；SQLite 初始化；健康检查 healthy",
     "notes": "v0.10.3；Nuxt 静态前端 embed；Go 1.27；modernc sqlite 需升到 1.61 支持 loong64；`/data`；7745；UID 1000；默认允许注册"
+  },
+  {
+    "image": "yunixintel/nocodb",
+    "size": "1.58GB",
+    "architecture": "linux/loong64",
+    "verification": "`/api/v1/health` 200；`/` 302→`/dashboard/` 200；SQLite `/data/noco.db` 初始化；健康检查 healthy",
+    "notes": "0.301.3 + Node 24.22.1；npm 需 --ignore-scripts 跳过 only-allow pnpm；sqlite3 手动 node-gyp 编 loong64；自定义 docker-main runner；`/data`；8080；UID 1000"
+  },
+  {
+    "image": "yunixintel/apprise-api",
+    "size": "1.03GB",
+    "architecture": "linux/loong64",
+    "verification": "`/` 200；`/status` 返回 OK；stateless `/notify/` 进入通知流程；健康检查 healthy",
+    "notes": "2.0.1 + Python 3.11；系统 cryptography 42/gevent 22.10.2；pycares 需 cmake；nginx+supervisor+gunicorn；`/config`、`/attach`、`/plugin`；8000"
   }
 ]

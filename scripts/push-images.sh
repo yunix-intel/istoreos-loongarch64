@@ -14,6 +14,7 @@ TAG_RELEASE="${RELEASE:-24.10-la5}"   # 与 GitHub Release 对齐，可覆盖
 
 IMAGES=(
   actual-budget
+  apprise-api
   adguardhome
   alertmanager
   audiobookshelf
@@ -60,6 +61,7 @@ IMAGES=(
   navidrome
   nextcloud
   nginx-proxy-manager
+  nocodb
   node
   node-exporter
   node-red
