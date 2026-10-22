@@ -508,3 +508,5 @@
   - 版本：源码 `__version__="develop"`，镜像内改为 `3.29.0`。
   - 验证：`/` 200、`/api/app/about` version 3.29.0、`/app/data` 初始化、健康检查 healthy；镜像 2.17GB。
   - 已推送 `yunixintel/mealie:loong64`/`24.10-la5`，digest `sha256:807d9025…e673`。
+
+- CasaOS 真实 USB 只读测试（2026-10-22）：/dev/sda 为 58.2G Alcor 读卡器 + LOONGSONISO。udevil 识别并 ro 挂载到 /media/root/LOONGSONISO，卸载正常；local-storage 白名单不含 usb，未写入 o_disk；smartctl 因读卡器桥接不支持 SMART。未格式化、未写盘。

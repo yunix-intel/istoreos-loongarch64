@@ -77,7 +77,18 @@ sudo systemctl enable --now casaos.target
 - `PUT /v1/storage` 格式化后重新挂载
 - `image_ssim_diff` 与此无关；这里是 CasaOS 的挂载链路
 
-未验证：真实 SATA/USB 盘的 SMART、udevil 拔插、真机重启自挂。
+2026-10-22 只读 USB 验证（未格式化、未写盘）：
+
+- 设备：`/dev/sda`，58.2G Alcor Micro Multi Flash Reader，内含 `LOONGSONISO`（iso9660）。
+- `udevil info /dev/sda1` 正确识别 removable/has media/size。
+- `udevil mount /dev/sda1` 挂载到 `/media/root/LOONGSONISO`，`findmnt` 显示 `iso9660 ro`；
+  `udevil umount /dev/sda1` 正常卸载。
+- CasaOS local-storage 的 `o_disk` 没有新增该 USB 盘：其白名单只接受
+  `sata/nvme/sas/spi/virtio/mmc`，`usb` 被过滤，符合当前实现。
+- `smartctl` 通过 Alcor 读卡器桥接读取 SMART 失败（`Unknown USB bridge` / unsupported
+  SCSI opcode），因此该读卡器无法验证 SMART。
+
+未验证：真实 SATA/USB 盘的 SMART、格式化/写入、udevil 物理拔插、真机重启自挂。
 
 ## 6. 运行约束
 
@@ -90,6 +101,8 @@ sudo systemctl enable --now casaos.target
 
 - A 机 systemd 257：7 unit 安装、`systemd-analyze verify` 0 错误、6 服务 active、网关健康检查通过。
 - `casaos-cli` 0.4.4 可运行；`uninstall.sh --system` 清理正确。
-- 8G NBD 盘：挂载/卸载/服务重启自挂/格式化通过；真实盘 SMART/USB/真机重启待测。
+- 8G NBD 盘：挂载/卸载/服务重启自挂/格式化通过。
+- 2026-10-22 真实 USB 只读：udevil 识别、ro 挂载、卸载通过；local-storage 不收录 usb，
+  SMART 被读卡器桥接屏蔽。格式化/写入/物理拔插/真机重启仍未验证。
 
 详见 [CASAOS-PLAN.md](CASAOS-PLAN.md)。
