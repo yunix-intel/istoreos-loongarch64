@@ -6,6 +6,7 @@
 |---|---|---|---|
 | la1–la5 连续发版，la5 内置 docker+podman | ROADMAP/NAMING | ✅ | 6 个 tag 全公开；la5 Release 10-19 发布，5 附件、316MB；最近的 CI 全绿（la2/la3 历史 Release 仅 2 附件） |
 | 79 只应用镜像上 Docker Hub | ROADMAP | ✅ | Hub 79 仓库（含 freshrss、homer、paperless-ngx、dashy、watchtower、changedetection、caddy、dozzle、ntfy、gotify、node-exporter、prometheus、pihole、gatus、alertmanager、postgres、redis、mosquitto、mariadb、node-red、grafana、memcached、homebridge、rest-server、node、actual-budget、minio、homebox、nocodb、apprise-api、mealie）；逐个核验均含 `loong64`+`24.10-la5` 双 tag，均 loong64 单架构 |
+| 原始 iStore 133 商店覆盖 | STORE-APP-LIST | 🟡 | 113 可用中 22 个已有镜像；11 个确认待补容器、76 个原生/LuCI、4 个待确认；见 STORE-COVERAGE.md |
 | 文档与实物一致 | IMAGES/README/STORE-APP-LIST | ✅ | README/IMAGES 均为 79 只；CasaOS 已标注“磁盘验证前不发布”；GAPS 本次同步 |
 | 镜像推送可复现 | 私有库 | ✅ | push-images.sh 已覆盖 79 只；本地 tag 名与 Hub 仓库名不一致时按脚本注释先 `docker tag` |
 | CasaOS P1+P2 | CASAOS §7 | ✅ | 7 个 ELF、网关/UI、18 应用商店、memos 安装实测 |
