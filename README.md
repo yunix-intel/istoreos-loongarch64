@@ -37,6 +37,7 @@ docker run -d --name memos --network=host -v memos:/opt/memos/data yunixintel/me
 - [固件发布记录](docs/RELEASES.md)：la1–la5/v1 的差异与资产
 - [运行手册](docs/RUNBOOK.md)：全部镜像的启动命令、端口、挂载、健康检查
 - [下一步计划](docs/NEXT-PLAN.md)：P1–P4 应用候选、CasaOS/OMV 平台工作流与执行顺序
+- [应用详细设计](docs/APP-DESIGNS.md)：26 个应用镜像的构建路径、运行时契约、依赖与验收
 - [镜像构建手册](docs/IMAGE-BUILD.md)：工具链、CGO/glibc、Vite 8 x86 构建、特殊补丁
 - [故障排查](docs/TROUBLESHOOTING.md)：现象→原因→修复
 - [应用同步清单](docs/APP-SYNC-CHECKLIST.md)：新增镜像必须完成的文档/发布步骤

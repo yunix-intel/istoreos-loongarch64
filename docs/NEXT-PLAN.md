@@ -5,11 +5,15 @@
 依据：现有 87 个镜像、[STORE-COVERAGE.md](STORE-COVERAGE.md) 的 8 个阻塞结论、
 以及两份独立子代理调研（存储/媒体方向、生产力/自动化方向）。
 
+对应详细设计：[APP-DESIGNS.md](APP-DESIGNS.md)。本文件只排期；具体构建路径与运行时契约在设计稿中。
+
 ## 0. 范围
 
 本计划包含：
 
 - **P1–P4 共 26 个应用候选**：全部列明技术栈、LoongArch64 路径、风险和验收标准。
+  经 2026-10-23 独立审查后：**21 个可进入后续波次，5 个暂停/暂缓**（Komga、Karakeep、
+  Linkwarden、Joplin、wg-easy）。
 - **CasaOS 工作流**：P3 收尾、真实盘验收、发布闸门、上游化。
 - **OpenMediaVault（OMV）工作流**：Gate 0 可行性调研，不预设一定移植。
 - 每个镜像的完成定义（DoD）和执行顺序。
@@ -94,11 +98,11 @@
 
 ### P3 启动条件
 
-- Komga 先做 `sqlite-jdbc` native spike，失败则暂停。
+- **审查后：P3-01 Komga 暂停**，`sqlite-jdbc` 无 loongarch64 JNI；先做 native spike，未通过前不排期。
 - Matomo 在 BookStack 的 PHP/MariaDB 栈稳定后复用。
-- MeTube 先验证 yt-dlp 在 loong64 上的下载与转码。
+- MeTube 先验证 Python 3.13 + yt-dlp PO-token 路径。
 - SABnzbd 先确认 `unrar` 许可与打包方式。
-- Autobrr 先验证 modernc sqlite 版本。
+- Autobrr 的 modernc sqlite 1.60.1 已含 loong64，无需升级。
 - Woodpecker 在 Gitea 镜像稳定后做；需要 Docker socket 的权限模型写入文档。
 
 ## 5. P4：待验证 / 备选（9 个）
@@ -116,6 +120,14 @@
 | P4-09 | **Unpackerr** | *arr 解压辅助 | Go 纯二进制 | *arr 栈出现解压需求时 |
 
 P4 不进入当前排期；每项启动前先做 1 天以内的依赖 spike，再决定是否转 P3。
+
+**审查后调整（2026-10-23）：**
+
+- **P4-02 Karakeep 暂停**：sharp/libvips 无 loong64 + Chromium 依赖。
+- **P4-04 Linkwarden 暂停**：Prisma engines 无 loong64 + Playwright/Chromium + sharp。
+- **P4-05 Joplin Server 暂缓**：sharp/sqlite-vec/sqlite3 无 loong64，先做 native spike。
+- **P4-06 wg-easy 暂缓**：libsql 无 loong64 预编译，先证明可从 Rust 源码构建。
+- P4 可评估项缩减为：MediaMTX、Readeck、Registry、Pocket ID、Unpackerr。
 
 ## 6. CasaOS 工作流
 
@@ -197,7 +209,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 |---|---|---|
 | Wave 1 | P1-01..P1-05 | 5 个镜像；先做依赖 spike，再连续构建 |
 | Wave 2 | P2-01 Piwigo、P2-06 go2rtc、P2-03 Headscale、P2-04 Authelia、P2-05 Backrest | Ente 视照片决策放 Wave 2 末或 Wave 3 |
-| Wave 3 | P2-02 Ente、P3-01..P3-06 | 多服务与重依赖集中处理 |
+| Wave 3 | P2-02 Ente、P3-02..P3-06（P3-01 Komga 暂停） | 多服务与重依赖集中处理 |
 | Wave 4 | P4-01..P4-09 | 按需，每项先 spike |
 | 并行 | C-01..C-05、O-01..O-06 | 平台工作流不阻塞容器主线 |
 
@@ -235,6 +247,9 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 8. 同时打 `loong64` 与 `24.10-la5`，用 `crane manifest` 校验单架构。
 9. 冒烟测试：HTTP/API、健康检查、关键业务路径；多服务应用给 compose 示例。
 10. 提交并推送 GitHub；不写入任何密钥、真实节点地址或用户数据。
+11. 备份/恢复：列出数据卷、数据库 dump、密钥；至少做一次恢复演练。
+12. 升级/回滚：写清停服务、备份、换镜像、迁移、回滚步骤；说明是否支持降级。
+13. 可观测性：健康端点/Gatus 监控项、日志位置、资源基线（内存/CPU/磁盘）。
 
 ## 10. 明确不做
 
@@ -299,18 +314,18 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [ ] P2-04 Authelia
 - [ ] P2-05 Backrest
 - [ ] P2-06 go2rtc
-- [ ] P3-01 Komga
+- [ ] P3-01 Komga（暂停：sqlite-jdbc 无 loong64 JNI，待 spike）
 - [ ] P3-02 Matomo
 - [ ] P3-03 MeTube
 - [ ] P3-04 SABnzbd
 - [ ] P3-05 Autobrr
 - [ ] P3-06 Woodpecker CI
 - [ ] P4-01 MediaMTX
-- [ ] P4-02 Karakeep
+- [ ] P4-02 Karakeep（暂停：sharp/Chromium 无 loong64）
 - [ ] P4-03 Readeck
-- [ ] P4-04 Linkwarden
-- [ ] P4-05 Joplin Server
-- [ ] P4-06 wg-easy
+- [ ] P4-04 Linkwarden（暂停：Prisma/Playwright/sharp）
+- [ ] P4-05 Joplin Server（暂缓：sharp/sqlite-vec）
+- [ ] P4-06 wg-easy（暂缓：libsql）
 - [ ] P4-07 Registry
 - [ ] P4-08 Pocket ID
 - [ ] P4-09 Unpackerr

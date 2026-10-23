@@ -17,9 +17,13 @@
 - [ ] 在 [RUNBOOK.md](RUNBOOK.md) 增加：镜像名、容器内端口、宿主端口、必需挂载、
       环境变量、健康检查 URL、首次启动注意事项。
 - [ ] 明确 `--network=host` vs bridge，是否需要 `--privileged` / docker.sock。
-- [ ] 明确持久化目录，禁止把数据只放容器可写层。
+- [ ] 明确 `--cap-add`、`--device`、`--group-add`、`--shm-size`、`--sysctl` 等启动参数，
+      以及禁止使用的危险参数（如 `-v /dev:/dev`）。
+- [ ] 明确持久化目录，禁止把数据只放容器可写层；**禁止把单个文件路径声明为卷**
+      （`.env`、`config.php` 等应由 entrypoint 生成）。
 - [ ] 给出最小 `docker run` 命令。
 - [ ] 写明已知限制（例如无 shell、需要外部 PostgreSQL、浏览器步骤限制）。
+- [ ] 写清密钥/证书的生成与持久化位置；容器重建后会话/数据仍可用。
 
 ## C. 问题记录
 
@@ -31,7 +35,7 @@
 ## D. 清单与索引
 
 - [ ] [IMAGES.md](IMAGES.md) 增加/更新一行：大小、验证结论、端口、限制。
-- [ ] `images/catalog.json` 同步（87 只时必须仍是 87 行）。
+- [ ] `images/catalog.json` 同步（条数与 README/IMAGES 一致，不写死 87）。
 - [ ] [README.md](../README.md) 的镜像计数更新。
 - [ ] 如状态变化，更新 [ROADMAP.md](ROADMAP.md) / [GAPS.md](GAPS.md)。
 
@@ -64,7 +68,16 @@ curl -fsS http://127.0.0.1:<port>/<health>
 - [ ] push 到 `yunix-intel/istoreos-loongarch64`。
 - [ ] 私有材料（真实配置/私人包）只推 `yunix-intel/istore-la-private`。
 
-## G. 完成定义
+## G. 备份、升级与可观测性
+
+- [ ] 列出需要备份的内容：数据卷、数据库 dump、密钥/证书、配置文件。
+- [ ] 给出备份命令和恢复命令；多服务应用至少做一次恢复演练。
+- [ ] 外接数据库（MariaDB/PostgreSQL）的应用写明 dump/restore，而不是只备份容器卷。
+- [ ] 写明升级步骤：停服务、备份、换镜像、迁移、回滚；说明是否支持降级。
+- [ ] 给出健康端点/Gatus 监控项；日志位置和关键错误关键字写进 RUNBOOK。
+- [ ] 记录资源基线（内存、CPU、磁盘），供后续回归比较。
+
+## H. 完成定义
 
 同时满足以下条件才算完成：
 
@@ -72,3 +85,4 @@ curl -fsS http://127.0.0.1:<port>/<health>
 2. 别人只读公开仓库，能按文档从上游源码重建出同架构镜像。
 3. 启动命令、端口、挂载、健康检查和已知限制都有记录。
 4. 新问题在 TROUBLESHOOTING/BUILDLOG 可检索到。
+5. 备份/恢复、升级/回滚步骤经过至少一次演练或有明确命令。
