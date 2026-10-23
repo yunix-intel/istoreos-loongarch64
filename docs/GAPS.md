@@ -17,7 +17,8 @@
 | 私人 p1 命名 | NAMING | ✅ | `personal-p1-20261019.img.gz`（398.5MB，md5 a4d5…）与 FLASH-USB 一致；archive 命名合规；仅 ROADMAP/BUILDLOG 残留旧名 `v2-personal-full-la5` |
 | 个人版 U 盘真机验证 | ROADMAP 进行中 | ⬜ | FLASH-USB 验证清单全未勾，无启动日志 |
 | KVM | KVM-PLAN | ❌封存 | A 四组合全败；B（自编 qemu 9.2）同症状复现，按判据落 D；C 未投 |
-| OpenMediaVault | ROADMAP 待排期 | ⬜ | 仅“建议只做可行性调研”，无代码/验证；compose/ZFS/KVM 插件同样未动（KVM 已封存） |
+| OpenMediaVault | NEXT-PLAN/ROADMAP | 🟡 | 已排期 Gate 0 可行性（O-01..O-06）：基线/依赖闭包/SaltStack/插件；未做安装，不预设移植；见 [NEXT-PLAN.md](NEXT-PLAN.md) |
+| P1–P4 应用候选 | NEXT-PLAN | 🟡 | 26 个候选已列计划，未开工；P1 5 个、P2 6 个、P3 6 个、P4 9 个；见 [NEXT-PLAN.md](NEXT-PLAN.md) |
 | jellyfin 缩略图 | ROADMAP/BUILDLOG | ✅ | ImageSharp 全接口 + 真照片库验证，镜像已替换 |
 | navidrome DSD | IMAGES/BUILDLOG | ✅/❓ | 系统 taglib 2.0.2，DSD 已编译验证；真实媒体播放无记录 |
 | podman bridge | BUILDLOG | 🟡 | 需宿主 nft_conntrack，Loongnix 6.6 缺；host/none 可用，未修也未写入 IMAGES 限制 |

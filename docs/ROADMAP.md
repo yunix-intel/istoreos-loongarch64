@@ -8,7 +8,7 @@
 - [x] 私有库（istore-la-private：模板+脚本+重打流程）
 - [x] 多形态发布规范（ghcr/版本对应/红线）
 - [x] **六个应用镜像**（jellyfin / navidrome / vaultwarden / uptimekuma / mihomo / easytier），已上架 Docker Hub `yunixintel/*`，见 [IMAGES.md](IMAGES.md)
-- [x] **镜像池扩至 42 只**：syncthing、adguardhome、memos、gogs、filebrowser、qbittorrent-ee、it-tools、excalidraw、kopia、linkding、heimdall、nextcloud、typecho、wallabag、drawio、jackett、xteve、one-api、code-server、casaos、dpanel、shiori、jellyseerr、audiobookshelf、calibre-web、homarr、openwebui、kodexplorer、stirling-pdf、wizarr、homeassistant、sonarr、radarr、tautulli、jellystat、prowlarr、bazarr，全部上架（双 tag）；技术栈覆盖 Go/Node/.NET/Rust/C++/Python/PHP
+- [x] **镜像池扩至 42 只（历史节点；当前 87 只见 [IMAGES.md](IMAGES.md)）**：syncthing、adguardhome、memos、gogs、filebrowser、qbittorrent-ee、it-tools、excalidraw、kopia、linkding、heimdall、nextcloud、typecho、wallabag、drawio、jackett、xteve、one-api、code-server、casaos、dpanel、shiori、jellyseerr、audiobookshelf、calibre-web、homarr、openwebui、kodexplorer、stirling-pdf、wizarr、homeassistant、sonarr、radarr、tautulli、jellystat、prowlarr、bazarr，全部上架（双 tag）；技术栈覆盖 Go/Node/.NET/Rust/C++/Python/PHP
 - [x] **CasaOS 评估完成**：代码可编、安装脚本架构误判需补丁、与 iStore 互补不可同装；MVP 2–4 人日，见 [CASAOS-PLAN.md](CASAOS-PLAN.md)
 - [x] **dockermanager 点绿**（LuCI 列出宿主容器，零报错；ipk 已进个人版预置）
 - [x] **podman 全链路**（CGO podman + conmon/runc/crun + netavark；嵌套 `--network={none,host}` 跑通）
@@ -21,16 +21,17 @@
 ## 进行中
 
 - [ ] 个人版 la5 镜像 U 盘真机验证（镜像已在盒子 `/var/tmp/personal-p1-20261019.img.gz`）
-- [ ] CasaOS P3 开发完成（systemd/CLI/安装卸载/NBD 磁盘链路）；真实盘验收与上游 PR 待做
+- [ ] CasaOS P3 开发完成（systemd/CLI/安装卸载/NBD 磁盘链路）；真实盘验收与上游 PR 待做，任务见 [NEXT-PLAN.md](NEXT-PLAN.md) 的 C-01..C-06
+- [ ] P1–P4 应用候选与 CasaOS/OMV 工作流：[NEXT-PLAN.md](NEXT-PLAN.md)
 
 ## 开发完成后（冻结后执行）
 
-- [ ] **生产级全量测试**：79 镜像逐个业务验证 + 固件真机 + CasaOS 磁盘 + 24h 稳定性，见 [PRODUCTION-TEST.md](PRODUCTION-TEST.md)
+- [ ] **生产级全量测试**：87 镜像逐个业务验证 + 固件真机 + CasaOS 磁盘 + 24h 稳定性，见 [PRODUCTION-TEST.md](PRODUCTION-TEST.md)
 
 ## 待排期
 
 - [x] **CasaOS P1+P2 完成**：7 个组件编译、网关/UI 验证、18 应用商店、memos 安装实测；P3（systemd/local-storage 全盘）待排，见 CASAOS-PLAN.md
-- [ ] **OpenMediaVault**：列入最后。现实判断：SaltStack+PHP+内核模块链，loong64 上工程浩大；存储管理虽全，但 3A6000 家用场景下 ksmbd + 现有方案已够用。建议：只做可行性调研，不承诺移植。
+- [ ] **OpenMediaVault**：已列入 [NEXT-PLAN.md](NEXT-PLAN.md) 的 OMV Gate 0 可行性调研。现实判断：SaltStack+PHP+内核模块链，loong64 上工程浩大；存储管理虽全，但 3A6000 家用场景下 ksmbd + 现有方案已够用。Gate 0 只回答“能否移植/是否只做 compose 集成/no-go”，不预设移植。
 
 ## 不做
 

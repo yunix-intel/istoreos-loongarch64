@@ -52,6 +52,7 @@
 | [KVM-PLAN.md](KVM-PLAN.md) | KVM 路线与封存依据 |
 | [PRODUCTION-TEST.md](PRODUCTION-TEST.md) | 开发冻结后的全量生产测试计划 |
 | [GAPS.md](GAPS.md) / [ROADMAP.md](ROADMAP.md) | 缺口盘点与路线图 |
+| [NEXT-PLAN.md](NEXT-PLAN.md) | P1–P4 应用候选、CasaOS/OMV 工作流与执行顺序 |
 | [../images/](../images/) | 87 个应用目录 / 85 个 Dockerfile / 87 份 BUILD.md + 87 只机读目录 `catalog.json` |
 | [APP-SYNC-CHECKLIST.md](APP-SYNC-CHECKLIST.md) | **新增/更新应用的强制同步清单** |
 | [PRIVACY-REVIEW.md](PRIVACY-REVIEW.md) | 转公开前的隐私/历史/大文件审计清单 |
