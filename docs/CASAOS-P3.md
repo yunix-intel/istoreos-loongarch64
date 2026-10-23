@@ -106,3 +106,26 @@ sudo systemctl enable --now casaos.target
   SMART 被读卡器桥接屏蔽。格式化/写入/物理拔插/真机重启仍未验证。
 
 详见 [CASAOS-PLAN.md](CASAOS-PLAN.md)。
+
+## 8. 2026-10-23 设计审查待修（发布闸门仍关闭）
+
+独立审查发现以下问题，修复前不得发布：
+
+1. **设备白名单只过滤列表**：`IsDiskSupported` 不拦 `POST/PUT /v1/storage`；
+   必须把白名单下沉到 mutating handler 与 `local-storage-helper.sh`，并加
+   `/dev/loop0` 负向测试。
+2. **首次管理员可被局域网抢先注册**：首管理员存在前只允许 `127.0.0.1` 注册，
+   安装脚本打印一次性 token 或要求 SSH 隧道。
+3. **端口口径冲突**：CasaOS gateway 固定 8081；80 保留；MeTube 改 8082；
+   Dashy 同机部署需改端口。不再使用静默 first-free。
+4. **前缀安装路径未全覆盖**：除 `gateway.ini` 外，其余服务配置、runtime socket、
+   helper 路径需逐项重定向；`/etc/systemd/system` 是明确例外。安装前后审计
+   `/etc` `/usr` 新增路径。
+5. **验收项与实现矛盾**：USB 盘不进入 local-storage，C-01 拆成 SATA 验收 +
+   USB 只读验收；C-02 的前置补丁必须入包并记录 sha256。
+6. **发布闸门过窄**：C-01、C-01b、C-02、C-03、C-04 全过才可发布；
+   C-05/C-06 不阻塞。
+7. **运维缺口**：systemd `Restart=`/hardening、平台备份/恢复、mergerfs 四场景、
+   安装包/补丁 sha256 锚定，需补入验收。
+
+完整设计与审查记录见 [APP-DESIGNS.md](APP-DESIGNS.md) 5.1 与 7.5。

@@ -11,9 +11,9 @@
 
 本计划包含：
 
-- **P1–P4 共 26 个应用候选**：全部列明技术栈、LoongArch64 路径、风险和验收标准。
-  经 2026-10-23 独立审查后：**21 个可进入后续波次，5 个暂停/暂缓**（Komga、Karakeep、
-  Linkwarden、Joplin、wg-easy）。
+- **P1–P4 共 26 个应用候选 + CasaOS/OMV 2 个平台工作流 = 28 个工作项**：全部列明技术栈、LoongArch64 路径、风险和验收标准。
+  经 2026-10-23 独立审查后：**21 个应用可进入后续波次，5 个暂停/暂缓**（Komga、Karakeep、
+  Linkwarden、Joplin、wg-easy）；CasaOS/OMV 按平台任务表推进。
 - **CasaOS 工作流**：P3 收尾、真实盘验收、发布闸门、上游化。
 - **OpenMediaVault（OMV）工作流**：Gate 0 可行性调研，不预设一定移植。
 - 每个镜像的完成定义（DoD）和执行顺序。
@@ -147,12 +147,13 @@ CasaOS 不是容器镜像，而是 Debian/systemd 侧的应用面板。详细构
 
 | ID | 任务 | 验收 | 状态 |
 |---|---|---|---|
-| C-01 | 真实 SATA/USB 盘验收（仅用备用盘） | 挂载、写读、卸载、物理拔插、按 UUID 重启自挂、SMART 可读 | 待开工 |
-| C-02 | 真实盘格式化/重建文件系统（仅备用盘） | 格式化后重新挂载；旧 UUID 记录不残留；数据丢失仅限测试盘 | 待开工 |
-| C-03 | 24h 稳定性与升级路径 | 服务不崩；重启后 6 服务自起；应用安装/卸载正常 | 待开工 |
-| C-04 | 发布闸门评审 | 决定是否发布；更新 CASAOS-P3/GAPS/README；关闭或保持闸门 | 待开工 |
-| C-05 | 上游 PR/issue | 架构误判、sqlite/gopsutil、helper、格式化记录等补丁提交上游 | 待开工 |
-| C-06 | 应用商店同步 | P1/P2 新镜像加入 CasaOS appstore；loong64-only 标注 | 随镜像完成 |
+| C-01 | SATA 盘验收（仅用备用盘） | 挂载、写读、卸载、按 UUID 重启自挂；SMART 至少可读 health/temperature/power_on_hours/reallocated_sector_ct |
+| C-01b | USB 盘只读验收 | udevil 识别、ro 挂载、卸载、物理拔插；明确 USB 不进入 local-storage，不做格式化 |
+| C-02 | 备用盘格式化/重建文件系统 | 格式化后重新挂载；旧 UUID 记录不残留；需先打入 `DeleteMountPointFromDB` 补丁并记录 sha256 |
+| C-03 | 24h 稳定性与升级路径 | 服务不崩；重启后 6 服务自起；应用安装/卸载正常；记录资源基线 |
+| C-04 | 发布闸门评审 | C-01/C-01b/C-02/C-03 全过，附命令输出与安装包 sha256；决定发布或继续关闭 |
+| C-05 | 上游 PR/issue（非闸门） | 架构误判、sqlite/gopsutil、helper、格式化记录等补丁提交上游；记录链接 |
+| C-06 | 应用商店同步（非闸门） | P1/P2 新镜像加入 CasaOS appstore；loong64-only 标注 |
 
 ### 安全红线
 
@@ -170,36 +171,42 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 
 ### Gate 0 要回答的问题
 
-1. **基础系统兼容性**：Loongnix 25 的 Debian 基线、glibc、systemd、apt 是否满足
-   OMV 7 的要求（OMV 7 面向 Debian 12 Bookworm）。
+1. **目标版本**：先确认 OMV 7（Debian 12 Bookworm）还是 OMV 8（Debian 13 Trixie）。
+   宿主已知 glibc 2.41 / systemd 257 / 16K 页，更接近 trixie，不能预设 OMV 7。
 2. **包依赖闭包**：`openmediavault` 及其依赖（PHP、nginx、SaltStack、rrdcached、
-   collectd、smartmontools、mdadm、lvm2、samba、nfs）是否有 loong64 包，缺哪些。
-3. **SaltStack 状态**：highstate 是否含架构假设；能否在一次性环境里跑通。
-4. **插件可用性**：openmediavault-compose（应为架构无关）、ZFS 插件
-   （OpenZFS 2.4.4 已在 Gate 0 验证）、KVM 插件（已封存）、sharerootfs/sftp/rsync。
-5. **安装隔离**：只在备用盘/一次性 NBD/VM 中测试；不得写入生产 NAS。
+   collectd、smartmontools、mdadm、lvm2、samba、nfs）是否有 loong64 包，缺哪些；
+   递归 Depends/Recommends，区分 `arch:all` 与 `binary-loong64`；禁止直接加 bookworm 源。
+3. **SaltStack 状态**：highstate 是否含架构假设；能否在 QEMU TCG 隔离环境里跑通；
+   先 `test=True`，对 `/etc`、`/boot`、unit 文件做 checksum diff，预置 network/ssh deny-list。
+4. **插件可用性**：openmediavault-compose（应为架构无关）、ZFS 插件（需引用或重跑
+   OpenZFS 2.4.4 + 16K 页证据）、KVM 插件（**已封存，移出评估**）、sharerootfs/sftp/rsync。
+5. **安装隔离**：**QEMU TCG loong64 VM** 或等价完全隔离环境；不得用 NBD 作为 OMV 管理根盘，
+   不得写入生产 NAS。
 6. **决策**：三种路线选一：
-   - A. 完整移植 OMV 宿主包；
-   - B. 只做 OMV-compose 集成，用现有 loong64 镜像；
+   - A. 完整移植 OMV 宿主包（硬依赖零不可修补缺口、highstate 失败可枚举、端到端通过）；
+   - B. 只做 compose 集成，用现有 loong64 镜像（独立可交付，不依赖 A）；
    - C. 判定 no-go，保留 ksmbd + 现有管理方案。
 
 ### 任务
 
 | ID | 任务 | 交付物 | 状态 |
 |---|---|---|---|
-| O-01 | 基线与环境审计 | `docs/OMV-FEASIBILITY.md` 初稿：OS/glibc/systemd/apt 结论 | 待开工 |
-| O-02 | 依赖闭包分析 | `openmediavault` 依赖表，标注有/无 loong64 包 | 待开工 |
-| O-03 | 一次性环境安装 spike | 备用盘或 NBD 上的安装日志、失败点 | 待开工 |
-| O-04 | SaltStack highstate 试跑 | 失败 state 清单与补丁评估 | 待开工 |
-| O-05 | 插件评估 | compose/ZFS/KVM 插件结论 | 待开工 |
-| O-06 | Go/No-Go 评审 | 选定 A/B/C 路线并记录理由 | 待开工 |
-| O-07 | 若 Go：移植计划 | 包清单、补丁、测试矩阵、风险 | 条件触发 |
+| O-01 | 目标版本与基线审计 | 先判定 OMV 7（bookworm）还是 OMV 8（trixie）；记录 os-release/glibc/systemd/page size/PHP/apt/kernel/bootloader | 待开工 |
+| O-02 | 依赖闭包分析 | 递归 Depends/Recommends，区分 arch:all 与 binary-loong64；禁止直接加 bookworm 源 | 待开工 |
+| O-03 | 一次性环境安装 spike | **QEMU TCG loong64 VM**；不用 NBD 作为 OMV 管理根盘 | 待开工 |
+| O-04 | SaltStack highstate 试跑 | `test=True` 先行；/etc /boot unit checksum diff；network/ssh deny-list；离线恢复点 | 待开工 |
+| O-05 | 插件评估 | compose/ZFS/sharerootfs/sftp/rsync；KVM 已封存，移出评估；ZFS 需引用或重跑证据 | 待开工 |
+| O-06 | Go/No-Go 评审 | 按预注册阈值选 A/B/C，引用具体缺口数与失败集合 | 待开工 |
+| O-07 | 若 A 或 B：交付计划 | A：包/补丁/测试矩阵；B：compose 集成与边界 | 条件触发 |
+| O-08 | 许可、卸载与回滚 | 名称/Logo/插件许可；卸载残留；配置备份/恢复 | 待开工 |
+| O-09 | 状态同步 | 更新 GAPS/ROADMAP/OMV-FEASIBILITY | 待开工 |
 
 ### 安全红线
 
 - OMV 会改网络、存储、系统服务；**禁止在生产 NAS 上直接试**。
-- 只使用备用盘、NBD 或可回滚 VM；测试前做快照。
-- ZFS/KVM 插件不与现有 CasaOS/固件实验混在同一台机器上。
+- 指定环境：QEMU TCG loong64 VM 或等价完全隔离机器；不用 NBD 作为 OMV 管理根盘。
+- 测试前备份 `/boot`、grub 配置、`/etc/fstab`、`/etc/network`，准备不依赖网络的串口/控制台救援流程。
+- ZFS/KVM 插件不与现有 CasaOS/固件实验混在同一台机器上；KVM 已封存。
 
 ## 8. 执行顺序与依赖
 
@@ -211,7 +218,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 | Wave 2 | P2-01 Piwigo、P2-06 go2rtc、P2-03 Headscale、P2-04 Authelia、P2-05 Backrest | Ente 视照片决策放 Wave 2 末或 Wave 3 |
 | Wave 3 | P2-02 Ente、P3-02..P3-06（P3-01 Komga 暂停） | 多服务与重依赖集中处理 |
 | Wave 4 | P4-01..P4-09 | 按需，每项先 spike |
-| 并行 | C-01..C-05、O-01..O-06 | 平台工作流不阻塞容器主线 |
+| 并行 | C-01..C-06、O-01..O-09 | 平台工作流不阻塞容器主线 |
 
 ### 镜像间依赖
 
@@ -332,16 +339,19 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 
 ### 平台
 
-- [ ] C-01 CasaOS 真实盘验收
+- [ ] C-01 CasaOS SATA 盘验收
+- [ ] C-01b CasaOS USB 只读验收
 - [ ] C-02 CasaOS 真实盘格式化/重建
 - [ ] C-03 CasaOS 24h 稳定性
 - [ ] C-04 CasaOS 发布闸门评审
 - [ ] C-05 CasaOS 上游 PR/issue
 - [ ] C-06 CasaOS 应用商店同步
-- [ ] O-01 OMV 基线审计
+- [ ] O-01 OMV 目标版本与基线审计
 - [ ] O-02 OMV 依赖闭包
-- [ ] O-03 OMV 安装 spike
+- [ ] O-03 OMV QEMU-TCG 安装 spike
 - [ ] O-04 OMV SaltStack 试跑
 - [ ] O-05 OMV 插件评估
 - [ ] O-06 OMV Go/No-Go
-- [ ] O-07 OMV 移植计划（条件触发）
+- [ ] O-07 OMV A/B 交付计划（条件触发）
+- [ ] O-08 OMV 许可/卸载/回滚
+- [ ] O-09 OMV 状态同步

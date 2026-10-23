@@ -44,4 +44,4 @@
 
 - **iStore Docker 应用（49 个，见 dig-store-v3 审计）**：jellyfin✅、navidrome✅（待验证页面细节）、vaultwarden（musl 版编译中）、uptimekuma（子代理在打）。
 - **CasaOS 应用市场（bigbear-casaos 约 200+，与 iStore 高度重叠）**：去重后新增候选——AdGuardHome、Pi-hole、Home-Assistant（Python，难）、qBittorrent-Enhanced（已有 -EE 包，可直接转镜像）、Syncthing（Go 单文件，易）、Stirling-PDF（Java，易但镜像大）、Kopia（Go，易）、Wizarr、Homarr/Homer（前端静态，极易）、Jellyseerr（Node，中）、Audiobookshelf（Node，中）、Calibre-Web（Python，中）、FileBrowser（已有 Go 版，极易）、Linkding、Shiori、Wallabag（稍后排）。
-- **OMV 插件（NAS 功能型，非容器）**：openmediavault-compose（直接吃我们的 loong64 镜像，无需移植）、KVM 插件（龙芯 KVM 可用但缺验证）、ZFS 插件（ZoL 在 loong64 上可编，中）、sharerootfs/sftp/rsync（官方自带，随发行版走）。
+- **OMV 插件（NAS 功能型，非容器）**：openmediavault-compose（直接吃我们的 loong64 镜像，无需移植）、KVM 插件（**已封存，不作为可用项**）、ZFS 插件（OpenZFS 2.4.4 的 Gate 0 结论需引用或重跑证据，不能直接写“可编”）、sharerootfs/sftp/rsync（官方自带，随发行版走）。

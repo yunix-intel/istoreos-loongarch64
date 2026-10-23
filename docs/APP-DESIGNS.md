@@ -1,10 +1,11 @@
-# P1–P4 应用镜像详细设计
+# P1–P4 应用与平台详细设计（28 个工作项）
 
 制定日期：2026-10-23  
 状态：**设计稿，未开工**。所有版本号、依赖和行为在开工前都要用上游源码与最小构建 spike 复核。  
 对应计划：[NEXT-PLAN.md](NEXT-PLAN.md)。现有镜像：[IMAGES.md](IMAGES.md)。
 
-本文件回答“每个镜像具体怎么造”，不替代 `images/<app>/BUILD.md`（构建完成后的事实记录）。
+本文件回答“每个工作项具体怎么造”：26 个应用镜像 + CasaOS + OMV，共 **28 个工作项**。
+它不替代 `images/<app>/BUILD.md`（构建完成后的事实记录）。
 
 ---
 
@@ -458,11 +459,11 @@
 | 构建 | Angular 前端 x86 构建；按 `uv.lock` 安装（不是裸 `pip install`）；去掉 `curl-cffi`/`deno` extras；yt-dlp 用 Node 作为 JS runtime |
 | 构建门禁 | YouTube 需要 PO token：上游 `bgutil-pot` 只有 amd64/arm64 资产；需自编 loong64 或配置远程 PO-token provider，否则部分视频下载失败 |
 | 运行用户 | `metube` UID/GID 1111 |
-| 端口 | 8081 |
+| 端口 | 8082（避开 CasaOS 8081） |
 | 卷 | `/downloads`（下载文件与状态） |
 | 环境 | `DOWNLOAD_DIR=/downloads`、`STATE_DIR=/downloads/.metube`、`TZ` |
 | entrypoint | 确保 downloads 可写；`exec python3 app.py` |
-| 健康检查 | `curl -fsS http://127.0.0.1:8081/` |
+| 健康检查 | `curl -fsS http://127.0.0.1:8082/` |
 | 测试 | 添加一个短视频 URL；下载完成；文件出现；队列/历史可用 |
 | 风险 | yt-dlp 频繁变动；curl-cffi/deno 无 loong64；网络受限时只能验证 UI |
 | 估算 | 镜像约 300–500MB；2–3 天 |
@@ -590,15 +591,215 @@
 
 ---
 
-## 5. 平台工作流（不是容器镜像）
+## 5. 平台工作流设计（CasaOS / OMV）
 
-CasaOS 与 OMV 不套用上面的镜像模板：
+CasaOS 与 OMV 不是容器镜像，但它们是计划内的两个独立工作项。加上 P1–P4 的 26 个应用，
+本计划共 **28 个工作项**。平台工作流不套用镜像模板，但同样要有版本、构建/安装路径、
+运行时契约、安全边界和验收标准。
 
-- **CasaOS**：宿主 Debian/systemd 组件。设计见 [CASAOS-P3.md](CASAOS-P3.md)，任务见
-  [NEXT-PLAN.md](NEXT-PLAN.md) 的 C-01..C-06。核心设计约束：不能与 iStoreOS/OpenWrt
-  同装；真实盘验收前不发布；USB 只读。
-- **OMV**：先做 Gate 0，不预设移植。设计问题与任务见 NEXT-PLAN 的 O-01..O-07。
-  核心约束：只在备用盘/NBD/VM 测试；不写生产 NAS；插件（compose/ZFS/KVM）单独评估。
+### 5.1 CasaOS（宿主 Debian/systemd 平台）
+
+**定位**：Loongnix/Debian + systemd 上的应用面板，提供应用商店、容器管理、文件与磁盘管理。
+**不能与 iStoreOS/OpenWrt 同装**；生产形态是宿主安装，不是容器。
+
+#### 5.1.1 组件与版本
+
+| 组件 | 版本 | 形态 |
+|---|---|---|
+| casaos | v0.4.15 | Go 静态 ELF |
+| gateway | v0.4.9-alpha4 | Go 静态 ELF |
+| message-bus | v0.4.4-3-alpha2 | Go 静态 ELF |
+| user-service | v0.4.8 | Go 静态 ELF |
+| app-management | v0.4.10-alpha2 | Go 静态 ELF |
+| local-storage | v0.4.4 | Go 静态 ELF |
+| CLI | v0.4.4-3-alpha1 | Go 静态 ELF |
+| UI | v0.4.25 | 架构无关静态资源 |
+| AppStore | v0.4.5 | 架构无关静态资源 |
+
+7 个 Go 组件均 `CGO_ENABLED=0` 编为 LoongArch 静态 ELF；UI/AppStore 直接复用 linux-all 包。
+
+#### 5.1.2 构建与补丁
+
+| 补丁 | 目的 |
+|---|---|
+| `modernc.org/sqlite → v1.30.0` | 旧版 `modernc.org/libc v1.22` 缺 loong64 syscall/asm |
+| `gopsutil v3 → v4` | v3 host 包缺 loong64 utmp |
+| `CASAOS_CONFIG_PATH` | 控制 `gateway.ini` 初建位置，支持前缀安装，避免写宿主 `/etc` |
+| `get.casaos.io` 安装脚本 arch 分支 | `loongarch64` 会被 `*64*` 误判为 amd64 |
+| `local-storage DeleteMountPointFromDB` | 格式化后按 `mount_point` 删除旧 UUID 记录 |
+| P3 安装包补 `share/shell/local-storage-helper.sh` | 缺失时挂载/格式化报 `exit 127 do_mount` |
+| **设备白名单下沉到写操作** | `IsDiskSupported` 只过滤列表；`POST/PUT /v1/storage` 仍可传 `/dev/loop0`、`/dev/nbd0`。必须在 mutating handler 和 helper 里再次校验，并拒绝不在服务端派生磁盘集合中的路径 |
+| **首次管理员注册限制** | 首个管理员存在前，只接受来自 `127.0.0.1` 的注册；`install.sh` 在控制台打印一次性 token，或要求 SSH 隧道完成首启 |
+
+构建产物布局：
+
+```text
+casaos-p3-0.1.0/
+  bin/         7 个 LoongArch ELF
+  www/         CasaOS UI v0.4.25
+  appstore/    loong64-only 商店 + 镜像覆盖
+  conf/        gateway.ini / 各服务 conf
+  share/shell/ 磁盘/USB 脚本（含 local-storage-helper.sh）
+```
+
+#### 5.1.3 安装布局与运行契约
+
+| 项 | 设计 |
+|---|---|
+| 安装前缀 | `/opt/casaos-p3`（业务文件避免污染宿主 `/etc`、`/usr`；systemd unit 例外） |
+| 宿主前置 | Docker ≥20 + containerd、`rclone`（local-storage 需要，自编 v1.71.2）、`samba cifs-utils net-tools unzip` |
+| 配置 | 前缀内 `conf/`；通过 `CASAOS_CONFIG_PATH` 指向；其余服务各自的 `*.conf` 路径见 5.1.4 路径表 |
+| 数据 | `/var/lib/casaos`（应用/用户/商店状态）、应用自身卷 |
+| systemd | 7 个 unit，`systemd-analyze verify` 必须 0 错误；6 个常驻服务；unit 需 `After=docker.service` 或 `Requires=docker.service` |
+| 用户 | 平台服务按上游要求运行；**CasaOS 管理员等同宿主 root**，app-management 持有 `docker.sock`，必须在文档中明示 |
+| 端口 | **固定 gateway 8081/tcp**；冲突时只允许显式改配置，不做静默 first-free；80 保留给宿主 Web；端口分配见 5.1.5 |
+| 存储依赖 | `udev smartmontools parted ntfs-3g mergerfs udevil`（Loongnix 源均有 loong64） |
+| 磁盘白名单 | 允许 `sata/nvme/sas/spi/virtio/mmc`；`usb`、`loop`、`dm`、`nbd` 在列表和**写操作**两层都被拒绝 |
+| 升级 | 替换前缀包；保留 `/var/lib/casaos` 与用户应用卷；升级前备份（见 5.1.6） |
+| 卸载 | `uninstall.sh --system`；不删除用户数据卷，除非显式确认；卸载前列出孤儿容器 |
+
+#### 5.1.4 路径与端口契约
+
+**路径表（前缀安装必须逐项验证）：**
+
+| 路径 | 用途 | 迁移方式/例外 |
+|---|---|---|
+| `/opt/casaos-p3/conf/gateway.ini` | gateway 配置 | `CASAOS_CONFIG_PATH` |
+| `/opt/casaos-p3/conf/*.conf` | 其余服务配置 | 各服务的 config flag 或补丁；不能只改 gateway |
+| `/var/lib/casaos` | 用户/应用/商店状态 | 数据目录，升级保留 |
+| `/var/run/casaos` | 运行时 socket/pid | 由 tmpfiles 或 unit `RuntimeDirectory=` 创建 |
+| `/opt/casaos-p3/share/shell/local-storage-helper.sh` | 磁盘 helper | 补丁让 local-storage 从前缀查找，或建兼容符号链接 |
+| `/etc/systemd/system/casaos*.service` | systemd unit | **明确例外**：`--system` 必须写这里 |
+| `/usr/share/casaos/...` | 上游默认资源路径 | 若无法重定向，明确列出并接受；不能声称“宿主 /etc /usr 完全未动” |
+
+验证方法：安装前后记录 `find /etc /usr -xdev -newer <timestamp>`，把新增路径写入 CASAOS-P3；未解释的路径视为失败。
+
+**端口表：**
+
+| 服务 | 端口 | 说明 |
+|---|---|---|
+| CasaOS gateway/UI | **8081/tcp** | 固定值；冲突时显式改配置，不静默漂移 |
+| 宿主 Web | 80/443/tcp | 保留；CasaOS 不占用 |
+| MeTube（P3-03） | **8082/tcp** | 从 8081 移开，避免与 CasaOS 冲突 |
+| Dashy（已有镜像） | 8081/tcp | 与 CasaOS 冲突；同机部署时必须改 Dashy 或 CasaOS 映射 |
+| 其他新应用 | 见各自设计 | 新增镜像不得占用 8081 |
+
+#### 5.1.5 安全与边界
+
+- **首次管理员注册**：首个管理员存在前，只接受来自 `127.0.0.1` 的注册；安装脚本在控制台打印一次性 token，或要求 SSH 隧道完成首启。管理员存在后才允许局域网登录。
+- **管理员等同宿主 root**：gateway/app-management 以高权限运行并持有 `docker.sock`；文档必须明示“CasaOS 管理员 = 宿主 root”，并建议只在受信内网使用。
+- **设备白名单必须在写操作生效**：`IsDiskSupported` 只负责列表；`POST/PUT /v1/storage` 与 `local-storage-helper.sh` 都要再次校验，拒绝不在服务端派生磁盘集合中的路径。增加负向测试：对 `/dev/loop0` 发起挂载/格式化必须返回 4xx。
+- **USB 只读是策略不是属性**：`iso9660 ro` 是文件系统自身只读，不代表 udevil 一定 ro 挂载。必须明确：不启用 `USBAutoMount`，udevil 配置为只读或禁用，并用可写 U 盘做负向测试。
+- 只在可信内网使用；网关不得直接暴露公网。
+- 不能与 iStoreOS/OpenWrt 同装；容器形态只用于演示。
+
+#### 5.1.6 验收（对应 NEXT-PLAN C-01..C-06）
+
+| ID | 验收 |
+|---|---|
+| C-01 | **SATA 盘**：挂载、写读、卸载、按 UUID 重启自挂、SMART 可读。SMART 判定标准：至少能读取 `health`、`temperature`、`power_on_hours`、`reallocated_sector_ct`；任一项读不到则记录为“该盘不支持”，不算通过 |
+| C-01b | **USB 盘（独立项）**：udevil 识别、只读挂载、卸载、物理拔插；明确“USB 不进入 local-storage 管理”，不做格式化验收 |
+| C-02 | 备用盘格式化/重建文件系统后重新挂载，旧 UUID 记录不残留；**前置条件：`DeleteMountPointFromDB` 补丁已打入安装包并记录 sha256** |
+| C-03 | 24h 稳定性：6 服务不崩；重启后自起；应用安装/卸载正常；记录 CPU/内存/日志 |
+| C-04 | 发布闸门评审：C-01/C-01b/C-02/C-03 全部通过，附带命令输出与安装包 sha256 |
+| C-05 | 上游 PR/issue：架构误判、sqlite/gopsutil、helper、格式化记录；记录 issue/PR 链接，**不作为发布闸门** |
+| C-06 | 应用商店同步：P1/P2 新镜像加入 appstore，标注 loong64-only；**不作为发布闸门** |
+
+**发布闸门**：C-01、C-01b、C-02、C-03、C-04 全部通过前，CasaOS 镜像和安装包不发布。
+
+#### 5.1.7 运维契约
+
+- **systemd unit**：统一包含 `Restart=on-failure`、`RestartSec=5`、`StartLimitIntervalSec`/`StartLimitBurst`；按需加 `ProtectSystem=strict`、`NoNewPrivileges=yes`、`MemoryMax`。unit 模板写入 CASAOS-P3。
+
+```ini
+[Unit]
+Description=CasaOS <service>
+After=network-online.target docker.service
+Requires=docker.service
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+Type=simple
+ExecStart=/opt/casaos-p3/bin/<service>
+Restart=on-failure
+RestartSec=5
+RuntimeDirectory=casaos
+NoNewPrivileges=yes
+ProtectSystem=strict
+ReadWritePaths=/var/lib/casaos /var/run/casaos
+
+[Install]
+WantedBy=multi-user.target
+```
+- **备份**：`/var/lib/casaos`、`/opt/casaos-p3/conf`、应用 compose/卷清单；备份前停服务，恢复后做一次登录/应用启动验证。
+- **升级/回滚**：保留上一版前缀包与配置；升级失败可按包版本回滚；不覆盖用户数据卷。
+- **日志/监控**：6 个服务日志进入 journald；给出 `journalctl -u` 命令；C-03 记录资源基线。
+- **mergerfs**：至少验收建池、加盘、移除盘、单盘故障四个场景；不能只声明依赖。
+- **产物锚定**：安装包、每个补丁、每个二进制都记录 sha256；设计/验收引用同一份哈希。
+
+### 5.2 OpenMediaVault（宿主 Debian 平台，先做 Gate 0）
+
+**定位**：Debian 上的 NAS 管理平台（存储、共享、插件、Web UI）。
+**当前不承诺移植**；先做 Gate 0 可行性，回答“完整移植 / 只做 compose 集成 / no-go”。
+
+#### 5.2.1 目标形态
+
+| 项 | 设计假设（待 Gate 0 验证） |
+|---|---|
+| 目标版本 | **先确认 OMV 7（bookworm）还是 OMV 8（trixie）**，不能预设 OMV 7。宿主已知事实：glibc 2.41、systemd 257、16K 页、kernel 6.6.52；这些更接近 Debian 13，而非 bookworm 的 glibc 2.36 / systemd 252 |
+| 基线证据 | `/etc/os-release`（`VERSION_CODENAME`）、`/etc/debian_version`、`dpkg --print-architecture`、`ldd --version`、`systemctl --version`、`getconf PAGE_SIZE`、PHP 版本/模块、Python、`apt policy`（php/nginx/salt/samba/mdadm/lvm2/nfs/smartmontools）、内核配置、bootloader/ESP、Loongnix 是否为真正 Debian 派生 |
+| 核心 | `openmediavault` 包、PHP、nginx、SaltStack、rrdcached、collectd、smartmontools、mdadm、lvm2、samba、nfs |
+| Web | 80/443；首次安装设置 admin 密码 |
+| 数据 | `/etc/openmediavault`、`/var/lib/openmediavault`、`/srv`；用户数据盘独立 |
+| 插件 | `openmediavault-compose`（应架构无关）、ZFS（需引用或重跑证据）、KVM（**已封存，移除**）、sharerootfs/sftp/rsync |
+| 安装方式 | 宿主包安装，不是容器；禁止在生产 NAS 上直接试 |
+
+#### 5.2.2 三条路线
+
+| 路线 | 内容 | 适用条件 |
+|---|---|---|
+| A. 完整移植 | 打齐 `openmediavault` 及依赖的 loong64 包，跑通 Salt highstate 与插件 | 硬依赖闭包无不可修补缺口；highstate 失败仅限已命名且可补的 state 集合；安装→重启→共享→回滚全部通过 |
+| B. 只做 compose 集成 | 不装 OMV 核心；在现有 Debian/Loongnix 上用 compose 管理本仓库镜像，并写清与 OMV 的边界 | 用户真正需要的是容器编排，不是 OMV 存储栈；1–2 天可交付，不叫“OMV-compose” |
+| C. No-Go | 保留 ksmbd + 现有方案 | 依赖缺口超过约定数量、插件不可用、无人维护 |
+
+**决策规则（必须在 O-03 之前预注册）：**
+
+- A 只在“硬 Depends 闭包零不可修补缺口 + highstate 失败可枚举修补 + 端到端验收通过”时成立。
+- B 是独立可交付路线，不依赖 A 的结论；O-07 也要覆盖 B。
+- C 在缺口数量超过阈值或没有维护者时成立。
+- 不允许用“补丁量可接受”这类无法证伪的判据；O-06 必须引用具体清单和数字。
+
+#### 5.2.3 Gate 0 任务与交付物
+
+| ID | 任务 | 交付物 | 退出条件 |
+|---|---|---|---|
+| O-01 | 目标版本与基线审计 | 先判定 OMV 7（bookworm）还是 OMV 8（trixie）；再记录 os-release/debian_version/arch/glibc/systemd/page size/PHP/Python/apt policy/kernel/bootloader | `OMV-FEASIBILITY.md` 明确“目标 OMV 版本 + 宿主是否匹配” |
+| O-02 | 依赖闭包 | 递归 `apt-cache depends --recurse`，区分 `arch:all` 与 `binary-loong64`；检查 OMV 仓库是否有 loong64 Packages；缺则评估 `apt-ftparchive -a loong64` 重建索引 | 硬 Depends/Recommends 缺口表；**禁止直接添加 bookworm 源**（在 trixie 时代基线上是部分升级事故） |
+| O-03 | 一次性环境安装 spike | **QEMU TCG loong64 VM**（x86 构建机上运行）或等价的完全隔离环境；不用 NBD 做 OMV 管理根盘 | 能进入 OMV 首次配置，或明确失败点 |
+| O-04 | SaltStack highstate | 先 `test=True`；对 `/etc`、`/boot`、unit 文件做前后 checksum diff；预置 network/ssh deny-list；离线恢复点 | 失败 state 可枚举、可补；不依赖网络恢复 |
+| O-05 | 插件评估 | compose（架构无关）、ZFS（引用或重跑 OpenZFS 2.4.4 + 16K 页证据）、sharerootfs/sftp/rsync；**KVM 已封存，移出评估** | 明确可用插件与前置条件 |
+| O-06 | Go/No-Go | 按 5.2.2 预注册规则选 A/B/C；记录依赖缺口数量、highstate 失败集合、维护者 | 决策可复现、可证伪 |
+| O-07 | 若 A 或 B：交付计划 | A：包清单/补丁/测试矩阵；B：compose 集成与边界说明 | 可排期 |
+| O-08 | 许可、卸载与回滚 | OMV 名称/Logo 商标与插件许可；卸载残留（`/etc/openmediavault`、fstab、samba 用户）；配置备份/恢复 | 许可结论 + 可执行回滚步骤 |
+| O-09 | 状态同步 | 更新 GAPS/ROADMAP/OMV-FEASIBILITY；记录 no-go 或进入 A/B | 文档与决策一致 |
+
+#### 5.2.4 测试环境与安全
+
+- **指定环境：QEMU TCG loong64 VM**（在 x86 构建机上运行），或等价的完全隔离机器；KVM 已封存、A 机无空闲物理盘，不能用“备用盘/NBD”当默认方案。
+- **不要用 NBD 作为 OMV 的管理根盘**：OMV 会把 `/dev/nbd*` 当作存储枚举并写 fstab/mount unit。
+- 测试前备份 `/boot`、grub 配置、`/etc/fstab`、`/etc/network`；准备不依赖网络的串口/控制台救援流程。
+- 禁止在生产 NAS 上直接安装/改网络/改存储。
+- ZFS/KVM 插件不与 CasaOS/固件实验混在同一台机器。
+- 安装脚本可能修改网络、fstab、服务；必须有离线回滚方案。
+
+#### 5.2.5 验收
+
+- O-01..O-06、O-08、O-09 全部有书面结论；O-06 明确 A/B/C，并引用具体依赖缺口数与 highstate 失败集合。
+- 若选 A：至少完成一次安装、一次重启、一次共享创建、一次配置恢复、一次回滚。
+- 若选 B：给出 compose 集成方案、与 OMV 的边界说明、卸载/回滚步骤。
+- 若选 C：在 GAPS/ROADMAP 记录 no-go 理由和前置条件，不再反复评估。
+- 无论 A/B/C：记录 OMV 名称/Logo/插件许可结论；不把未验证的 ZFS/KVM 写成“可用”。
 
 ---
 
@@ -671,7 +872,9 @@ CasaOS 与 OMV 不套用上面的镜像模板：
 | P3 可开工 | 5 | Komga 暂停；其余 5 个保留 |
 | P4 可评估 | 5 | MediaMTX、Readeck、Registry、Pocket ID、Unpackerr |
 | 暂停/暂缓 | 5 | Komga、Karakeep、Linkwarden、Joplin、wg-easy |
-| 合计 | 26 | 21 个可进入后续波次，5 个等待依赖 spike |
+| 合计 | 26 | 21 个应用可进入后续波次，5 个等待依赖 spike |
+
+加上 CasaOS 与 OMV 两个平台工作项，计划总数为 **28 个工作项**。平台审查记录见 7.5。
 
 ### 7.3 开工前剩余门禁
 
@@ -685,9 +888,52 @@ CasaOS 与 OMV 不套用上面的镜像模板：
 8. Komga `sqlite-jdbc` loong64 JNI（未通过前不排期）。
 9. Karakeep/Joplin/Linkwarden 的 sharp/libvips；wg-easy 的 libsql。
 10. OMV Gate 0 的 Debian 基线审计。
+11. CasaOS 的设备白名单下沉、首启认证、端口固定、路径审计；C-01..C-04 全过才解禁。
+12. OMV 的目标版本判定（7 vs 8）、QEMU TCG 隔离、依赖闭包方法与 A/B/C 阈值。
 
 ### 7.4 审查方法说明
 
 - 审查 A 的证据来自上游仓库文件与发布资产，不是 Docker Hub manifest；个别版本可能已漂移，开工前仍需 `crane manifest` + 构建 spike。
 - 审查 B 的部分运行时参数来自上游 Dockerfile/compose 推断，尤其是 Ente、BookStack、Woodpecker；实现时以启动日志和官方 compose 为准。
 - 两个审查都不替代真机验证；设计稿通过审查只表示“没有明显找死路”，不表示“必然构建成功”。
+
+### 7.5 平台工作项审查（CasaOS / OMV）
+
+CasaOS/OMV 的详细设计补充后，另开两个独立审查代理，只读、不改文件。结论如下。
+
+#### CasaOS 审查
+
+| 严重度 | 发现 | 处理 |
+|---|---|---|
+| BLOCKER | `IsDiskSupported` 只过滤列表；`POST/PUT /v1/storage` 仍可对 `/dev/loop0`、`/dev/nbd0` 挂载/格式化 | 白名单下沉到 mutating handler 和 helper；5.1.2 新增补丁；验收加负向测试 |
+| BLOCKER | 端口口径矛盾：CASAOS-P3 默认 8081、CASAOS-PLAN 80–89/8080–8089、MeTube/Dashy 也占 8081；first-free 会静默漂移 | 固定 CasaOS 8081；MeTube 改 8082；新增 5.1.4 端口表；first-free 只作显式 fallback |
+| BLOCKER | 首个管理员注册可被局域网抢先；管理员等同宿主 root；docker.sock | 首管理员前只接受 localhost 注册 + 一次性 token；文档明示 root 等价；建议限制 docker.sock |
+| MAJOR | 前缀安装只重定向 gateway.ini，其他服务/helper/runtime socket 路径未覆盖 | 新增 5.1.4 路径表；`/etc/systemd/system` 为明确例外；安装前后做 `/etc` `/usr` 新增路径审计 |
+| MAJOR | 缺 Docker/containerd、rclone、samba/cifs-utils/net-tools/unzip；unit 无 docker 依赖 | 5.1.3 增加宿主前置；unit 加 `After=/Requires=docker.service` |
+| MAJOR | C-01 要求 USB 盘可被 local-storage 管理，但设计明确过滤 usb；C-02 依赖的补丁未入包 | 拆成 C-01 SATA + C-01b USB 只读；C-02 前置补丁 sha256 |
+| MAJOR | “USB 只读”是策略不是属性 | 明确关闭 USBAutoMount/udevil ro；用可写 U 盘做负向测试 |
+| MAJOR | 发布闸门只覆盖 C-01/C-02，跳过 24h 稳定性和评审 | 闸门改为 C-01/C-01b/C-02/C-03/C-04；C-05/C-06 非闸门 |
+| MINOR | 版本字符串不一致、无 systemd 运维契约、无平台备份/恢复、mergerfs 无验收、产物哈希未锚定 | 5.1.6/5.1.7 增加 unit 模板、备份/回滚、mergerfs 四场景、sha256 锚定 |
+
+**CasaOS 结论：保持发布闸门关闭，不发布。** 必须完成上述 BLOCKER 修复和 C-01..C-04 后才能解禁。
+
+#### OMV 审查
+
+| 严重度 | 发现 | 处理 |
+|---|---|---|
+| BLOCKER | 原设计预设 OMV 7/Debian 12，但宿主 glibc 2.41/systemd 257/16K 页更接近 Debian 13；可能应评估 OMV 8 | 5.2.1 改为“先判定 OMV 7 还是 8”；O-01 先定目标版本再审计宿主 |
+| BLOCKER | 原隔离方案“备用盘/NBD/VM”不可执行：A 机无空闲盘、KVM 已封存、快照未定义 | 指定 QEMU TCG loong64 VM；备份 `/boot`/grub/fstab/network；准备离线救援；禁止 NBD 做管理根盘 |
+| MAJOR | O-02 依赖闭包方法太薄，漏 Recommends、arch:all、OMV 仓库无 loong64、插件链、PHP/Salt 依赖 | 改为递归 Depends/Recommends + `apt-ftparchive -a loong64` 评估；禁止加 bookworm 源 |
+| MAJOR | SaltStack highstate 风险被低估，可能改网络/ssh/fstab/服务 | O-04 增加 `test=True`、checksum diff、network/ssh deny-list、离线恢复点 |
+| MAJOR | A/B/C 不互斥、B 被误称为 OMV-compose、A 无可证伪阈值 | 重写 5.2.2：B 是独立 compose 集成；A 需硬依赖零缺口 + 可枚举 highstate 失败 + 端到端通过 |
+| MAJOR | KVM 已封存却仍在插件评估；ZFS “已验证”无仓库证据 | O-05 移除 KVM；ZFS 需引用或重跑 OpenZFS 2.4.4 + 16K 页证据；修正 ROADMAP |
+| MINOR | 缺许可/商标、卸载/回滚、配置备份、OMV 7→8 升级、监控冲突、状态同步 | 新增 O-08/O-09；5.2.5 增加许可与回滚验收 |
+
+**OMV 结论：Gate 0 方向正确，但必须先修目标版本、隔离环境、依赖方法和决策规则，否则 O-06 无法给出可辩护的 A/B/C。**
+
+### 7.6 平台审查后的总状态
+
+- **28 个工作项**：26 个应用镜像 + CasaOS + OMV。
+- 应用：21 个可进入后续波次，5 个暂停/暂缓。
+- 平台：CasaOS 保持闸门关闭；OMV 只做 Gate 0，先修审查发现的 BLOCKER。
+- 本设计稿不承诺发布日期；每个工作项开工前仍需依赖 spike 和真机验证。

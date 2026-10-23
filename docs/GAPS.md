@@ -10,14 +10,14 @@
 | 文档与实物一致 | IMAGES/README/STORE-APP-LIST | ✅ | README/IMAGES 均为 87 只；CasaOS 已标注“磁盘验证前不发布”；GAPS 本次同步 |
 | 镜像推送可复现 | 私有库 | ✅ | push-images.sh 已覆盖 87 只；本地 tag 名与 Hub 仓库名不一致时按脚本注释先 `docker tag` |
 | CasaOS P1+P2 | CASAOS §7 | ✅ | 7 个 ELF、网关/UI、18 应用商店、memos 安装实测 |
-| CasaOS P3 系统集成 | CASAOS §8/§10 | ✅ | 开发/系统集成完成：A 机 systemd 257 的 7 unit、6 服务、CLI 0.4.4、安装/卸载、NBD 磁盘链路、helper 打包修复均已验证；真实盘验收与上游 PR 待做，发布闸门仍关闭 |
+| CasaOS P3 系统集成 | CASAOS §8/§10 | 🟡 | 开发/系统集成完成：7 unit、6 服务、CLI、安装/卸载、NBD 链路已验；**2026-10-23 审查发现 3 个 BLOCKER**（白名单未下沉到写 API、首启管理员可被抢先、端口冲突）及运维缺口；发布闸门仍关闭，见 APP-DESIGNS 5.1/7.5 |
 | CasaOS local-storage 磁盘能力 | CASAOS §9/§10 | 🟡 | 8G NBD 盘验证：挂载、写读、卸载、服务重启按 UUID 自挂、格式化全过；真实 SATA/USB 盘的 SMART、udevil 拔插、真机重启待测；`IsDiskSupported` 白名单会过滤 loop/dm/nbd |
 | CasaOS 对外发布 | NAMING/§9 | ❌ | Hub 无 casaos；GitHub `casaos-0.1.0` 返回 404（Actions 曾构建过） |
 | CasaOS 与固件补丁上游化 | CASAOS §8/BUILD.md | ⬜ | UPSTREAM-PRS.md 自述“未 push 任何仓库”；无公开 PR |
 | 私人 p1 命名 | NAMING | ✅ | `personal-p1-20261019.img.gz`（398.5MB，md5 a4d5…）与 FLASH-USB 一致；archive 命名合规；仅 ROADMAP/BUILDLOG 残留旧名 `v2-personal-full-la5` |
 | 个人版 U 盘真机验证 | ROADMAP 进行中 | ⬜ | FLASH-USB 验证清单全未勾，无启动日志 |
 | KVM | KVM-PLAN | ❌封存 | A 四组合全败；B（自编 qemu 9.2）同症状复现，按判据落 D；C 未投 |
-| OpenMediaVault | NEXT-PLAN/ROADMAP | 🟡 | 已排期 Gate 0 可行性（O-01..O-06）：基线/依赖闭包/SaltStack/插件；未做安装，不预设移植；见 [NEXT-PLAN.md](NEXT-PLAN.md) |
+| OpenMediaVault | NEXT-PLAN/ROADMAP | 🟡 | 已排期 Gate 0（O-01..O-09）：先判定 OMV 7/8，再审计依赖；QEMU TCG 隔离，不用 NBD 做管理根盘；未做安装，不预设移植 |
 | P1–P4 应用候选 | NEXT-PLAN | 🟡 | 26 个候选已列计划，未开工；P1 5 个、P2 6 个、P3 6 个、P4 9 个；见 [NEXT-PLAN.md](NEXT-PLAN.md) |
 | jellyfin 缩略图 | ROADMAP/BUILDLOG | ✅ | ImageSharp 全接口 + 真照片库验证，镜像已替换 |
 | navidrome DSD | IMAGES/BUILDLOG | ✅/❓ | 系统 taglib 2.0.2，DSD 已编译验证；真实媒体播放无记录 |
