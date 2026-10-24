@@ -617,6 +617,34 @@ docker run -d --name matomo --network matomo -p 8080:80 \
 - 归档：`docker exec matomo php /var/www/matomo/console core:archive --url=http://<host>:8080/`。
 - 完整说明见 [../images/matomo/BUILD.md](../images/matomo/BUILD.md)。
 
+### Woodpecker CI（server + agent）
+
+```bash
+docker network create woodpecker
+docker run -d --name woodpecker-server --network woodpecker \
+  -p 8000:8000 -p 9000:9000 \
+  -e WOODPECKER_HOST=http://<host>:8000 \
+  -e WOODPECKER_OPEN=true -e WOODPECKER_ADMIN=admin \
+  -e WOODPECKER_GITEA=true -e WOODPECKER_GITEA_URL=https://git.example.com \
+  -e WOODPECKER_GITEA_CLIENT=<client> -e WOODPECKER_GITEA_SECRET=<secret> \
+  -v woodpecker-data:/var/lib/woodpecker \
+  yunixintel/woodpecker-server:loong64
+docker run -d --name woodpecker-agent --network woodpecker --restart unless-stopped \
+  --group-add $(stat -c %g /var/run/docker.sock) \
+  -e WOODPECKER_SERVER=woodpecker-server:9000 \
+  -e WOODPECKER_AGENT_SECRET="$(docker exec woodpecker-server cat /var/lib/woodpecker/agent-secret)" \
+  -e WOODPECKER_BACKEND=docker -e WOODPECKER_MAX_WORKFLOWS=1 \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  yunixintel/woodpecker-agent:loong64
+```
+
+- Web UI：`http://<host>:8000/`；健康 `/api/healthz`（204）。
+- **必须配置一个 forge**（Gitea/GitHub/GitLab/Forgejo），否则 server 启动即退出。
+- server `/var/lib/woodpecker` 存 SQLite 与 `agent-secret`/`grpc-secret`，必须持久化。
+- agent 需 `docker.sock`；能访问 socket 等同宿主 root，只接可信仓库。
+- 完整说明见 [../images/woodpecker-server/BUILD.md](../images/woodpecker-server/BUILD.md)
+  与 [../images/woodpecker-agent/BUILD.md](../images/woodpecker-agent/BUILD.md)。
+
 ### NocoDB
 
 ```bash

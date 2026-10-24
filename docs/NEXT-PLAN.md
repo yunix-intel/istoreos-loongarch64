@@ -2,7 +2,7 @@
 
 制定日期：2026-10-23  
 状态：**计划，未开工**。本文件只排期，不代表已构建或已承诺发布日期。  
-依据：现有 101 个镜像、[STORE-COVERAGE.md](STORE-COVERAGE.md) 的 8 个阻塞结论、
+依据：现有 103 个镜像、[STORE-COVERAGE.md](STORE-COVERAGE.md) 的 8 个阻塞结论、
 以及两份独立子代理调研（存储/媒体方向、生产力/自动化方向）。
 
 对应详细设计：[APP-DESIGNS.md](APP-DESIGNS.md)。本文件只排期；具体构建路径与运行时契约在设计稿中。
@@ -95,7 +95,7 @@
 | P3-03 | **MeTube** | yt-dlp Web 队列，归档视频到 NAS | Python 3.13 + Angular + ffmpeg + yt-dlp | Python/Node/ffmpeg 均可编 | 低中 | 上游 extras 含 `curl-cffi`/`deno`，需去掉；用 Node 跑 yt-dlp-ejs |
 | P3-04 | **SABnzbd** | Usenet NZB 下载，补 *arr 栈 BT 之外的缺口 | Python + sabctools/CT3 + par2 + unrar | C/Rust 扩展可编；par2 可编 | 中 | `unrar` 是 freeware 许可，分发前需确认；无上游 loong64 镜像 |
 | P3-05 | **Autobrr** | 私种 IRC announce → qBittorrent/*arr | Go + `modernc.org/sqlite`（无 CGO）+ React | Go 可编；前端 x86 | 低 | `modernc sqlite` 可能需升到 1.61 才有 loong64 |
-| P3-06 | **Woodpecker CI** | 给 Gitea/Gogs 补 CI/CD | Go server/agent + Vue/pnpm；CGO SQLite | 源码可编；发布资产有 riscv64 但无 loong64 | 中 | agent 需 `docker.sock` 和权限；流水线基础镜像需来自本仓库 |
+| P3-06 | **Woodpecker CI** ✅ | 给 Gitea/Gogs 补 CI/CD | Go server/agent + Vue/pnpm；CGO SQLite | 已发布 `woodpecker-server`/`woodpecker-agent` | 中 | server 必须配 forge；agent 需 `docker.sock` 和 `--group-add`；流水线基础镜像需来自本仓库 |
 
 ### P3 启动条件
 
@@ -363,7 +363,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [ ] P3-03 MeTube
 - [ ] P3-04 SABnzbd
 - [x] P3-05 Autobrr（已发布，`32f91a31…dcf7`）
-- [ ] P3-06 Woodpecker CI
+- [x] P3-06 Woodpecker CI
 - [ ] P4-01 MediaMTX
 - [ ] P4-02 Karakeep（暂停：sharp/Chromium 无 loong64）
 - [ ] P4-03 Readeck

@@ -1,6 +1,6 @@
 # loongarch64 应用镜像
 
-共 101 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
+共 103 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
 `loong64`（浮动）与 `24.10-la5`（与 GitHub Release 对齐）。
 
 拉取：
@@ -96,6 +96,8 @@ docker pull yunixintel/jellyfin:loong64
 | `yunixintel/ente-server` | 约 123MB（Hub） | `/ping` 200、PostgreSQL 迁移、MinIO 三桶可用；healthy | ente server master；需 PostgreSQL + S3/MinIO；`/data/museum.yaml`；8080；UID 1105；Web 端暂未包含 |
 | `yunixintel/autobrr` | 约 131MB（Hub） | `/` 200、`/api/healthz/liveness` 200、SQLite 迁移；healthy | master 2026-10；Go 单二进制 + 内嵌 Vue；`/config`；7474；UID 1113；默认无认证 |
 | `yunixintel/matomo` | 约 193MB（Hub） | `/index.php` 200、安装向导可打开、PHP 扩展齐全；healthy | 5.14.2；PHP 8.3 + nginx/php-fpm；必须 MariaDB；`config`/`tmp` 持久化；80 |
+| `yunixintel/woodpecker-server` | 约 133MB（Hub） | `/` 200、内嵌 UI 资源 200、`/api/healthz` 204；SQLite 迁移；healthy | 3.19.0；**必须配置 forge**（Gitea/GitHub）才能启动；`/var/lib/woodpecker`；8000/9000；自动生成 agent/grpc secret；UID 1114 |
+| `yunixintel/woodpecker-agent` | 约 117MB（Hub） | 注册到 server、`/healthz` 200；healthy | 3.19.0；需 `docker.sock` + `--group-add`；`WOODPECKER_AGENT_SECRET` 与 server 一致；3000 仅健康检查；UID 1114 |
 | `yunixintel/nocodb` | 1.58GB | `/api/v1/health` 200；`/` 302→`/dashboard/` 200；SQLite 初始化；健康检查 healthy | 0.301.3 + Node 24；npm 需 `--ignore-scripts`；sqlite3 手动编 loong64；自定义 runner；`/data`；8080；UID 1000 |
 | `yunixintel/apprise-api` | 1.03GB | `/` 200；`/status` OK；stateless `/notify/` 进入通知流程；健康检查 healthy | 2.0.1 + Python 3.11；系统 cryptography/gevent；pycares 需 cmake；nginx+supervisor+gunicorn；`/config`、`/attach`、`/plugin`；8000 |
 | `yunixintel/homebox` | 346MB | `/` 200；`/api/v1/status` health=true；版本 v0.10.3；SQLite 初始化；健康检查 healthy | v0.10.3；Nuxt 静态前端 embed；Go 1.27；modernc sqlite 升到 1.61 支持 loong64；`/data`；7745；UID 1000；默认允许注册 |

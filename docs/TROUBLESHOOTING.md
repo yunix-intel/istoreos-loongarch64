@@ -400,6 +400,28 @@ docker run --rm -v "$PWD":/src -w /src openeuler/openeuler:24.03 bash -c '
 - 首次访问 `/web/admin/setup` 创建管理员；`create_default_admin=false` 是上游默认值。
 - 不要用 `sftpgo resetpwd` 在运行中的实例上操作：文档明确要求先停服务，否则 SQLite 可能损坏。
 
+### Woodpecker server 启动报 `forge not configured`
+
+现象：日志 `can't setup globals: could not setup service manager: forge not configured`，
+随后 `error running server`，端口不监听。
+
+原因：Woodpecker 没有内置账号体系，必须接一个 forge（Gitea/GitHub/GitLab/Forgejo）。
+
+修复：至少设置 `WOODPECKER_GITEA=true`、`WOODPECKER_GITEA_URL`、`WOODPECKER_GITEA_CLIENT`、
+`WOODPECKER_GITEA_SECRET`，并把 Gitea OAuth 回调配成 `http://<host>:8000/authorize`。
+
+### Woodpecker agent 反复报 `open /etc/woodpecker/agent.conf: no such file or directory`
+
+原因：agent 会尝试把运行时配置持久化到 `/etc/woodpecker/agent.conf`，目录不存在。
+
+修复：镜像已预建 `/etc/woodpecker` 并授权给 UID 1114；自行改镜像时不要删掉这一步。
+
+### Woodpecker agent 访问 Docker API `permission denied`
+
+原因：agent 以 UID 1114 非 root 运行，不在宿主 `docker.sock` 的组里。
+
+修复：启动加 `--group-add $(stat -c %g /var/run/docker.sock)`。
+
 ## Docker Hub
 
 ### `denied: requested access to the resource is denied`

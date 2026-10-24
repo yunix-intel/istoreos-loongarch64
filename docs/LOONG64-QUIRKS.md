@@ -24,6 +24,8 @@
 | Ente server | 仅 API；museum.yaml 首次启动生成 | Web 图库未包含；需 PostgreSQL + S3/MinIO 三桶 | `/data/museum.yaml` 含密钥必须备份；S3 bucket 需预先创建 |
 | Autobrr | 前端 x86 构建后内嵌；SQLite | 默认无认证；需自配 IRC/下载器 | `/config` 持久化；公网加反代认证 |
 | Matomo | 官方完整包；PHP 8.3 | 首次必须走 Web 安装向导；无 CLI 安装 | 必须 MariaDB/MySQL；`config`/`tmp` 持久化；归档需 cron |
+| Woodpecker server | 前端 x86 构建后内嵌；CGO SQLite | **不配置 forge（Gitea/GitHub 等）无法启动**；无内置账号体系，依赖 forge OAuth | `/var/lib/woodpecker` 持久化；`WOODPECKER_HOST` 必须是外部可访问 URL；agent/grpc secret 自动生成 |
+| Woodpecker agent | Go CGO-free；UID 1114 | 无业务端口，仅 3000 健康检查；必须能访问 Docker daemon | 挂 `docker.sock` 并 `--group-add <GID>`；`WOODPECKER_AGENT_SECRET` 与 server 一致；等同宿主 root，只接可信仓库 |
 | Mealie | Python 3.14 自编 | HEIF/HEIC 不支持 | `/app/data`；UID 911 |
 | Nextcloud | 当前镜像使用 SQLite | 生产不建议 SQLite；无外部 DB 自动配置 | 仅测试/轻量使用；`config`/`data` 持久化 |
 | Navidrome | Go + 系统 taglib | DSD 已编，但真实播放未全量验证 | 音乐目录只读挂载 |

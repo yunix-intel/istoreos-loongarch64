@@ -1,6 +1,6 @@
 # 应用镜像构建手册（loong64）
 
-本文件说明 101 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 99 个镜像的 Dockerfile；
+本文件说明 103 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 93 个镜像的 Dockerfile；
 其余 10 个早期镜像的 Dockerfile 未保留，但下方给出源码版本、关键步骤和构建日志入口。
 
 ## 0. 共同约定
@@ -165,7 +165,7 @@ Config UI 5 由 `hb-service run` 同时启动 UI 和 Homebridge，单独跑 `hom
 > adguardhome、code-server、easytier、firefly-iii、gitea、memos、mihomo、miniflux、
 > phpmyadmin、vaultwarden 共 10 个。
 
-## 3.5 2026-10 新增的 22 个镜像
+## 3.5 2026-10 新增的 24 个镜像
 
 | 镜像 | 上游 | 关键步骤/坑 |
 |---|---|---|
@@ -191,6 +191,8 @@ Config UI 5 由 `hb-service run` 同时启动 UI 和 Homebridge，单独跑 `hom
 | ente-server | master 2026-10 | Go CGO-free；museum.yaml 自动生成；需 PostgreSQL + S3/MinIO；Web 端未含 |
 | autobrr | master 2026-10 | Vue 前端 x86 构建后 embed；Go CGO-free；SQLite |
 | matomo | 5.14.2 | 官方完整包；PHP 8.3 + nginx/php-fpm；必须 MariaDB；Web 安装向导 |
+| woodpecker-server | v3.19.0 | Vue 前端 x86 构建后 embed；Go CGO SQLite；必须配置 forge；`/var/lib/woodpecker` |
+| woodpecker-agent | v3.19.0 | Go CGO-free；UID 1114；需 `docker.sock` + `--group-add`；3000 健康检查 |
 
 逐应用细节见 `images/<app>/BUILD.md`。无法移植的 8 个商店应用见
 [BLOCKED-APPS.md](BLOCKED-APPS.md)。
@@ -199,4 +201,4 @@ Config UI 5 由 `hb-service run` 同时启动 UI 和 Homebridge，单独跑 `hom
 
 构建完成后记录：镜像大小、`docker inspect` 架构、启动日志、HTTP/健康检查、digest。
 统一推送到 `docker.io/yunixintel/<app>:loong64` 与 `:24.10-la5`。
-`scripts/push-images.sh`（私有库）覆盖全部 101 只。
+`scripts/push-images.sh`（私有库）覆盖全部 103 只。

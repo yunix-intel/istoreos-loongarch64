@@ -555,7 +555,7 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 | 风险 | modernc sqlite 版本；IRC 真实测试需凭据，不进镜像 |
 | 估算 | 镜像约 100–150MB；1–3 天 |
 
-### P3-06 Woodpecker CI（server + agent）
+### P3-06 Woodpecker CI（server + agent）✅ 已实现（2026-10-24）
 
 | 项 | 设计 |
 |---|---|
@@ -568,7 +568,7 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 | 卷 | server `/var/lib/woodpecker`；agent `/var/lib/woodpecker`（可选） |
 | 环境 | server：`WOODPECKER_HOST`、`WOODPECKER_GITEA=true`、`WOODPECKER_GITEA_URL`、`WOODPECKER_GITEA_CLIENT`、`WOODPECKER_GITEA_SECRET`、`WOODPECKER_AGENT_SECRET`、`WOODPECKER_ADMIN`、`WOODPECKER_DATABASE_DRIVER=sqlite3`、`WOODPECKER_DATABASE_DATASOURCE=/var/lib/woodpecker/woodpecker.sqlite`；agent：`WOODPECKER_SERVER=woodpecker-server:9000`、`WOODPECKER_AGENT_SECRET`、`WOODPECKER_BACKEND=docker`、`WOODPECKER_MAX_WORKFLOWS` |
 | entrypoint | server 启动迁移；agent `exec woodpecker-agent`；compose 用 `depends_on` 保证 server 先起；`WOODPECKER_AGENT_SECRET` 必须持久化在 compose env/secret，不得每次随机 |
-| 健康检查 | server `curl -fsS http://127.0.0.1:8000/healthz` |
+| 健康检查 | server `/api/healthz`（204）；agent `:3000/healthz` |
 | 测试 | server UI 200；OAuth 连接 Gitea；agent 上线；跑一个 echo 流水线 |
 | 风险 | agent 挂载 `docker.sock` 等同宿主 root；只运行受信流水线和镜像；多镜像交付 |
 | 估算 | 2 个镜像；5–8 天 |

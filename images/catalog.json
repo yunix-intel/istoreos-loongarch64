@@ -705,5 +705,19 @@
     "architecture": "linux/loong64",
     "verification": "`/index.php` 200、安装向导可打开；PHP 扩展齐全；healthy",
     "notes": "5.14.2；PHP 8.3 + nginx/php-fpm；必须 MariaDB/MySQL；`config`/`tmp` 持久化；80；安装向导建管理员"
+  },
+  {
+    "image": "yunixintel/woodpecker-server",
+    "size": "约 133MB (Hub)",
+    "architecture": "linux/loong64",
+    "verification": "`/` 200、`/api/healthz` 204、内嵌 UI 资源 200；SQLite 迁移完成；healthy",
+    "notes": "3.19.0；必须配置一个 forge（Gitea/GitHub 等）才能启动；`/var/lib/woodpecker` 持久化；8000 HTTP/9000 gRPC；自动生成 agent/grpc secret"
+  },
+  {
+    "image": "yunixintel/woodpecker-agent",
+    "size": "约 117MB (Hub)",
+    "architecture": "linux/loong64",
+    "verification": "启动后注册到 server（runner ID 4）、`/healthz` 200、healthy",
+    "notes": "3.19.0；UID/GID 1114；需 `docker.sock` 与匹配的 `--group-add`；`WOODPECKER_AGENT_SECRET` 与 server 一致；3000 仅健康检查"
   }
 ]
