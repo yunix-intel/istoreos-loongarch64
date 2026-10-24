@@ -775,5 +775,12 @@
     "architecture": "linux/loong64",
     "verification": "`/` 303→引导页 200、`/data/config.toml` 与 SQLite 首启生成；healthy",
     "notes": "0.9.2；Go CGO（mattn sqlite）+ gulp 前端 x86 构建；`/data`；8000；UID 1117；CGO-free 的 modernc 旧版缺 loongarch64；未做完整抓取联调"
+  },
+  {
+    "image": "yunixintel/wg-easy",
+    "size": "约 169MB (Hub)",
+    "architecture": "linux/loong64",
+    "verification": "DB 迁移、`wg0.conf` 生成、`/` 302→`/setup/1`、卷持久化、健康检查 healthy；真实客户端隧道未验证",
+    "notes": "15.4.0；Node 24 + Nuxt/Nitro + Drizzle/libsql（龙芯 0.5.13 绑定）；argon2 换 hash-wasm；51820/udp、51821/tcp；需 NET_ADMIN/SYS_MODULE 与 sysctls；IPv4-only"
   }
 ]

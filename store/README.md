@@ -15,7 +15,8 @@
 | `exports/istore-descriptions.json` | 可直接写入 iStore app-meta description 的 HTML（中/英） |
 | `casaos/Apps/<id>/docker-compose.yml` | CasaOS 应用定义（当前 18 个已导入并注入说明，其余待生成） |
 | `casaos/apply_descriptions.py` | 将导出的 title/category/tagline/description 写回 CasaOS 定义 |
-| `casaos/port-plan.json` | 110 个应用的宿主端口分配；18 个已有定义保留 18001–18018，其余从 18101 起预留 |
+| `casaos/port-plan.json` | 111 个应用的宿主端口分配；18 个已有定义保留 18001–18018，其余从 18101 起预留 |
+| `casaos/build_port_plan.py` | 重新生成端口分配（多端口/固定端口应用需手工覆盖） |
 | `descriptions-preview.md` | 人工复核用的表格预览 |
 
 ## 必备字段

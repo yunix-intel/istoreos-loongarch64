@@ -1,8 +1,7 @@
 {
   "schema": 1,
-  "generated": "2026-10-24",
-  "range": "18001-18110",
-  "note": "Existing 18 definitions keep 18001-18018; new apps reserved from 18101. Verify no host conflicts before publishing.",
+  "generated": "2026-10-25",
+  "note": "Existing definitions keep 18001-18018; new apps are reserved from 18101. Apps needing multiple or fixed ports (e.g. wg-easy 51820/udp) must override this primary port.",
   "apps": [
     {
       "id": "actual-budget",
@@ -740,37 +739,44 @@
       "category": "Developer"
     },
     {
+      "id": "wg-easy",
+      "image": "yunixintel/wg-easy",
+      "host_port": 18190,
+      "source": "reserved",
+      "category": "Utilities"
+    },
+    {
       "id": "wizarr",
       "image": "yunixintel/wizarr",
-      "host_port": 18190,
+      "host_port": 18191,
       "source": "reserved",
       "category": "Utilities"
     },
     {
       "id": "woodpecker-agent",
       "image": "yunixintel/woodpecker-agent",
-      "host_port": 18191,
+      "host_port": 18192,
       "source": "reserved",
       "category": "Developer"
     },
     {
       "id": "woodpecker-server",
       "image": "yunixintel/woodpecker-server",
-      "host_port": 18192,
+      "host_port": 18193,
       "source": "reserved",
       "category": "Developer"
     },
     {
       "id": "xteve",
       "image": "yunixintel/xteve",
-      "host_port": 18193,
+      "host_port": 18194,
       "source": "reserved",
       "category": "Media"
     },
     {
       "id": "zigbee2mqtt",
       "image": "yunixintel/zigbee2mqtt",
-      "host_port": 18194,
+      "host_port": 18195,
       "source": "reserved",
       "category": "Home Automation"
     }

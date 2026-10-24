@@ -740,6 +740,30 @@ docker run -d --name readeck -p 8000:8000 \
 - 默认 SQLite；可改用 PostgreSQL（上游 `READECK_DATABASE_SOURCE`）。
 - 完整说明见 [../images/readeck/BUILD.md](../images/readeck/BUILD.md)。
 
+### wg-easy
+
+```bash
+docker run -d --name wg-easy --restart unless-stopped \
+  -p 51820:51820/udp -p 51821:51821/tcp \
+  -v etc_wireguard:/etc/wireguard \
+  -v /lib/modules:/lib/modules:ro \
+  --cap-add NET_ADMIN --cap-add SYS_MODULE \
+  --sysctl net.ipv4.ip_forward=1 \
+  --sysctl net.ipv4.conf.all.src_valid_mark=1 \
+  -e INSECURE=true \
+  -e INIT_ENABLED=true -e INIT_USERNAME=admin -e INIT_PASSWORD='change-me' \
+  -e INIT_HOST=vpn.example.com -e INIT_PORT=51820 \
+  -e DISABLE_IPV6=true \
+  yunixintel/wg-easy:loong64
+```
+
+- Web：`http://<host>:51821/`，首启 302→`/setup/1`；WireGuard：51820/udp。
+- `/etc/wireguard` 存 `wg-easy.db` 与 `wg0.conf`，必须持久化。
+- `NET_ADMIN` 必需；`SYS_MODULE` + `/lib/modules` 用于容器内 `modprobe wireguard`。
+- 宿主需放行 51820/udp；公网建议反代 51821 并保持 `INSECURE=false`。
+- 首发 IPv4-only；AmneziaWG 未启用；真实客户端握手/隧道尚未验收。
+- 完整说明见 [../images/wg-easy/BUILD.md](../images/wg-easy/BUILD.md)。
+
 ### Woodpecker CI（server + agent）
 
 ```bash
@@ -964,6 +988,7 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | unpackerr | — | `/config`、`/downloads` | 无 UI；`UN_*` 环境；UID 1123 |
 | pocket-id | 1411 | `/data` | UID 1122；`APP_URL`；首启生成加密密钥 |
 | readeck | 8000 | `/data` | UID 1117；CGO sqlite；首启引导页 |
+| wg-easy | 51820/udp, 51821 | `/etc/wireguard`；`/lib/modules:ro` | 需 NET_ADMIN/SYS_MODULE 与 sysctls；IPv4-only；真实隧道未验 |
 | nocodb | 8080 | `/data` | UID 1000；SQLite；`NC_DB` 用 `?d=` |
 | apprise-api | 8000 | `/config`、`/attach`、`/plugin` | 默认无认证/无 TLS |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |

@@ -628,7 +628,7 @@ sharp/sqlite-vec 不是服务端运行时依赖；唯一硬阻塞 sqlite3 5.1.6 
 - 风险：`YARN_ENABLE_SCRIPTS=false`、`focus @joplin/server` 裁剪、Node ABI 重编、
   无 NTP 时 `MAX_TIME_DRIFT=0`。估算 2–3 天。
 
-### P4-06 wg-easy（2026-10-24 研究：GO，镜像收尾中）
+### P4-06 wg-easy ✅ 已实现（2026-10-24）
 
 **状态：GO。** 研究结论见 [research/wg-easy-unblock.md](research/wg-easy-unblock.md)。v15.4.0 已在
 龙芯本机完成 Nuxt/Nitro 构建、libsql 迁移、配置生成和 HTTP 冒烟；复用龙芯 npm 镜像的

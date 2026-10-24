@@ -2,7 +2,7 @@
 
 制定日期：2026-10-23  
 状态：**计划，未开工**。本文件只排期，不代表已构建或已承诺发布日期。  
-依据：现有 111 个镜像、[STORE-COVERAGE.md](STORE-COVERAGE.md) 的 8 个阻塞结论、
+依据：现有 112 个镜像、[STORE-COVERAGE.md](STORE-COVERAGE.md) 的 8 个阻塞结论、
 以及两份独立子代理调研（存储/媒体方向、生产力/自动化方向）。
 
 对应详细设计：[APP-DESIGNS.md](APP-DESIGNS.md)。本文件只排期；具体构建路径与运行时契约在设计稿中。
@@ -127,7 +127,7 @@ P4 不进入当前排期；每项启动前先做 1 天以内的依赖 spike，�
 - **P4-02 Karakeep 有条件 Go**：基础版（SQLite + 静态抓取）可做；搜索/截图需外部 Meilisearch/browserless，原生 Chromium/Meilisearch No-Go。见 `docs/research/karakeep-unblock.md`。
 - **P4-04 Linkwarden 暂停**：Prisma engines 无 loong64 + Playwright/Chromium + sharp。
 - **P4-05 Joplin Server GO**：sharp/sqlite-vec 非服务端依赖；sqlite3 5.1.6 已源码编过 16K 页门禁；PostgreSQL 路径仍建临时 SQLite。见 `docs/research/joplin-unblock.md`。
-- **P4-06 wg-easy GO**：v15.4.0 已用龙芯 libsql 绑定 + hash-wasm 跑通构建/冒烟；镜像收尾中，真实隧道待验收。见 `docs/research/wg-easy-unblock.md`。
+- **P4-06 wg-easy GO（已发布）**：v15.4.0 已用龙芯 libsql 绑定 + hash-wasm 构建并推送双 tag；真实隧道待验收。见 `docs/research/wg-easy-unblock.md`。
 - P4 可评估项缩减为：MediaMTX、Readeck、Registry、Pocket ID、Unpackerr。
 
 ## 6. CasaOS 工作流
@@ -369,7 +369,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [x] P4-03 Readeck（已发布，`14c9426b…4719`）
 - [ ] P4-04 Linkwarden（暂停：Prisma/Playwright/sharp）
 - [ ] P4-05 Joplin Server（GO；2–3 人日，待排期）
-- [ ] P4-06 wg-easy（GO；镜像收尾，待真实隧道验收）
+- [x] P4-06 wg-easy（已发布，`52bd56b2…38ea`；真实隧道待验收）
 - [x] P4-07 Registry（已发布，`da519e59…0229`）
 - [x] P4-08 Pocket ID（已发布，`7c21de80…0cb4`）
 - [x] P4-09 Unpackerr（已发布，`8cc802bf…bc7e`）

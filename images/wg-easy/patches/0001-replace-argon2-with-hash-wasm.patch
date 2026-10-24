@@ -1,0 +1,58 @@
+--- a/server/utils/password.ts
++++ b/server/utils/password.ts
+@@ -1,4 +1,5 @@
+-import argon2 from 'argon2';
++import { argon2id, argon2Verify } from 'hash-wasm';
++import { randomBytes } from 'node:crypto';
+ import { deserialize } from '@phc/format';
+ 
+ const DUMMY_HASH =
+@@ -14,17 +15,25 @@
+   hash: string | null
+ ): Promise<boolean> {
+   if (hash === null) {
+-    await argon2.verify(DUMMY_HASH, password);
++    await argon2Verify({ password, hash: DUMMY_HASH }).catch(() => false);
+     return false;
+   }
+-  return argon2.verify(hash, password);
++  return argon2Verify({ password, hash }).catch(() => false);
+ }
+ 
+ /**
+  * Hashes a password.
+  */
+ export async function hashPassword(password: string): Promise<string> {
+-  return argon2.hash(password);
++  return argon2id({
++    password,
++    salt: randomBytes(16),
++    parallelism: 4,
++    iterations: 3,
++    memorySize: 65536,
++    hashLength: 32,
++    outputType: 'encoded',
++  });
+ }
+ 
+ /**
+--- a/package.json
++++ b/package.json
+@@ -33,7 +33,6 @@
+     "@vueuse/core": "^14.4.0",
+     "@vueuse/nuxt": "^14.4.0",
+     "apexcharts": "^6.8.0",
+-    "argon2": "^0.45.1",
+     "cidr-tools": "^12.1.3",
+     "citty": "^0.2.2",
+     "consola": "^3.4.2",
+@@ -54,7 +53,8 @@
+     "tailwindcss": "^3.4.19",
+     "vue": "latest",
+     "vue3-apexcharts": "^1.11.1",
+-    "zod": "^4.4.3"
++    "zod": "^4.4.3",
++    "hash-wasm": "4.12.0"
+   },
+   "devDependencies": {
+     "@nuxt/eslint": "^1.17.0",

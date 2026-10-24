@@ -1,6 +1,6 @@
 # loongarch64 应用镜像
 
-共 111 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
+共 112 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
 `loong64`（浮动）与 `24.10-la5`（与 GitHub Release 对齐）。
 
 拉取：
@@ -102,6 +102,7 @@ docker pull yunixintel/jellyfin:loong64
 | `yunixintel/unpackerr` | 约 100MB（Hub） | v0.9.9 启动、配置自动生成、假 Sonarr 轮询、`pgrep` healthy | 0.9.9；Go 单二进制；无 UI/端口；`/config`、`/downloads`；UID 1123；需 x/sys 升级补丁；unrar 7.13 + 7za |
 | `yunixintel/pocket-id` | 约 136MB（Hub） | `/` 200、`/healthz` 204、首启建库/密钥；healthy | 2.9.0；SvelteKit 前端 x86 构建后 embed；Go 单二进制；`/data`；1411；UID 1122；首启生成加密密钥；无邮件/SCIM 联调 |
 | `yunixintel/readeck` | 约 118MB（Hub） | `/` 303→引导页 200、首启生成配置与 SQLite；healthy | 0.9.2；Go CGO（mattn sqlite）+ gulp 前端；`/data`；8000；UID 1117；CGO-free 路径因 modernc 旧版不可用 |
+| `yunixintel/wg-easy` | 约 169MB（Hub） | DB 迁移、wg0.conf、302→`/setup/1`、卷持久化、healthy；真实隧道未验 | 15.4.0；Node 24 + Nuxt + libsql（龙芯绑定）；hash-wasm 替代 argon2；51820/udp、51821/tcp；需 NET_ADMIN/SYS_MODULE；IPv4-only |
 | `yunixintel/autobrr` | 约 131MB（Hub） | `/` 200、`/api/healthz/liveness` 200、SQLite 迁移；healthy | master 2026-10；Go 单二进制 + 内嵌 Vue；`/config`；7474；UID 1113；默认无认证 |
 | `yunixintel/matomo` | 约 193MB（Hub） | `/index.php` 200、安装向导可打开、PHP 扩展齐全；healthy | 5.14.2；PHP 8.3 + nginx/php-fpm；必须 MariaDB；`config`/`tmp` 持久化；80 |
 | `yunixintel/woodpecker-server` | 约 133MB（Hub） | `/` 200、内嵌 UI 资源 200、`/api/healthz` 204；SQLite 迁移；healthy | 3.19.0；**必须配置 forge**（Gitea/GitHub）才能启动；`/var/lib/woodpecker`；8000/9000；自动生成 agent/grpc secret；UID 1114 |

@@ -1,6 +1,6 @@
 # 应用镜像构建手册（loong64）
 
-本文件说明 111 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 101 个镜像的 Dockerfile；
+本文件说明 112 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 102 个镜像的 Dockerfile；
 其余 10 个早期镜像的 Dockerfile 未保留，但下方给出源码版本、关键步骤和构建日志入口。
 
 ## 0. 共同约定
@@ -165,7 +165,7 @@ Config UI 5 由 `hb-service run` 同时启动 UI 和 Homebridge，单独跑 `hom
 > adguardhome、code-server、easytier、firefly-iii、gitea、memos、mihomo、miniflux、
 > phpmyadmin、vaultwarden 共 10 个。
 
-## 3.5 2026-10 新增的 32 个镜像
+## 3.5 2026-10 新增的 33 个镜像
 
 | 镜像 | 上游 | 关键步骤/坑 |
 |---|---|---|
@@ -201,6 +201,7 @@ Config UI 5 由 `hb-service run` 同时启动 UI 和 Homebridge，单独跑 `hom
 | unpackerr | 0.9.9 | Go 静态编；必须把 `golang.org/x/sys` 升到 v0.35.0（旧版无 loongarch64 定义）；unrar 源码 |
 | pocket-id | 2.9.0 | SvelteKit 前端 x86 构建后 embed；Go 静态编；首启生成加密密钥；健康检查用 curl（内置 healthcheck 需要完整 env） |
 | readeck | 0.9.2 | gulp 前端 x86 构建到 `assets/www`；必须 `CGO_ENABLED=1`（modernc 旧版无 loongarch64）；mattn sqlite |
+| wg-easy | 15.4.0 | Nuxt/Nitro 本机构建；vendor 5 个 loong64 绑定（libsql/oxc/rolldown/lightningcss）；argon2 换 hash-wasm；运行阶段需 EPOL 的 wireguard-tools |
 
 逐应用细节见 `images/<app>/BUILD.md`。无法移植的 8 个商店应用见
 [BLOCKED-APPS.md](BLOCKED-APPS.md)。
@@ -209,4 +210,4 @@ Config UI 5 由 `hb-service run` 同时启动 UI 和 Homebridge，单独跑 `hom
 
 构建完成后记录：镜像大小、`docker inspect` 架构、启动日志、HTTP/健康检查、digest。
 统一推送到 `docker.io/yunixintel/<app>:loong64` 与 `:24.10-la5`。
-`scripts/push-images.sh`（私有库）覆盖全部 111 只。
+`scripts/push-images.sh`（私有库）覆盖全部 112 只。

@@ -549,6 +549,8 @@
 
 - 2026-10-24 Matomo 5.14.2（P3-02）：官方 `matomo.zip` 完整包（含 vendor）；PHP 8.3 + nginx/php-fpm，`php-pecl-zip` 单独安装。`/index.php` 安装向导 200、PHP 扩展齐全、healthy；Matomo 无 CLI 安装器，保留 Web 向导。镜像 193MB，digest `sha256:b1e7baec…1bc2`，已推送双 tag。
 
+- 2026-10-24 wg-easy 15.4.0（P4-06 复活）：Nuxt/Nitro 在龙芯本机构建；libsql 用龙芯 `@libsql/linux-loong64-gnu@0.5.13` 绑定（JS 层 0.5.29），argon2 退出崩溃改用 hash-wasm；另外 vendor oxc/rolldown/lightningcss 四个 loong64 绑定。运行阶段基于 `yunixintel/node:24.22.1`，openEuler EPOL 提供 wireguard-tools；bridge 测试下 DB 迁移、wg0.conf、302→`/setup/1`、卷持久化、healthy 均通过。真实客户端握手/隧道未验。镜像 509MB（Hub 169MiB），digest `sha256:52bd56b2…38ea`，已推送双 tag。
+
 - 2026-10-24 Readeck 0.9.2（P4-03）：gulp 前端在 x86 WSL2 用 Node 22 构建到 `assets/www`；后端必须 `CGO_ENABLED=1`，因为 `CGO_ENABLED=0` 会走 modernc/sqlite v1.25.0，该版本没有 loongarch64 定义（`sqlite3_index_orderby` 等）。mattn sqlite + 六个 sqlite 构建 tag 编出 34MB 动态二进制；首启生成 `/data/config.toml` 与 SQLite，引导页 200、healthy。镜像 338MB（Hub 118MB），digest `sha256:14c9426b…4719`，已推送双 tag。
 
 - 2026-10-24 Pocket ID 2.9.0（P4-08）：SvelteKit 前端在 x86 WSL2 用 Node 24 + pnpm 10.33 构建，Go 1.27.2 静态编后端并 embed 前端；首启生成 `/data/encryption-key` 与 SQLite。上游 `pocket-id healthcheck` 会先解析完整配置，`docker exec` 不继承 entrypoint 导出的密钥而失败，健康检查改用 `curl /healthz`（204）。UI 200、healthy；未做 OIDC/邮件联调。镜像 394MB（Hub 136MB），digest `sha256:7c21de80…0cb4`，已推送双 tag。

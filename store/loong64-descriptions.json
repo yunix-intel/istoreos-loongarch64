@@ -2,7 +2,7 @@
   "schema": 1,
   "generated": "2026-10-24",
   "architecture": "linux/loong64",
-  "app_count": 110,
+  "app_count": 111,
   "sources": [
     "images/catalog.json",
     "docs/LOONG64-QUIRKS.md"
@@ -4297,6 +4297,45 @@
       "istore_description_html": {
         "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：gulp 前端在 x86 构建；Go 使用 CGO/mattn sqlite。</p><p>缺失功能：CGO-free 的 modernc 旧版缺 loongarch64 定义；未做完整抓取联调。</p><p>额外依赖：持久化 /data；8000；与 Wallabag/Shiori 重叠。</p><p>镜像说明：0.9.2；Go CGO（mattn sqlite）+ gulp 前端 x86 构建；`/data`；8000；UID 1117；CGO-free 的 modernc 旧版缺 loongarch64；未做完整抓取联调</p>",
         "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: gulp frontend built on x86; Go uses CGO/mattn sqlite.</p><p>Missing features: The pinned pure-Go modernc sqlite lacks loongarch64 definitions; full archiving was not tested.</p><p>Extra dependencies: Persist /data; port 8000; overlaps with Wallabag/Shiori.</p><p>Image notes: 0.9.2；Go CGO（mattn sqlite）+ gulp 前端 x86 构建；`/data`；8000；UID 1117；CGO-free 的 modernc 旧版缺 loongarch64；未做完整抓取联调</p>"
+      }
+    },
+    "wg-easy": {
+      "image": "yunixintel/wg-easy",
+      "title": {
+        "zh_cn": "wg-easy",
+        "en_us": "wg-easy"
+      },
+      "category": "Utilities",
+      "architecture": "linux/loong64",
+      "tagline": {
+        "zh_cn": "wg-easy 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "wg-easy LoongArch64 image; see the LoongArch notes."
+      },
+      "quirk": {
+        "zh_cn": "v15.4.0 在龙芯原生构建；libsql 使用龙芯 0.5.13 绑定，argon2 换成 hash-wasm。",
+        "en_us": "v15.4.0 is built natively on LoongArch; libsql uses the LoongArch 0.5.13 binding and argon2 is replaced by hash-wasm."
+      },
+      "missing": {
+        "zh_cn": "AmneziaWG 未启用；IPv6 关闭；真实客户端握手/隧道尚未验证。",
+        "en_us": "AmneziaWG is disabled; IPv6 is off; real client handshakes/tunnels are not verified yet."
+      },
+      "dependencies": {
+        "zh_cn": "需 NET_ADMIN，建议 SYS_MODULE + /lib/modules；sysctls；51820/udp、51821；/etc/wireguard 持久化。",
+        "en_us": "Requires NET_ADMIN, ideally SYS_MODULE + /lib/modules, sysctls, ports 51820/udp and 51821, and persistent /etc/wireguard."
+      },
+      "notes": "15.4.0；Node 24 + Nuxt/Nitro + Drizzle/libsql（龙芯 0.5.13 绑定）；argon2 换 hash-wasm；51820/udp、51821/tcp；需 NET_ADMIN/SYS_MODULE 与 sysctls；IPv4-only",
+      "verification": "DB 迁移、`wg0.conf` 生成、`/` 302→`/setup/1`、卷持久化、健康检查 healthy；真实客户端隧道未验证",
+      "disclosure": {
+        "zh_cn": "架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：v15.4.0 在龙芯原生构建；libsql 使用龙芯 0.5.13 绑定，argon2 换成 hash-wasm。\n缺失功能：AmneziaWG 未启用；IPv6 关闭；真实客户端握手/隧道尚未验证。\n额外依赖：需 NET_ADMIN，建议 SYS_MODULE + /lib/modules；sysctls；51820/udp、51821；/etc/wireguard 持久化。\n镜像说明：15.4.0；Node 24 + Nuxt/Nitro + Drizzle/libsql（龙芯 0.5.13 绑定）；argon2 换 hash-wasm；51820/udp、51821/tcp；需 NET_ADMIN/SYS_MODULE 与 sysctls；IPv4-only",
+        "en_us": "Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: v15.4.0 is built natively on LoongArch; libsql uses the LoongArch 0.5.13 binding and argon2 is replaced by hash-wasm.\nMissing features: AmneziaWG is disabled; IPv6 is off; real client handshakes/tunnels are not verified yet.\nExtra dependencies: Requires NET_ADMIN, ideally SYS_MODULE + /lib/modules, sysctls, ports 51820/udp and 51821, and persistent /etc/wireguard.\nImage notes: 15.4.0；Node 24 + Nuxt/Nitro + Drizzle/libsql（龙芯 0.5.13 绑定）；argon2 换 hash-wasm；51820/udp、51821/tcp；需 NET_ADMIN/SYS_MODULE 与 sysctls；IPv4-only"
+      },
+      "casaos_description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：v15.4.0 在龙芯原生构建；libsql 使用龙芯 0.5.13 绑定，argon2 换成 hash-wasm。\n缺失功能：AmneziaWG 未启用；IPv6 关闭；真实客户端握手/隧道尚未验证。\n额外依赖：需 NET_ADMIN，建议 SYS_MODULE + /lib/modules；sysctls；51820/udp、51821；/etc/wireguard 持久化。\n镜像说明：15.4.0；Node 24 + Nuxt/Nitro + Drizzle/libsql（龙芯 0.5.13 绑定）；argon2 换 hash-wasm；51820/udp、51821/tcp；需 NET_ADMIN/SYS_MODULE 与 sysctls；IPv4-only",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: v15.4.0 is built natively on LoongArch; libsql uses the LoongArch 0.5.13 binding and argon2 is replaced by hash-wasm.\nMissing features: AmneziaWG is disabled; IPv6 is off; real client handshakes/tunnels are not verified yet.\nExtra dependencies: Requires NET_ADMIN, ideally SYS_MODULE + /lib/modules, sysctls, ports 51820/udp and 51821, and persistent /etc/wireguard.\nImage notes: 15.4.0；Node 24 + Nuxt/Nitro + Drizzle/libsql（龙芯 0.5.13 绑定）；argon2 换 hash-wasm；51820/udp、51821/tcp；需 NET_ADMIN/SYS_MODULE 与 sysctls；IPv4-only"
+      },
+      "istore_description_html": {
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：v15.4.0 在龙芯原生构建；libsql 使用龙芯 0.5.13 绑定，argon2 换成 hash-wasm。</p><p>缺失功能：AmneziaWG 未启用；IPv6 关闭；真实客户端握手/隧道尚未验证。</p><p>额外依赖：需 NET_ADMIN，建议 SYS_MODULE + /lib/modules；sysctls；51820/udp、51821；/etc/wireguard 持久化。</p><p>镜像说明：15.4.0；Node 24 + Nuxt/Nitro + Drizzle/libsql（龙芯 0.5.13 绑定）；argon2 换 hash-wasm；51820/udp、51821/tcp；需 NET_ADMIN/SYS_MODULE 与 sysctls；IPv4-only</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: v15.4.0 is built natively on LoongArch; libsql uses the LoongArch 0.5.13 binding and argon2 is replaced by hash-wasm.</p><p>Missing features: AmneziaWG is disabled; IPv6 is off; real client handshakes/tunnels are not verified yet.</p><p>Extra dependencies: Requires NET_ADMIN, ideally SYS_MODULE + /lib/modules, sysctls, ports 51820/udp and 51821, and persistent /etc/wireguard.</p><p>Image notes: 15.4.0；Node 24 + Nuxt/Nitro + Drizzle/libsql（龙芯 0.5.13 绑定）；argon2 换 hash-wasm；51820/udp、51821/tcp；需 NET_ADMIN/SYS_MODULE 与 sysctls；IPv4-only</p>"
       }
     }
   }

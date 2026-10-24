@@ -651,6 +651,15 @@ QUIRKS.update({
     },
 })
 
+QUIRKS["wg-easy"] = {
+    "zh": "v15.4.0 在龙芯原生构建；libsql 使用龙芯 0.5.13 绑定，argon2 换成 hash-wasm。",
+    "en": "v15.4.0 is built natively on LoongArch; libsql uses the LoongArch 0.5.13 binding and argon2 is replaced by hash-wasm.",
+    "missing_zh": "AmneziaWG 未启用；IPv6 关闭；真实客户端握手/隧道尚未验证。",
+    "missing_en": "AmneziaWG is disabled; IPv6 is off; real client handshakes/tunnels are not verified yet.",
+    "deps_zh": "需 NET_ADMIN，建议 SYS_MODULE + /lib/modules；sysctls；51820/udp、51821；/etc/wireguard 持久化。",
+    "deps_en": "Requires NET_ADMIN, ideally SYS_MODULE + /lib/modules, sysctls, ports 51820/udp and 51821, and persistent /etc/wireguard.",
+}
+
 EXTRA_DEPS = {
     "homarr": ("需 Redis。", "Requires Redis."),
     "jellystat": ("需外部 PostgreSQL。", "Requires external PostgreSQL."),

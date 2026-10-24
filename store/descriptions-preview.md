@@ -1,6 +1,6 @@
 # 商店卡片“龙芯版说明”预览
 
-共 110 个可安装应用（不含运行时基础镜像 node）。
+共 111 个可安装应用（不含运行时基础镜像 node）。
 
 | 应用 | 分类 | 龙芯版说明 | 缺失功能 | 额外依赖 |
 |---|---|---|---|---|
@@ -114,3 +114,4 @@
 | Unpackerr (`unpackerr`) | Downloaders | Go 单二进制；需要升级 x/sys 才能支持 loongarch64。 | 无 Web UI/端口；健康检查仅进程存活；未接真实 *arr。 | 持久化 /config 与 /downloads，路径必须与 *arr 一致；unrar 为闭源 freeware。 |
 | Pocket ID (`pocket-id`) | Security | SvelteKit 前端在 x86 构建后内嵌；Go 单二进制。 | 未做邮件 SMTP/SCIM/Passkey 全链路；与 Authelia 二选一。 | 持久化 /data（含加密密钥）；APP_URL 必填为外部地址；1411。 |
 | Readeck (`readeck`) | Productivity | gulp 前端在 x86 构建；Go 使用 CGO/mattn sqlite。 | CGO-free 的 modernc 旧版缺 loongarch64 定义；未做完整抓取联调。 | 持久化 /data；8000；与 Wallabag/Shiori 重叠。 |
+| wg-easy (`wg-easy`) | Utilities | v15.4.0 在龙芯原生构建；libsql 使用龙芯 0.5.13 绑定，argon2 换成 hash-wasm。 | AmneziaWG 未启用；IPv6 关闭；真实客户端握手/隧道尚未验证。 | 需 NET_ADMIN，建议 SYS_MODULE + /lib/modules；sysctls；51820/udp、51821；/etc/wireguard 持久化。 |
