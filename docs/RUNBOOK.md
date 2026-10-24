@@ -457,6 +457,31 @@ docker run -d --name vikunja -p 3456:3456 \
 - 默认无 TLS；公网放在反代之后。
 - 完整说明见 [../images/vikunja/BUILD.md](../images/vikunja/BUILD.md)。
 
+### Piwigo
+
+```bash
+docker network create piwigo
+docker run -d --name piwigo-db --network piwigo \
+  -e MYSQL_ROOT_PASSWORD='change-me' -e MYSQL_DATABASE=piwigo \
+  -e MYSQL_USER=piwigo -e MYSQL_PASSWORD='piwigo-pass' \
+  -v piwigo-db:/var/lib/mysql yunixintel/mariadb:loong64
+docker run -d --name piwigo --network piwigo -p 8080:80 \
+  -e PIWIGO_DB_HOST=piwigo-db -e PIWIGO_DB_NAME=piwigo \
+  -e PIWIGO_DB_USER=piwigo -e PIWIGO_DB_PASSWORD='piwigo-pass' \
+  -e PIWIGO_ADMIN_USER=admin -e PIWIGO_ADMIN_PASSWORD='change-me' \
+  -e PIWIGO_ADMIN_EMAIL=admin@example.com \
+  -v piwigo-local:/var/www/piwigo/local \
+  -v piwigo-data:/var/www/piwigo/_data \
+  -v piwigo-galleries:/var/www/piwigo/galleries \
+  -v piwigo-upload:/var/www/piwigo/upload \
+  yunixintel/piwigo:loong64
+```
+
+- Web：`http://<host>:8080/`；管理员 `/identification.php`。
+- 首次启动自动安装；失败则打开 `/install.php` 手动完成。
+- `local`/`_data`/`galleries`/`upload` 必须持久化；必须外接 MariaDB/MySQL。
+- 完整说明见 [../images/piwigo/BUILD.md](../images/piwigo/BUILD.md)。
+
 ### NocoDB
 
 ```bash
@@ -585,7 +610,7 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 92 个镜像）
+## 3. 端口索引（全部 93 个镜像）
 
 ### 从端口索引生成最小启动命令
 
@@ -634,6 +659,7 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | sftpgo | 8080, 2022 | `/srv/sftpgo/data`、`/var/lib/sftpgo`、`/srv/sftpgo/backups` | UID 1103；首次安装页建管理员；默认无 TLS |
 | bookstack | 80 | `/var/www/bookstack/storage`、`/var/www/bookstack/public/uploads` | 必须 MariaDB；`app.key` 持久化；首次用 artisan 建管理员 |
 | vikunja | 3456 | `/app/vikunja/files`、`/db` | UID 1104；SQLite；JWT secret 持久化；默认允许注册 |
+| piwigo | 80 | `local`、`_data`、`galleries`、`upload` | 必须 MariaDB；首次自动安装；管理员 `/identification.php` |
 | nocodb | 8080 | `/data` | UID 1000；SQLite；`NC_DB` 用 `?d=` |
 | apprise-api | 8000 | `/config`、`/attach`、`/plugin` | 默认无认证/无 TLS |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |

@@ -326,7 +326,9 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 
 ## 2. P2 应用设计
 
-### P2-01 Piwigo
+### P2-01 Piwigo（已发布）
+
+**状态：已构建并推送。** 16.4.0，digest `sha256:289fca6c…f8b9`；构建记录见 [../images/piwigo/BUILD.md](../images/piwigo/BUILD.md)。
 
 | 项 | 设计 |
 |---|---|

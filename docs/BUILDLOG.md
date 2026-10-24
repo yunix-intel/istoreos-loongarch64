@@ -530,3 +530,5 @@
 - 2026-10-24 BookStack v26.09.2（P1-04）：Composer 生产依赖 + PHP 8.3/nginx/php-fpm；`php-pecl-zip` 不能和整组 PHP 包一起装，分两步解决；metalink 指向不可达镜像，注释后用 aliyun baseurl。MariaDB 10.11 下全部迁移完成，`/login` 200，`bookstack:create-admin --initial` 成功。镜像约 600MB，digest `sha256:20304871…efba`，已推送双 tag。
 
 - 2026-10-24 Vikunja v2.7.1（P1-05）：前端要求 Node >=24 + pnpm 11.27，在 x86 WSL2 构建 `frontend/dist`；后端 Go 1.27.2 + CGO SQLite，在 openEuler 容器内编。Vikunja 用 `service.interface` 而不是 `service.port`，必须设 `0.0.0.0:3456`；默认 CORS 要求 `service.publicurl`，JWT 密钥改用 `service.secret` 并持久化 `/db/jwt.secret`。`/` 200、`/health` 200、`/api/v1/info` v2.7.1、注册/登录 200。镜像 169MB，digest `sha256:25333510…20a0a3`，已推送双 tag。
+
+- 2026-10-24 Piwigo 16.4.0（P2-01）：PHP 8.3 + nginx/php-fpm；首次启动等待 MariaDB 后向 `install.php` POST 自动安装，生成 `local/config/database.inc.php`；`piwigo_users` 2 行（admin/guest），`/` 200、`/identification.php` 200、healthy。`php-pecl-zip` 仍需单独安装。镜像约 550MB，digest `sha256:289fca6c…f8b9`，已推送双 tag。

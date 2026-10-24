@@ -79,6 +79,7 @@ IMAGES=(
   penpot-backend
   penpot-frontend
   phpmyadmin
+  piwigo
   pihole
   portainer
   postgres
