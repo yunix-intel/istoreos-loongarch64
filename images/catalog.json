@@ -635,5 +635,12 @@
     "architecture": "linux/loong64",
     "verification": "MariaDB 迁移全部完成；`/login` 200；healthy；`bookstack:create-admin` 成功",
     "notes": "v26.09.2；PHP 8.3 + nginx/php-fpm；必须 MariaDB/MySQL；`storage`/`public/uploads` 持久化；`app.key` 0600；80"
+  },
+  {
+    "image": "yunixintel/vikunja",
+    "size": "约 169MB (Hub)",
+    "architecture": "linux/loong64",
+    "verification": "`/` 200、`/health` 200、`/api/v1/info` version=v2.7.1；注册/登录 200；healthy",
+    "notes": "v2.7.1；Vue 前端 x86 构建 + Go CGO SQLite；`/app/vikunja/files`、`/db`；3456；UID 1104；`service.interface=0.0.0.0:3456`；JWT secret 持久化"
   }
 ]

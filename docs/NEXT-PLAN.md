@@ -2,7 +2,7 @@
 
 制定日期：2026-10-23  
 状态：**计划，未开工**。本文件只排期，不代表已构建或已承诺发布日期。  
-依据：现有 91 个镜像、[STORE-COVERAGE.md](STORE-COVERAGE.md) 的 8 个阻塞结论、
+依据：现有 92 个镜像、[STORE-COVERAGE.md](STORE-COVERAGE.md) 的 8 个阻塞结论、
 以及两份独立子代理调研（存储/媒体方向、生产力/自动化方向）。
 
 对应详细设计：[APP-DESIGNS.md](APP-DESIGNS.md)。本文件只排期；具体构建路径与运行时契约在设计稿中。
@@ -316,7 +316,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [ ] P1-02 Scrutiny（暂停：强制 InfluxDB，loong64 无解）
 - [x] P1-03 SFTPGo（已发布，`6e35b029…8919`）
 - [x] P1-04 BookStack（已发布，`20304871…efba`）
-- [ ] P1-05 Vikunja
+- [x] P1-05 Vikunja（已发布，`25333510…a0a3`）
 - [ ] P2-01 Piwigo
 - [ ] P2-02 Ente（多服务）
 - [ ] P2-03 Headscale

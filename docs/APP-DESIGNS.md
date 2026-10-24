@@ -297,7 +297,9 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 
 **多服务说明**：BookStack 不是单容器应用；RUNBOOK 必须给 MariaDB 的 compose 示例和持久化卷。
 
-### P1-05 Vikunja
+### P1-05 Vikunja（已发布）
+
+**状态：已构建并推送。** v2.7.1，digest `sha256:25333510…20a0a3`；构建记录见 [../images/vikunja/BUILD.md](../images/vikunja/BUILD.md)。
 
 **目标**：项目/任务/Kanban/CalDAV/提醒。
 

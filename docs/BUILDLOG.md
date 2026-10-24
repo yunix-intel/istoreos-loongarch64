@@ -528,3 +528,5 @@
 - 2026-10-24 SFTPGo v2.7.6（P1-03）：openEuler 容器内用 Go 1.27.2 + gcc/sqlite-devel 做 CGO 构建，SQLite 静态链入；运行阶段补 `templates/static/openapi/sftpgo.json`。首次启动工作目录必须是 `/var/lib/sftpgo`，否则相对路径 `sftpgo.db` 报 `unable to open database file`。Web 首次安装页创建管理员成功，登录后 `/web/admin/users` 200，SFTP 2022 监听并生成 host key。镜像 422MB，digest `sha256:6e35b029…8919`，已推送双 tag。
 
 - 2026-10-24 BookStack v26.09.2（P1-04）：Composer 生产依赖 + PHP 8.3/nginx/php-fpm；`php-pecl-zip` 不能和整组 PHP 包一起装，分两步解决；metalink 指向不可达镜像，注释后用 aliyun baseurl。MariaDB 10.11 下全部迁移完成，`/login` 200，`bookstack:create-admin --initial` 成功。镜像约 600MB，digest `sha256:20304871…efba`，已推送双 tag。
+
+- 2026-10-24 Vikunja v2.7.1（P1-05）：前端要求 Node >=24 + pnpm 11.27，在 x86 WSL2 构建 `frontend/dist`；后端 Go 1.27.2 + CGO SQLite，在 openEuler 容器内编。Vikunja 用 `service.interface` 而不是 `service.port`，必须设 `0.0.0.0:3456`；默认 CORS 要求 `service.publicurl`，JWT 密钥改用 `service.secret` 并持久化 `/db/jwt.secret`。`/` 200、`/health` 200、`/api/v1/info` v2.7.1、注册/登录 200。镜像 169MB，digest `sha256:25333510…20a0a3`，已推送双 tag。

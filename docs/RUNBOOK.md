@@ -441,6 +441,22 @@ docker run -d --name bookstack --network bookstack -p 8080:80 \
   `docker exec -u nginx -w /var/www/bookstack bookstack php artisan bookstack:create-admin --email=... --name=... --password=... --initial`。
 - 完整说明见 [../images/bookstack/BUILD.md](../images/bookstack/BUILD.md)。
 
+### Vikunja
+
+```bash
+docker run -d --name vikunja -p 3456:3456 \
+  -e VIKUNJA_SERVICE_PUBLICURL=http://<host>:3456/ \
+  -v vikunja-files:/app/vikunja/files \
+  -v vikunja-db:/db \
+  yunixintel/vikunja:loong64
+```
+
+- Web/API：`http://<host>:3456/`；健康检查 `/health`。
+- `/app/vikunja/files` 存附件；`/db` 存 SQLite 与 JWT secret，必须持久化。
+- `VIKUNJA_SERVICE_PUBLICURL` 必须与浏览器地址一致；默认允许注册，生产建议关闭。
+- 默认无 TLS；公网放在反代之后。
+- 完整说明见 [../images/vikunja/BUILD.md](../images/vikunja/BUILD.md)。
+
 ### NocoDB
 
 ```bash
@@ -569,7 +585,7 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 91 个镜像）
+## 3. 端口索引（全部 92 个镜像）
 
 ### 从端口索引生成最小启动命令
 
@@ -617,6 +633,7 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | smartctl-exporter | 9633 | `/run/udev:ro`；`--device /dev/nvme0` | 需 SYS_RAWIO/SYS_ADMIN；只读指标 |
 | sftpgo | 8080, 2022 | `/srv/sftpgo/data`、`/var/lib/sftpgo`、`/srv/sftpgo/backups` | UID 1103；首次安装页建管理员；默认无 TLS |
 | bookstack | 80 | `/var/www/bookstack/storage`、`/var/www/bookstack/public/uploads` | 必须 MariaDB；`app.key` 持久化；首次用 artisan 建管理员 |
+| vikunja | 3456 | `/app/vikunja/files`、`/db` | UID 1104；SQLite；JWT secret 持久化；默认允许注册 |
 | nocodb | 8080 | `/data` | UID 1000；SQLite；`NC_DB` 用 `?d=` |
 | apprise-api | 8000 | `/config`、`/attach`、`/plugin` | 默认无认证/无 TLS |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |

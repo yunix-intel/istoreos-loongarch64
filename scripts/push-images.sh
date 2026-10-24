@@ -98,6 +98,7 @@ IMAGES=(
   typecho
   uptimekuma
   vaultwarden
+  vikunja
   wallabag
   watchtower
   webvirtcloud
