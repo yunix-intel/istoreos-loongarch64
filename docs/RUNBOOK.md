@@ -648,6 +648,20 @@ docker run -d --name metube -p 8082:8082 \
 - 无 Brotli 解压、无 `bgutil-pot`；部分 YouTube 视频可能需要 cookies。
 - 完整说明见 [../images/metube/BUILD.md](../images/metube/BUILD.md)。
 
+### SABnzbd
+
+```bash
+docker run -d --name sabnzbd -p 8080:8080 \
+  -v /srv/sabnzbd/config:/config \
+  -v /srv/downloads:/downloads \
+  yunixintel/sabnzbd:loong64
+```
+
+- Web：`http://<host>:8080/`，首次进入 `/wizard/`；健康检查跟随根路径 303。
+- `/config` 存 `sabnzbd.ini`（含 `api_key`）、日志与 admin；`/downloads` 为下载目录。
+- 自带 `par2` 0.8.1 与 `unrar` 7.13；无 orjson，JSON 走 ujson。
+- 完整说明见 [../images/sabnzbd/BUILD.md](../images/sabnzbd/BUILD.md)。
+
 ### Woodpecker CI（server + agent）
 
 ```bash

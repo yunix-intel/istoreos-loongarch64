@@ -549,6 +549,8 @@
 
 - 2026-10-24 Matomo 5.14.2（P3-02）：官方 `matomo.zip` 完整包（含 vendor）；PHP 8.3 + nginx/php-fpm，`php-pecl-zip` 单独安装。`/index.php` 安装向导 200、PHP 扩展齐全、healthy；Matomo 无 CLI 安装器，保留 Web 向导。镜像 193MB，digest `sha256:b1e7baec…1bc2`，已推送双 tag。
 
+- 2026-10-24 SABnzbd 5.1.3（P3-04）：openEuler Python 3.11 + venv；`orjson` 过滤掉走 ujson 回退，`cryptography` 用系统 42.0.2 避免 Rust；par2cmdline 0.8.1 与 unrar 7.13 源码编。par2 的旧 `config.guess` 不认 loongarch64，configure 需 `--build=loongarch64-unknown-linux-gnu`；5.x UI 根路径是 `/`（303→`/wizard/`），健康检查不能打 `/sabnzbd/`。API version 5.1.3、par2 create/verify、unrar 可用，healthy；未接真实 Usenet。镜像 390MB（Hub 139MB），digest `sha256:1e20dee8…7d81`，已推送双 tag。
+
 - 2026-10-24 MeTube 2026.10.23（P3-03）：Angular 22 前端在 x86 WSL2 构建（输出 `dist/metube/browser`）；openEuler 内源码编 Python 3.13.7，pip 装 aiohttp/socketio/yt-dlp/yt-dlp-ejs 等，复制 Node 24 作 JS runtime。`watchfiles` 无 loong64 轮子，改为 1 秒轮询目录 mtime；`brotli`/`brotlicffi` 的 C 代码在 LoongArch GCC 下因 `model` 属性失败，放弃 Brotli；openEuler 无 aria2 包且源码未用，移除；`bgutil-pot` 未编译，entrypoint 检测缺失即跳过。修复 `UID` 覆盖 PUID、Docker ENV 吞 JSON 引号、Angular 多一层 browser 目录三个问题。API 添加 YouTube 短视频成功合并 464KB，UI 200、healthy。镜像 1.28GB（Hub 441MB），digest `sha256:7321b0bf…526f`，已推送双 tag。
 
 - 2026-10-24 Ente Web（P2-02 收尾）：10 个 Next.js 16.4.2 应用静态导出（photos/albums/accounts/auth/cast/share/embed/paste/locker/memories），Rust/wasm 部分在 x86 WSL2 构建；占位符 `ENTE_API_ORIGIN_PLACEHOLDER` 运行时替换。工具链问题：rustup 走 USTC 镜像、清理混装工具链、crates.io 换 USTC sparse、wasm-opt 用 Ubuntu binaryen 120 deb、cast 需 nightly-2026-08-13 + rust-src。运行阶段 nginx 1.30，启动复制模板到 `/srv/ente` 再改写，改 origin 后重启即生效。10 端口全 200、`/gallery` 200、WASM 类型正确、占位符 0。镜像 243MB（Hub 103MB），digest `sha256:feda42de…fe67`，已推送双 tag。

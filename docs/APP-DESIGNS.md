@@ -517,7 +517,7 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 | 风险 | yt-dlp 频繁变动；curl-cffi/deno 无 loong64；网络受限时只能验证 UI |
 | 估算 | 镜像约 300–500MB；2–3 天 |
 
-### P3-04 SABnzbd
+### P3-04 SABnzbd ✅ 已实现（2026-10-24）
 
 | 项 | 设计 |
 |---|---|
@@ -530,7 +530,7 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 | 卷 | `/config`、`/downloads` |
 | 环境 | `SABNZBD_CONFIG=/config`、`TZ` |
 | entrypoint | 首次启动生成默认配置；`exec sabnzbdplus --config-file /config/sabnzbd.ini` |
-| 健康检查 | `curl -fsS http://127.0.0.1:8080/sabnzbd/` |
+| 健康检查 | `curl -fsSL http://127.0.0.1:8080/`（5.x 根路径 303→`/wizard/`） |
 | 测试 | UI 200；配置新闻服务器（可用假地址验证保存）；添加 NZB；par2/unrar 可执行 |
 | 风险 | `unrar` 是 freeware，许可需复核；无 loong64 预编译包 |
 | 估算 | 镜像约 400–600MB；4–6 天 |

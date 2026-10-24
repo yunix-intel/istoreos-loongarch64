@@ -1,6 +1,6 @@
 # loongarch64 应用镜像
 
-共 105 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
+共 106 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
 `loong64`（浮动）与 `24.10-la5`（与 GitHub Release 对齐）。
 
 拉取：
@@ -96,6 +96,7 @@ docker pull yunixintel/jellyfin:loong64
 | `yunixintel/ente-server` | 约 123MB（Hub） | `/ping` 200、PostgreSQL 迁移、MinIO 三桶可用；healthy | ente server master；需 PostgreSQL + S3/MinIO；`/data/museum.yaml`；8080；UID 1105 |
 | `yunixintel/ente-web` | 约 103MB（Hub） | 10 个端口全部 200、photos `/gallery` 200、WASM `application/wasm`、占位符 0；静态导出 | 10 个 Next.js 16.4.2 应用静态导出；nginx 1.30；3000–3006/3008–3010；`ENTE_API_ORIGIN` 启动时注入，重启可改 |
 | `yunixintel/metube` | 约 441MB（Hub） | `/` 200、`POST /add` 下载 YouTube 短视频成功、文件合并、healthy | 2026.10.23；Python 3.13.7 + yt-dlp 2026.10.21 + Node 24 + ffmpeg 6.1.1；`/downloads`；8082；UID 1111；无 Brotli/bgutil-pot |
+| `yunixintel/sabnzbd` | 约 139MB（Hub） | `/wizard/` 200、API version 5.1.3、par2 create/verify 通过、healthy | 5.1.3；Python 3.11 + system cryptography；par2cmdline 0.8.1 + unrar 7.13；`/config`、`/downloads`；8080；UID 1112；无 orjson |
 | `yunixintel/autobrr` | 约 131MB（Hub） | `/` 200、`/api/healthz/liveness` 200、SQLite 迁移；healthy | master 2026-10；Go 单二进制 + 内嵌 Vue；`/config`；7474；UID 1113；默认无认证 |
 | `yunixintel/matomo` | 约 193MB（Hub） | `/index.php` 200、安装向导可打开、PHP 扩展齐全；healthy | 5.14.2；PHP 8.3 + nginx/php-fpm；必须 MariaDB；`config`/`tmp` 持久化；80 |
 | `yunixintel/woodpecker-server` | 约 133MB（Hub） | `/` 200、内嵌 UI 资源 200、`/api/healthz` 204；SQLite 迁移；healthy | 3.19.0；**必须配置 forge**（Gitea/GitHub）才能启动；`/var/lib/woodpecker`；8000/9000；自动生成 agent/grpc secret；UID 1114 |

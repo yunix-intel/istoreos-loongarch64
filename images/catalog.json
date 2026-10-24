@@ -733,5 +733,12 @@
     "architecture": "linux/loong64",
     "verification": "`/` 200、`POST /add` 下载 YouTube 短视频 finished、文件合并 464KB、healthy",
     "notes": "2026.10.23；Python 3.13.7 + yt-dlp 2026.10.21 + Node 24 + ffmpeg 6.1.1；`/downloads`；8082；UID 1111；watchfiles 用轮询替代；无 Brotli；无 bgutil-pot"
+  },
+  {
+    "image": "yunixintel/sabnzbd",
+    "size": "约 139MB (Hub)",
+    "architecture": "linux/loong64",
+    "verification": "`/wizard/` 200、`mode=version` 5.1.3、par2 create+verify 通过、unrar 7.13、healthy",
+    "notes": "5.1.3；Python 3.11 + openEuler cryptography；par2cmdline 0.8.1 + unrar 7.13；`/config`、`/downloads`；8080；UID 1112；orjson 用 ujson 回退；未接真实 Usenet"
   }
 ]
