@@ -1,6 +1,6 @@
 # loongarch64 应用镜像
 
-共 87 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
+共 88 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
 `loong64`（浮动）与 `24.10-la5`（与 GitHub Release 对齐）。
 
 拉取：
@@ -82,6 +82,7 @@ docker pull yunixintel/jellyfin:loong64
 | `yunixintel/penpot-backend` | 约 900MB（Hub 710MB） | 迁移至 0153、6060、`/api` 200 | 2.18.3；官方 uberjar + openEuler JDK 21；需 PostgreSQL/Redis；`PENPOT_SECRET_KEY` 必填 |
 | `yunixintel/penpot-frontend` | 约 350MB（Hub 274MB） | `/` 200、Penpot 标题、API 代理 200；healthy | 2.18.3 静态前端 + nginx；反代 backend；8080 |
 | `yunixintel/hermes` | 3.68GB（Hub 1.23GB） | `/` 200、`/health` 200、双进程；healthy | Hermes agent + WebUI；Python 3.14.8；8787；HEIC 不支持；镜像含 gcc/rust |
+| `yunixintel/zigbee2mqtt` | 649MB（Hub 217MB） | onboarding `/` 200、udevadm 255、serialport native 可加载、MQTT 连接 OK；healthy | 2.14.2；Node 24 + pnpm；serialport 源码编；需 USB 协调器；`/app/data`；8080；UID 1101 |
 | `yunixintel/nocodb` | 1.58GB | `/api/v1/health` 200；`/` 302→`/dashboard/` 200；SQLite 初始化；健康检查 healthy | 0.301.3 + Node 24；npm 需 `--ignore-scripts`；sqlite3 手动编 loong64；自定义 runner；`/data`；8080；UID 1000 |
 | `yunixintel/apprise-api` | 1.03GB | `/` 200；`/status` OK；stateless `/notify/` 进入通知流程；健康检查 healthy | 2.0.1 + Python 3.11；系统 cryptography/gevent；pycares 需 cmake；nginx+supervisor+gunicorn；`/config`、`/attach`、`/plugin`；8000 |
 | `yunixintel/homebox` | 346MB | `/` 200；`/api/v1/status` health=true；版本 v0.10.3；SQLite 初始化；健康检查 healthy | v0.10.3；Nuxt 静态前端 embed；Go 1.27；modernc sqlite 升到 1.61 支持 loong64；`/data`；7745；UID 1000；默认允许注册 |

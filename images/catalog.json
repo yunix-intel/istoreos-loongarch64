@@ -607,5 +607,12 @@
     "architecture": "linux/loong64",
     "verification": "`/` 200；`/health` 200；gateway + WebUI 双进程；健康检查 healthy",
     "notes": "Hermes agent/webui master；Python 3.14.8；browser-harness/Pillow 冲突用 --no-deps+过滤依赖；pillow-heif/HEIC 不支持；`/data/.hermes`、`/workspace`；8787；UID 1000"
+  },
+  {
+    "image": "yunixintel/zigbee2mqtt",
+    "size": "649MB (Hub 217MB)",
+    "architecture": "linux/loong64",
+    "verification": "onboarding `/` 200；udevadm 255；serialport native 可加载；MQTT 连接 Mosquitto OK；健康检查 healthy",
+    "notes": "2.14.2；Node 24 + pnpm；serialport 源码编 loong64；运行阶段含 systemd-udev；`/app/data`；8080；UID 1101；需 USB 协调器"
   }
 ]

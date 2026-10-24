@@ -172,7 +172,10 @@
 
 ## 1. P1 应用设计
 
-### P1-01 Zigbee2MQTT
+### P1-01 Zigbee2MQTT（已发布）
+
+**状态：已构建并推送。** 版本 2.14.2，digest `sha256:8d998996…039e2`；构建记录见
+[../images/zigbee2mqtt/BUILD.md](../images/zigbee2mqtt/BUILD.md)。
 
 **目标**：Zigbee 设备通过 MQTT 接入 Home Assistant / Node-RED。
 

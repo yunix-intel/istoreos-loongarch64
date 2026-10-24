@@ -520,3 +520,5 @@
   - Penpot 2.18.3：取官方 backend uberjar（Java 21 字节码）+ openEuler JDK 21；前端静态产物 + nginx 反代；PostgreSQL+Redis 下迁移到 0153。backend digest `sha256:96eb7b46…0bfe`，frontend `sha256:71153a40…ea96`。
   - Hermes：Python 3.14.8（复用 Mealie 前缀）+ Hermes agent/webui；pip 的 browser-harness/Pillow 冲突用 `--no-deps` + 过滤依赖解决；`HERMES_NIX_BUILD=1` 才允许打 wheel；pillow-heif 因缺 libheif 跳过。
   - 阻塞：Emby/Plex/MT Photos（闭源仅 amd64/arm）、UniFi（MongoDB）、Immich（VectorChord+ONNX）、PhotoPrism（libvips+TensorFlow）、PVE（x86）、Ubuntu（Kasm amd64）。
+
+- 2026-10-24 Zigbee2MQTT 2.14.2（P1-01）：Node 24 多阶段；上游只有 `pnpm-lock.yaml`，用 pnpm 11.26.0；`@serialport/bindings-cpp` 删除 prebuilds 后源码编 loong64；运行阶段补 `systemd-udev`（`udevadm`），否则适配器发现直接报 ENOENT。onboarding UI 200、udevadm 255、serialport native 可加载、容器内 MQTT 连接成功；无真实协调器，配对未验证。镜像 649MB，digest `sha256:8d998996…039e2`，已推送双 tag。

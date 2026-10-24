@@ -366,6 +366,23 @@ docker run -d --name hermes -p 8787:8787 \
 - HEIC/HEIF 图片不支持；`computer_use` 工具在 loongarch64 上不可用。
 - 完整说明见 [../images/hermes/BUILD.md](../images/hermes/BUILD.md)。
 
+### Zigbee2MQTT
+
+```bash
+docker run -d --name zigbee2mqtt -p 8080:8080 \
+  --device /dev/ttyACM0:/dev/ttyACM0 --group-add dialout \
+  -e MQTT_SERVER=mqtt://mosquitto:1883 \
+  -v zigbee2mqtt-data:/app/data \
+  yunixintel/zigbee2mqtt:loong64
+```
+
+- Web UI：`http://<host>:8080/`；首次启动无配置时进入 onboarding。
+- `/app/data` 保存 configuration.yaml、database.db、devices.yaml、日志。
+- 协调器建议用 `/dev/serial/by-id/...`；`dialout` GID 以宿主为准。
+- 无协调器时容器会退出（上游行为）；先用 `Z2M_ONBOARD_FORCE_RUN=true` 可只看 UI。
+- `MQTT_SERVER`/`MQTT_USER`/`MQTT_PASSWORD` 是便利变量，也可用 `ZIGBEE2MQTT_CONFIG_*`。
+- 完整说明见 [../images/zigbee2mqtt/BUILD.md](../images/zigbee2mqtt/BUILD.md)。
+
 ### NocoDB
 
 ```bash
@@ -494,7 +511,7 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 87 个镜像）
+## 3. 端口索引（全部 88 个镜像）
 
 ### 从端口索引生成最小启动命令
 
@@ -538,6 +555,7 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | penpot-backend | 6060 | `/opt/data/assets` | 需 PostgreSQL/Redis；`PENPOT_SECRET_KEY` 必填 |
 | penpot-frontend | 8080 | — | 反代 penpot-backend；9001 对外 |
 | hermes | 8787 | `/data/.hermes`、`/workspace` | UID 1000；默认无密码；HEIC 不支持 |
+| zigbee2mqtt | 8080 | `/app/data`；`--device /dev/ttyACM0 --group-add dialout` | UID 1101；需 USB 协调器；无适配器会退出 |
 | nocodb | 8080 | `/data` | UID 1000；SQLite；`NC_DB` 用 `?d=` |
 | apprise-api | 8000 | `/config`、`/attach`、`/plugin` | 默认无认证/无 TLS |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |

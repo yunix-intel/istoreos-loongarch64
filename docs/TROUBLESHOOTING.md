@@ -349,6 +349,29 @@ docker run --rm -v "$PWD":/src -w /src openeuler/openeuler:24.03 bash -c '
 - Hermes 的 wheel 构建有保护：必须 `HERMES_NIX_BUILD=1 pip install --no-deps`
   才能生成 wheel，否则报 “Building wheels or sdists for hermes-agent is not supported”。
 
+### Zigbee2MQTT：`spawn udevadm ENOENT`
+
+- 原因：运行阶段没有 `udevadm`，zigbee-herdsman 在 USB 适配器发现阶段直接退出。
+- 修复：Dockerfile 安装 `systemd-udev`；确认 `udevadm --version` 可执行。
+
+### Zigbee2MQTT：`npm ci` 报 EUSAGE
+
+- 原因：上游 2.14.2 只有 `pnpm-lock.yaml`（`packageManager: pnpm@11.26.0`）。
+- 修复：`npm install -g pnpm@11.26.0`，再用
+  `pnpm install --frozen-lockfile`；不要用 `npm ci`。
+
+### Zigbee2MQTT：serialport 加载错架构
+
+- 原因：`@serialport/bindings-cpp` 的 npm 包只带 x86/ARM `prebuilds`。
+- 修复：删除 `node_modules/.pnpm/**/@serialport/bindings-cpp/prebuilds`，
+  再 `pnpm rebuild @serialport/bindings-cpp`，确认 `build/Release/bindings.node` 存在。
+
+### Zigbee2MQTT：没有协调器时容器退出
+
+- 这是上游预期行为：adapter discovery 失败即退出，不是镜像故障。
+- 只看 UI 可加 `Z2M_ONBOARD_FORCE_RUN=true` 进入 onboarding；生产必须传
+  `--device /dev/ttyACM0` 或 `/dev/serial/by-id/...`。
+
 ## Docker Hub
 
 ### `denied: requested access to the resource is denied`

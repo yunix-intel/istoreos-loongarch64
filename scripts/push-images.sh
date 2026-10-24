@@ -100,6 +100,7 @@ IMAGES=(
   webvirtcloud
   wizarr
   xteve
+  zigbee2mqtt
 )
 
 for img in "${IMAGES[@]}"; do
