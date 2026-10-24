@@ -1,6 +1,6 @@
 # 应用镜像构建手册（loong64）
 
-本文件说明 103 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 93 个镜像的 Dockerfile；
+本文件说明 104 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 94 个镜像的 Dockerfile；
 其余 10 个早期镜像的 Dockerfile 未保留，但下方给出源码版本、关键步骤和构建日志入口。
 
 ## 0. 共同约定
@@ -165,7 +165,7 @@ Config UI 5 由 `hb-service run` 同时启动 UI 和 Homebridge，单独跑 `hom
 > adguardhome、code-server、easytier、firefly-iii、gitea、memos、mihomo、miniflux、
 > phpmyadmin、vaultwarden 共 10 个。
 
-## 3.5 2026-10 新增的 24 个镜像
+## 3.5 2026-10 新增的 25 个镜像
 
 | 镜像 | 上游 | 关键步骤/坑 |
 |---|---|---|
@@ -188,7 +188,8 @@ Config UI 5 由 `hb-service run` 同时启动 UI 和 Homebridge，单独跑 `hom
 | headscale | v0.29.5 | Go 单二进制；配置模板 + `/var/run/headscale` 权限；无 Web UI |
 | backrest | v1.14.1 | 前端 x86 构建后 embed；restic 0.19.1 源码编；`/data`/`/config`/`/cache` |
 | authelia | v4.39.28 | 前端 x86 构建 + api 资产；Go CGO SQLite；自动生成配置/用户/密钥 |
-| ente-server | master 2026-10 | Go CGO-free；museum.yaml 自动生成；需 PostgreSQL + S3/MinIO；Web 端未含 |
+| ente-server | master 2026-10 | Go CGO-free；museum.yaml 自动生成；需 PostgreSQL + S3/MinIO |
+| ente-web | ente commit 1353a65 | 10 个 Next.js 静态导出；x86 上 Rust/wasm-pack 与 npm 构建；nginx 模板启动时注入 `ENTE_API_ORIGIN` |
 | autobrr | master 2026-10 | Vue 前端 x86 构建后 embed；Go CGO-free；SQLite |
 | matomo | 5.14.2 | 官方完整包；PHP 8.3 + nginx/php-fpm；必须 MariaDB；Web 安装向导 |
 | woodpecker-server | v3.19.0 | Vue 前端 x86 构建后 embed；Go CGO SQLite；必须配置 forge；`/var/lib/woodpecker` |
@@ -201,4 +202,4 @@ Config UI 5 由 `hb-service run` 同时启动 UI 和 Homebridge，单独跑 `hom
 
 构建完成后记录：镜像大小、`docker inspect` 架构、启动日志、HTTP/健康检查、digest。
 统一推送到 `docker.io/yunixintel/<app>:loong64` 与 `:24.10-la5`。
-`scripts/push-images.sh`（私有库）覆盖全部 103 只。
+`scripts/push-images.sh`（私有库）覆盖全部 104 只。

@@ -549,4 +549,6 @@
 
 - 2026-10-24 Matomo 5.14.2（P3-02）：官方 `matomo.zip` 完整包（含 vendor）；PHP 8.3 + nginx/php-fpm，`php-pecl-zip` 单独安装。`/index.php` 安装向导 200、PHP 扩展齐全、healthy；Matomo 无 CLI 安装器，保留 Web 向导。镜像 193MB，digest `sha256:b1e7baec…1bc2`，已推送双 tag。
 
+- 2026-10-24 Ente Web（P2-02 收尾）：10 个 Next.js 16.4.2 应用静态导出（photos/albums/accounts/auth/cast/share/embed/paste/locker/memories），Rust/wasm 部分在 x86 WSL2 构建；占位符 `ENTE_API_ORIGIN_PLACEHOLDER` 运行时替换。工具链问题：rustup 走 USTC 镜像、清理混装工具链、crates.io 换 USTC sparse、wasm-opt 用 Ubuntu binaryen 120 deb、cast 需 nightly-2026-08-13 + rust-src。运行阶段 nginx 1.30，启动复制模板到 `/srv/ente` 再改写，改 origin 后重启即生效。10 端口全 200、`/gallery` 200、WASM 类型正确、占位符 0。镜像 243MB（Hub 103MB），digest `sha256:feda42de…fe67`，已推送双 tag。
+
 - 2026-10-24 Woodpecker v3.19.0（P3-06，server + agent）：Vue/pnpm 前端在 x86 WSL2 构建（Node 24.22.1 + pnpm 12.9.1），Go 1.27.2 编两个二进制；server 用 CGO SQLite，agent CGO-free。server 未配置 forge 时启动直接失败（`forge not configured`），Gitea 配置后 `/` 200、`/api/healthz` 204、内嵌 JS 200；agent 以 UID 1114 运行，`--group-add docker.sock GID` 后注册成功，`/healthz` 200。entrypoint 自动生成并持久化 `agent-secret`/`grpc-secret`。server 133MB digest `sha256:e2441791…3e7f`，agent 117MB digest `sha256:23689010…8efc2`，均已推送双 tag。

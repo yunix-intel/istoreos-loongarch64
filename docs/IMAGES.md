@@ -1,6 +1,6 @@
 # loongarch64 应用镜像
 
-共 103 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
+共 104 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
 `loong64`（浮动）与 `24.10-la5`（与 GitHub Release 对齐）。
 
 拉取：
@@ -93,7 +93,8 @@ docker pull yunixintel/jellyfin:loong64
 | `yunixintel/headscale` | 约 137MB（Hub） | `/health` 200、metrics 9090、users/preauthkeys 成功；healthy | v0.29.5；Go 单二进制；无 Web UI；`/etc/headscale`、`/var/lib/headscale`；8080/9090；UID 1106 |
 | `yunixintel/backrest` | 约 160MB（Hub） | Web UI `/` 200、restic 0.19.1 loong64、oplog 迁移完成；healthy | v1.14.1；`/data`、`/config`、`/cache`；9898；UID 1108；首次 UI 建账号/仓库 |
 | `yunixintel/authelia` | 约 139MB（Hub） | `/api/health` 200、门户 `/` 200、SQLite 迁移 0→29；healthy | v4.39.28；CGO SQLite；自动生成配置/用户/密钥；`/config`；9091；UID 1107 |
-| `yunixintel/ente-server` | 约 123MB（Hub） | `/ping` 200、PostgreSQL 迁移、MinIO 三桶可用；healthy | ente server master；需 PostgreSQL + S3/MinIO；`/data/museum.yaml`；8080；UID 1105；Web 端暂未包含 |
+| `yunixintel/ente-server` | 约 123MB（Hub） | `/ping` 200、PostgreSQL 迁移、MinIO 三桶可用；healthy | ente server master；需 PostgreSQL + S3/MinIO；`/data/museum.yaml`；8080；UID 1105 |
+| `yunixintel/ente-web` | 约 103MB（Hub） | 10 个端口全部 200、photos `/gallery` 200、WASM `application/wasm`、占位符 0；静态导出 | 10 个 Next.js 16.4.2 应用静态导出；nginx 1.30；3000–3006/3008–3010；`ENTE_API_ORIGIN` 启动时注入，重启可改 |
 | `yunixintel/autobrr` | 约 131MB（Hub） | `/` 200、`/api/healthz/liveness` 200、SQLite 迁移；healthy | master 2026-10；Go 单二进制 + 内嵌 Vue；`/config`；7474；UID 1113；默认无认证 |
 | `yunixintel/matomo` | 约 193MB（Hub） | `/index.php` 200、安装向导可打开、PHP 扩展齐全；healthy | 5.14.2；PHP 8.3 + nginx/php-fpm；必须 MariaDB；`config`/`tmp` 持久化；80 |
 | `yunixintel/woodpecker-server` | 约 133MB（Hub） | `/` 200、内嵌 UI 资源 200、`/api/healthz` 204；SQLite 迁移；healthy | 3.19.0；**必须配置 forge**（Gitea/GitHub）才能启动；`/var/lib/woodpecker`；8000/9000；自动生成 agent/grpc secret；UID 1114 |

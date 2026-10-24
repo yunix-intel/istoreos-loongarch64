@@ -719,5 +719,12 @@
     "architecture": "linux/loong64",
     "verification": "启动后注册到 server（runner ID 4）、`/healthz` 200、healthy",
     "notes": "3.19.0；UID/GID 1114；需 `docker.sock` 与匹配的 `--group-add`；`WOODPECKER_AGENT_SECRET` 与 server 一致；3000 仅健康检查"
+  },
+  {
+    "image": "yunixintel/ente-web",
+    "size": "约 103MB (Hub)",
+    "architecture": "linux/loong64",
+    "verification": "10 个端口 3000–3006/3008–3010 全 200、photos `/gallery` 200、WASM `application/wasm`、占位符 0",
+    "notes": "ente commit 1353a65；10 个 Next.js 16.4.2 静态导出；nginx 1.30；必须设 `ENTE_API_ORIGIN`；无 Next 服务端/API/图片优化器；需配 ente-server"
   }
 ]

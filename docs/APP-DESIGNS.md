@@ -149,7 +149,7 @@
 | BookStack | v26.09.2 | 调研值，待复核 |
 | Vikunja | v2.7.1 | 调研值，待复核 |
 | Piwigo | 未记录 | 待锁定 |
-| Ente | 未记录 | 待锁定 commit |
+| Ente | 未记录 | 已锁定：`ente-io/ente` commit `1353a65`；server master 同期 |
 | Headscale | v0.29.5 | 调研值，待复核 |
 | Authelia | v4.39.28 | 调研值，待复核 |
 | Backrest | 未记录 | 待锁定 |
@@ -347,7 +347,7 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 | 风险 | UI 较老；必须 MariaDB；首次安装向导需可写 `local/` |
 | 估算 | 镜像约 400–500MB；2–3 天 |
 
-### P2-02 Ente（server 已发布；web 待做）
+### P2-02 Ente（server + web 均已发布）
 
 **状态：ente-server 已构建并推送；ente-web 未完成。** server digest `sha256:bfac0212…9d7e`；构建记录见 [../images/ente-server/BUILD.md](../images/ente-server/BUILD.md)。
 

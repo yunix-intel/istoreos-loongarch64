@@ -581,8 +581,24 @@ docker run -d --name ente-server --network ente -p 8080:8080 \
 
 - API `/ping`；需 PostgreSQL + S3/MinIO，三个 bucket 必须先建。
 - `/data/museum.yaml` 含 DB/S3 与加密密钥，必须持久化并备份。
-- 镜像只含 API，Web 图库待 `ente-web`。
+- 镜像只含 API；Web 图库用下面的 `ente-web`。
 - 完整说明见 [../images/ente-server/BUILD.md](../images/ente-server/BUILD.md)。
+
+### Ente Web
+
+```bash
+docker run -d --name ente-web --network ente \
+  -e ENTE_API_ORIGIN=http://<host>:8080 \
+  -p 3000:3000 -p 3001:3001 -p 3002:3002 -p 3003:3003 -p 3004:3004 \
+  -p 3005:3005 -p 3006:3006 -p 3008:3008 -p 3009:3009 -p 3010:3010 \
+  yunixintel/ente-web:loong64
+```
+
+- 端口：3000 photos、3001 accounts、3002 albums、3003 auth、3004 cast、
+  3005 share、3006 embed、3008 paste、3009 locker、3010 memories。
+- 纯静态导出；没有 Next 服务端、API routes、图片优化器。
+- `ENTE_API_ORIGIN` 在启动时注入；改值后重启容器即可，无需重建。
+- 完整说明见 [../images/ente-web/BUILD.md](../images/ente-web/BUILD.md)。
 
 ### Autobrr
 
@@ -828,7 +844,8 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | headscale | 8080, 9090 | `/etc/headscale`、`/var/lib/headscale` | UID 1106；无 Web UI；CLI 建用户/key |
 | backrest | 9898 | `/data`、`/config`、`/cache` | UID 1108；内置 restic；首次 UI 建账号/仓库 |
 | authelia | 9091 | `/config` | UID 1107；自动生成配置/用户/密钥；需 HTTPS 反代 |
-| ente-server | 8080 | `/data` | UID 1105；需 PostgreSQL + S3/MinIO；Web 端未包含 |
+| ente-server | 8080 | `/data` | UID 1105；需 PostgreSQL + S3/MinIO；API only |
+| ente-web | 3000–3006, 3008–3010 | 无 | 静态导出；`ENTE_API_ORIGIN` 必填 |
 | autobrr | 7474 | `/config` | UID 1113；默认无认证；需自配 IRC/下载器 |
 | matomo | 80 | `/var/www/matomo/config`、`/tmp` | 必须 MariaDB；Web 安装向导；归档需 cron |
 | nocodb | 8080 | `/data` | UID 1000；SQLite；`NC_DB` 用 `?d=` |

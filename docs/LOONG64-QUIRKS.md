@@ -21,7 +21,8 @@
 | Headscale | 单二进制，无 Web UI；CLI/API 管理 | 无图形界面；gRPC 默认仅本机 | `HEADSCALE_SERVER_URL` 必填；`/etc/headscale` 与 `/var/lib/headscale` 持久化 |
 | Backrest | 前端 x86 构建后内嵌；自带 restic 0.19.1 | 首次需 UI 建账号/仓库；默认无认证 | `/data`/`/config`/`/cache` 持久化；备份源目录需额外挂载 |
 | Authelia | 自动生成配置/用户库/密钥；单机 SQLite | 无内置 TLS；默认 one_factor，forward-auth 需反代配置 | `AUTH_DOMAIN`/`AUTH_URL` 必须是 HTTPS 正式域名；`/config` 持久化 |
-| Ente server | 仅 API；museum.yaml 首次启动生成 | Web 图库未包含；需 PostgreSQL + S3/MinIO 三桶 | `/data/museum.yaml` 含密钥必须备份；S3 bucket 需预先创建 |
+| Ente server | 仅 API；museum.yaml 首次启动生成 | 无 Web 图库（需配 `ente-web`） | `/data/museum.yaml` 含密钥必须备份；S3 bucket 需预先创建 |
+| Ente web | 10 个 Next 应用纯静态导出；nginx | 无 Next 服务端/API/图片优化器；未知路径回退 index.html；不保证逐字节可复现 | 必须设 `ENTE_API_ORIGIN`；10 个端口；升级 origin 后重启容器生效 |
 | Autobrr | 前端 x86 构建后内嵌；SQLite | 默认无认证；需自配 IRC/下载器 | `/config` 持久化；公网加反代认证 |
 | Matomo | 官方完整包；PHP 8.3 | 首次必须走 Web 安装向导；无 CLI 安装 | 必须 MariaDB/MySQL；`config`/`tmp` 持久化；归档需 cron |
 | Woodpecker server | 前端 x86 构建后内嵌；CGO SQLite | **不配置 forge（Gitea/GitHub 等）无法启动**；无内置账号体系，依赖 forge OAuth | `/var/lib/woodpecker` 持久化；`WOODPECKER_HOST` 必须是外部可访问 URL；agent/grpc secret 自动生成 |
