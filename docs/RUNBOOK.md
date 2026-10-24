@@ -896,7 +896,7 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 101 个镜像）
+## 3. 端口索引（全部 111 个镜像）
 
 ### 从端口索引生成最小启动命令
 
@@ -955,6 +955,15 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | ente-web | 3000–3006, 3008–3010 | 无 | 静态导出；`ENTE_API_ORIGIN` 必填 |
 | autobrr | 7474 | `/config` | UID 1113；默认无认证；需自配 IRC/下载器 |
 | matomo | 80 | `/var/www/matomo/config`、`/tmp` | 必须 MariaDB；Web 安装向导；归档需 cron |
+| woodpecker-server | 8000, 9000 | `/var/lib/woodpecker` | 必须配 forge；自动生成 agent/grpc secret；UID 1114 |
+| woodpecker-agent | 3000（仅健康） | `/var/run/docker.sock`；`--group-add` | UID 1114；等同宿主 root，只接可信仓库 |
+| sabnzbd | 8080 | `/config`、`/downloads` | Python 3.11；par2/unrar；UID 1112 |
+| metube | 8082 | `/downloads` | Python 3.13 + yt-dlp + Node 24；UID 1111 |
+| mediamtx | 8554, 1935, 8888, 8889, 8890/udp, 9997, 8000–8001/udp | 无持久化 | Go 单二进制；API 默认开但仅本机白名单；UID 1115 |
+| registry | 5000 | `/var/lib/registry`、`/auth` | UID 1121；首启生成 htpasswd；无 TLS |
+| unpackerr | — | `/config`、`/downloads` | 无 UI；`UN_*` 环境；UID 1123 |
+| pocket-id | 1411 | `/data` | UID 1122；`APP_URL`；首启生成加密密钥 |
+| readeck | 8000 | `/data` | UID 1117；CGO sqlite；首启引导页 |
 | nocodb | 8080 | `/data` | UID 1000；SQLite；`NC_DB` 用 `?d=` |
 | apprise-api | 8000 | `/config`、`/attach`、`/plugin` | 默认无认证/无 TLS |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |
