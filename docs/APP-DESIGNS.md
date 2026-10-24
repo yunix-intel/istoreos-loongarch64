@@ -619,13 +619,19 @@ Karakeep 0.34.1 的正文归档不依赖 Chromium，Chromium 只影响 JS 渲染
 - 端口 22300；`/data`；`APP_BASE_URL`、`APP_ADMIN_EMAIL`、`DB_CLIENT`、`POSTGRES_*`。
 - 风险：Node 原生模块；迁移方式；多阶段构建。估算 3–5 天（若依赖解决）。
 
-### P4-06 wg-easy（审查后：暂缓，待 libsql spike）
+### P4-06 wg-easy（2026-10-24 研究：GO，镜像收尾中）
 
-**状态：暂缓。** 上游 Dockerfile 复制单独构建的 `libsql` `node_modules`，libsql 没有 loong64 预编译；需要先证明能从 Rust 源码构建 libsql。AmneziaWG 的 Go/C 部分可交叉编译。
+**状态：GO。** 研究结论见 [research/wg-easy-unblock.md](research/wg-easy-unblock.md)。v15.4.0 已在
+龙芯本机完成 Nuxt/Nitro 构建、libsql 迁移、配置生成和 HTTP 冒烟；复用龙芯 npm 镜像的
+`@libsql/linux-loong64-gnu@0.5.13` 绑定，argon2 换 hash-wasm，pnpm 用 11.26。
+真实客户端隧道仍未验证，首发描述必须写明。
 
-- 上游 `wg-easy/wg-easy`；Node + WireGuard tools。
-- 端口 51821/tcp（Web）+ 51820/udp（WireGuard）；`/etc/wireguard`；`WG_HOST`、`PASSWORD_HASH`；`NET_ADMIN`；`sysctl net.ipv4.conf.all.src_valid_mark=1`；必要时挂 `/lib/modules`。
-- 风险：宿主内核 WireGuard 模块；libsql 无 loong64；权限模型；与 Headscale/Tailscale 重叠。估算 2–4 天（若依赖解决）。
+- 上游 `wg-easy/wg-easy` v15.4.0（AGPL-3.0）；Node 24 + Nuxt 4 + Drizzle/libsql。
+- 端口 51821/tcp（Web）+ 51820/udp（WireGuard）；`/etc/wireguard`。
+- 权限：`NET_ADMIN`、`SYS_MODULE` + `/lib/modules:ro`、`net.ipv4.ip_forward=1`、
+  `net.ipv4.conf.all.src_valid_mark=1`。
+- 首发范围：标准 WireGuard、IPv4-only；AmneziaWG 与 IPv6 暂缓。
+- 风险：vendor 的 4 个 .node 需锁 SHA-256；真实隧道/转发待验收；与 Headscale 重叠。
 
 ### P4-07 Registry ✅ 已实现（2026-10-24）
 
