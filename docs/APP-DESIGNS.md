@@ -200,9 +200,11 @@
 
 **配置策略**：不在镜像内放具体设备配置；只放 `configuration.example.yaml`。`permit_join`、网络密钥由用户首次配置生成。
 
-### P1-02 Scrutiny
+### P1-02 Scrutiny（审查后：暂停）
 
 **目标**：硬盘 SMART 历史、阈值告警、设备健康页面。
+
+**状态：暂停，不发布。** 0.8/0.9 的 Web 端启动时强制连接 InfluxDB 2.x；SQLite 只存设备元数据，SMART 历史在 InfluxDB。InfluxDB 2.8 在 loong64 上卡在 bbolt 架构定义与 `libflux`；改 Scrutiny 为纯 SQLite 涉及 28 个接口方法、166 处 Influx 引用。磁盘健康改用 P1-02b `smartctl_exporter`。
 
 | 项 | 设计 |
 |---|---|
@@ -223,6 +225,28 @@
 | 估算 | 镜像约 150–250MB；2–3 天 |
 
 **设备策略**：文档给 SATA/NVMe 两种 `--device` 示例；不建议 `--privileged`，**禁止 `-v /dev:/dev`**。多盘用户逐个列 `--device`，或使用 compose `devices` 列表。
+
+### P1-02b smartctl_exporter（已发布）
+
+**状态：已构建并推送。** 替代 Scrutiny，补磁盘 SMART 指标；版本 v0.15.0，
+digest `sha256:be3f0b58…fbda`，构建记录见
+[../images/smartctl-exporter/BUILD.md](../images/smartctl-exporter/BUILD.md)。
+
+| 项 | 设计 |
+|---|---|
+| 上游 | `prometheus-community/smartctl_exporter` v0.15.0 |
+| 镜像 | `yunixintel/smartctl-exporter` |
+| 基础 | `openeuler/openeuler:24.03` + `smartmontools` |
+| 构建 | Go 1.27.2，`CGO_ENABLED=0 go build` |
+| 运行用户 | 容器 root（smartctl ioctl）；只读指标，无写操作 |
+| 端口 | 9633 |
+| 设备 | `/dev/sd*` 或 `/dev/nvme*`；`SYS_RAWIO`，NVMe 建议 `SYS_ADMIN` + `/run/udev:ro` |
+| 参数 | `--smartctl.device=/dev/nvme0`（可重复）；不传则由 exporter 扫描 |
+| 指标 | `/metrics` 暴露 `smartctl_device_*` |
+| 依赖 | Prometheus 抓取；Grafana 出图 |
+| 测试 | `/metrics` 200；NVMe 型号/固件/序列号/SMART 可读；healthy |
+| 风险 | 容器只看到显式 `--device` 的盘；USB 桥接可能不支持 SMART |
+| 估算 | 已完成；镜像约 123MB |
 
 ### P1-03 SFTPGo
 
@@ -937,6 +961,6 @@ CasaOS/OMV 的详细设计补充后，另开两个独立审查代理，只读、
 ### 7.6 平台审查后的总状态
 
 - **28 个工作项**：26 个应用镜像 + CasaOS + OMV。
-- 应用：21 个可进入后续波次，5 个暂停/暂缓。
+- 应用：21 个可进入后续波次，5 个暂停/暂缓；Scrutiny 已由 P1-02b smartctl_exporter 替代。
 - 平台：CasaOS 保持闸门关闭；OMV 只做 Gate 0，先修审查发现的 BLOCKER。
 - 本设计稿不承诺发布日期；每个工作项开工前仍需依赖 spike 和真机验证。

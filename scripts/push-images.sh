@@ -88,6 +88,7 @@ IMAGES=(
   redis
   rest-server
   shiori
+  smartctl-exporter
   sonarr
   stirling-pdf
   syncthing

@@ -372,6 +372,19 @@ docker run --rm -v "$PWD":/src -w /src openeuler/openeuler:24.03 bash -c '
 - 只看 UI 可加 `Z2M_ONBOARD_FORCE_RUN=true` 进入 onboarding；生产必须传
   `--device /dev/ttyACM0` 或 `/dev/serial/by-id/...`。
 
+### Scrutiny：启动 panic `influxdb setup status`
+
+- 原因：Scrutiny 0.8/0.9 的 Web 端强制连接 InfluxDB 2.x，SQLite 只存设备元数据。
+- 现状：InfluxDB 2.8 在 loong64 卡在 `bbolt` 架构定义和 `libflux`，未移植；Scrutiny 暂停。
+- 替代：`smartctl_exporter` 暴露 Prometheus 指标，接现有 Prometheus/Grafana。
+
+### smartctl_exporter：读不到磁盘
+
+- 原因：容器只看到显式 `--device` 的盘；NVMe 还需要 `/dev/nvme0` 和 `/dev/nvme0n1`。
+- 修复：逐个 `--device` 传入；加 `--cap-add SYS_RAWIO`，NVMe 建议
+  `--cap-add SYS_ADMIN -v /run/udev:/run/udev:ro`；用 `--smartctl.device=/dev/nvme0` 指定。
+- 不要 `-v /dev:/dev`；USB 读卡器桥接可能不支持 SMART。
+
 ## Docker Hub
 
 ### `denied: requested access to the resource is denied`

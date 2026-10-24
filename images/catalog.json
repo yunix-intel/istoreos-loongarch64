@@ -614,5 +614,12 @@
     "architecture": "linux/loong64",
     "verification": "onboarding `/` 200；udevadm 255；serialport native 可加载；MQTT 连接 Mosquitto OK；健康检查 healthy",
     "notes": "2.14.2；Node 24 + pnpm；serialport 源码编 loong64；运行阶段含 systemd-udev；`/app/data`；8080；UID 1101；需 USB 协调器"
+  },
+  {
+    "image": "yunixintel/smartctl-exporter",
+    "size": "约 123MB (Hub)",
+    "architecture": "linux/loong64",
+    "verification": "`/metrics` 200；NVMe 型号/固件/序列号/SMART 指标可读；健康检查 healthy",
+    "notes": "v0.15.0；Go 单二进制 + smartmontools；9633；需 SYS_RAWIO/SYS_ADMIN 与设备直通；替代 Scrutiny（其强制 InfluxDB）"
   }
 ]
