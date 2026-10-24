@@ -58,6 +58,7 @@
 | Pocket ID | SvelteKit 前端 x86 构建后 embed；Go 单二进制 | 未做邮件 SMTP/SCIM/Passkey 全链路；与 Authelia 二选一 | `/data` 必须持久化（含加密密钥）；`APP_URL` 必填为外部地址；1411；UID 1122 |
 | Readeck | gulp 前端 x86 构建；Go 用 CGO/mattn sqlite | CGO-free 的 modernc 旧版缺 loongarch64 定义；未做完整抓取联调 | `/data` 持久化；8000；UID 1117；与 Wallabag/Shiori 重叠 |
 | wg-easy | v15.4.0；Nuxt 在龙芯原生构建；libsql 用龙芯 0.5.13 绑定；argon2 换 hash-wasm | AmneziaWG 未启用；IPv6 关闭；真实客户端握手/隧道未验证 | 需 NET_ADMIN，建议 SYS_MODULE + `/lib/modules`；sysctls；51820/udp、51821；`/etc/wireguard` 持久化 |
+| Komga | 官方 jar；自编 loongarch64 sqlite-jdbc JNI，经 `org.sqlite.lib.path` 外挂 | HEIF/JXL 封面不可用；Kobo 转换未支持；PDF/EPUB/RAR 未验证 | JDK 21；`/config`、`/data`（可只读）；25600；UID 1110 |
 | Woodpecker server | 前端 x86 构建后内嵌；CGO SQLite | **不配置 forge（Gitea/GitHub 等）无法启动**；无内置账号体系，依赖 forge OAuth | `/var/lib/woodpecker` 持久化；`WOODPECKER_HOST` 必须是外部可访问 URL；agent/grpc secret 自动生成 |
 | Woodpecker agent | Go CGO-free；UID 1114 | 无业务端口，仅 3000 健康检查；必须能访问 Docker daemon | 挂 `docker.sock` 并 `--group-add <GID>`；`WOODPECKER_AGENT_SECRET` 与 server 一致；等同宿主 root，只接可信仓库 |
 | Mealie | Python 3.14 自编 | HEIF/HEIC 不支持 | `/app/data`；UID 911 |

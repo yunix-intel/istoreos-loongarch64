@@ -10,9 +10,10 @@ IMAGE="${IMAGE:-yunixintel/komga}"
 TAG="${TAG:-loong64}"
 RELEASE="${RELEASE:-24.10-la5}"
 
+export DOCKER_BUILDKIT="${DOCKER_BUILDKIT:-0}"
+
 docker build \
     --network=host \
-    --progress=plain \
     -t "${IMAGE}:${TAG}" \
     -t "${IMAGE}:${RELEASE}" \
     .

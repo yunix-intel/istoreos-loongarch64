@@ -457,7 +457,7 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 
 ## 3. P3 应用设计
 
-### P3-01 Komga（2026-10-24 研究：GO，镜像收尾中）
+### P3-01 Komga ✅ 已实现（2026-10-25）
 
 **状态：GO。** 研究结论见 [research/komga-unblock.md](research/komga-unblock.md)：官方
 `komga-1.29.1.jar` + 自编 loongarch64 `libsqlitejdbc.so`，通过 `-Dorg.sqlite.lib.path`

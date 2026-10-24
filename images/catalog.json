@@ -782,5 +782,12 @@
     "architecture": "linux/loong64",
     "verification": "DB 迁移、`wg0.conf` 生成、`/` 302→`/setup/1`、卷持久化、健康检查 healthy；真实客户端隧道未验证",
     "notes": "15.4.0；Node 24 + Nuxt/Nitro + Drizzle/libsql（龙芯 0.5.13 绑定）；argon2 换 hash-wasm；51820/udp、51821/tcp；需 NET_ADMIN/SYS_MODULE 与 sysctls；IPv4-only"
+  },
+  {
+    "image": "yunixintel/komga",
+    "size": "约 318MB (Hub)",
+    "architecture": "linux/loong64",
+    "verification": "94+2+1 项迁移、`/` 200、health UP、重启持久化、最小 CBZ 扫描 1 系列/1 书/1 页；healthy",
+    "notes": "1.29.1；官方 jar + 自编 loongarch64 libsqlitejdbc；JDK 21；`/config`、`/data`（可只读）；25600；UID 1110；HEIF/JXL/Kobo 未支持"
   }
 ]

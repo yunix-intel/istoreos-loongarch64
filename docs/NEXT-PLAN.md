@@ -2,7 +2,7 @@
 
 制定日期：2026-10-23  
 状态：**计划，未开工**。本文件只排期，不代表已构建或已承诺发布日期。  
-依据：现有 112 个镜像、[STORE-COVERAGE.md](STORE-COVERAGE.md) 的 8 个阻塞结论、
+依据：现有 113 个镜像、[STORE-COVERAGE.md](STORE-COVERAGE.md) 的 8 个阻塞结论、
 以及两份独立子代理调研（存储/媒体方向、生产力/自动化方向）。
 
 对应详细设计：[APP-DESIGNS.md](APP-DESIGNS.md)。本文件只排期；具体构建路径与运行时契约在设计稿中。
@@ -99,7 +99,7 @@
 
 ### P3 启动条件
 
-- **P3-01 Komga GO**：官方 jar + 自编 loongarch64 `libsqlitejdbc.so` 已实测启动/迁移/重启；镜像收尾中。见 `docs/research/komga-unblock.md`。
+- **P3-01 Komga GO（已发布）**：官方 jar + 自编 loongarch64 `libsqlitejdbc.so`，已实测启动/迁移/重启/最小 CBZ。见 `docs/research/komga-unblock.md`。
 - Matomo 在 BookStack 的 PHP/MariaDB 栈稳定后复用。
 - MeTube 先验证 Python 3.13 + yt-dlp PO-token 路径。
 - SABnzbd 先确认 `unrar` 许可与打包方式。
@@ -358,7 +358,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [x] P2-04 Authelia（已发布，`e05a03ac…d83a`）
 - [x] P2-05 Backrest（已发布，`955cae89…79eb`）
 - [x] P2-06 go2rtc（已发布，`03aa0422…3def`）
-- [ ] P3-01 Komga（GO；镜像收尾，待扫描/阅读验收）
+- [x] P3-01 Komga（已发布，`0cf05b7e…9e7a`；PDF/EPUB/RAR 待验收）
 - [x] P3-02 Matomo（已发布，`b1e7baec…1bc2`）
 - [x] P3-03 MeTube（已发布，`7321b0bf…526f`）
 - [x] P3-04 SABnzbd（已发布，`1e20dee8…7d81`）

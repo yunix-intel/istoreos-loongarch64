@@ -764,6 +764,21 @@ docker run -d --name wg-easy --restart unless-stopped \
 - 首发 IPv4-only；AmneziaWG 未启用；真实客户端握手/隧道尚未验收。
 - 完整说明见 [../images/wg-easy/BUILD.md](../images/wg-easy/BUILD.md)。
 
+### Komga
+
+```bash
+docker run -d --name komga -p 25600:25600 \
+  -v /srv/komga/config:/config \
+  -v /srv/comics:/data:ro \
+  yunixintel/komga:loong64
+```
+
+- Web：`http://<host>:25600/`；健康 `/actuator/health` 为 `{"status":"UP"}`。
+- `/config` 存 SQLite、Lucene、日志；`/data` 为漫画库，可只读挂载。
+- UID/GID 1110；首次启动完成 94+2+1 项迁移，之后在 UI 建库/扫描。
+- HEIF/JXL 封面不可用；Kobo 转换未支持；PDF/EPUB/RAR 未验证。
+- 完整说明见 [../images/komga/BUILD.md](../images/komga/BUILD.md)。
+
 ### Woodpecker CI（server + agent）
 
 ```bash
@@ -989,6 +1004,7 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | pocket-id | 1411 | `/data` | UID 1122；`APP_URL`；首启生成加密密钥 |
 | readeck | 8000 | `/data` | UID 1117；CGO sqlite；首启引导页 |
 | wg-easy | 51820/udp, 51821 | `/etc/wireguard`；`/lib/modules:ro` | 需 NET_ADMIN/SYS_MODULE 与 sysctls；IPv4-only；真实隧道未验 |
+| komga | 25600 | `/config`、`/data`（可只读） | UID 1110；JDK 21；自编 sqlite JNI；HEIF/JXL/Kobo 未支持 |
 | nocodb | 8080 | `/data` | UID 1000；SQLite；`NC_DB` 用 `?d=` |
 | apprise-api | 8000 | `/config`、`/attach`、`/plugin` | 默认无认证/无 TLS |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |

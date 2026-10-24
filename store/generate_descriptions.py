@@ -660,6 +660,15 @@ QUIRKS["wg-easy"] = {
     "deps_en": "Requires NET_ADMIN, ideally SYS_MODULE + /lib/modules, sysctls, ports 51820/udp and 51821, and persistent /etc/wireguard.",
 }
 
+QUIRKS["komga"] = {
+    "zh": "官方 jar 不重编；自编 loongarch64 sqlite-jdbc JNI，经 org.sqlite.lib.path 外挂。",
+    "en": "Uses the official jar unchanged with a locally built loongarch64 sqlite-jdbc JNI loaded via org.sqlite.lib.path.",
+    "missing_zh": "HEIF/JXL 封面不可用；Kobo 转换未支持；PDF/EPUB/RAR 扫描未验证。",
+    "missing_en": "HEIF/JXL covers are unavailable; Kobo conversion is unsupported; PDF/EPUB/RAR scanning is unverified.",
+    "deps_zh": "JDK 21；/config 与 /data（可只读）；25600；UID 1110。",
+    "deps_en": "JDK 21; /config and /data (read-only is fine); port 25600; UID 1110.",
+}
+
 EXTRA_DEPS = {
     "homarr": ("需 Redis。", "Requires Redis."),
     "jellystat": ("需外部 PostgreSQL。", "Requires external PostgreSQL."),
