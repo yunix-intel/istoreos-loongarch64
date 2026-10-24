@@ -7,7 +7,7 @@
 | Karakeep | **有条件 Go（基础版）** | [karakeep-unblock.md](karakeep-unblock.md) | SQLite + 静态抓取可首发；搜索/截图需外部 Meilisearch/browserless；原生 Chromium/Meilisearch No-Go |
 | wg-easy | **Go** | [wg-easy-unblock.md](wg-easy-unblock.md) | v15.4.0 已在龙芯构建并冒烟；复用 libsql loong64 绑定 + hash-wasm；镜像收尾中；真实隧道待验收 |
 | Joplin Server | **Go** | [joplin-unblock.md](joplin-unblock.md) | sharp/sqlite-vec 非服务端依赖；sqlite3 5.1.6 已过 16K 页门禁；PostgreSQL 路径仍建临时 SQLite |
-| Komga | 研究中 | — | sqlite-jdbc 无 loongarch64 JNI；研究自编/替代驱动 |
+| Komga | **Go** | [komga-unblock.md](komga-unblock.md) | 官方 jar + 自编 loongarch64 `libsqlitejdbc.so`；已实测启动/迁移/重启；镜像收尾中 |
 | Linkwarden | 研究中 | — | Prisma/Playwright/sharp；研究替换 DB 层或降级 |
 
 ## 结论使用规则

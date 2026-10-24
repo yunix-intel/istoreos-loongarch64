@@ -457,16 +457,19 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 
 ## 3. P3 应用设计
 
-### P3-01 Komga（审查后：暂停，BLOCKER）
+### P3-01 Komga（2026-10-24 研究：GO，镜像收尾中）
 
-**状态：暂停，不进入当前波次。** 1.29.1 的 `sqlite-jdbc 3.53.4.0` 只带 x86_64/aarch64/arm/ppc64/riscv64 的 JNI native，没有 loongarch64；`org.sqlite.lib.path` 不能解决缺失的 JNI wrapper。必须先做 xerial `native/` 的 loong64 编译 spike，否则 Komga 无法打开数据库。`nightmonkeys` 的 HEIF/JXL/WebP native 也只有 x86/ARM，WebP 封面同样会坏。
+**状态：GO。** 研究结论见 [research/komga-unblock.md](research/komga-unblock.md)：官方
+`komga-1.29.1.jar` + 自编 loongarch64 `libsqlitejdbc.so`，通过 `-Dorg.sqlite.lib.path`
+外挂；已在 3A6000/16K 页实测启动、完成 94+2+1 项迁移、HTTP 200、重启数据保留。
+不需要 Gradle/Node 出镜像；PostgreSQL/MySQL 与 QEMU 整 JVM 均不推荐。
 
 | 项 | 设计 |
 |---|---|
-| 上游 | `gotson/komga`（调研时为 1.29.1） |
+| 上游 | `gotson/komga` 1.29.1（固定） |
 | 镜像 | `yunixintel/komga` |
 | 基础 | openEuler + `java-21-openjdk-headless` |
-| 构建 | 使用官方 fat jar；**BLOCKER：必须先把 xerial `sqlite-jdbc` 的 loongarch64 JNI 编出来**；PDFBox/junrar 纯 Java |
+| 构建 | 官方 fat jar + 构建阶段从 sqlite-jdbc 3.53.4.0 源码编 loongarch64 JNI；PDFBox/junrar 纯 Java |
 | 运行用户 | `komga` UID/GID 1110 |
 | 端口 | 25600 |
 | 卷 | `/config`、`/data`（漫画库） |

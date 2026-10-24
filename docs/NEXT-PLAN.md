@@ -99,7 +99,7 @@
 
 ### P3 启动条件
 
-- **审查后：P3-01 Komga 暂停**，`sqlite-jdbc` 无 loongarch64 JNI；先做 native spike，未通过前不排期。
+- **P3-01 Komga GO**：官方 jar + 自编 loongarch64 `libsqlitejdbc.so` 已实测启动/迁移/重启；镜像收尾中。见 `docs/research/komga-unblock.md`。
 - Matomo 在 BookStack 的 PHP/MariaDB 栈稳定后复用。
 - MeTube 先验证 Python 3.13 + yt-dlp PO-token 路径。
 - SABnzbd 先确认 `unrar` 许可与打包方式。
@@ -217,7 +217,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 |---|---|---|
 | Wave 1 | P1-01..P1-05 | 5 个镜像；先做依赖 spike，再连续构建 |
 | Wave 2 | P2-01 Piwigo、P2-06 go2rtc、P2-03 Headscale、P2-04 Authelia、P2-05 Backrest | Ente 视照片决策放 Wave 2 末或 Wave 3 |
-| Wave 3 | P2-02 Ente、P3-02..P3-06（P3-01 Komga 暂停） | 多服务与重依赖集中处理 |
+| Wave 3 | P2-02 Ente、P3-01..P3-06 | 多服务与重依赖集中处理 |
 | Wave 4 | P4-01..P4-09 | 按需，每项先 spike |
 | 并行 | C-01..C-06、O-01..O-09 | 平台工作流不阻塞容器主线 |
 
@@ -358,7 +358,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [x] P2-04 Authelia（已发布，`e05a03ac…d83a`）
 - [x] P2-05 Backrest（已发布，`955cae89…79eb`）
 - [x] P2-06 go2rtc（已发布，`03aa0422…3def`）
-- [ ] P3-01 Komga（暂停：sqlite-jdbc 无 loong64 JNI，待 spike）
+- [ ] P3-01 Komga（GO；镜像收尾，待扫描/阅读验收）
 - [x] P3-02 Matomo（已发布，`b1e7baec…1bc2`）
 - [x] P3-03 MeTube（已发布，`7321b0bf…526f`）
 - [x] P3-04 SABnzbd（已发布，`1e20dee8…7d81`）
