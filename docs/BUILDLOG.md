@@ -524,3 +524,5 @@
 - 2026-10-24 Zigbee2MQTT 2.14.2（P1-01）：Node 24 多阶段；上游只有 `pnpm-lock.yaml`，用 pnpm 11.26.0；`@serialport/bindings-cpp` 删除 prebuilds 后源码编 loong64；运行阶段补 `systemd-udev`（`udevadm`），否则适配器发现直接报 ENOENT。onboarding UI 200、udevadm 255、serialport native 可加载、容器内 MQTT 连接成功；无真实协调器，配对未验证。镜像 649MB，digest `sha256:8d998996…039e2`，已推送双 tag。
 
 - 2026-10-24 Scrutiny → smartctl_exporter（P1-02/P1-02b）：Scrutiny 0.8/0.9 的 Web 端启动强制连 InfluxDB 2.x；InfluxDB 2.8 在 loong64 卡在 bbolt 的 `maxMapSize`/`maxAllocSize` 和 `libflux`，改纯 SQLite 涉及 28 个接口方法/166 处 Influx 引用，暂停 Scrutiny。改用 `smartctl_exporter v0.15.0`（Go 单二进制 + smartmontools），`/metrics` 200，NVMe 型号/固件/序列号/SMART 可读，healthy；镜像 123MB，digest `sha256:be3f0b58…fbda`，已推送双 tag。
+
+- 2026-10-24 SFTPGo v2.7.6（P1-03）：openEuler 容器内用 Go 1.27.2 + gcc/sqlite-devel 做 CGO 构建，SQLite 静态链入；运行阶段补 `templates/static/openapi/sftpgo.json`。首次启动工作目录必须是 `/var/lib/sftpgo`，否则相对路径 `sftpgo.db` 报 `unable to open database file`。Web 首次安装页创建管理员成功，登录后 `/web/admin/users` 200，SFTP 2022 监听并生成 host key。镜像 422MB，digest `sha256:6e35b029…8919`，已推送双 tag。

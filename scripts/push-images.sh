@@ -87,6 +87,7 @@ IMAGES=(
   radarr
   redis
   rest-server
+  sftpgo
   shiori
   smartctl-exporter
   sonarr

@@ -385,6 +385,21 @@ docker run --rm -v "$PWD":/src -w /src openeuler/openeuler:24.03 bash -c '
   `--cap-add SYS_ADMIN -v /run/udev:/run/udev:ro`；用 `--smartctl.device=/dev/nvme0` 指定。
 - 不要 `-v /dev:/dev`；USB 读卡器桥接可能不支持 SMART。
 
+### SFTPGo：`unable to open database file`
+
+- 原因：SQLite 数据库名 `sftpgo.db` 是相对路径，进程工作目录不是 `/var/lib/sftpgo`。
+- 修复：entrypoint 先 `cd /var/lib/sftpgo` 再 `sftpgo serve`；确保该目录可写。
+
+### SFTPGo：Web UI 空白/500
+
+- 原因：运行镜像缺 `templates/`、`static/`、`openapi/` 或 `sftpgo.json`。
+- 修复：按上游布局复制到 `/usr/share/sftpgo/` 与 `/etc/sftpgo/`。
+
+### SFTPGo：没有默认管理员
+
+- 首次访问 `/web/admin/setup` 创建管理员；`create_default_admin=false` 是上游默认值。
+- 不要用 `sftpgo resetpwd` 在运行中的实例上操作：文档明确要求先停服务，否则 SQLite 可能损坏。
+
 ## Docker Hub
 
 ### `denied: requested access to the resource is denied`

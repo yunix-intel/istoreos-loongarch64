@@ -248,7 +248,9 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 | 风险 | 容器只看到显式 `--device` 的盘；USB 桥接可能不支持 SMART |
 | 估算 | 已完成；镜像约 123MB |
 
-### P1-03 SFTPGo
+### P1-03 SFTPGo（已发布）
+
+**状态：已构建并推送。** v2.7.6，digest `sha256:6e35b029…8919`；构建记录见 [../images/sftpgo/BUILD.md](../images/sftpgo/BUILD.md)。
 
 **目标**：SFTP/FTP/WebDAV + Web 管理、配额、多用户、多种后端。
 

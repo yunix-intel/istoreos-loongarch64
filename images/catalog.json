@@ -621,5 +621,12 @@
     "architecture": "linux/loong64",
     "verification": "`/metrics` 200；NVMe 型号/固件/序列号/SMART 指标可读；健康检查 healthy",
     "notes": "v0.15.0；Go 单二进制 + smartmontools；9633；需 SYS_RAWIO/SYS_ADMIN 与设备直通；替代 Scrutiny（其强制 InfluxDB）"
+  },
+  {
+    "image": "yunixintel/sftpgo",
+    "size": "422MB (Hub 149MB)",
+    "architecture": "linux/loong64",
+    "verification": "Web 302→setup；管理员登录后 `/web/admin/users` 200；SQLite/host key 生成；2022 监听；healthy",
+    "notes": "v2.7.6；Go + CGO SQLite；Web 8080、SFTP 2022；`/srv/sftpgo/data`、`/var/lib/sftpgo`；UID 1103；首次安装页创建管理员"
   }
 ]

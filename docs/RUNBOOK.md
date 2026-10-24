@@ -401,6 +401,23 @@ docker run -d --name smartctl-exporter -p 9633:9633 \
 - 镜像是只读指标 exporter，不存历史；历史由 Prometheus 保存。
 - 完整说明见 [../images/smartctl-exporter/BUILD.md](../images/smartctl-exporter/BUILD.md)。
 
+### SFTPGo
+
+```bash
+docker run -d --name sftpgo -p 8080:8080 -p 2022:2022 \
+  -v sftpgo-data:/srv/sftpgo/data \
+  -v sftpgo-db:/var/lib/sftpgo \
+  -v sftpgo-backups:/srv/sftpgo/backups \
+  yunixintel/sftpgo:loong64
+```
+
+- Web 管理/客户端：`http://<host>:8080/`；首次访问进入 `/web/admin/setup` 创建管理员。
+- SFTP：`sftp -P 2022 <user>@<host>`。
+- `/srv/sftpgo/data` 是用户文件根；`/var/lib/sftpgo` 存 SQLite 与 host key，必须持久化。
+- FTP/WebDAV 默认关闭（端口 0）；需要时改配置。
+- 公网使用必须配 TLS 或反代；默认 Web 无 HTTPS。
+- 完整说明见 [../images/sftpgo/BUILD.md](../images/sftpgo/BUILD.md)。
+
 ### NocoDB
 
 ```bash
@@ -529,7 +546,7 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 89 个镜像）
+## 3. 端口索引（全部 90 个镜像）
 
 ### 从端口索引生成最小启动命令
 
@@ -575,6 +592,7 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | hermes | 8787 | `/data/.hermes`、`/workspace` | UID 1000；默认无密码；HEIC 不支持 |
 | zigbee2mqtt | 8080 | `/app/data`；`--device /dev/ttyACM0 --group-add dialout` | UID 1101；需 USB 协调器；无适配器会退出 |
 | smartctl-exporter | 9633 | `/run/udev:ro`；`--device /dev/nvme0` | 需 SYS_RAWIO/SYS_ADMIN；只读指标 |
+| sftpgo | 8080, 2022 | `/srv/sftpgo/data`、`/var/lib/sftpgo`、`/srv/sftpgo/backups` | UID 1103；首次安装页建管理员；默认无 TLS |
 | nocodb | 8080 | `/data` | UID 1000；SQLite；`NC_DB` 用 `?d=` |
 | apprise-api | 8000 | `/config`、`/attach`、`/plugin` | 默认无认证/无 TLS |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |
