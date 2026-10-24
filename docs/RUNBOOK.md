@@ -497,6 +497,24 @@ docker run -d --name go2rtc \
 - API 默认无认证；公网必须加反代认证或 `api.username/password`。
 - 完整说明见 [../images/go2rtc/BUILD.md](../images/go2rtc/BUILD.md)。
 
+### Scrutiny（SQLite 版）
+
+```bash
+docker run -d --name scrutiny -p 8080:8080 \
+  --cap-add SYS_RAWIO --cap-add SYS_ADMIN \
+  -v /run/udev:/run/udev:ro \
+  --device /dev/nvme0:/dev/nvme0 --device /dev/nvme0n1:/dev/nvme0n1 \
+  -v scrutiny-config:/opt/scrutiny/config \
+  yunixintel/scrutiny:loong64
+```
+
+- Web：`http://<host>:8080/web/`；健康 `/api/health`。
+- 采集一次：`docker exec scrutiny /opt/scrutiny/bin/scrutiny-collector-metrics run`。
+- 镜像默认只跑 Web；collector 由宿主 cron 或 `docker exec` 调度。
+- `/opt/scrutiny/config` 存 SQLite，必须持久化。
+- 不再依赖 InfluxDB；SMART 历史在 SQLite。
+- 完整说明见 [../images/scrutiny/BUILD.md](../images/scrutiny/BUILD.md)。
+
 ### NocoDB
 
 ```bash
@@ -625,7 +643,7 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 94 个镜像）
+## 3. 端口索引（全部 95 个镜像）
 
 ### 从端口索引生成最小启动命令
 
@@ -676,6 +694,7 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | vikunja | 3456 | `/app/vikunja/files`、`/db` | UID 1104；SQLite；JWT secret 持久化；默认允许注册 |
 | piwigo | 80 | `local`、`_data`、`galleries`、`upload` | 必须 MariaDB；首次自动安装；管理员 `/identification.php` |
 | go2rtc | 1984, 8554, 8555 | `/config` | UID 1109；默认无认证；需自配摄像头流 |
+| scrutiny | 8080 | `/opt/scrutiny/config`；`--device` + SYS_RAWIO | SQLite 历史；collector 需手动/cron 触发 |
 | nocodb | 8080 | `/data` | UID 1000；SQLite；`NC_DB` 用 `?d=` |
 | apprise-api | 8000 | `/config`、`/attach`、`/plugin` | 默认无认证/无 TLS |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |

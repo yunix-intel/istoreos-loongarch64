@@ -2,7 +2,7 @@
 
 制定日期：2026-10-23  
 状态：**计划，未开工**。本文件只排期，不代表已构建或已承诺发布日期。  
-依据：现有 94 个镜像、[STORE-COVERAGE.md](STORE-COVERAGE.md) 的 8 个阻塞结论、
+依据：现有 95 个镜像、[STORE-COVERAGE.md](STORE-COVERAGE.md) 的 8 个阻塞结论、
 以及两份独立子代理调研（存储/媒体方向、生产力/自动化方向）。
 
 对应详细设计：[APP-DESIGNS.md](APP-DESIGNS.md)。本文件只排期；具体构建路径与运行时契约在设计稿中。
@@ -13,7 +13,7 @@
 
 - **P1–P4 共 26 个应用候选 + CasaOS/OMV 2 个平台工作流 = 28 个工作项**：全部列明技术栈、LoongArch64 路径、风险和验收标准。
   经 2026-10-23 独立审查后：**21 个应用可进入后续波次，5 个暂停/暂缓**（Komga、Karakeep、
-  Linkwarden、Joplin、wg-easy）；Scrutiny 因强制 InfluxDB 暂停，由 P1-02b `smartctl_exporter` 替代；CasaOS/OMV 按平台任务表推进。
+  Linkwarden、Joplin、wg-easy）；Scrutiny 经 SQLite 补丁已发布，P1-02b `smartctl_exporter` 作为轻量替代；CasaOS/OMV 按平台任务表推进。
 - **CasaOS 工作流**：P3 收尾、真实盘验收、发布闸门、上游化。
 - **OpenMediaVault（OMV）工作流**：Gate 0 可行性调研，不预设一定移植。
 - 每个镜像的完成定义（DoD）和执行顺序。
@@ -45,7 +45,7 @@
 | ID | 应用 | 价值 | 技术栈 / 关键依赖 | LoongArch64 路径 | 难度 | 主要风险 / 前置 |
 |---|---|---|---|---|---|---|
 | P1-01 | **Zigbee2MQTT** | Zigbee 网关；已有 Home Assistant + Mosquitto，缺这一环 | Node 24 + `@serialport/bindings-cpp`；TypeScript | 源码编 serialport；Node 24 loong64 镜像已有 | 低中 | 需 USB 协调器透传（`/dev/ttyACM0`）；无协调器时只能验证 UI/MQTT |
-| P1-02 | **Scrutiny**（暂停） | 硬盘 SMART 历史、阈值告警；NAS 刚需 | Go + 纯 Go SQLite；Angular 前端；**Web 端强制 InfluxDB** | 后端可编；InfluxDB 2.8 在 loong64 卡在 bbolt/libflux | 中低→阻塞 | 暂停，不发布；替代见 P1-02b |
+| P1-02 | **Scrutiny**（已发布） | 硬盘 SMART 历史、阈值告警；NAS 刚需 | Go + 纯 Go SQLite；Angular 前端；**SQLite metrics 补丁，不再依赖 InfluxDB** | 原生 loong64 已跑通 collector/API/历史 | 中低 | 已发布；`smartctl_exporter` 保留为轻量替代 |
 | P1-02b | **smartctl_exporter** | 暴露 SMART 指标给现有 Prometheus/Grafana | Go 单二进制 + smartmontools | `CGO_ENABLED=0` 直接编 | 低 | 需 `SYS_RAWIO`/设备直通；只读指标 |
 | P1-03 | **SFTPGo** | 带 Web 管理的 SFTP/FTP/WebDAV，补 filebrowser 停止维护后的空缺 | Go + `mattn/go-sqlite3`（CGO）或 PostgreSQL；前端已嵌入 | 复用现有 CGO-sqlite 配方；也可用 Postgres 完全避开 CGO | 低 | 默认配置需改；公网使用必须配 TLS/限权 |
 | P1-04 | **BookStack** | Wiki/知识库；当前为零 | PHP 8.3 + Laravel + MariaDB；需 pdo_mysql/gd/zip/dom/mbstring/curl | 纯 PHP，复用现有 nginx/php-fpm + MariaDB 镜像 | 中 | 必须 MariaDB/MySQL；openEuler 可能要补 `php-gd`/`php-zip` |
@@ -347,7 +347,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 
 - [x] P1-01 Zigbee2MQTT（已发布，`8d998996…039e2`）
 - [x] P1-02b smartctl_exporter（已发布，`be3f0b58…fbda`）
-- [ ] P1-02 Scrutiny（暂停：强制 InfluxDB，loong64 无解）
+- [x] P1-02 Scrutiny（SQLite 补丁，已发布，`72885303…db71`）
 - [x] P1-03 SFTPGo（已发布，`6e35b029…8919`）
 - [x] P1-04 BookStack（已发布，`20304871…efba`）
 - [x] P1-05 Vikunja（已发布，`25333510…a0a3`）

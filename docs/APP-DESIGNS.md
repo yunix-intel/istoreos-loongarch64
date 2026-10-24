@@ -202,11 +202,11 @@
 
 **配置策略**：不在镜像内放具体设备配置；只放 `configuration.example.yaml`。`permit_join`、网络密钥由用户首次配置生成。
 
-### P1-02 Scrutiny（审查后：暂停）
+### P1-02 Scrutiny（SQLite 补丁，已发布）
 
 **目标**：硬盘 SMART 历史、阈值告警、设备健康页面。
 
-**状态：暂停，不发布。** 0.8/0.9 的 Web 端启动时强制连接 InfluxDB 2.x；SQLite 只存设备元数据，SMART 历史在 InfluxDB。InfluxDB 2.8 在 loong64 上卡在 bbolt 架构定义与 `libflux`；改 Scrutiny 为纯 SQLite 涉及 28 个接口方法、166 处 Influx 引用。磁盘健康改用 P1-02b `smartctl_exporter`。
+**状态：已构建并推送。** 子代理实现 SQLite metrics 补丁（`smart_metrics`/`temp_metrics`），移除 InfluxDB 依赖，API/前端不变；原生 loong64 已验证。digest `sha256:72885303…db71`，构建记录见 [../images/scrutiny/BUILD.md](../images/scrutiny/BUILD.md)。`smartctl_exporter` 保留为轻量指标替代。
 
 | 项 | 设计 |
 |---|---|
@@ -973,6 +973,6 @@ CasaOS/OMV 的详细设计补充后，另开两个独立审查代理，只读、
 ### 7.6 平台审查后的总状态
 
 - **28 个工作项**：26 个应用镜像 + CasaOS + OMV。
-- 应用：21 个可进入后续波次，5 个暂停/暂缓；Scrutiny 已由 P1-02b smartctl_exporter 替代。
+- 应用：Scrutiny 经 SQLite 补丁发布；P1-02b smartctl_exporter 作为轻量替代；其余 21 个可推进，5 个暂停/暂缓。
 - 平台：CasaOS 保持闸门关闭；OMV 只做 Gate 0，先修审查发现的 BLOCKER。
 - 本设计稿不承诺发布日期；每个工作项开工前仍需依赖 spike 和真机验证。

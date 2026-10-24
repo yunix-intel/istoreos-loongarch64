@@ -656,5 +656,12 @@
     "architecture": "linux/loong64",
     "verification": "`/` 200、`/api/streams` 返回 `{}`；RTSP 8554/WebRTC 8555 监听；healthy",
     "notes": "1.9.14；Go 单二进制；1984 API、8554 RTSP、8555 WebRTC；`/config`；UID 1109；默认无认证、无摄像头配置"
+  },
+  {
+    "image": "yunixintel/scrutiny",
+    "size": "242MB (Hub 145MB)",
+    "architecture": "linux/loong64",
+    "verification": "`/web/` 200、`/api/health` true；NVMe collector 读到型号/温度/通电小时；healthy",
+    "notes": "0.9.5 + SQLite metrics 补丁；不再依赖 InfluxDB；`/opt/scrutiny/config`；8080；需 SYS_RAWIO/SYS_ADMIN 与设备直通；collector 外部调度"
   }
 ]

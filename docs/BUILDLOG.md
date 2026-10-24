@@ -534,3 +534,5 @@
 - 2026-10-24 Piwigo 16.4.0（P2-01）：PHP 8.3 + nginx/php-fpm；首次启动等待 MariaDB 后向 `install.php` POST 自动安装，生成 `local/config/database.inc.php`；`piwigo_users` 2 行（admin/guest），`/` 200、`/identification.php` 200、healthy。`php-pecl-zip` 仍需单独安装。镜像约 550MB，digest `sha256:289fca6c…f8b9`，已推送双 tag。
 
 - 2026-10-24 go2rtc 1.9.14（P2-06）：Go 1.27.2 `CGO_ENABLED=0` 静态编；运行阶段只带二进制与默认 `go2rtc.yaml`。API `/` 200、`/api/streams` 返回 `{}`，RTSP 8554/WebRTC 8555 监听，healthy；未配置真实摄像头。镜像 111MB，digest `sha256:03aa0422…3def`，已推送双 tag。
+
+- 2026-10-24 Scrutiny 0.9.5 + SQLite 补丁（P1-02 复活）：子代理独立实现 Path B，新增 `smart_metrics`/`temp_metrics` 两表，移除 InfluxDB 依赖，API/前端不变；补丁和构建脚本已入库。原生 loong64 验证：`/web/` 200、`/api/health` true、collector 读到 NVMe 型号/温度/通电小时、`/api/summary` 正常、healthy。运行阶段必须带 `libstdc++`/`libgcc`，否则 smartctl 127。镜像 242MB，digest `sha256:72885303…db71`，已推送双 tag。

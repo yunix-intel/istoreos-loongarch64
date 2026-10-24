@@ -90,6 +90,7 @@ IMAGES=(
   radarr
   redis
   rest-server
+  scrutiny
   sftpgo
   shiori
   smartctl-exporter

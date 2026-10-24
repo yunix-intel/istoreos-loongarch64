@@ -1,0 +1,2169 @@
+diff --git a/webapp/backend/pkg/database/scrutiny_repository.go b/webapp/backend/pkg/database/scrutiny_repository.go
+index 1cc3dc2..514e299 100644
+--- a/webapp/backend/pkg/database/scrutiny_repository.go
++++ b/webapp/backend/pkg/database/scrutiny_repository.go
+@@ -2,23 +2,15 @@ package database
+ 
+ import (
+ 	"context"
+-	"crypto/tls"
+-	"encoding/json"
++	"errors"
+ 	"fmt"
+-	"io"
+-	"net/http"
+ 	"net/url"
+-	"time"
+ 
+ 	"github.com/analogj/scrutiny/webapp/backend/pkg/config"
+ 	"github.com/analogj/scrutiny/webapp/backend/pkg/models"
+ 	"github.com/glebarez/sqlite"
+ 	"github.com/gofrs/uuid/v5"
+-	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
+-	"github.com/influxdata/influxdb-client-go/v2/api"
+-	"github.com/influxdata/influxdb-client-go/v2/domain"
+ 	"github.com/sirupsen/logrus"
+-
+ 	"gorm.io/gorm"
+ )
+ 
+@@ -39,27 +31,6 @@ const (
+ 	DURATION_KEY_FOREVER = "forever"
+ )
+ 
+-//// GormLogger is a custom logger for Gorm, making it use logrus.
+-//type GormLogger struct{ Logger logrus.FieldLogger }
+-//
+-//// Print handles log events from Gorm for the custom logger.
+-//func (gl *GormLogger) Print(v ...interface{}) {
+-//	switch v[0] {
+-//	case "sql":
+-//		gl.Logger.WithFields(
+-//			logrus.Fields{
+-//				"module":  "gorm",
+-//				"type":    "sql",
+-//				"rows":    v[5],
+-//				"src_ref": v[1],
+-//				"values":  v[4],
+-//			},
+-//		).Debug(v[3])
+-//	case "log":
+-//		gl.Logger.WithFields(logrus.Fields{"module": "gorm", "type": "log"}).Print(v[2])
+-//	}
+-//}
+-
+ func NewScrutinyRepository(appConfig config.Interface, globalLogger logrus.FieldLogger) (DeviceRepo, error) {
+ 	backgroundContext := context.Background()
+ 
+@@ -71,18 +42,12 @@ func NewScrutinyRepository(appConfig config.Interface, globalLogger logrus.Field
+ 	// When a transaction cannot lock the database, because it is already locked by another one,
+ 	// SQLite by default throws an error: database is locked. This behavior is usually not appropriate when
+ 	// concurrent access is needed, typically when multiple processes write to the same database.
+-	// PRAGMA busy_timeout lets you set a timeout or a handler for these events. When setting a timeout,
+-	// SQLite will try the transaction multiple times within this timeout.
+ 	// fixes #341
+-	// https://rsqlite.r-dbi.org/reference/sqlitesetbusyhandler
+-	// retrying for 30000 milliseconds, 30seconds - this would be unreasonable for a distributed multi-tenant application,
+-	// but should be fine for local usage.
+ 	pragmaStr := sqlitePragmaString(map[string]string{
+ 		"busy_timeout": "30000",
+ 	})
+ 	database, err := gorm.Open(sqlite.Open(appConfig.GetString("web.database.location")+pragmaStr), &gorm.Config{
+ 		//TODO: figure out how to log database queries again.
+-		//Logger: logger
+ 		DisableForeignKeyConstraintWhenMigrating: true,
+ 	})
+ 	if err != nil {
+@@ -90,100 +55,15 @@ func NewScrutinyRepository(appConfig config.Interface, globalLogger logrus.Field
+ 	}
+ 	globalLogger.Infof("Successfully connected to scrutiny sqlite db: %s\n", appConfig.GetString("web.database.location"))
+ 
+-	//database.SetLogger()
+-
+-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-	// InfluxDB setup
+-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-
+-	// Create a new client using an InfluxDB server base URL and an authentication token
+-	influxdbUrl := fmt.Sprintf("%s://%s:%s", appConfig.GetString("web.influxdb.scheme"), appConfig.GetString("web.influxdb.host"), appConfig.GetString("web.influxdb.port"))
+-	globalLogger.Debugf("InfluxDB url: %s", influxdbUrl)
+-
+-	tlsConfig := &tls.Config{
+-		InsecureSkipVerify: appConfig.GetBool("web.influxdb.tls.insecure_skip_verify"),
+-	}
+-	globalLogger.Infof("InfluxDB certificate verification: %t\n", !tlsConfig.InsecureSkipVerify)
+-
+-	client := influxdb2.NewClientWithOptions(
+-		influxdbUrl,
+-		appConfig.GetString("web.influxdb.token"),
+-		influxdb2.DefaultOptions().SetTLSConfig(tlsConfig),
+-	)
+-
+-	//if !appConfig.IsSet("web.influxdb.token") {
+-	globalLogger.Debugf("Determine Influxdb setup status...")
+-	influxSetupComplete, err := InfluxSetupComplete(influxdbUrl, tlsConfig)
+-	if err != nil {
+-		return nil, fmt.Errorf("failed to check influxdb setup status - %w", err)
+-	}
+-
+-	if !influxSetupComplete {
+-		globalLogger.Debugf("Influxdb un-initialized, running first-time setup...")
+-
+-		// if no token is provided, but we have a valid server, we're going to assume this is the first setup of our server.
+-		// we will initialize with a predetermined username & password, that you should change.
+-
+-		// metrics bucket will have a retention period of 8 days (since it will be down-sampled once a week)
+-		// in seconds (60seconds * 60minutes * 24hours * 15 days) = 1_296_000 (see EnsureBucket() function)
+-		_, err := client.SetupWithToken(
+-			backgroundContext,
+-			appConfig.GetString("web.influxdb.init_username"),
+-			appConfig.GetString("web.influxdb.init_password"),
+-			appConfig.GetString("web.influxdb.org"),
+-			appConfig.GetString("web.influxdb.bucket"),
+-			0,
+-			appConfig.GetString("web.influxdb.token"),
+-		)
+-		if err != nil {
+-			return nil, err
+-		}
+-	}
+-
+-	// Use blocking write client for writes to desired bucket
+-	writeAPI := client.WriteAPIBlocking(appConfig.GetString("web.influxdb.org"), appConfig.GetString("web.influxdb.bucket"))
+-
+-	// Get query client
+-	queryAPI := client.QueryAPI(appConfig.GetString("web.influxdb.org"))
+-
+-	// Get task client
+-	taskAPI := client.TasksAPI()
+-
+-	if writeAPI == nil || queryAPI == nil || taskAPI == nil {
+-		return nil, fmt.Errorf("failed to connect to influxdb")
+-	}
+-
+ 	deviceRepo := scrutinyRepository{
+-		appConfig:      appConfig,
+-		logger:         globalLogger,
+-		influxClient:   client,
+-		influxWriteApi: writeAPI,
+-		influxQueryApi: queryAPI,
+-		influxTaskApi:  taskAPI,
+-		gormClient:     database,
+-	}
+-
+-	orgInfo, err := client.OrganizationsAPI().FindOrganizationByName(backgroundContext, appConfig.GetString("web.influxdb.org"))
+-	if err != nil {
+-		return nil, err
+-	}
+-
+-	// Initialize Buckets (if necessary)
+-	err = deviceRepo.EnsureBuckets(backgroundContext, orgInfo)
+-	if err != nil {
+-		return nil, err
+-	}
+-
+-	// Initialize Background Tasks
+-	err = deviceRepo.EnsureTasks(backgroundContext, *orgInfo.Id)
+-	if err != nil {
+-		return nil, err
++		appConfig:  appConfig,
++		logger:     globalLogger,
++		gormClient: database,
+ 	}
+ 
+ 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-	// InfluxDB & SQLite migrations
++	// SQLite migrations
+ 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-	//database.AutoMigrate(&models.Device{})
+ 	err = deviceRepo.Migrate(backgroundContext)
+ 	if err != nil {
+ 		return nil, err
+@@ -196,29 +76,18 @@ type scrutinyRepository struct {
+ 	appConfig config.Interface
+ 	logger    logrus.FieldLogger
+ 
+-	influxWriteApi api.WriteAPIBlocking
+-	influxQueryApi api.QueryAPI
+-	influxTaskApi  api.TasksAPI
+-	influxClient   influxdb2.Client
+-
+ 	gormClient *gorm.DB
+ }
+ 
+ func (sr *scrutinyRepository) Close() error {
+-	sr.influxClient.Close()
+-	return nil
+-}
+-
+-func (sr *scrutinyRepository) HealthCheck(ctx context.Context) error {
+-	//check influxdb
+-	status, err := sr.influxClient.Health(ctx)
++	sqlDatabase, err := sr.gormClient.DB()
+ 	if err != nil {
+-		return fmt.Errorf("influxdb healthcheck failed: %w", err)
+-	}
+-	if status.Status != "pass" {
+-		return fmt.Errorf("influxdb healthcheckf failed: status=%s", status.Status)
++		return err
+ 	}
++	return sqlDatabase.Close()
++}
+ 
++func (sr *scrutinyRepository) HealthCheck(ctx context.Context) error {
+ 	//check sqlite db.
+ 	database, err := sr.gormClient.DB()
+ 	if err != nil {
+@@ -229,105 +98,6 @@ func (sr *scrutinyRepository) HealthCheck(ctx context.Context) error {
+ 		return fmt.Errorf("sqlite healthcheck failed during ping: %w", err)
+ 	}
+ 	return nil
+-
+-}
+-
+-func InfluxSetupComplete(influxEndpoint string, tlsConfig *tls.Config) (bool, error) {
+-	influxUri, err := url.Parse(influxEndpoint)
+-	if err != nil {
+-		return false, err
+-	}
+-	influxUri, err = influxUri.Parse("/api/v2/setup")
+-	if err != nil {
+-		return false, err
+-	}
+-
+-	client := &http.Client{Transport: &http.Transport{TLSClientConfig: tlsConfig}}
+-	res, err := client.Get(influxUri.String())
+-	if err != nil {
+-		return false, err
+-	}
+-
+-	body, err := io.ReadAll(res.Body)
+-	if err != nil {
+-		return false, err
+-	}
+-
+-	type SetupStatus struct {
+-		Allowed bool `json:"allowed"`
+-	}
+-	var data SetupStatus
+-	err = json.Unmarshal(body, &data)
+-	if err != nil {
+-		return false, err
+-	}
+-	return !data.Allowed, nil
+-}
+-
+-func (sr *scrutinyRepository) EnsureBuckets(ctx context.Context, org *domain.Organization) error {
+-
+-	var mainBucketRetentionRule domain.RetentionRule
+-	var weeklyBucketRetentionRule domain.RetentionRule
+-	var monthlyBucketRetentionRule domain.RetentionRule
+-	if sr.appConfig.GetBool("web.influxdb.retention_policy") {
+-
+-		// in tests, we may not want to set a retention policy. If "false", we can set data with old timestamps,
+-		// then manually run the down sampling scripts. This should be true for production environments.
+-		mainBucketRetentionRule = domain.RetentionRule{EverySeconds: RETENTION_PERIOD_15_DAYS_IN_SECONDS}
+-		weeklyBucketRetentionRule = domain.RetentionRule{EverySeconds: RETENTION_PERIOD_9_WEEKS_IN_SECONDS}
+-		monthlyBucketRetentionRule = domain.RetentionRule{EverySeconds: RETENTION_PERIOD_25_MONTHS_IN_SECONDS}
+-	}
+-
+-	mainBucket := sr.appConfig.GetString("web.influxdb.bucket")
+-	if foundMainBucket, foundErr := sr.influxClient.BucketsAPI().FindBucketByName(ctx, mainBucket); foundErr != nil {
+-		// metrics bucket will have a retention period of 15 days (since it will be down-sampled once a week)
+-		_, err := sr.influxClient.BucketsAPI().CreateBucketWithName(ctx, org, mainBucket, mainBucketRetentionRule)
+-		if err != nil {
+-			return err
+-		}
+-	} else if sr.appConfig.GetBool("web.influxdb.retention_policy") {
+-		//correctly set the retention period for the main bucket (cant do it during setup/creation)
+-		foundMainBucket.RetentionRules = domain.RetentionRules{mainBucketRetentionRule}
+-		sr.influxClient.BucketsAPI().UpdateBucket(ctx, foundMainBucket)
+-	}
+-
+-	//create buckets (used for downsampling)
+-	weeklyBucket := fmt.Sprintf("%s_weekly", sr.appConfig.GetString("web.influxdb.bucket"))
+-	if foundWeeklyBucket, foundErr := sr.influxClient.BucketsAPI().FindBucketByName(ctx, weeklyBucket); foundErr != nil {
+-		// metrics_weekly bucket will have a retention period of 8+1 weeks (since it will be down-sampled once a month)
+-		_, err := sr.influxClient.BucketsAPI().CreateBucketWithName(ctx, org, weeklyBucket, weeklyBucketRetentionRule)
+-		if err != nil {
+-			return err
+-		}
+-	} else if sr.appConfig.GetBool("web.influxdb.retention_policy") {
+-		//correctly set the retention period for the bucket (may not be able to do it during setup/creation)
+-		foundWeeklyBucket.RetentionRules = domain.RetentionRules{weeklyBucketRetentionRule}
+-		sr.influxClient.BucketsAPI().UpdateBucket(ctx, foundWeeklyBucket)
+-	}
+-
+-	monthlyBucket := fmt.Sprintf("%s_monthly", sr.appConfig.GetString("web.influxdb.bucket"))
+-	if foundMonthlyBucket, foundErr := sr.influxClient.BucketsAPI().FindBucketByName(ctx, monthlyBucket); foundErr != nil {
+-		// metrics_monthly bucket will have a retention period of 24+1 months (since it will be down-sampled once a year)
+-		_, err := sr.influxClient.BucketsAPI().CreateBucketWithName(ctx, org, monthlyBucket, monthlyBucketRetentionRule)
+-		if err != nil {
+-			return err
+-		}
+-	} else if sr.appConfig.GetBool("web.influxdb.retention_policy") {
+-		//correctly set the retention period for the bucket (may not be able to do it during setup/creation)
+-		foundMonthlyBucket.RetentionRules = domain.RetentionRules{monthlyBucketRetentionRule}
+-		sr.influxClient.BucketsAPI().UpdateBucket(ctx, foundMonthlyBucket)
+-	}
+-
+-	yearlyBucket := fmt.Sprintf("%s_yearly", sr.appConfig.GetString("web.influxdb.bucket"))
+-	if _, foundErr := sr.influxClient.BucketsAPI().FindBucketByName(ctx, yearlyBucket); foundErr != nil {
+-		// metrics_yearly bucket will have an infinite retention period
+-		_, err := sr.influxClient.BucketsAPI().CreateBucketWithName(ctx, org, yearlyBucket)
+-		if err != nil {
+-			return err
+-		}
+-	}
+-
+-	return nil
+ }
+ 
+ ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+@@ -344,101 +114,46 @@ func (sr *scrutinyRepository) GetSummary(ctx context.Context) (map[uuid.UUID]*mo
+ 	summaries := map[uuid.UUID]*models.DeviceSummary{}
+ 
+ 	for _, device := range devices {
+-		summaries[device.ScrutinyUUID] = &models.DeviceSummary{Device: device}
+-	}
+-
+-	// Get parser flux query result
+-	//appConfig.GetString("web.influxdb.bucket")
+-	queryStr := fmt.Sprintf(`
+-  	import "influxdata/influxdb/schema"
+-  	bucketBaseName = "%s"
+-
+-	dailyData = from(bucket: bucketBaseName)
+-	|> range(start: -10y, stop: now())
+-	|> filter(fn: (r) => r["_measurement"] == "smart" )
+-	|> filter(fn: (r) => r["_field"] == "temp" or r["_field"] == "power_on_hours" or r["_field"] == "date")
+-	|> last()
+-	|> schema.fieldsAsCols()
+-	|> group(columns: ["scrutiny_uuid"])
+-	
+-	weeklyData = from(bucket: bucketBaseName + "_weekly")
+-	|> range(start: -10y, stop: now())
+-	|> filter(fn: (r) => r["_measurement"] == "smart" )
+-	|> filter(fn: (r) => r["_field"] == "temp" or r["_field"] == "power_on_hours" or r["_field"] == "date")
+-	|> last()
+-	|> schema.fieldsAsCols()
+-	|> group(columns: ["scrutiny_uuid"])
+-	
+-	monthlyData = from(bucket: bucketBaseName + "_monthly")
+-	|> range(start: -10y, stop: now())
+-	|> filter(fn: (r) => r["_measurement"] == "smart" )
+-	|> filter(fn: (r) => r["_field"] == "temp" or r["_field"] == "power_on_hours" or r["_field"] == "date")
+-	|> last()
+-	|> schema.fieldsAsCols()
+-	|> group(columns: ["scrutiny_uuid"])
+-	
+-	yearlyData = from(bucket: bucketBaseName + "_yearly")
+-	|> range(start: -10y, stop: now())
+-	|> filter(fn: (r) => r["_measurement"] == "smart" )
+-	|> filter(fn: (r) => r["_field"] == "temp" or r["_field"] == "power_on_hours" or r["_field"] == "date")
+-	|> last()
+-	|> schema.fieldsAsCols()
+-	|> group(columns: ["scrutiny_uuid"])
+-	
+-	union(tables: [dailyData, weeklyData, monthlyData, yearlyData])
+-	|> sort(columns: ["_time"], desc: false)
+-	|> group(columns: ["scrutiny_uuid"])
+-	|> last(column: "scrutiny_uuid")
+-	|> yield(name: "last")
+-		`,
+-		sr.appConfig.GetString("web.influxdb.bucket"),
+-	)
+-
+-	result, err := sr.influxQueryApi.Query(ctx, queryStr)
+-	if err == nil {
+-		// Use Next() to iterate over query result lines
+-		for result.Next() {
+-			// Observe when there is new grouping key producing new table
+-			if result.TableChanged() {
+-				//fmt.Printf("table: %s\n", result.TableMetadata().String())
++		summary := &models.DeviceSummary{Device: device}
++		summaries[device.ScrutinyUUID] = summary
++
++		row := models.SmartMetric{}
++		err := sr.gormClient.WithContext(ctx).
++			Where("scrutiny_uuid = ?", device.ScrutinyUUID.String()).
++			Order("date DESC").
++			First(&row).Error
++		if err != nil {
++			if errors.Is(err, gorm.ErrRecordNotFound) {
++				continue
+ 			}
+-			// read result
+-
+-			//get summary data from Influxdb.
+-			//result.Record().Values()
+-			if scrutinyUUIDString, ok := result.Record().Values()["scrutiny_uuid"]; ok {
+-				scrutinyUUID := uuid.Must(uuid.FromString(scrutinyUUIDString.(string)))
+-
+-				//ensure summaries is intialized for this scrutiny_uuid
+-				if _, exists := summaries[scrutinyUUID]; !exists {
+-					summaries[scrutinyUUID] = &models.DeviceSummary{}
+-				}
++			return nil, fmt.Errorf("failed to load latest SMART result for %s: %w", device.ScrutinyUUID, err)
++		}
+ 
+-				summaries[scrutinyUUID].SmartResults = &models.SmartSummary{
+-					Temp:          result.Record().Values()["temp"].(int64),
+-					PowerOnHours:  result.Record().Values()["power_on_hours"].(int64),
+-					CollectorDate: result.Record().Values()["_time"].(time.Time),
+-				}
+-			}
++		fields, err := decodeMetricFields(row.Fields)
++		if err != nil {
++			sr.logger.Errorf("failed to decode latest SMART result for %s: %v", device.ScrutinyUUID, err)
++			continue
+ 		}
+-		if result.Err() != nil {
+-			fmt.Printf("Query error: %s\n", result.Err().Error())
++
++		temp, _ := fields["temp"].(int64)
++		powerOnHours, _ := fields["power_on_hours"].(int64)
++		summary.SmartResults = &models.SmartSummary{
++			Temp:          temp,
++			PowerOnHours:  powerOnHours,
++			CollectorDate: row.Date,
+ 		}
+-	} else {
+-		return nil, err
+ 	}
+ 
++	// Attach full temperature history in a single query.
+ 	deviceTempHistory, err := sr.GetSmartTemperatureHistory(ctx, DURATION_KEY_FOREVER)
+ 	if err != nil {
+-		sr.logger.Printf("========================>>>>>>>>======================")
+-		sr.logger.Printf("========================>>>>>>>>======================")
+-		sr.logger.Printf("========================>>>>>>>>======================")
+-		sr.logger.Printf("========================>>>>>>>>======================")
+-		sr.logger.Printf("========================>>>>>>>>======================")
+-		sr.logger.Printf("Error: %v", err)
+-	}
+-	for scutiny_uuid, tempHistory := range deviceTempHistory {
+-		summaries[scutiny_uuid].TempHistory = tempHistory
++		sr.logger.Errorf("failed to load temperature history: %v", err)
++	} else {
++		for scrutinyUUID, tempHistory := range deviceTempHistory {
++			if summary, exists := summaries[scrutinyUUID]; exists {
++				summary.TempHistory = tempHistory
++			}
++		}
+ 	}
+ 
+ 	return summaries, nil
+@@ -448,78 +163,6 @@ func (sr *scrutinyRepository) GetSummary(ctx context.Context) (map[uuid.UUID]*mo
+ // Helper Methods
+ ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+-func (sr *scrutinyRepository) lookupBucketName(durationKey string) string {
+-	switch durationKey {
+-	case DURATION_KEY_DAY:
+-	case DURATION_KEY_WEEK:
+-		//data stored in the last week
+-		return sr.appConfig.GetString("web.influxdb.bucket")
+-	case DURATION_KEY_MONTH:
+-		// data stored in the last month (after the first week)
+-		return fmt.Sprintf("%s_weekly", sr.appConfig.GetString("web.influxdb.bucket"))
+-	case DURATION_KEY_YEAR:
+-		// data stored in the last year (after the first month)
+-		return fmt.Sprintf("%s_monthly", sr.appConfig.GetString("web.influxdb.bucket"))
+-	case DURATION_KEY_FOREVER:
+-		//data stored before the last year
+-		return fmt.Sprintf("%s_yearly", sr.appConfig.GetString("web.influxdb.bucket"))
+-	}
+-	return sr.appConfig.GetString("web.influxdb.bucket")
+-}
+-
+-func (sr *scrutinyRepository) lookupDuration(durationKey string) []string {
+-	switch durationKey {
+-	case DURATION_KEY_DAY:
+-		//data stored in the last day
+-		return []string{"-1d", "now()"}
+-	case DURATION_KEY_WEEK:
+-		//data stored in the last week
+-		return []string{"-1w", "now()"}
+-	case DURATION_KEY_MONTH:
+-		// data stored in the last month (after the first week)
+-		return []string{"-1mo", "-1w"}
+-	case DURATION_KEY_YEAR:
+-		// data stored in the last year (after the first month)
+-		return []string{"-1y", "-1mo"}
+-	case DURATION_KEY_FOREVER:
+-		//data stored before the last year
+-		return []string{"-10y", "-1y"}
+-	}
+-	return []string{"-1w", "now()"}
+-}
+-
+-func (sr *scrutinyRepository) lookupResolution(durationKey string) string {
+-	switch durationKey {
+-	case DURATION_KEY_DAY:
+-		// Return data with higher resolution for daily summaries
+-		return "10m"
+-	default:
+-		// Return data with 1h resolution for other summaries
+-		return "1h"
+-	}
+-}
+-
+-func (sr *scrutinyRepository) lookupNestedDurationKeys(durationKey string) []string {
+-	switch durationKey {
+-	case DURATION_KEY_DAY:
+-		//all data is stored in a single bucket, but we want a finer resolution
+-		return []string{DURATION_KEY_DAY}
+-	case DURATION_KEY_WEEK:
+-		//all data is stored in a single bucket
+-		return []string{DURATION_KEY_WEEK}
+-	case DURATION_KEY_MONTH:
+-		//data is stored in the week bucket and the month bucket
+-		return []string{DURATION_KEY_WEEK, DURATION_KEY_MONTH}
+-	case DURATION_KEY_YEAR:
+-		// data stored in the last year (after the first month)
+-		return []string{DURATION_KEY_WEEK, DURATION_KEY_MONTH, DURATION_KEY_YEAR}
+-	case DURATION_KEY_FOREVER:
+-		//data stored before the last year
+-		return []string{DURATION_KEY_WEEK, DURATION_KEY_MONTH, DURATION_KEY_YEAR, DURATION_KEY_FOREVER}
+-	}
+-	return []string{DURATION_KEY_WEEK}
+-}
+-
+ func sqlitePragmaString(pragmas map[string]string) string {
+ 	q := url.Values{}
+ 	for key, val := range pragmas {
+diff --git a/webapp/backend/pkg/database/scrutiny_repository_device.go b/webapp/backend/pkg/database/scrutiny_repository_device.go
+index 3bdc992..c5aade8 100644
+--- a/webapp/backend/pkg/database/scrutiny_repository_device.go
++++ b/webapp/backend/pkg/database/scrutiny_repository_device.go
+@@ -3,7 +3,6 @@ package database
+ import (
+ 	"context"
+ 	"fmt"
+-	"time"
+ 
+ 	"github.com/analogj/scrutiny/webapp/backend/pkg"
+ 	"github.com/analogj/scrutiny/webapp/backend/pkg/models"
+@@ -95,26 +94,12 @@ func (sr *scrutinyRepository) DeleteDevice(ctx context.Context, scrutiny_uuid uu
+ 		return err
+ 	}
+ 
+-	//delete data from influxdb.
+-	buckets := []string{
+-		sr.appConfig.GetString("web.influxdb.bucket"),
+-		fmt.Sprintf("%s_weekly", sr.appConfig.GetString("web.influxdb.bucket")),
+-		fmt.Sprintf("%s_monthly", sr.appConfig.GetString("web.influxdb.bucket")),
+-		fmt.Sprintf("%s_yearly", sr.appConfig.GetString("web.influxdb.bucket")),
++	//delete SMART metrics from SQLite.
++	if err := sr.gormClient.WithContext(ctx).Where("scrutiny_uuid = ?", scrutiny_uuid.String()).Delete(&models.SmartMetric{}).Error; err != nil {
++		return err
+ 	}
+-
+-	for _, bucket := range buckets {
+-		sr.logger.Infof("Deleting data for %s in bucket: %s", scrutiny_uuid.String(), bucket)
+-		if err := sr.influxClient.DeleteAPI().DeleteWithName(
+-			ctx,
+-			sr.appConfig.GetString("web.influxdb.org"),
+-			bucket,
+-			time.Now().AddDate(-10, 0, 0),
+-			time.Now(),
+-			fmt.Sprintf(`scrutiny_uuid="%s"`, scrutiny_uuid.String()),
+-		); err != nil {
+-			return err
+-		}
++	if err := sr.gormClient.WithContext(ctx).Where("scrutiny_uuid = ?", scrutiny_uuid.String()).Delete(&models.TempMetric{}).Error; err != nil {
++		return err
+ 	}
+ 
+ 	return nil
+diff --git a/webapp/backend/pkg/database/scrutiny_repository_device_smart_attributes.go b/webapp/backend/pkg/database/scrutiny_repository_device_smart_attributes.go
+index 510e014..a563a09 100644
+--- a/webapp/backend/pkg/database/scrutiny_repository_device_smart_attributes.go
++++ b/webapp/backend/pkg/database/scrutiny_repository_device_smart_attributes.go
+@@ -3,15 +3,12 @@ package database
+ import (
+ 	"context"
+ 	"fmt"
+-	"strings"
+ 	"time"
+ 
++	"github.com/analogj/scrutiny/webapp/backend/pkg/models"
+ 	"github.com/analogj/scrutiny/webapp/backend/pkg/models/collector"
+ 	"github.com/analogj/scrutiny/webapp/backend/pkg/models/measurements"
+ 	"github.com/gofrs/uuid/v5"
+-	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
+-	"github.com/influxdata/influxdb-client-go/v2/api"
+-	log "github.com/sirupsen/logrus"
+ )
+ 
+ // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+@@ -25,10 +22,10 @@ func (sr *scrutinyRepository) SaveSmartAttributes(ctx context.Context, scrutiny_
+ 		return measurements.Smart{}, err
+ 	}
+ 
+-	tags, fields := deviceSmartData.Flatten()
+-
+-	// write point immediately
+-	return deviceSmartData, sr.saveDatapoint(sr.influxWriteApi, "smart", tags, fields, deviceSmartData.Date, ctx)
++	if err := sr.saveSmartMeasurement(ctx, deviceSmartData); err != nil {
++		return measurements.Smart{}, err
++	}
++	return deviceSmartData, nil
+ }
+ 
+ // GetSmartAttributeHistory MUST return in sorted order, where newest entries are at the beginning of the list, and oldest are at the end.
+@@ -36,177 +33,30 @@ func (sr *scrutinyRepository) SaveSmartAttributes(ctx context.Context, scrutiny_
+ // For example, with selectEntries = 5, selectEntries = 0, the most recent 5 are returned. With selectEntries = 3, selectEntries = 2, entries
+ // 2 to 4 are returned (2 being the third newest, since it is zero-indexed)
+ func (sr *scrutinyRepository) GetSmartAttributeHistory(ctx context.Context, scrutiny_uuid uuid.UUID, durationKey string, aggregationWindow time.Duration, selectEntries int, selectEntriesOffset int, attributes []string) ([]measurements.Smart, error) {
+-	// Get SMartResults from InfluxDB
+-
+-	//TODO: change the filter startrange to a real number.
+-
+-	// Get parser flux query result
+-	//appConfig.GetString("web.influxdb.bucket")
+-	queryStr := sr.aggregateSmartAttributesQuery(scrutiny_uuid, durationKey, aggregationWindow, selectEntries, selectEntriesOffset, attributes)
+-	log.Infoln(queryStr)
++	query := sr.gormClient.WithContext(ctx).Model(&models.SmartMetric{}).
++		Where("scrutiny_uuid = ?", scrutiny_uuid.String())
+ 
+-	smartResults := []measurements.Smart{}
+-
+-	result, err := sr.influxQueryApi.Query(ctx, queryStr)
+-	if err == nil {
+-		// Use Next() to iterate over query result lines
+-		for result.Next() {
+-			// Observe when there is new grouping key producing new table
+-			if result.TableChanged() {
+-				//fmt.Printf("table: %s\n", result.TableMetadata().String())
+-			}
+-
+-			smartData, err := measurements.NewSmartFromInfluxDB(result.Record().Values())
+-			if err != nil {
+-				return nil, err
+-			}
+-			smartResults = append(smartResults, *smartData)
+-
+-		}
+-		if result.Err() != nil {
+-			fmt.Printf("Query error: %s\n", result.Err().Error())
+-		}
+-	} else {
+-		return nil, err
++	start, bounded := sr.metricTimeRange(durationKey)
++	if bounded {
++		query = query.Where("date >= ? AND date <= ?", start, time.Now())
+ 	}
+ 
+-	return smartResults, nil
+-
+-	//if err := device.SquashHistory(); err != nil {
+-	//	logger.Errorln("An error occurred while squashing device history", err)
+-	//	c.JSON(http.StatusInternalServerError, gin.H{"success": false})
+-	//	return
+-	//}
+-	//
+-	//if err := device.ApplyMetadataRules(); err != nil {
+-	//	logger.Errorln("An error occurred while applying scrutiny thresholds & rules", err)
+-	//	c.JSON(http.StatusInternalServerError, gin.H{"success": false})
+-	//	return
+-	//}
+-
+-}
+-
+-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-// Helper Methods
+-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-
+-func (sr *scrutinyRepository) saveDatapoint(influxWriteApi api.WriteAPIBlocking, measurement string, tags map[string]string, fields map[string]interface{}, date time.Time, ctx context.Context) error {
+-	//sr.logger.Debugf("Storing datapoint in measurement '%s'. tags: %d fields: %d", measurement, len(tags), len(fields))
+-	p := influxdb2.NewPoint(measurement,
+-		tags,
+-		fields,
+-		date)
+-
+-	// write point immediately
+-	return influxWriteApi.WritePoint(ctx, p)
+-}
+-
+-func (sr *scrutinyRepository) aggregateSmartAttributesQuery(scrutiny_uuid uuid.UUID, durationKey string, aggregationWindow time.Duration, selectEntries int, selectEntriesOffset int, attributes []string) string {
+-
+-	/*
+-
+-		import "influxdata/influxdb/schema"
+-		weekData = from(bucket: "metrics")
+-		|> range(start: -1w, stop: now())
+-		|> filter(fn: (r) => r["_measurement"] == "smart" )
+-		|> filter(fn: (r) => r["scrutiny_uuid"] == "32bda933-15be-56a3-902f-9f3674b03d59" )
+-		|> tail(n: 10, offset: 0)
+-		|> schema.fieldsAsCols()
+-
+-		monthData = from(bucket: "metrics_weekly")
+-		|> range(start: -1mo, stop: -1w)
+-		|> filter(fn: (r) => r["_measurement"] == "smart" )
+-		|> filter(fn: (r) => r["scrutiny_uuid"] == "32bda933-15be-56a3-902f-9f3674b03d59" )
+-		|> tail(n: 10, offset: 0)
+-		|> schema.fieldsAsCols()
+-
+-		yearData = from(bucket: "metrics_monthly")
+-		|> range(start: -1y, stop: -1mo)
+-		|> filter(fn: (r) => r["_measurement"] == "smart" )
+-		|> filter(fn: (r) => r["scrutiny_uuid"] == "32bda933-15be-56a3-902f-9f3674b03d59" )
+-		|> tail(n: 10, offset: 0)
+-		|> schema.fieldsAsCols()
+-
+-		foreverData = from(bucket: "metrics_yearly")
+-		|> range(start: -10y, stop: -1y)
+-		|> filter(fn: (r) => r["_measurement"] == "smart" )
+-		|> filter(fn: (r) => r["scrutiny_uuid"] == "32bda933-15be-56a3-902f-9f3674b03d59" )
+-		|> tail(n: 10, offset: 0)
+-		|> schema.fieldsAsCols()
+-
+-		union(tables: [weekData, monthData, yearData, foreverData])
+-		|> group()
+-		|> sort(columns: ["_time"], desc: true)
+-		|> tail(n: 6, offset: 4)
+-		|> yield(name: "last")
+-
+-	*/
+-
+-	partialQueryStr := []string{
+-		`import "influxdata/influxdb/schema"`,
++	rows := []models.SmartMetric{}
++	if err := query.Order("date DESC").Find(&rows).Error; err != nil {
++		return nil, fmt.Errorf("failed to load SMART history: %w", err)
+ 	}
+ 
+-	nestedDurationKeys := sr.lookupNestedDurationKeys(durationKey)
++	rows = aggregateSmartMetricRows(rows, aggregationWindow)
++	rows = pageSmartMetricRows(rows, selectEntries, selectEntriesOffset)
+ 
+-	if len(nestedDurationKeys) == 1 {
+-		//there's only one bucket being queried, no need to union, just aggregate the dataset and return
+-		partialQueryStr = append(partialQueryStr, []string{
+-			sr.generateSmartAttributesSubquery(scrutiny_uuid, nestedDurationKeys[0], aggregationWindow, selectEntries, selectEntriesOffset, attributes),
+-			fmt.Sprintf(`%sData`, nestedDurationKeys[0]),
+-			`|> sort(columns: ["_time"], desc: true)`,
+-			`|> yield()`,
+-		}...)
+-		return strings.Join(partialQueryStr, "\n")
+-	}
+-
+-	subQueries := []string{}
+-	subQueryNames := []string{}
+-	for _, nestedDurationKey := range nestedDurationKeys {
+-		subQueryNames = append(subQueryNames, fmt.Sprintf(`%sData`, nestedDurationKey))
+-		if selectEntries > 0 {
+-			// We only need the last `n + offset` # of entries from each table to guarantee we can
+-			// get the last `n` # of entries starting from `offset` of the union
+-			subQueries = append(subQueries, sr.generateSmartAttributesSubquery(scrutiny_uuid, nestedDurationKey, aggregationWindow, selectEntries+selectEntriesOffset, 0, attributes))
+-		} else {
+-			subQueries = append(subQueries, sr.generateSmartAttributesSubquery(scrutiny_uuid, nestedDurationKey, aggregationWindow, 0, 0, attributes))
++	smartResults := make([]measurements.Smart, 0, len(rows))
++	for _, row := range rows {
++		smartData, err := sr.smartFromMetricRow(row)
++		if err != nil {
++			return nil, err
+ 		}
++		smartResults = append(smartResults, *smartData)
+ 	}
+-	partialQueryStr = append(partialQueryStr, subQueries...)
+-	partialQueryStr = append(partialQueryStr, []string{
+-		fmt.Sprintf("union(tables: [%s])", strings.Join(subQueryNames, ", ")),
+-		`|> group()`,
+-		`|> sort(columns: ["_time"], desc: true)`,
+-	}...)
+-	if selectEntries > 0 {
+-		partialQueryStr = append(partialQueryStr, fmt.Sprintf(`|> limit(n: %d, offset: %d)`, selectEntries, selectEntriesOffset))
+-	}
+-	partialQueryStr = append(partialQueryStr, `|> yield(name: "last")`)
+ 
+-	return strings.Join(partialQueryStr, "\n")
+-}
+-
+-func (sr *scrutinyRepository) generateSmartAttributesSubquery(scrutiny_uuid uuid.UUID, durationKey string, aggregationWindow time.Duration, selectEntries int, selectEntriesOffset int, attributes []string) string {
+-	bucketName := sr.lookupBucketName(durationKey)
+-	durationRange := sr.lookupDuration(durationKey)
+-
+-	partialQueryStr := []string{
+-		fmt.Sprintf(`%sData = from(bucket: "%s")`, durationKey, bucketName),
+-		fmt.Sprintf(`|> range(start: %s, stop: %s)`, durationRange[0], durationRange[1]),
+-		`|> filter(fn: (r) => r["_measurement"] == "smart" )`,
+-		fmt.Sprintf(`|> filter(fn: (r) => r["scrutiny_uuid"] == "%s" )`, scrutiny_uuid.String()),
+-	}
+-
+-	if aggregationWindow > 0 {
+-		// use int64 seconds to avoid format discrepancies between go and flux
+-		partialQueryStr = append(partialQueryStr, fmt.Sprintf(`|> aggregateWindow(every: %ds, fn: last, createEmpty: false)`, int64(aggregationWindow.Seconds())))
+-	}
+-
+-	// ensure we are selecting the latest entries when paging
+-	partialQueryStr = append(partialQueryStr, `|> sort(columns: ["_time"], desc: true)`)
+-	if selectEntries > 0 {
+-		partialQueryStr = append(partialQueryStr, fmt.Sprintf(`|> limit(n: %d, offset: %d)`, selectEntries, selectEntriesOffset))
+-	}
+-	partialQueryStr = append(partialQueryStr, "|> schema.fieldsAsCols()")
+-
+-	return strings.Join(partialQueryStr, "\n")
++	return smartResults, nil
+ }
+diff --git a/webapp/backend/pkg/database/scrutiny_repository_metrics.go b/webapp/backend/pkg/database/scrutiny_repository_metrics.go
+new file mode 100644
+index 0000000..58ddfb0
+--- /dev/null
++++ b/webapp/backend/pkg/database/scrutiny_repository_metrics.go
+@@ -0,0 +1,205 @@
++package database
++
++import (
++	"context"
++	"encoding/json"
++	"fmt"
++	"sort"
++	"strings"
++	"time"
++
++	"github.com/analogj/scrutiny/webapp/backend/pkg/models"
++	"github.com/analogj/scrutiny/webapp/backend/pkg/models/measurements"
++	"github.com/gofrs/uuid/v5"
++	"gorm.io/gorm/clause"
++)
++
++// metricTimeRange returns the inclusive lower bound for a duration key.
++// The second return value is false for "forever", which has no lower bound.
++func (sr *scrutinyRepository) metricTimeRange(durationKey string) (time.Time, bool) {
++	now := time.Now()
++	switch durationKey {
++	case DURATION_KEY_DAY:
++		return now.Add(-24 * time.Hour), true
++	case DURATION_KEY_WEEK:
++		return now.Add(-7 * 24 * time.Hour), true
++	case DURATION_KEY_MONTH:
++		return now.AddDate(0, -1, 0), true
++	case DURATION_KEY_YEAR:
++		return now.AddDate(-1, 0, 0), true
++	case DURATION_KEY_FOREVER:
++		return time.Time{}, false
++	}
++	return now.Add(-7 * 24 * time.Hour), true
++}
++
++func (sr *scrutinyRepository) saveSmartMeasurement(ctx context.Context, sm measurements.Smart) error {
++	_, fields := sm.Flatten()
++	rawFields, err := json.Marshal(fields)
++	if err != nil {
++		return fmt.Errorf("failed to serialize SMART metrics: %w", err)
++	}
++
++	row := models.SmartMetric{
++		ScrutinyUUID:   sm.ScrutinyUUID.String(),
++		Date:           sm.Date,
++		DeviceProtocol: sm.DeviceProtocol,
++		Fields:         string(rawFields),
++	}
++
++	return sr.gormClient.WithContext(ctx).Clauses(clause.OnConflict{
++		Columns:   []clause.Column{{Name: "scrutiny_uuid"}, {Name: "date"}},
++		DoUpdates: clause.AssignmentColumns([]string{"device_protocol", "fields"}),
++	}).Create(&row).Error
++}
++
++func (sr *scrutinyRepository) saveTempMeasurements(ctx context.Context, scrutinyUUID uuid.UUID, points []measurements.SmartTemperature) error {
++	if len(points) == 0 {
++		return nil
++	}
++
++	rows := make([]models.TempMetric, 0, len(points))
++	for _, point := range points {
++		rows = append(rows, models.TempMetric{
++			ScrutinyUUID: scrutinyUUID.String(),
++			Date:         point.Date,
++			Temp:         point.Temp,
++		})
++	}
++
++	return sr.gormClient.WithContext(ctx).Clauses(clause.OnConflict{
++		Columns:   []clause.Column{{Name: "scrutiny_uuid"}, {Name: "date"}},
++		DoUpdates: clause.AssignmentColumns([]string{"temp"}),
++	}).CreateInBatches(&rows, 200).Error
++}
++
++func decodeMetricFields(raw string) (map[string]interface{}, error) {
++	decoder := json.NewDecoder(strings.NewReader(raw))
++	decoder.UseNumber()
++
++	fields := map[string]interface{}{}
++	if err := decoder.Decode(&fields); err != nil {
++		return nil, err
++	}
++
++	for key, value := range fields {
++		number, ok := value.(json.Number)
++		if !ok {
++			continue
++		}
++		// failure_rate is the only float64 field in the measurement models.
++		// JSON drops the fractional part for whole numbers (e.g. 0), so the
++		// generic Int64 path below would turn it into an int64 and make the
++		// existing Inflate implementations panic.
++		if strings.HasSuffix(key, ".failure_rate") {
++			if floatValue, err := number.Float64(); err == nil {
++				fields[key] = floatValue
++			}
++			continue
++		}
++		if integer, err := number.Int64(); err == nil {
++			fields[key] = integer
++		} else if floatValue, err := number.Float64(); err == nil {
++			fields[key] = floatValue
++		}
++	}
++	return fields, nil
++}
++
++func (sr *scrutinyRepository) smartFromMetricRow(row models.SmartMetric) (*measurements.Smart, error) {
++	fields, err := decodeMetricFields(row.Fields)
++	if err != nil {
++		return nil, fmt.Errorf("failed to decode SMART metrics for %s: %w", row.ScrutinyUUID, err)
++	}
++
++	values := map[string]interface{}{
++		"_time":           row.Date,
++		"scrutiny_uuid":   row.ScrutinyUUID,
++		"device_protocol": row.DeviceProtocol,
++	}
++	for key, value := range fields {
++		values[key] = value
++	}
++
++	return measurements.NewSmartFromInfluxDB(values)
++}
++
++func aggregateSmartMetricRows(rows []models.SmartMetric, window time.Duration) []models.SmartMetric {
++	if window <= 0 {
++		return rows
++	}
++
++	seen := map[int64]bool{}
++	aggregated := make([]models.SmartMetric, 0, len(rows))
++	for _, row := range rows { // rows arrive newest-first
++		bucket := row.Date.Truncate(window).Unix()
++		if seen[bucket] {
++			continue
++		}
++		seen[bucket] = true
++		aggregated = append(aggregated, row)
++	}
++	return aggregated
++}
++
++func pageSmartMetricRows(rows []models.SmartMetric, limit int, offset int) []models.SmartMetric {
++	if limit <= 0 {
++		return rows
++	}
++	if offset < 0 {
++		offset = 0
++	}
++	if offset >= len(rows) {
++		return []models.SmartMetric{}
++	}
++	end := offset + limit
++	if end > len(rows) {
++		end = len(rows)
++	}
++	return rows[offset:end]
++}
++
++func aggregateTempMetrics(rows []models.TempMetric, window time.Duration) map[uuid.UUID][]measurements.SmartTemperature {
++	type bucketKey struct {
++		uuid   string
++		bucket int64
++	}
++	type bucketValue struct {
++		date  time.Time
++		sum   int64
++		count int64
++	}
++
++	buckets := map[bucketKey]*bucketValue{}
++	for _, row := range rows {
++		key := bucketKey{uuid: row.ScrutinyUUID, bucket: row.Date.Truncate(window).Unix()}
++		value, ok := buckets[key]
++		if !ok {
++			value = &bucketValue{date: row.Date.Truncate(window)}
++			buckets[key] = value
++		}
++		value.sum += row.Temp
++		value.count++
++	}
++
++	history := map[uuid.UUID][]measurements.SmartTemperature{}
++	for key, value := range buckets {
++		parsedUUID, err := uuid.FromString(key.uuid)
++		if err != nil {
++			continue
++		}
++		temp := value.sum / value.count
++		history[parsedUUID] = append(history[parsedUUID], measurements.SmartTemperature{
++			Date: value.date,
++			Temp: temp,
++		})
++	}
++
++	for parsedUUID := range history {
++		sort.Slice(history[parsedUUID], func(i, j int) bool {
++			return history[parsedUUID][i].Date.Before(history[parsedUUID][j].Date)
++		})
++	}
++
++	return history
++}
+diff --git a/webapp/backend/pkg/database/scrutiny_repository_metrics_test.go b/webapp/backend/pkg/database/scrutiny_repository_metrics_test.go
+new file mode 100644
+index 0000000..28497db
+--- /dev/null
++++ b/webapp/backend/pkg/database/scrutiny_repository_metrics_test.go
+@@ -0,0 +1,77 @@
++package database
++
++import (
++	"context"
++	"testing"
++	"time"
++
++	"github.com/analogj/scrutiny/webapp/backend/pkg"
++	"github.com/analogj/scrutiny/webapp/backend/pkg/models"
++	"github.com/analogj/scrutiny/webapp/backend/pkg/models/measurements"
++	"github.com/glebarez/sqlite"
++	"github.com/gofrs/uuid/v5"
++	"github.com/sirupsen/logrus"
++	"github.com/stretchr/testify/require"
++	"gorm.io/gorm"
++)
++
++func newMetricsTestRepository(t *testing.T) *scrutinyRepository {
++	t.Helper()
++
++	database, err := gorm.Open(sqlite.Open(t.TempDir()+"/scrutiny.db"), &gorm.Config{})
++	require.NoError(t, err)
++	require.NoError(t, database.AutoMigrate(&models.SmartMetric{}, &models.TempMetric{}))
++
++	return &scrutinyRepository{
++		logger:     logrus.New(),
++		gormClient: database,
++	}
++}
++
++func TestSmartMetricRoundTrip(t *testing.T) {
++	repository := newMetricsTestRepository(t)
++	ctx := context.Background()
++	scrutinyUUID := uuid.Must(uuid.NewV4())
++	now := time.Now().Truncate(time.Second)
++
++	for offset := 0; offset < 3; offset++ {
++		smart := measurements.Smart{
++			Date:           now.Add(-time.Duration(offset) * time.Hour),
++			ScrutinyUUID:   scrutinyUUID,
++			DeviceProtocol: pkg.DeviceProtocolAta,
++			Temp:           int64(30 + offset),
++			PowerOnHours:   100,
++			PowerCycleCount: 2,
++			Attributes:     map[string]measurements.SmartAttribute{},
++		}
++		require.NoError(t, repository.saveSmartMeasurement(ctx, smart))
++	}
++
++	history, err := repository.GetSmartAttributeHistory(ctx, scrutinyUUID, DURATION_KEY_WEEK, 0, 0, 0, nil)
++	require.NoError(t, err)
++	require.Len(t, history, 3)
++	require.True(t, now.Equal(history[0].Date))
++	require.Equal(t, int64(30), history[0].Temp)
++	require.True(t, now.Add(-2*time.Hour).Equal(history[2].Date))
++}
++
++func TestAggregateSmartMetricRowsUsesLastEntryPerWindow(t *testing.T) {
++	now := time.Now().UTC().Truncate(time.Hour).Add(30 * time.Minute)
++	rows := []models.SmartMetric{
++		{Date: now},
++		{Date: now.Add(-25 * time.Minute)},
++		{Date: now.Add(-2 * time.Hour)},
++	}
++
++	aggregated := aggregateSmartMetricRows(rows, time.Hour)
++	require.Len(t, aggregated, 2)
++	require.True(t, now.Equal(aggregated[0].Date))
++	require.True(t, now.Add(-2*time.Hour).Equal(aggregated[1].Date))
++}
++
++func TestDecodeMetricFieldsPreservesFailureRateFloat(t *testing.T) {
++	fields, err := decodeMetricFields(`{"temp":25,"attr.5.failure_rate":0}`)
++	require.NoError(t, err)
++	require.IsType(t, int64(0), fields["temp"])
++	require.IsType(t, float64(0), fields["attr.5.failure_rate"])
++}
+diff --git a/webapp/backend/pkg/database/scrutiny_repository_migrations.go b/webapp/backend/pkg/database/scrutiny_repository_migrations.go
+index 8b61a6f..caf036e 100644
+--- a/webapp/backend/pkg/database/scrutiny_repository_migrations.go
++++ b/webapp/backend/pkg/database/scrutiny_repository_migrations.go
+@@ -2,11 +2,8 @@ package database
+ 
+ import (
+ 	"context"
+-	"errors"
+ 	"fmt"
+-	"strconv"
+ 	"strings"
+-	"time"
+ 
+ 	"github.com/analogj/scrutiny/collector/pkg/detect"
+ 	"github.com/analogj/scrutiny/webapp/backend/pkg"
+@@ -21,8 +18,6 @@ import (
+ 	"github.com/analogj/scrutiny/webapp/backend/pkg/models/measurements"
+ 	_ "github.com/glebarez/sqlite"
+ 	"github.com/go-gormigrate/gormigrate/v2"
+-	"github.com/influxdata/influxdb-client-go/v2/api/http"
+-	log "github.com/sirupsen/logrus"
+ 	"gorm.io/gorm"
+ )
+ 
+@@ -53,6 +48,12 @@ func (sr *scrutinyRepository) Migrate(ctx context.Context) error {
+ 				)
+ 			},
+ 		},
++		{
++			ID: "20220503113000", // SQLite SMART metrics store (no InfluxDB)
++			Migrate: func(tx *gorm.DB) error {
++				return tx.AutoMigrate(&models.SmartMetric{}, &models.TempMetric{})
++			},
++		},
+ 		{
+ 			ID: "20220503113100", // backwards compatible - influxdb schema
+ 			Migrate: func(tx *gorm.DB) error {
+@@ -93,157 +94,25 @@ func (sr *scrutinyRepository) Migrate(ctx context.Context) error {
+ 					return err
+ 				}
+ 
+-				//calculate bucket oldest dates
+-				today := time.Now()
+-				dailyBucketMax := today.Add(-RETENTION_PERIOD_15_DAYS_IN_SECONDS * time.Second)     //15 days
+-				weeklyBucketMax := today.Add(-RETENTION_PERIOD_9_WEEKS_IN_SECONDS * time.Second)    //9 weeks
+-				monthlyBucketMax := today.Add(-RETENTION_PERIOD_25_MONTHS_IN_SECONDS * time.Second) //25 weeks
+-
+ 				for _, preDevice := range preDevices {
+-					sr.logger.Debugf("====================================")
+-					sr.logger.Infof("begin processing device: %s", preDevice.WWN)
+-
+-					//weekly, monthly, yearly lookup storage, so we don't add more data to the buckets than necessary.
+-					weeklyLookup := map[string]bool{}
+-					monthlyLookup := map[string]bool{}
+-					yearlyLookup := map[string]bool{}
+-					for _, preSmartResult := range preDevice.SmartResults { //pre-migration smart results
+-
+-						//we're looping in ASC mode, so from oldest entry to most current.
+-
++					for _, preSmartResult := range preDevice.SmartResults {
+ 						err, postSmartResults := m20201107210306_FromPreInfluxDBSmartResultsCreatePostInfluxDBSmartResults(tx, preDevice, preSmartResult)
+ 						if err != nil {
+ 							return err
+ 						}
+-						smartTags, smartFields := postSmartResults.Flatten()
++						if err := sr.saveSmartMeasurement(ctx, postSmartResults); err != nil {
++							return err
++						}
+ 
+ 						err, postSmartTemp := m20201107210306_FromPreInfluxDBTempCreatePostInfluxDBTemp(preDevice, preSmartResult)
+ 						if err != nil {
+ 							return err
+ 						}
+-						tempTags, tempFields := postSmartTemp.Flatten()
+-						tempTags["device_wwn"] = preDevice.WWN
+-
+-						year, week := postSmartResults.Date.ISOWeek()
+-						month := postSmartResults.Date.Month()
+-
+-						yearStr := strconv.Itoa(year)
+-						yearMonthStr := fmt.Sprintf("%d-%d", year, month)
+-						yearWeekStr := fmt.Sprintf("%d-%d", year, week)
+-
+-						//write data to daily bucket if in the last 15 days
+-						if postSmartResults.Date.After(dailyBucketMax) {
+-							sr.logger.Debugf("device (%s) smart data added to bucket: daily", preDevice.WWN)
+-							// write point immediately
+-							err = sr.saveDatapoint(
+-								sr.influxClient.WriteAPIBlocking(sr.appConfig.GetString("web.influxdb.org"), sr.appConfig.GetString("web.influxdb.bucket")),
+-								"smart",
+-								smartTags,
+-								smartFields,
+-								postSmartResults.Date, ctx)
+-							if ignorePastRetentionPolicyError(err) != nil {
+-								return err
+-							}
+-
+-							err = sr.saveDatapoint(
+-								sr.influxClient.WriteAPIBlocking(sr.appConfig.GetString("web.influxdb.org"), sr.appConfig.GetString("web.influxdb.bucket")),
+-								"temp",
+-								tempTags,
+-								tempFields,
+-								postSmartResults.Date, ctx)
+-							if ignorePastRetentionPolicyError(err) != nil {
+-								return err
+-							}
+-						}
+-
+-						//write data to the weekly bucket if in the last 9 weeks, and week has not been processed yet
+-						if _, weekExists := weeklyLookup[yearWeekStr]; !weekExists && postSmartResults.Date.After(weeklyBucketMax) {
+-							sr.logger.Debugf("device (%s) smart data added to bucket: weekly", preDevice.WWN)
+-
+-							//this week/year pair has not been processed
+-							weeklyLookup[yearWeekStr] = true
+-							// write point immediately
+-							err = sr.saveDatapoint(
+-								sr.influxClient.WriteAPIBlocking(sr.appConfig.GetString("web.influxdb.org"), fmt.Sprintf("%s_weekly", sr.appConfig.GetString("web.influxdb.bucket"))),
+-								"smart",
+-								smartTags,
+-								smartFields,
+-								postSmartResults.Date, ctx)
+-
+-							if ignorePastRetentionPolicyError(err) != nil {
+-								return err
+-							}
+-
+-							err = sr.saveDatapoint(
+-								sr.influxClient.WriteAPIBlocking(sr.appConfig.GetString("web.influxdb.org"), fmt.Sprintf("%s_weekly", sr.appConfig.GetString("web.influxdb.bucket"))),
+-								"temp",
+-								tempTags,
+-								tempFields,
+-								postSmartResults.Date, ctx)
+-							if ignorePastRetentionPolicyError(err) != nil {
+-								return err
+-							}
+-						}
+-
+-						//write data to the monthly bucket if in the last 9 weeks, and week has not been processed yet
+-						if _, monthExists := monthlyLookup[yearMonthStr]; !monthExists && postSmartResults.Date.After(monthlyBucketMax) {
+-							sr.logger.Debugf("device (%s) smart data added to bucket: monthly", preDevice.WWN)
+-
+-							//this month/year pair has not been processed
+-							monthlyLookup[yearMonthStr] = true
+-							// write point immediately
+-							err = sr.saveDatapoint(
+-								sr.influxClient.WriteAPIBlocking(sr.appConfig.GetString("web.influxdb.org"), fmt.Sprintf("%s_monthly", sr.appConfig.GetString("web.influxdb.bucket"))),
+-								"smart",
+-								smartTags,
+-								smartFields,
+-								postSmartResults.Date, ctx)
+-							if ignorePastRetentionPolicyError(err) != nil {
+-								return err
+-							}
+-
+-							err = sr.saveDatapoint(
+-								sr.influxClient.WriteAPIBlocking(sr.appConfig.GetString("web.influxdb.org"), fmt.Sprintf("%s_monthly", sr.appConfig.GetString("web.influxdb.bucket"))),
+-								"temp",
+-								tempTags,
+-								tempFields,
+-								postSmartResults.Date, ctx)
+-							if ignorePastRetentionPolicyError(err) != nil {
+-								return err
+-							}
+-						}
+-
+-						if _, yearExists := yearlyLookup[yearStr]; !yearExists && year != today.Year() {
+-							sr.logger.Debugf("device (%s) smart data added to bucket: yearly", preDevice.WWN)
+-
+-							//this year has not been processed
+-							yearlyLookup[yearStr] = true
+-							// write point immediately
+-							err = sr.saveDatapoint(
+-								sr.influxClient.WriteAPIBlocking(sr.appConfig.GetString("web.influxdb.org"), fmt.Sprintf("%s_yearly", sr.appConfig.GetString("web.influxdb.bucket"))),
+-								"smart",
+-								smartTags,
+-								smartFields,
+-								postSmartResults.Date, ctx)
+-							if ignorePastRetentionPolicyError(err) != nil {
+-								return err
+-							}
+-
+-							err = sr.saveDatapoint(
+-								sr.influxClient.WriteAPIBlocking(sr.appConfig.GetString("web.influxdb.org"), fmt.Sprintf("%s_yearly", sr.appConfig.GetString("web.influxdb.bucket"))),
+-								"temp",
+-								tempTags,
+-								tempFields,
+-								postSmartResults.Date, ctx)
+-							if ignorePastRetentionPolicyError(err) != nil {
+-								return err
+-							}
++						if err := sr.saveTempMeasurements(ctx, postSmartResults.ScrutinyUUID, []measurements.SmartTemperature{postSmartTemp}); err != nil {
++							return err
+ 						}
+ 					}
+-					sr.logger.Infof("finished processing device %s. weekly: %d, monthly: %d, yearly: %d", preDevice.WWN, len(weeklyLookup), len(monthlyLookup), len(yearlyLookup))
+-
+ 				}
+-
+ 				return nil
+ 			},
+ 		},
+@@ -525,98 +394,12 @@ func (sr *scrutinyRepository) Migrate(ctx context.Context) error {
+ // When adding data to influxdb, an error may be returned if the data point is outside the range of the retention policy.
+ // This function will ignore retention policy errors, and allow the migration to continue.
+ func ignorePastRetentionPolicyError(err error) error {
+-	var influxDbWriteError *http.Error
+-	if errors.As(err, &influxDbWriteError) {
+-		if influxDbWriteError.StatusCode == 422 {
+-			log.Infoln("ignoring error: attempted to writePoint past retention period duration")
+-			return nil
+-		}
+-	}
+ 	return err
+ }
+ 
+ func m20260216155600_ChangeInfluxDBTags(sr *scrutinyRepository, ctx context.Context, wwnToUUID map[string]string) error {
+-	bucket := sr.appConfig.GetString("web.influxdb.bucket")
+-	org := sr.appConfig.GetString("web.influxdb.org")
+-	bucketNames := []string{
+-		bucket,
+-		fmt.Sprintf("%s_weekly", bucket),
+-		fmt.Sprintf("%s_monthly", bucket),
+-		fmt.Sprintf("%s_yearly", bucket),
+-	}
+-
+-	const batchSize = 1000
+-	bucketsAPI := sr.influxClient.BucketsAPI()
+-
+-	for _, bucketName := range bucketNames {
+-		newBucketName := fmt.Sprintf("%s_new", bucketName)
+-
+-		// Step 1: Create the new bucket. Copy retention rules from the original.
+-		sr.logger.Debugf("Creating temporary bucket %s...", newBucketName)
+-		oldBucket, err := bucketsAPI.FindBucketByName(ctx, bucketName)
+-		if err != nil {
+-			return fmt.Errorf("Failed to find bucket %s: %w", bucketName, err)
+-		}
+-
+-		// Delete leftover _new bucket from a previous failed migration attempt.
+-		if existingNew, _ := bucketsAPI.FindBucketByName(ctx, newBucketName); existingNew != nil {
+-			sr.logger.Debugf("Found leftover bucket %s from previous migration, deleting...", newBucketName)
+-			if err := bucketsAPI.DeleteBucket(ctx, existingNew); err != nil {
+-				return fmt.Errorf("Failed to delete leftover bucket %s: %w", newBucketName, err)
+-			}
+-		}
+-
+-		orgObj, err := sr.influxClient.OrganizationsAPI().FindOrganizationByName(ctx, org)
+-		if err != nil {
+-			return fmt.Errorf("failed to find organization %s: %w", org, err)
+-		}
+-
+-		newBucket, err := bucketsAPI.CreateBucketWithName(ctx, orgObj, newBucketName, oldBucket.RetentionRules...)
+-		if err != nil {
+-			return fmt.Errorf("failed to create bucket %s: %w", newBucketName, err)
+-		}
+-
+-		for wwn, scrutinyUUID := range wwnToUUID {
+-			sr.logger.Debugf("Copying points from %s to %s for wwn %s...", bucketName, newBucketName, wwn)
+-
+-			offset := 0
+-			for ; ; offset += batchSize {
+-				queryStr := fmt.Sprintf(`
+-					from(bucket: "%s")
+-					|> range(start: -10y, stop: now())
+-					|> filter(fn: (r) => r["_measurement"] == "smart" or r["_measurement"] == "temp")
+-					|> filter(fn: (r) => r["device_wwn"] == "%s")
+-					|> limit(n: %d, offset: %d)
+-					|> drop(columns: ["device_wwn"])
+-					|> set(key: "scrutiny_uuid", value: "%s")
+-					|> to(bucket: "%s")
+-				`, bucketName, wwn, batchSize, offset, scrutinyUUID, newBucketName)
+-
+-				result, err := sr.influxQueryApi.Query(ctx, queryStr)
+-				if err != nil {
+-					return fmt.Errorf("failed to copy points from %s to %s for wwn %s (offset %d): %w", bucketName, newBucketName, wwn, offset, err)
+-				}
+-
+-				if !result.Next() {
+-					break
+-				}
+-			}
+-			sr.logger.Debugf("Copied approx. %d points for wwn %s", offset, wwn)
+-		}
+-
+-		sr.logger.Debugf("Replacing bucket %s with %s...", bucketName, newBucketName)
+-		if err := bucketsAPI.DeleteBucket(ctx, oldBucket); err != nil {
+-			return fmt.Errorf("Failed to delete old bucket %s: %w", bucketName, err)
+-		}
+-
+-		newBucket.Name = bucketName
+-		if _, err := bucketsAPI.UpdateBucket(ctx, newBucket); err != nil {
+-			return fmt.Errorf("Failed to rename bucket %s to %s: %w", newBucketName, bucketName, err)
+-		}
+-
+-		sr.logger.Debugf("Bucket %s migrated successfully", bucketName)
+-	}
+-
++	// Metrics now live in SQLite and are re-keyed through the devices table;
++	// there are no InfluxDB buckets to rewrite.
+ 	return nil
+ }
+ 
+diff --git a/webapp/backend/pkg/database/scrutiny_repository_tasks.go b/webapp/backend/pkg/database/scrutiny_repository_tasks.go
+index ab66405..7875540 100644
+--- a/webapp/backend/pkg/database/scrutiny_repository_tasks.go
++++ b/webapp/backend/pkg/database/scrutiny_repository_tasks.go
+@@ -1,165 +1,15 @@
+ package database
+ 
+-import (
+-	"context"
+-	"fmt"
+-
+-	"github.com/influxdata/influxdb-client-go/v2/api"
+-)
++import "context"
+ 
+ // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ // Tasks
+ // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-func (sr *scrutinyRepository) EnsureTasks(ctx context.Context, orgID string) error {
+-	weeklyTaskName := "tsk-weekly-aggr"
+-	weeklyTaskScript := sr.DownsampleScript("weekly", weeklyTaskName, "0 1 * * 0")
+-	if found, findErr := sr.influxTaskApi.FindTasks(ctx, &api.TaskFilter{Name: weeklyTaskName}); findErr == nil && len(found) == 0 {
+-		//weekly on Sunday at 1:00am
+-		_, err := sr.influxTaskApi.CreateTaskByFlux(ctx, weeklyTaskScript, orgID)
+-		if err != nil {
+-			return err
+-		}
+-	} else if len(found) == 1 {
+-		//check if we should update
+-		task := &found[0]
+-		if weeklyTaskScript != task.Flux {
+-			sr.logger.Infoln("updating weekly task script")
+-			task.Flux = weeklyTaskScript
+-			_, err := sr.influxTaskApi.UpdateTask(ctx, task)
+-			if err != nil {
+-				return err
+-			}
+-		}
+-	}
+ 
+-	monthlyTaskName := "tsk-monthly-aggr"
+-	monthlyTaskScript := sr.DownsampleScript("monthly", monthlyTaskName, "30 1 1 * *")
+-	if found, findErr := sr.influxTaskApi.FindTasks(ctx, &api.TaskFilter{Name: monthlyTaskName}); findErr == nil && len(found) == 0 {
+-		//monthly on first day of the month at 1:30am
+-		_, err := sr.influxTaskApi.CreateTaskByFlux(ctx, monthlyTaskScript, orgID)
+-		if err != nil {
+-			return err
+-		}
+-	} else if len(found) == 1 {
+-		//check if we should update
+-		task := &found[0]
+-		if monthlyTaskScript != task.Flux {
+-			sr.logger.Infoln("updating monthly task script")
+-			task.Flux = monthlyTaskScript
+-			_, err := sr.influxTaskApi.UpdateTask(ctx, task)
+-			if err != nil {
+-				return err
+-			}
+-		}
+-	}
+-
+-	yearlyTaskName := "tsk-yearly-aggr"
+-	yearlyTaskScript := sr.DownsampleScript("yearly", yearlyTaskName, "0 2 1 1 *")
+-	if found, findErr := sr.influxTaskApi.FindTasks(ctx, &api.TaskFilter{Name: yearlyTaskName}); findErr == nil && len(found) == 0 {
+-		//yearly on the first day of the year at 2:00am
+-		_, err := sr.influxTaskApi.CreateTaskByFlux(ctx, yearlyTaskScript, orgID)
+-		if err != nil {
+-			return err
+-		}
+-	} else if len(found) == 1 {
+-		//check if we should update
+-		task := &found[0]
+-		if yearlyTaskScript != task.Flux {
+-			sr.logger.Infoln("updating yearly task script")
+-			task.Flux = yearlyTaskScript
+-			_, err := sr.influxTaskApi.UpdateTask(ctx, task)
+-			if err != nil {
+-				return err
+-			}
+-		}
+-	}
++// EnsureTasks is a no-op in the SQLite-backed metrics store. InfluxDB used
++// scheduled Flux tasks to downsample the 15-day bucket into weekly, monthly
++// and yearly buckets. SQLite keeps one row per scan and performs aggregation
++// at query time, so no background tasks are required.
++func (sr *scrutinyRepository) EnsureTasks(ctx context.Context, orgID string) error {
+ 	return nil
+ }
+-
+-func (sr *scrutinyRepository) DownsampleScript(aggregationType string, name string, cron string) string {
+-	var sourceBucket string // the source of the data
+-	var destBucket string   // the destination for the aggregated data
+-	var rangeStart string
+-	var rangeEnd string
+-	var aggWindow string
+-	switch aggregationType {
+-	case "weekly":
+-		sourceBucket = sr.appConfig.GetString("web.influxdb.bucket")
+-		destBucket = fmt.Sprintf("%s_weekly", sr.appConfig.GetString("web.influxdb.bucket"))
+-		rangeStart = "-2w"
+-		rangeEnd = "-1w"
+-		aggWindow = "1w"
+-	case "monthly":
+-		sourceBucket = fmt.Sprintf("%s_weekly", sr.appConfig.GetString("web.influxdb.bucket"))
+-		destBucket = fmt.Sprintf("%s_monthly", sr.appConfig.GetString("web.influxdb.bucket"))
+-		rangeStart = "-2mo"
+-		rangeEnd = "-1mo"
+-		aggWindow = "1mo"
+-	case "yearly":
+-		sourceBucket = fmt.Sprintf("%s_monthly", sr.appConfig.GetString("web.influxdb.bucket"))
+-		destBucket = fmt.Sprintf("%s_yearly", sr.appConfig.GetString("web.influxdb.bucket"))
+-		rangeStart = "-2y"
+-		rangeEnd = "-1y"
+-		aggWindow = "1y"
+-	}
+-
+-	// TODO: using "last" function for aggregation. This should eventually be replaced with a more accurate represenation
+-	/*
+-	  import "types"
+-	  smart_data = from(bucket: sourceBucket)
+-	  |> range(start: rangeStart, stop: rangeEnd)
+-	  |> filter(fn: (r) => r["_measurement"] == "smart" )
+-	  |> group(columns: ["scrutiny_uuid", "_field"])
+-
+-	  non_numeric_smart_data = smart_data
+-	    |> filter(fn: (r) => types.isType(v: r._value, type: "string") or types.isType(v: r._value, type: "bool"))
+-	    |> aggregateWindow(every: aggWindow, fn: last, createEmpty: false)
+-
+-	  numeric_smart_data = smart_data
+-	    |> filter(fn: (r) => types.isType(v: r._value, type: "int") or types.isType(v: r._value, type: "float"))
+-	    |> aggregateWindow(every: aggWindow, fn: mean, createEmpty: false)
+-
+-	  union(tables: [non_numeric_smart_data, numeric_smart_data])
+-	  |> to(bucket: destBucket, org: destOrg)
+-
+-	*/
+-
+-	return fmt.Sprintf(`
+-option task = { 
+-  name: "%s",
+-  cron: "%s",
+-}
+-
+-sourceBucket = "%s"
+-rangeStart = %s
+-rangeEnd = %s
+-aggWindow = %s
+-destBucket = "%s"
+-destOrg = "%s"
+-
+-from(bucket: sourceBucket)
+-|> range(start: rangeStart, stop: rangeEnd)
+-|> filter(fn: (r) => r["_measurement"] == "smart" )
+-|> group(columns: ["scrutiny_uuid", "_field"])
+-|> aggregateWindow(every: aggWindow, fn: last, createEmpty: false)
+-|> to(bucket: destBucket, org: destOrg)
+-
+-from(bucket: sourceBucket)
+-|> range(start: rangeStart, stop: rangeEnd)
+-|> filter(fn: (r) => r["_measurement"] == "temp")
+-|> group(columns: ["scrutiny_uuid"])
+-|> toInt()
+-|> aggregateWindow(fn: mean, every: aggWindow, createEmpty: false)
+-|> set(key: "_measurement", value: "temp")
+-|> set(key: "_field", value: "temp")
+-|> to(bucket: destBucket, org: destOrg)`,
+-		name,
+-		cron,
+-		sourceBucket,
+-		rangeStart,
+-		rangeEnd,
+-		aggWindow,
+-		destBucket,
+-		sr.appConfig.GetString("web.influxdb.org"),
+-	)
+-}
+diff --git a/webapp/backend/pkg/database/scrutiny_repository_tasks_test.go b/webapp/backend/pkg/database/scrutiny_repository_tasks_test.go
+deleted file mode 100644
+index a28cb11..0000000
+--- a/webapp/backend/pkg/database/scrutiny_repository_tasks_test.go
++++ /dev/null
+@@ -1,159 +0,0 @@
+-package database
+-
+-import (
+-	"testing"
+-
+-	mock_config "github.com/analogj/scrutiny/webapp/backend/pkg/config/mock"
+-	"github.com/stretchr/testify/require"
+-	"go.uber.org/mock/gomock"
+-)
+-
+-func Test_DownsampleScript_Weekly(t *testing.T) {
+-	t.Parallel()
+-
+-	//setup
+-	mockCtrl := gomock.NewController(t)
+-	fakeConfig := mock_config.NewMockInterface(mockCtrl)
+-	fakeConfig.EXPECT().GetString("web.influxdb.bucket").Return("metrics").AnyTimes()
+-	fakeConfig.EXPECT().GetString("web.influxdb.org").Return("scrutiny").AnyTimes()
+-
+-	deviceRepo := scrutinyRepository{
+-		appConfig: fakeConfig,
+-	}
+-
+-	aggregationType := "weekly"
+-
+-	//test
+-	influxDbScript := deviceRepo.DownsampleScript(aggregationType, "tsk-weekly-aggr", "0 1 * * 0")
+-
+-	//assert
+-	require.Equal(t, `
+-option task = { 
+-  name: "tsk-weekly-aggr",
+-  cron: "0 1 * * 0",
+-}
+-
+-sourceBucket = "metrics"
+-rangeStart = -2w
+-rangeEnd = -1w
+-aggWindow = 1w
+-destBucket = "metrics_weekly"
+-destOrg = "scrutiny"
+-
+-from(bucket: sourceBucket)
+-|> range(start: rangeStart, stop: rangeEnd)
+-|> filter(fn: (r) => r["_measurement"] == "smart" )
+-|> group(columns: ["scrutiny_uuid", "_field"])
+-|> aggregateWindow(every: aggWindow, fn: last, createEmpty: false)
+-|> to(bucket: destBucket, org: destOrg)
+-
+-from(bucket: sourceBucket)
+-|> range(start: rangeStart, stop: rangeEnd)
+-|> filter(fn: (r) => r["_measurement"] == "temp")
+-|> group(columns: ["scrutiny_uuid"])
+-|> toInt()
+-|> aggregateWindow(fn: mean, every: aggWindow, createEmpty: false)
+-|> set(key: "_measurement", value: "temp")
+-|> set(key: "_field", value: "temp")
+-|> to(bucket: destBucket, org: destOrg)`, influxDbScript)
+-}
+-
+-func Test_DownsampleScript_Monthly(t *testing.T) {
+-	t.Parallel()
+-
+-	//setup
+-	mockCtrl := gomock.NewController(t)
+-	fakeConfig := mock_config.NewMockInterface(mockCtrl)
+-	fakeConfig.EXPECT().GetString("web.influxdb.bucket").Return("metrics").AnyTimes()
+-	fakeConfig.EXPECT().GetString("web.influxdb.org").Return("scrutiny").AnyTimes()
+-
+-	deviceRepo := scrutinyRepository{
+-		appConfig: fakeConfig,
+-	}
+-
+-	aggregationType := "monthly"
+-
+-	//test
+-	influxDbScript := deviceRepo.DownsampleScript(aggregationType, "tsk-monthly-aggr", "30 1 1 * *")
+-
+-	//assert
+-	require.Equal(t, `
+-option task = { 
+-  name: "tsk-monthly-aggr",
+-  cron: "30 1 1 * *",
+-}
+-
+-sourceBucket = "metrics_weekly"
+-rangeStart = -2mo
+-rangeEnd = -1mo
+-aggWindow = 1mo
+-destBucket = "metrics_monthly"
+-destOrg = "scrutiny"
+-
+-from(bucket: sourceBucket)
+-|> range(start: rangeStart, stop: rangeEnd)
+-|> filter(fn: (r) => r["_measurement"] == "smart" )
+-|> group(columns: ["scrutiny_uuid", "_field"])
+-|> aggregateWindow(every: aggWindow, fn: last, createEmpty: false)
+-|> to(bucket: destBucket, org: destOrg)
+-
+-from(bucket: sourceBucket)
+-|> range(start: rangeStart, stop: rangeEnd)
+-|> filter(fn: (r) => r["_measurement"] == "temp")
+-|> group(columns: ["scrutiny_uuid"])
+-|> toInt()
+-|> aggregateWindow(fn: mean, every: aggWindow, createEmpty: false)
+-|> set(key: "_measurement", value: "temp")
+-|> set(key: "_field", value: "temp")
+-|> to(bucket: destBucket, org: destOrg)`, influxDbScript)
+-}
+-
+-func Test_DownsampleScript_Yearly(t *testing.T) {
+-	t.Parallel()
+-
+-	//setup
+-	mockCtrl := gomock.NewController(t)
+-	fakeConfig := mock_config.NewMockInterface(mockCtrl)
+-	fakeConfig.EXPECT().GetString("web.influxdb.bucket").Return("metrics").AnyTimes()
+-	fakeConfig.EXPECT().GetString("web.influxdb.org").Return("scrutiny").AnyTimes()
+-
+-	deviceRepo := scrutinyRepository{
+-		appConfig: fakeConfig,
+-	}
+-
+-	aggregationType := "yearly"
+-
+-	//test
+-	influxDbScript := deviceRepo.DownsampleScript(aggregationType, "tsk-yearly-aggr", "0 2 1 1 *")
+-
+-	//assert
+-	require.Equal(t, `
+-option task = { 
+-  name: "tsk-yearly-aggr",
+-  cron: "0 2 1 1 *",
+-}
+-
+-sourceBucket = "metrics_monthly"
+-rangeStart = -2y
+-rangeEnd = -1y
+-aggWindow = 1y
+-destBucket = "metrics_yearly"
+-destOrg = "scrutiny"
+-
+-from(bucket: sourceBucket)
+-|> range(start: rangeStart, stop: rangeEnd)
+-|> filter(fn: (r) => r["_measurement"] == "smart" )
+-|> group(columns: ["scrutiny_uuid", "_field"])
+-|> aggregateWindow(every: aggWindow, fn: last, createEmpty: false)
+-|> to(bucket: destBucket, org: destOrg)
+-
+-from(bucket: sourceBucket)
+-|> range(start: rangeStart, stop: rangeEnd)
+-|> filter(fn: (r) => r["_measurement"] == "temp")
+-|> group(columns: ["scrutiny_uuid"])
+-|> toInt()
+-|> aggregateWindow(fn: mean, every: aggWindow, createEmpty: false)
+-|> set(key: "_measurement", value: "temp")
+-|> set(key: "_field", value: "temp")
+-|> to(bucket: destBucket, org: destOrg)`, influxDbScript)
+-}
+diff --git a/webapp/backend/pkg/database/scrutiny_repository_temperature.go b/webapp/backend/pkg/database/scrutiny_repository_temperature.go
+index e40e5f2..c81d13f 100644
+--- a/webapp/backend/pkg/database/scrutiny_repository_temperature.go
++++ b/webapp/backend/pkg/database/scrutiny_repository_temperature.go
+@@ -3,21 +3,21 @@ package database
+ import (
+ 	"context"
+ 	"fmt"
+-	"strings"
+ 	"time"
+ 
++	"github.com/analogj/scrutiny/webapp/backend/pkg/models"
+ 	"github.com/analogj/scrutiny/webapp/backend/pkg/models/collector"
+ 	"github.com/analogj/scrutiny/webapp/backend/pkg/models/measurements"
+ 	"github.com/gofrs/uuid/v5"
+-	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
+ )
+ 
+ // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ // Temperature Data
+ // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ func (sr *scrutinyRepository) SaveSmartTemperature(ctx context.Context, scrutiny_uuid uuid.UUID, deviceProtocol string, collectorSmartData collector.SmartInfo, discardSCTTempHistory bool) error {
+-	if len(collectorSmartData.AtaSctTemperatureHistory.Table) > 0 && !discardSCTTempHistory {
++	points := []measurements.SmartTemperature{}
+ 
++	if len(collectorSmartData.AtaSctTemperatureHistory.Table) > 0 && !discardSCTTempHistory {
+ 		for ndx, temp := range collectorSmartData.AtaSctTemperatureHistory.Table {
+ 			//temp value may be null, we must skip/ignore them. See #393
+ 			if temp == 0 {
+@@ -27,149 +27,39 @@ func (sr *scrutinyRepository) SaveSmartTemperature(ctx context.Context, scrutiny
+ 			intervalSec := collectorSmartData.AtaSctTemperatureHistory.LoggingIntervalMinutes * 60
+ 			datapointTime := collectorSmartData.LocalTime.TimeT - int64(ndx)*intervalSec
+ 			alignedDatapointTime := datapointTime - datapointTime%intervalSec
+-			smartTemp := measurements.SmartTemperature{
++			points = append(points, measurements.SmartTemperature{
+ 				Date: time.Unix(alignedDatapointTime, 0),
+ 				Temp: temp,
+-			}
+-
+-			tags, fields := smartTemp.Flatten()
+-			tags["scrutiny_uuid"] = scrutiny_uuid.String()
+-			p := influxdb2.NewPoint("temp",
+-				tags,
+-				fields,
+-				smartTemp.Date)
+-			err := sr.influxWriteApi.WritePoint(ctx, p)
+-			if err != nil {
+-				return err
+-			}
++			})
+ 		}
+ 	}
+ 
+ 	// Even if ata_sct_temperature_history is present, also add current temperature. See #824
+-	smartTemp := measurements.SmartTemperature{
++	points = append(points, measurements.SmartTemperature{
+ 		Date: time.Unix(collectorSmartData.LocalTime.TimeT, 0),
+ 		Temp: collectorSmartData.Temperature.Current,
+-	}
++	})
+ 
+-	tags, fields := smartTemp.Flatten()
+-	tags["scrutiny_uuid"] = scrutiny_uuid.String()
+-	p := influxdb2.NewPoint("temp",
+-		tags,
+-		fields,
+-		smartTemp.Date)
+-	return sr.influxWriteApi.WritePoint(ctx, p)
++	return sr.saveTempMeasurements(ctx, scrutiny_uuid, points)
+ }
+ 
+ func (sr *scrutinyRepository) GetSmartTemperatureHistory(ctx context.Context, durationKey string) (map[uuid.UUID][]measurements.SmartTemperature, error) {
+-	//we can get temp history for "week", "month", DURATION_KEY_YEAR, "forever"
+-
+-	deviceTempHistory := map[uuid.UUID][]measurements.SmartTemperature{}
++	query := sr.gormClient.WithContext(ctx).Model(&models.TempMetric{})
+ 
+-	//TODO: change the query range to a variable.
+-	queryStr := sr.aggregateTempQuery(durationKey)
+-
+-	result, err := sr.influxQueryApi.Query(ctx, queryStr)
+-	if err == nil {
+-		// Use Next() to iterate over query result lines
+-		for result.Next() {
+-
+-			if scrutinyUUIDString, ok := result.Record().Values()["scrutiny_uuid"]; ok {
+-				scrutinyUUID := uuid.Must(uuid.FromString(scrutinyUUIDString.(string)))
+-
+-				//check if scrutinyUUID has been seen and initialized already
+-				if _, ok := deviceTempHistory[scrutinyUUID]; !ok {
+-					deviceTempHistory[scrutinyUUID] = []measurements.SmartTemperature{}
+-				}
+-
+-				currentTempHistory := deviceTempHistory[scrutinyUUID]
+-				smartTemp := measurements.SmartTemperature{}
+-
+-				for key, val := range result.Record().Values() {
+-					smartTemp.Inflate(key, val)
+-				}
+-				smartTemp.Date = result.Record().Values()["_time"].(time.Time)
+-				currentTempHistory = append(currentTempHistory, smartTemp)
+-				deviceTempHistory[scrutinyUUID] = currentTempHistory
+-			}
+-		}
+-		if result.Err() != nil {
+-			fmt.Printf("Query error: %s\n", result.Err().Error())
+-		}
+-	} else {
+-		return nil, err
++	start, bounded := sr.metricTimeRange(durationKey)
++	if bounded {
++		query = query.Where("date >= ? AND date <= ?", start, time.Now())
+ 	}
+-	return deviceTempHistory, nil
+-
+-}
+-
+-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-// Helper Methods
+-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-
+-func (sr *scrutinyRepository) aggregateTempQuery(durationKey string) string {
+-
+-	/*
+-		import "influxdata/influxdb/schema"
+-		weekData = from(bucket: "metrics")
+-		  |> range(start: -1w, stop: now())
+-		  |> filter(fn: (r) => r["_measurement"] == "temp" )
+-		  |> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
+-		  |> group(columns: ["scrutiny_uuid"])
+-		  |> toInt()
+-
+-		monthData = from(bucket: "metrics_weekly")
+-		  |> range(start: -1mo, stop: now())
+-		  |> filter(fn: (r) => r["_measurement"] == "temp" )
+-		  |> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
+-		  |> group(columns: ["scrutiny_uuid"])
+-		  |> toInt()
+-
+-		union(tables: [weekData, monthData])
+-		  |> group(columns: ["scrutiny_uuid"])
+-		  |> sort(columns: ["_time"], desc: false)
+-		  |> schema.fieldsAsCols()
+-
+-	*/
+-
+-	partialQueryStr := []string{
+-		`import "influxdata/influxdb/schema"`,
+-	}
+-
+-	nestedDurationKeys := sr.lookupNestedDurationKeys(durationKey)
+-
+-	subQueryNames := []string{}
+-	for _, nestedDurationKey := range nestedDurationKeys {
+-		bucketName := sr.lookupBucketName(nestedDurationKey)
+-		durationRange := sr.lookupDuration(nestedDurationKey)
+-		durationResolution := sr.lookupResolution(nestedDurationKey)
+ 
+-		subQueryNames = append(subQueryNames, fmt.Sprintf(`%sData`, nestedDurationKey))
+-		partialQueryStr = append(partialQueryStr, []string{
+-			fmt.Sprintf(`%sData = from(bucket: "%s")`, nestedDurationKey, bucketName),
+-			fmt.Sprintf(`|> range(start: %s, stop: %s)`, durationRange[0], durationRange[1]),
+-			`|> filter(fn: (r) => r["_measurement"] == "temp" )`,
+-			fmt.Sprintf(`|> aggregateWindow(every: %s, fn: mean, createEmpty: false)`, durationResolution),
+-			`|> group(columns: ["scrutiny_uuid"])`,
+-			`|> toInt()`,
+-			"",
+-		}...)
++	rows := []models.TempMetric{}
++	if err := query.Order("date ASC").Find(&rows).Error; err != nil {
++		return nil, fmt.Errorf("failed to load temperature history: %w", err)
+ 	}
+ 
+-	if len(subQueryNames) == 1 {
+-		//there's only one bucket being queried, no need to union, just aggregate the dataset and return
+-		partialQueryStr = append(partialQueryStr, []string{
+-			subQueryNames[0],
+-			"|> schema.fieldsAsCols()",
+-			"|> yield()",
+-		}...)
+-	} else {
+-		partialQueryStr = append(partialQueryStr, []string{
+-			fmt.Sprintf("union(tables: [%s])", strings.Join(subQueryNames, ", ")),
+-			`|> group(columns: ["scrutiny_uuid"])`,
+-			`|> sort(columns: ["_time"], desc: false)`,
+-			"|> schema.fieldsAsCols()",
+-		}...)
++	window := time.Hour
++	if durationKey == DURATION_KEY_DAY {
++		window = 10 * time.Minute
+ 	}
+ 
+-	return strings.Join(partialQueryStr, "\n")
++	return aggregateTempMetrics(rows, window), nil
+ }
+diff --git a/webapp/backend/pkg/database/scrutiny_repository_temperature_test.go b/webapp/backend/pkg/database/scrutiny_repository_temperature_test.go
+deleted file mode 100644
+index 5fd2133..0000000
+--- a/webapp/backend/pkg/database/scrutiny_repository_temperature_test.go
++++ /dev/null
+@@ -1,182 +0,0 @@
+-package database
+-
+-import (
+-	"testing"
+-
+-	mock_config "github.com/analogj/scrutiny/webapp/backend/pkg/config/mock"
+-	"github.com/stretchr/testify/require"
+-	"go.uber.org/mock/gomock"
+-)
+-
+-func Test_aggregateTempQuery_Week(t *testing.T) {
+-	t.Parallel()
+-
+-	//setup
+-	mockCtrl := gomock.NewController(t)
+-	fakeConfig := mock_config.NewMockInterface(mockCtrl)
+-	fakeConfig.EXPECT().GetString("web.influxdb.bucket").Return("metrics").AnyTimes()
+-	fakeConfig.EXPECT().GetString("web.influxdb.org").Return("scrutiny").AnyTimes()
+-
+-	deviceRepo := scrutinyRepository{
+-		appConfig: fakeConfig,
+-	}
+-
+-	aggregationType := DURATION_KEY_WEEK
+-
+-	//test
+-	influxDbScript := deviceRepo.aggregateTempQuery(aggregationType)
+-
+-	//assert
+-	require.Equal(t, `import "influxdata/influxdb/schema"
+-weekData = from(bucket: "metrics")
+-|> range(start: -1w, stop: now())
+-|> filter(fn: (r) => r["_measurement"] == "temp" )
+-|> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
+-|> group(columns: ["scrutiny_uuid"])
+-|> toInt()
+-
+-weekData
+-|> schema.fieldsAsCols()
+-|> yield()`, influxDbScript)
+-}
+-
+-func Test_aggregateTempQuery_Month(t *testing.T) {
+-	t.Parallel()
+-
+-	//setup
+-	mockCtrl := gomock.NewController(t)
+-	fakeConfig := mock_config.NewMockInterface(mockCtrl)
+-	fakeConfig.EXPECT().GetString("web.influxdb.bucket").Return("metrics").AnyTimes()
+-	fakeConfig.EXPECT().GetString("web.influxdb.org").Return("scrutiny").AnyTimes()
+-
+-	deviceRepo := scrutinyRepository{
+-		appConfig: fakeConfig,
+-	}
+-
+-	aggregationType := DURATION_KEY_MONTH
+-
+-	//test
+-	influxDbScript := deviceRepo.aggregateTempQuery(aggregationType)
+-
+-	//assert
+-	require.Equal(t, `import "influxdata/influxdb/schema"
+-weekData = from(bucket: "metrics")
+-|> range(start: -1w, stop: now())
+-|> filter(fn: (r) => r["_measurement"] == "temp" )
+-|> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
+-|> group(columns: ["scrutiny_uuid"])
+-|> toInt()
+-
+-monthData = from(bucket: "metrics_weekly")
+-|> range(start: -1mo, stop: -1w)
+-|> filter(fn: (r) => r["_measurement"] == "temp" )
+-|> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
+-|> group(columns: ["scrutiny_uuid"])
+-|> toInt()
+-
+-union(tables: [weekData, monthData])
+-|> group(columns: ["scrutiny_uuid"])
+-|> sort(columns: ["_time"], desc: false)
+-|> schema.fieldsAsCols()`, influxDbScript)
+-}
+-
+-func Test_aggregateTempQuery_Year(t *testing.T) {
+-	t.Parallel()
+-
+-	//setup
+-	mockCtrl := gomock.NewController(t)
+-	fakeConfig := mock_config.NewMockInterface(mockCtrl)
+-	fakeConfig.EXPECT().GetString("web.influxdb.bucket").Return("metrics").AnyTimes()
+-	fakeConfig.EXPECT().GetString("web.influxdb.org").Return("scrutiny").AnyTimes()
+-
+-	deviceRepo := scrutinyRepository{
+-		appConfig: fakeConfig,
+-	}
+-
+-	aggregationType := DURATION_KEY_YEAR
+-
+-	//test
+-	influxDbScript := deviceRepo.aggregateTempQuery(aggregationType)
+-
+-	//assert
+-	require.Equal(t, `import "influxdata/influxdb/schema"
+-weekData = from(bucket: "metrics")
+-|> range(start: -1w, stop: now())
+-|> filter(fn: (r) => r["_measurement"] == "temp" )
+-|> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
+-|> group(columns: ["scrutiny_uuid"])
+-|> toInt()
+-
+-monthData = from(bucket: "metrics_weekly")
+-|> range(start: -1mo, stop: -1w)
+-|> filter(fn: (r) => r["_measurement"] == "temp" )
+-|> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
+-|> group(columns: ["scrutiny_uuid"])
+-|> toInt()
+-
+-yearData = from(bucket: "metrics_monthly")
+-|> range(start: -1y, stop: -1mo)
+-|> filter(fn: (r) => r["_measurement"] == "temp" )
+-|> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
+-|> group(columns: ["scrutiny_uuid"])
+-|> toInt()
+-
+-union(tables: [weekData, monthData, yearData])
+-|> group(columns: ["scrutiny_uuid"])
+-|> sort(columns: ["_time"], desc: false)
+-|> schema.fieldsAsCols()`, influxDbScript)
+-}
+-
+-func Test_aggregateTempQuery_Forever(t *testing.T) {
+-	t.Parallel()
+-
+-	//setup
+-	mockCtrl := gomock.NewController(t)
+-	fakeConfig := mock_config.NewMockInterface(mockCtrl)
+-	fakeConfig.EXPECT().GetString("web.influxdb.bucket").Return("metrics").AnyTimes()
+-	fakeConfig.EXPECT().GetString("web.influxdb.org").Return("scrutiny").AnyTimes()
+-
+-	deviceRepo := scrutinyRepository{
+-		appConfig: fakeConfig,
+-	}
+-
+-	aggregationType := DURATION_KEY_FOREVER
+-
+-	//test
+-	influxDbScript := deviceRepo.aggregateTempQuery(aggregationType)
+-
+-	//assert
+-	require.Equal(t, `import "influxdata/influxdb/schema"
+-weekData = from(bucket: "metrics")
+-|> range(start: -1w, stop: now())
+-|> filter(fn: (r) => r["_measurement"] == "temp" )
+-|> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
+-|> group(columns: ["scrutiny_uuid"])
+-|> toInt()
+-
+-monthData = from(bucket: "metrics_weekly")
+-|> range(start: -1mo, stop: -1w)
+-|> filter(fn: (r) => r["_measurement"] == "temp" )
+-|> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
+-|> group(columns: ["scrutiny_uuid"])
+-|> toInt()
+-
+-yearData = from(bucket: "metrics_monthly")
+-|> range(start: -1y, stop: -1mo)
+-|> filter(fn: (r) => r["_measurement"] == "temp" )
+-|> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
+-|> group(columns: ["scrutiny_uuid"])
+-|> toInt()
+-
+-foreverData = from(bucket: "metrics_yearly")
+-|> range(start: -10y, stop: -1y)
+-|> filter(fn: (r) => r["_measurement"] == "temp" )
+-|> aggregateWindow(every: 1h, fn: mean, createEmpty: false)
+-|> group(columns: ["scrutiny_uuid"])
+-|> toInt()
+-
+-union(tables: [weekData, monthData, yearData, foreverData])
+-|> group(columns: ["scrutiny_uuid"])
+-|> sort(columns: ["_time"], desc: false)
+-|> schema.fieldsAsCols()`, influxDbScript)
+-}
+diff --git a/webapp/backend/pkg/models/metrics.go b/webapp/backend/pkg/models/metrics.go
+new file mode 100644
+index 0000000..1e01fe7
+--- /dev/null
++++ b/webapp/backend/pkg/models/metrics.go
+@@ -0,0 +1,32 @@
++package models
++
++import "time"
++
++// SmartMetric is a single SMART scan result stored in SQLite.
++// Fields contains the flattened SMART field map (including attr.* keys)
++// serialized as JSON. Keeping the flattened representation means the
++// existing measurements.Smart decoding path can be reused unchanged.
++type SmartMetric struct {
++	ID             uint      `gorm:"primaryKey" json:"-"`
++	ScrutinyUUID   string    `gorm:"type:text;uniqueIndex:idx_smart_metrics_uuid_date,priority:1" json:"scrutiny_uuid"`
++	Date           time.Time `gorm:"uniqueIndex:idx_smart_metrics_uuid_date,priority:2;index:idx_smart_metrics_date" json:"date"`
++	DeviceProtocol string    `gorm:"type:text" json:"device_protocol"`
++	Fields         string    `gorm:"type:text" json:"fields"`
++}
++
++func (SmartMetric) TableName() string {
++	return "smart_metrics"
++}
++
++// TempMetric is a single temperature sample (current value or an entry from
++// the ATA SCT temperature history table).
++type TempMetric struct {
++	ID           uint      `gorm:"primaryKey" json:"-"`
++	ScrutinyUUID string    `gorm:"type:text;uniqueIndex:idx_temp_metrics_uuid_date,priority:1" json:"scrutiny_uuid"`
++	Date         time.Time `gorm:"uniqueIndex:idx_temp_metrics_uuid_date,priority:2;index:idx_temp_metrics_date" json:"date"`
++	Temp         int64     `json:"temp"`
++}
++
++func (TempMetric) TableName() string {
++	return "temp_metrics"
++}
