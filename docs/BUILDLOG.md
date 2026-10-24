@@ -538,3 +538,5 @@
 - 2026-10-24 Scrutiny 0.9.5 + SQLite 补丁（P1-02 复活）：子代理独立实现 Path B，新增 `smart_metrics`/`temp_metrics` 两表，移除 InfluxDB 依赖，API/前端不变；补丁和构建脚本已入库。原生 loong64 验证：`/web/` 200、`/api/health` true、collector 读到 NVMe 型号/温度/通电小时、`/api/summary` 正常、healthy。运行阶段必须带 `libstdc++`/`libgcc`，否则 smartctl 127。镜像 242MB，digest `sha256:72885303…db71`，已推送双 tag。
 
 - 2026-10-24 Headscale v0.29.5（P2-03）：Go 1.27.2 `CGO_ENABLED=0` 单二进制；配置来自上游 `config-example.yaml`，entrypoint 按环境变量改 server_url/listen/metrics。首次启动需 `/var/run/headscale` 可写，否则 unix socket 创建失败；`users create` 与 `preauthkeys create` 验证通过，`/health` 200、metrics 9090、healthy。镜像 137MB，digest `sha256:603650be…b3fb`，已推送双 tag。
+
+- 2026-10-24 Backrest v1.14.1（P2-05）：React/Vite 前端在 x86 构建（pnpm 11 需 `--ignore-scripts` 后 `pnpm rebuild esbuild @parcel/watcher`），Go 1.27.2 `CGO_ENABLED=0` embed dist；restic 0.19.1 源码编 loong64 放 PATH。Web UI 200、restic 版本正确、SQLite oplog 迁移完成、healthy；未做实际仓库备份/恢复。镜像 160MB，digest `sha256:955cae89…79eb`，已推送双 tag。

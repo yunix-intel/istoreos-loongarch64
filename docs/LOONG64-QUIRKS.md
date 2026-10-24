@@ -19,6 +19,7 @@
 | smartctl_exporter | 仅暴露 Prometheus 指标，无 UI/历史 | 无内置历史库/告警 | 需 `SYS_RAWIO`/`SYS_ADMIN`、设备直通；默认无认证 |
 | go2rtc | 单二进制，无 ffmpeg 依赖 | 默认无摄像头流配置；无认证 | 1984 API/8554 RTSP/8555 WebRTC；跨 NAT 配 candidates |
 | Headscale | 单二进制，无 Web UI；CLI/API 管理 | 无图形界面；gRPC 默认仅本机 | `HEADSCALE_SERVER_URL` 必填；`/etc/headscale` 与 `/var/lib/headscale` 持久化 |
+| Backrest | 前端 x86 构建后内嵌；自带 restic 0.19.1 | 首次需 UI 建账号/仓库；默认无认证 | `/data`/`/config`/`/cache` 持久化；备份源目录需额外挂载 |
 | Mealie | Python 3.14 自编 | HEIF/HEIC 不支持 | `/app/data`；UID 911 |
 | Nextcloud | 当前镜像使用 SQLite | 生产不建议 SQLite；无外部 DB 自动配置 | 仅测试/轻量使用；`config`/`data` 持久化 |
 | Navidrome | Go + 系统 taglib | DSD 已编，但真实播放未全量验证 | 音乐目录只读挂载 |

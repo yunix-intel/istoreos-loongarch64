@@ -409,7 +409,9 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 | 风险 | YAML 配置复杂；密钥文件权限；误配置可能锁死入口 |
 | 估算 | 镜像约 100–150MB；3–5 天 |
 
-### P2-05 Backrest
+### P2-05 Backrest（已发布）
+
+**状态：已构建并推送。** v1.14.1，digest `sha256:955cae89…79eb`；构建记录见 [../images/backrest/BUILD.md](../images/backrest/BUILD.md)。
 
 | 项 | 设计 |
 |---|---|

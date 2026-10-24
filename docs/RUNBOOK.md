@@ -532,6 +532,22 @@ docker run -d --name headscale -p 8080:8080 -p 9090:9090 \
 - 公网需 HTTPS 反代；gRPC 默认只监听容器内 127.0.0.1。
 - 完整说明见 [../images/headscale/BUILD.md](../images/headscale/BUILD.md)。
 
+### Backrest
+
+```bash
+docker run -d --name backrest -p 9898:9898 \
+  -v backrest-data:/data \
+  -v backrest-config:/config \
+  -v backrest-cache:/cache \
+  yunixintel/backrest:loong64
+```
+
+- Web UI：`http://<host>:9898/`；首次打开创建管理员账号。
+- 内置 restic 0.19.1 loong64；`/data`/`/config`/`/cache` 必须持久化。
+- 备份源目录需额外 `-v` 挂载，并在 UI 中配置路径。
+- 默认无 TLS/无认证；公网放在反代之后。
+- 完整说明见 [../images/backrest/BUILD.md](../images/backrest/BUILD.md)。
+
 ### NocoDB
 
 ```bash
@@ -660,7 +676,7 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 96 个镜像）
+## 3. 端口索引（全部 97 个镜像）
 
 ### 从端口索引生成最小启动命令
 
@@ -713,6 +729,7 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | go2rtc | 1984, 8554, 8555 | `/config` | UID 1109；默认无认证；需自配摄像头流 |
 | scrutiny | 8080 | `/opt/scrutiny/config`；`--device` + SYS_RAWIO | SQLite 历史；collector 需手动/cron 触发 |
 | headscale | 8080, 9090 | `/etc/headscale`、`/var/lib/headscale` | UID 1106；无 Web UI；CLI 建用户/key |
+| backrest | 9898 | `/data`、`/config`、`/cache` | UID 1108；内置 restic；首次 UI 建账号/仓库 |
 | nocodb | 8080 | `/data` | UID 1000；SQLite；`NC_DB` 用 `?d=` |
 | apprise-api | 8000 | `/config`、`/attach`、`/plugin` | 默认无认证/无 TLS |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |

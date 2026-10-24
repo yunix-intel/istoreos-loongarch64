@@ -670,5 +670,12 @@
     "architecture": "linux/loong64",
     "verification": "`/health` 200、metrics 9090；`users create`/`preauthkeys create` 成功；healthy",
     "notes": "v0.29.5；Go 单二进制；无 Web UI；`/etc/headscale`、`/var/lib/headscale`；8080/9090；UID 1106；gRPC 默认仅本机"
+  },
+  {
+    "image": "yunixintel/backrest",
+    "size": "约 160MB (Hub)",
+    "architecture": "linux/loong64",
+    "verification": "Web UI `/` 200；restic 0.19.1 loong64；SQLite oplog 迁移完成；healthy",
+    "notes": "v1.14.1 + restic 0.19.1；`/data`、`/config`、`/cache`；9898；UID 1108；首次 UI 建账号/仓库；默认无认证"
   }
 ]

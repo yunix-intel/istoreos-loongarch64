@@ -1,6 +1,6 @@
 # 应用镜像构建手册（loong64）
 
-本文件说明 96 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 94 个镜像的 Dockerfile；
+本文件说明 97 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 95 个镜像的 Dockerfile；
 其余 10 个早期镜像的 Dockerfile 未保留，但下方给出源码版本、关键步骤和构建日志入口。
 
 ## 0. 共同约定
@@ -165,7 +165,7 @@ Config UI 5 由 `hb-service run` 同时启动 UI 和 Homebridge，单独跑 `hom
 > adguardhome、code-server、easytier、firefly-iii、gitea、memos、mihomo、miniflux、
 > phpmyadmin、vaultwarden 共 10 个。
 
-## 3.5 2026-10 新增的 17 个镜像
+## 3.5 2026-10 新增的 18 个镜像
 
 | 镜像 | 上游 | 关键步骤/坑 |
 |---|---|---|
@@ -186,6 +186,7 @@ Config UI 5 由 `hb-service run` 同时启动 UI 和 Homebridge，单独跑 `hom
 | go2rtc | 1.9.14 | Go 单二进制；1984 API/8554 RTSP/8555 WebRTC；默认无认证 |
 | scrutiny | 0.9.5 + SQLite 补丁 | Go 纯 Go SQLite；Angular 13（Node 20）；运行阶段需 libstdc++/libgcc 供 smartctl |
 | headscale | v0.29.5 | Go 单二进制；配置模板 + `/var/run/headscale` 权限；无 Web UI |
+| backrest | v1.14.1 | 前端 x86 构建后 embed；restic 0.19.1 源码编；`/data`/`/config`/`/cache` |
 
 逐应用细节见 `images/<app>/BUILD.md`。无法移植的 8 个商店应用见
 [BLOCKED-APPS.md](BLOCKED-APPS.md)。
@@ -194,4 +195,4 @@ Config UI 5 由 `hb-service run` 同时启动 UI 和 Homebridge，单独跑 `hom
 
 构建完成后记录：镜像大小、`docker inspect` 架构、启动日志、HTTP/健康检查、digest。
 统一推送到 `docker.io/yunixintel/<app>:loong64` 与 `:24.10-la5`。
-`scripts/push-images.sh`（私有库）覆盖全部 96 只。
+`scripts/push-images.sh`（私有库）覆盖全部 97 只。

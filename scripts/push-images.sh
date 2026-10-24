@@ -19,6 +19,7 @@ IMAGES=(
   adguardhome
   alertmanager
   audiobookshelf
+  backrest
   bazarr
   caddy
   calibre-web
