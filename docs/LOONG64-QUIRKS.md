@@ -25,6 +25,31 @@
 | Ente web | 10 个 Next 应用纯静态导出；nginx | 无 Next 服务端/API/图片优化器；未知路径回退 index.html；不保证逐字节可复现 | 必须设 `ENTE_API_ORIGIN`；10 个端口；升级 origin 后重启容器生效 |
 | Autobrr | 前端 x86 构建后内嵌；SQLite | 默认无认证；需自配 IRC/下载器 | `/config` 持久化；公网加反代认证 |
 | Matomo | 官方完整包；PHP 8.3 | 首次必须走 Web 安装向导；无 CLI 安装 | 必须 MariaDB/MySQL；`config`/`tmp` 持久化；归档需 cron |
+| Jellyseerr | Next 16 用 WASM SWC 在 x86 构建；sharp 不可用，图片优化关闭 | 无 Next 图片优化器 | 需 Sonarr/Radarr 等上游服务；5055 |
+| qBittorrent-EE | 官方 loong64 静态包；WebUI 校验 Host header | 映射端口与 WebUI 端口不一致会拒绝访问 | 让 WebUI 端口与宿主映射端口一致 |
+| Homarr | Next 16 WASM SWC + Node 24；未用 Bun/Turbo | Bun/Turbo 构建链未移植 | 需 Redis；7575 |
+| Open WebUI | 仅推理模式，不含 torch/onnxruntime/whisper/OCR 与模型 | 本地推理/语音/OCR 不可用；RAG 需外部 pgvector | 需外部 Ollama/OpenAI 兼容服务；RAG 需 PostgreSQL+pgvector |
+| Paperless-ngx | qpdf 12.4.2 自编；AI 关闭；未装 unpaper | 无 AI 分类/实体识别；无 unpaper 后处理 | 需 Redis + celery worker/beat/consumer；8000 |
+| Stirling PDF | 官方 jar + Java 25 | 未装 LibreOffice/OCR，相关转换不可用 | 8080 |
+| code-server | 4.141.0 + VS Code 1.141；必须 Node 24；自编静态 ripgrep | Node 20 缺 `module.registerHooks`，不能替换运行时 | 8443；持久化 `/home/coder` |
+| ChangeDetection | Firefox 140.11 ESR + geckodriver/Selenium，不是 Playwright；SSIM 用 numpy 1.26.4 | 无本地 Chrome；可配远程 Chrome WebDriver | `--shm-size=1g`；5000；持久化 `/datastore` |
+| File Browser | 上游 2026-09-01 已归档；镜像默认监听 0.0.0.0 | 无上游安全更新 | 8080；持久化 `/srv` 与数据库 |
+| Miniflux | 上游已删 SQLite，必须 PostgreSQL DSN | 不支持 SQLite | 需 PostgreSQL；8080 |
+| Jellystat | Node 20 + Vite 6 | 无 SQLite 路径，必须外部 PostgreSQL | 需 PostgreSQL；3000 |
+| MinIO | Go 源码编；单目录无纠删码 | 无纠删码/多盘冗余；无内置 TLS | 必须设 `MINIO_ROOT_USER/PASSWORD`；AGPLv3；9000/9001 |
+| Grafana | 前端 x86 构建；Go CGO-free | 未内置 renderer；默认 admin/admin | 3000；持久化 `/var/lib/grafana` |
+| Pi-hole | FTL 6.8 源码编，版本自报 UNKNOWN；内置 CLI 与 pihole-adlist | 需 host 网络；宿主 dnsmasq 占 53 时不可用 | 53/tcp+udp、80；持久化 `/etc/pihole` |
+| AdGuard Home | 官方无 loong64 资产，源码编 + 官方前端 | 53 端口需避让宿主 dnsmasq | 建议 host 网络；3000 Web；持久化 work/conf |
+| Nginx Proxy Manager | 前端 x64 构建；自定义 entrypoint 替代 s6-overlay | s6-overlay 进程管理未完全复刻 | 81/443；持久化 data/letsencrypt |
+| REST Server | Go 静态编，约 12MB | 默认开认证；无 TLS | 8000；用 httpd-tools 的 htpasswd 建用户 |
+| Redis | openEuler 7.2.14 包；AOF+RDB | 默认 protected-mode no，必须配密码或限制网络 | 6379；持久化 `/data` |
+| Mosquitto | openEuler 2.0.20 包 | 默认 allow_anonymous true，公网必须配 passwd | 1883；持久化 `/mosquitto/data` |
+| Memcached | openEuler 1.6.42 包；默认 64MB/1024 连接 | 无认证、无持久化，禁止公网暴露 | 11211；用 `MEMCACHED_*` 调整 |
+| Homebridge | 2.4.0 + Config UI 5.29.0 + Node 24；node-pty 源码编 | 建议 host 网络；默认配对码需改 | 8581/51826；持久化 `/homebridge` |
+| WebVirtCloud | Django 4.2 + Python 3.11 + libvirt + noVNC | 需真实 libvirt/KVM 与 SSH 凭据；noVNC WebSocket 需反代 | 80；持久化 data 与 `.ssh` |
+| LANraragi | Perl 0.9.81 + 126 个 CPAN 模块；内置 Redis | 默认无认证 | 3000；持久化 content/thumb/database；UID 9001 |
+| OwnTone | DAAP/DACP/AirPlay；运行期需 dbus/avahi | AirPlay 发现依赖宿主网络与 avahi | 3689；挂载 `/srv/music` 与缓存 |
+| Apprise API | Python 3.11 + 系统 cryptography/gevent；nginx+supervisor+gunicorn | 默认无认证/无 TLS | 8000；持久化 `/config`、`/attach`、`/plugin` |
 | MeTube | Python 3.13 自编；Angular 前端 x86 构建 | 无 Brotli 解压；无内置 `bgutil-pot`（部分 YouTube 视频需 cookies/远程 provider）；ffmpeg 为 6.1.1 而非上游 8.1 | `/downloads` 持久化并 `chown 1111`；默认 `YTDL_OPTIONS` 用 Node 24 作 JS runtime；8082 |
 | SABnzbd | Python 3.11 + venv；par2/unrar 源码编 | 无 orjson（ujson 回退，性能略低）；unrar 为闭源 freeware | `/config`、`/downloads` 持久化；UI 根路径 `/` 不是 `/sabnzbd/`；8080 |
 | MediaMTX | Go 单二进制；配置内嵌 | 无 Web 管理界面/持久化；API 默认仅本机白名单；`runOnInit` 等同容器内执行命令 | 8554/1935/8888/8889/8890/9997；NAT 后 WebRTC 需配 additional hosts；与 go2rtc 二选一 |
