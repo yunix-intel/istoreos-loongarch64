@@ -2,7 +2,7 @@
 
 制定日期：2026-10-23  
 状态：**计划，未开工**。本文件只排期，不代表已构建或已承诺发布日期。  
-依据：现有 110 个镜像、[STORE-COVERAGE.md](STORE-COVERAGE.md) 的 8 个阻塞结论、
+依据：现有 111 个镜像、[STORE-COVERAGE.md](STORE-COVERAGE.md) 的 8 个阻塞结论、
 以及两份独立子代理调研（存储/媒体方向、生产力/自动化方向）。
 
 对应详细设计：[APP-DESIGNS.md](APP-DESIGNS.md)。本文件只排期；具体构建路径与运行时契约在设计稿中。
@@ -366,7 +366,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [x] P3-06 Woodpecker CI
 - [x] P4-01 MediaMTX（已发布，`20d0edcb…26bb`）
 - [ ] P4-02 Karakeep（暂停：sharp/Chromium 无 loong64）
-- [ ] P4-03 Readeck
+- [x] P4-03 Readeck（已发布，`14c9426b…4719`）
 - [ ] P4-04 Linkwarden（暂停：Prisma/Playwright/sharp）
 - [ ] P4-05 Joplin Server（暂缓：sharp/sqlite-vec）
 - [ ] P4-06 wg-easy（暂缓：libsql）

@@ -17,7 +17,7 @@
 |---|---|---|
 | 公版固件 la5 | GitHub Release `24.10-la5` | 已发布 |
 | 私人固件 p1 | 私有库 `/build/firmware/personal-p1-20261019.img.gz` | 已构建，U 盘待验 |
-| 110 个应用镜像 | Docker Hub `yunixintel/*` | 已推送，生产级全量测试待做 |
+| 111 个应用镜像 | Docker Hub `yunixintel/*` | 已推送，生产级全量测试待做 |
 | CasaOS P3 安装包 | 私有库 `casaos-p3/` + 构建机 tarball | 功能验证完成，真实盘待验 |
 | Podman/dockerman | la5 固件内 | 已真机验证 |
 | EasyTier/mihomo | 私有库模板 + 固件 feed | 已做稳定性/性能测试 |
@@ -55,7 +55,7 @@
 | [NEXT-PLAN.md](NEXT-PLAN.md) | P1–P4 应用候选、CasaOS/OMV 工作流与执行顺序 |
 | [APP-DESIGNS.md](APP-DESIGNS.md) | 26 个应用镜像 + CasaOS/OMV 两个平台工作项的详细设计 |
 | [LOONG64-QUIRKS.md](LOONG64-QUIRKS.md) | 龙芯版与上游应用的行为差异，商店详情页必须展示 |
-| [../images/](../images/) | 110 个应用目录 / 100 个 Dockerfile / 110 份 BUILD.md + 110 只机读目录 `catalog.json` |
+| [../images/](../images/) | 111 个应用目录 / 101 个 Dockerfile / 111 份 BUILD.md + 111 只机读目录 `catalog.json` |
 | [APP-SYNC-CHECKLIST.md](APP-SYNC-CHECKLIST.md) | **新增/更新应用的强制同步清单** |
 | [PRIVACY-REVIEW.md](PRIVACY-REVIEW.md) | 转公开前的隐私/历史/大文件审计清单 |
 
@@ -76,8 +76,8 @@
 ## 6. 当前状态（2026-10-23）
 
 - 固件：la1–la5 连续发版；la5 内置 docker+podman；私人 p1 已构建。
-- 镜像：110 个仓库，全部 `loong64` + `24.10-la5`；新增 homer、paperless-ngx、dashy、
-  watchtower、changedetection、caddy、dozzle、ntfy、gotify、node-exporter、prometheus、pihole、gatus、alertmanager、postgres、redis、mosquitto、mariadb、node-red、grafana、memcached、homebridge、rest-server、node、actual-budget、minio、homebox、nocodb、apprise-api、mealie、chinesesubfinder、lanraragi、owntone、mymind、webvirtcloud、penpot-backend、penpot-frontend、hermes、zigbee2mqtt、smartctl-exporter、sftpgo、bookstack、vikunja、piwigo、go2rtc、scrutiny、headscale、backrest、authelia、ente-server、autobrr、matomo、woodpecker-server、woodpecker-agent、ente-web、metube、sabnzbd、mediamtx、registry、unpackerr、pocket-id。
+- 镜像：111 个仓库，全部 `loong64` + `24.10-la5`；新增 homer、paperless-ngx、dashy、
+  watchtower、changedetection、caddy、dozzle、ntfy、gotify、node-exporter、prometheus、pihole、gatus、alertmanager、postgres、redis、mosquitto、mariadb、node-red、grafana、memcached、homebridge、rest-server、node、actual-budget、minio、homebox、nocodb、apprise-api、mealie、chinesesubfinder、lanraragi、owntone、mymind、webvirtcloud、penpot-backend、penpot-frontend、hermes、zigbee2mqtt、smartctl-exporter、sftpgo、bookstack、vikunja、piwigo、go2rtc、scrutiny、headscale、backrest、authelia、ente-server、autobrr、matomo、woodpecker-server、woodpecker-agent、ente-web、metube、sabnzbd、mediamtx、registry、unpackerr、pocket-id、readeck。
 - 原始 iStore 133：29 个有镜像、76 个固件原生、8 个有明确阻塞证据；见
   [STORE-COVERAGE.md](STORE-COVERAGE.md) 与 [BLOCKED-APPS.md](BLOCKED-APPS.md)。
 - CasaOS P3：systemd/CLI/安装卸载、NBD 挂载/卸载/重启自挂/格式化通过；真实盘待验。

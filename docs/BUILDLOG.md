@@ -549,6 +549,8 @@
 
 - 2026-10-24 Matomo 5.14.2（P3-02）：官方 `matomo.zip` 完整包（含 vendor）；PHP 8.3 + nginx/php-fpm，`php-pecl-zip` 单独安装。`/index.php` 安装向导 200、PHP 扩展齐全、healthy；Matomo 无 CLI 安装器，保留 Web 向导。镜像 193MB，digest `sha256:b1e7baec…1bc2`，已推送双 tag。
 
+- 2026-10-24 Readeck 0.9.2（P4-03）：gulp 前端在 x86 WSL2 用 Node 22 构建到 `assets/www`；后端必须 `CGO_ENABLED=1`，因为 `CGO_ENABLED=0` 会走 modernc/sqlite v1.25.0，该版本没有 loongarch64 定义（`sqlite3_index_orderby` 等）。mattn sqlite + 六个 sqlite 构建 tag 编出 34MB 动态二进制；首启生成 `/data/config.toml` 与 SQLite，引导页 200、healthy。镜像 338MB（Hub 118MB），digest `sha256:14c9426b…4719`，已推送双 tag。
+
 - 2026-10-24 Pocket ID 2.9.0（P4-08）：SvelteKit 前端在 x86 WSL2 用 Node 24 + pnpm 10.33 构建，Go 1.27.2 静态编后端并 embed 前端；首启生成 `/data/encryption-key` 与 SQLite。上游 `pocket-id healthcheck` 会先解析完整配置，`docker exec` 不继承 entrypoint 导出的密钥而失败，健康检查改用 `curl /healthz`（204）。UI 200、healthy；未做 OIDC/邮件联调。镜像 394MB（Hub 136MB），digest `sha256:7c21de80…0cb4`，已推送双 tag。
 
 - 2026-10-24 Unpackerr 0.9.9（P4-09）：Go 1.27.2 静态编；旧 `golang.org/x/sys` v0.0.0-20211216 缺 loongarch64 定义（`Cmsghdr/Timespec/SockaddrStorage`），升到 v0.35.0 后通过，补丁入库；ldflags 补 `golift.io/version.Version=0.9.9` 否则日志版本为空。entrypoint 首启复制示例配置到 `/config/unpackerr.conf`；unrar 7.13 + 7za 可用。配置假 Sonarr 后持续轮询，`pgrep` healthy。镜像 292MB（Hub 100MB），digest `sha256:8cc802bf…bc7e`，已推送双 tag。

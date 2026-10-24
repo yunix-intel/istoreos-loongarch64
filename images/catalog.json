@@ -768,5 +768,12 @@
     "architecture": "linux/loong64",
     "verification": "`/` 200、`/healthz` 204、SQLite 与密钥首启生成；healthy",
     "notes": "2.9.0；SvelteKit 前端 x86 构建后 embed；Go 单二进制；`/data`；1411；UID 1122；`APP_URL` 与 `ENCRYPTION_KEY` 注意；健康检查用 curl 不用内置子命令"
+  },
+  {
+    "image": "yunixintel/readeck",
+    "size": "约 118MB (Hub)",
+    "architecture": "linux/loong64",
+    "verification": "`/` 303→引导页 200、`/data/config.toml` 与 SQLite 首启生成；healthy",
+    "notes": "0.9.2；Go CGO（mattn sqlite）+ gulp 前端 x86 构建；`/data`；8000；UID 1117；CGO-free 的 modernc 旧版缺 loongarch64；未做完整抓取联调"
   }
 ]

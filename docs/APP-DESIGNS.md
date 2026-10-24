@@ -162,7 +162,7 @@
 | Woodpecker | v3.19.0 | 调研值，待复核 |
 | MediaMTX | 未记录 | 待锁定 |
 | Karakeep | 未记录 | 待锁定 |
-| Readeck | 未记录 | 待锁定 |
+| Readeck | 未记录 | 已锁定：`0.9.2`，commit `ef6f135` |
 | Linkwarden | 未记录 | 待锁定 |
 | Joplin Server | 未记录 | 待锁定 |
 | wg-easy | 未记录 | 待锁定 |
@@ -592,7 +592,7 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 - 端口 3000；`/data`；`NEXTAUTH_SECRET`、`NEXTAUTH_URL`、`DATABASE_URL`；浏览器/搜索服务按 compose 拆分。
 - 风险：Chromium loong64 可用性；sharp/libvips 无 loong64；Meilisearch 依赖；镜像体积大。估算 4–7 天（若依赖解决）。
 
-### P4-03 Readeck
+### P4-03 Readeck ✅ 已实现（2026-10-24）
 
 - 上游 `readeck/readeck`（Codeberg）；Go **CGO_ENABLED=1** + `make -C web build`，不是“纯 Go 单二进制”。
 - 端口 8000；`/data`；UID 1117；健康检查 `/`。

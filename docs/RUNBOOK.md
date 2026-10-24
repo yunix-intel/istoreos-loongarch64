@@ -727,6 +727,19 @@ docker run -d --name pocket-id -p 1411:1411 \
 - 与 Authelia 二选一。
 - 完整说明见 [../images/pocket-id/BUILD.md](../images/pocket-id/BUILD.md)。
 
+### Readeck
+
+```bash
+docker run -d --name readeck -p 8000:8000 \
+  -v /srv/readeck:/data \
+  yunixintel/readeck:loong64
+```
+
+- Web：`http://<host>:8000/`，首次进入引导页创建管理员；健康检查跟随 `/` 303。
+- `/data` 存 `config.toml`、`data/`（SQLite 与书签资源），必须持久化。
+- 默认 SQLite；可改用 PostgreSQL（上游 `READECK_DATABASE_SOURCE`）。
+- 完整说明见 [../images/readeck/BUILD.md](../images/readeck/BUILD.md)。
+
 ### Woodpecker CI（server + agent）
 
 ```bash
