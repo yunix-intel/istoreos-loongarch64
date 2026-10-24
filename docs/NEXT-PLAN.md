@@ -395,15 +395,15 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 
 ### 商店同步（最后阶段）
 
-- [ ] S-C1 CasaOS 全量应用定义
+- [ ] S-C1 CasaOS 全量应用定义（已导入 18 个并注入说明，其余 92 个待生成）
 - [ ] S-C2 CasaOS 端口与 overrides
 - [ ] S-C3 CasaOS 分类/图标/描述
 - [ ] S-C4 CasaOS 干净安装
 - [ ] S-C5 CasaOS 升级/卸载
-- [ ] S-C6 CasaOS 龙芯差异披露
+- [ ] S-C6 CasaOS 龙芯差异披露（110 个应用的文案已生成，待全部定义应用）
 - [ ] S-I1 iStore app-meta 镜像覆盖
 - [ ] S-I2 iStore 自定义 feed
 - [ ] S-I3 iStore 依赖/sidecar
 - [ ] S-I4 la5 公开版干净安装
 - [ ] S-I5 p1 私人版干净安装
-- [ ] S-I6 商店文档
+- [ ] S-I6 商店文档（110 个应用的 iStore 描述已生成，待接入 app-meta）
