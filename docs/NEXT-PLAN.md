@@ -126,7 +126,7 @@ P4 不进入当前排期；每项启动前先做 1 天以内的依赖 spike，�
 
 - **P4-02 Karakeep 有条件 Go**：基础版（SQLite + 静态抓取）可做；搜索/截图需外部 Meilisearch/browserless，原生 Chromium/Meilisearch No-Go。见 `docs/research/karakeep-unblock.md`。
 - **P4-04 Linkwarden 暂停**：Prisma engines 无 loong64 + Playwright/Chromium + sharp。
-- **P4-05 Joplin Server 暂缓**：sharp/sqlite-vec/sqlite3 无 loong64，先做 native spike。
+- **P4-05 Joplin Server GO**：sharp/sqlite-vec 非服务端依赖；sqlite3 5.1.6 已源码编过 16K 页门禁；PostgreSQL 路径仍建临时 SQLite。见 `docs/research/joplin-unblock.md`。
 - **P4-06 wg-easy GO**：v15.4.0 已用龙芯 libsql 绑定 + hash-wasm 跑通构建/冒烟；镜像收尾中，真实隧道待验收。见 `docs/research/wg-easy-unblock.md`。
 - P4 可评估项缩减为：MediaMTX、Readeck、Registry、Pocket ID、Unpackerr。
 
@@ -368,7 +368,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [ ] P4-02 Karakeep（基础版可行；待排期）
 - [x] P4-03 Readeck（已发布，`14c9426b…4719`）
 - [ ] P4-04 Linkwarden（暂停：Prisma/Playwright/sharp）
-- [ ] P4-05 Joplin Server（暂缓：sharp/sqlite-vec）
+- [ ] P4-05 Joplin Server（GO；2–3 人日，待排期）
 - [ ] P4-06 wg-easy（GO；镜像收尾，待真实隧道验收）
 - [x] P4-07 Registry（已发布，`da519e59…0229`）
 - [x] P4-08 Pocket ID（已发布，`7c21de80…0cb4`）

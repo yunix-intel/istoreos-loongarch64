@@ -611,13 +611,19 @@ Karakeep 0.34.1 的正文归档不依赖 Chromium，Chromium 只影响 JS 渲染
 - 端口 3000；`DATABASE_URL`、`NEXTAUTH_SECRET`、`NEXTAUTH_URL`；按上游 compose 增加 Meilisearch（若需要）。
 - 风险：Prisma/Playwright/sharp 无 loong64；多服务；浏览器归档依赖。估算 4–7 天（若依赖解决）。
 
-### P4-05 Joplin Server（审查后：暂缓，待 native spike）
+### P4-05 Joplin Server（2026-10-24 研究：GO）
 
-**状态：暂缓。** `packages/lib/package.json` 依赖 `sharp 0.35.0`、`sqlite-vec 0.1.9`、`sqlite3 5.1.6`，均无 loong64 预编译；server 是 yarn workspace + gulp 构建。先做 sharp/sqlite-vec 的源码编译 spike，再决定。
+**状态：GO（2–3 人日）。** 研究结论见 [research/joplin-unblock.md](research/joplin-unblock.md)：
+sharp/sqlite-vec 不是服务端运行时依赖；唯一硬阻塞 sqlite3 5.1.6 已在 3A6000/16K 页
+源码编译并读写通过；不需要 x86 前端阶段。生产建议 PostgreSQL，但 PG 路径仍会建
+`/data/temp/joplin.sqlite` 临时库，绕不开 sqlite3 原生模块。
 
-- 上游 `laurent22/joplin` 的 server 部分；Node + SQLite/Postgres。
-- 端口 22300；`/data`；`APP_BASE_URL`、`APP_ADMIN_EMAIL`、`DB_CLIENT`、`POSTGRES_*`。
-- 风险：Node 原生模块；迁移方式；多阶段构建。估算 3–5 天（若依赖解决）。
+- 上游 `laurent22/joplin` tag v3.7.21；Yarn 4 workspace + gulp；Node 24。 
+- 端口 22300；`/data`（logs/temp/resource/storage）；`APP_BASE_URL`、`DB_CLIENT`、
+  `POSTGRES_*`；管理员固定 `admin@localhost`，`APP_ADMIN_EMAIL` 不被读取。
+- 首发不装 sharp/sqlite-vec/PM2；用 Docker 日志轮转。
+- 风险：`YARN_ENABLE_SCRIPTS=false`、`focus @joplin/server` 裁剪、Node ABI 重编、
+  无 NTP 时 `MAX_TIME_DRIFT=0`。估算 2–3 天。
 
 ### P4-06 wg-easy（2026-10-24 研究：GO，镜像收尾中）
 
