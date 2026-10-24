@@ -6,87 +6,87 @@
 |---|---|---|---|---|
 | Jellyfin (`jellyfin`) | Media | .NET 9 自编 + ImageSharp 编码器。 | 无 ICC 色彩管理；纯托管性能低于 Skia；硬件转码未验证。 | 媒体目录与 config 需持久化。 |
 | Navidrome (`navidrome`) | Media | Go + 系统 taglib；DSD 已编译。 | DSD 真实播放尚未全量验证。 | 音乐目录需只读挂载。 |
-| Vaultwarden (`vaultwarden`) | Security | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Uptime Kuma (`uptimekuma`) | Monitoring | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Mihomo (`mihomo`) | Networking | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| EasyTier (`easytier`) | Networking | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Syncthing (`syncthing`) | Cloud | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| AdGuard Home (`adguardhome`) | Networking | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 需 host 网络并避让宿主 dnsmasq。 |
-| Memos (`memos`) | Productivity | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Gogs (`gogs`) | Developer | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| File Browser (`filebrowser`) | Cloud | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| qBittorrent (Enhanced Edition) (`qbittorrent-ee`) | Downloaders | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| IT-Tools (`it-tools`) | Developer | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Excalidraw (`excalidraw`) | Media | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
+| Vaultwarden (`vaultwarden`) | Security | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Uptime Kuma (`uptimekuma`) | Monitoring | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Mihomo (`mihomo`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| EasyTier (`easytier`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Syncthing (`syncthing`) | Cloud | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| AdGuard Home (`adguardhome`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 需 host 网络并避让宿主 dnsmasq。 |
+| Memos (`memos`) | Productivity | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Gogs (`gogs`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| File Browser (`filebrowser`) | Cloud | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| qBittorrent (Enhanced Edition) (`qbittorrent-ee`) | Downloaders | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| IT-Tools (`it-tools`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Excalidraw (`excalidraw`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Kopia (`kopia`) | Backup | Web UI 强制 Basic 认证。 | 默认凭据需修改。 | 仓库存储需持久化。 |
-| Linkding (`linkding`) | Productivity | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Heimdall (`heimdall`) | Utilities | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
+| Linkding (`linkding`) | Productivity | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Heimdall (`heimdall`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Nextcloud (`nextcloud`) | Cloud | 当前镜像使用 SQLite。 | 生产不建议 SQLite；无外部数据库自动配置。 | 仅适合测试/轻量使用；持久化 config 与 data。 |
-| Typecho (`typecho`) | Productivity | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Wallabag (`wallabag`) | Productivity | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| draw.io (`drawio`) | Media | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Jackett (`jackett`) | Downloaders | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| xTeVe (`xteve`) | Media | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| One API (`one-api`) | Developer | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| code-server (`code-server`) | Developer | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| DPanel (`dpanel`) | Developer | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 需挂载 docker.sock。 |
-| Shiori (`shiori`) | Productivity | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Jellyseerr (`jellyseerr`) | Media | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Audiobookshelf (`audiobookshelf`) | Media | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Calibre-Web (`calibre-web`) | Media | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Homarr (`homarr`) | Networking | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 需 Redis。 |
-| Open WebUI (`openwebui`) | Developer | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| KodExplorer (`kodexplorer`) | Cloud | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Home Assistant (`homeassistant`) | Home Automation | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 建议 host 网络以发现设备。 |
-| Sonarr (`sonarr`) | Downloaders | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Radarr (`radarr`) | Downloaders | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Tautulli (`tautulli`) | Media | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Jellystat (`jellystat`) | Media | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 需外部 PostgreSQL。 |
-| Stirling PDF (`stirling-pdf`) | Media | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Wizarr (`wizarr`) | Utilities | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Gitea (`gitea`) | Developer | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Miniflux (`miniflux`) | Utilities | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 需外部 PostgreSQL。 |
-| Portainer (`portainer`) | Developer | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 需挂载 docker.sock。 |
-| Nginx Proxy Manager (`nginx-proxy-manager`) | Networking | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Firefly III (`firefly-iii`) | Productivity | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| phpMyAdmin (`phpmyadmin`) | Utilities | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| FreshRSS (`freshrss`) | Productivity | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Prowlarr (`prowlarr`) | Downloaders | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Bazarr (`bazarr`) | Downloaders | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| homer (`homer`) | Networking | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Paperless-ngx (`paperless-ngx`) | Productivity | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Dashy (`dashy`) | Networking | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Watchtower (`watchtower`) | Utilities | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 需挂载 docker.sock。 |
-| ChangeDetection.io (`changedetection`) | Monitoring | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Caddy (`caddy`) | Networking | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Dozzle (`dozzle`) | Developer | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 需挂载 docker.sock。 |
-| ntfy (`ntfy`) | Utilities | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Gotify (`gotify`) | Utilities | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Node Exporter (`node-exporter`) | Monitoring | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Prometheus (`prometheus`) | Monitoring | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Pi-hole (`pihole`) | Networking | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 需 host 网络并避让宿主 dnsmasq。 |
-| Gatus (`gatus`) | Monitoring | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Alertmanager (`alertmanager`) | Monitoring | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| PostgreSQL (`postgres`) | Utilities | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Redis (`redis`) | Utilities | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Eclipse Mosquitto (`mosquitto`) | Utilities | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| MariaDB (`mariadb`) | Utilities | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Node-RED (`node-red`) | Developer | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Grafana (`grafana`) | Monitoring | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Memcached (`memcached`) | Networking | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Homebridge (`homebridge`) | Home Automation | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 建议 host 网络；需改默认配对码。 |
-| REST Server (`rest-server`) | Backup | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Actual Budget (`actual-budget`) | Productivity | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| MinIO (`minio`) | Cloud | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 必须设置 MINIO_ROOT_USER/PASSWORD。 |
-| HomeBox (`homebox`) | Productivity | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| NocoDB (`nocodb`) | Developer | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| Apprise API (`apprise-api`) | Utilities | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
+| Typecho (`typecho`) | Productivity | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Wallabag (`wallabag`) | Productivity | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| draw.io (`drawio`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Jackett (`jackett`) | Downloaders | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| xTeVe (`xteve`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| One API (`one-api`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| code-server (`code-server`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| DPanel (`dpanel`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 需挂载 docker.sock。 |
+| Shiori (`shiori`) | Productivity | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Jellyseerr (`jellyseerr`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Audiobookshelf (`audiobookshelf`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Calibre-Web (`calibre-web`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Homarr (`homarr`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 需 Redis。 |
+| Open WebUI (`openwebui`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| KodExplorer (`kodexplorer`) | Cloud | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Home Assistant (`homeassistant`) | Home Automation | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 建议 host 网络以发现设备。 |
+| Sonarr (`sonarr`) | Downloaders | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Radarr (`radarr`) | Downloaders | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Tautulli (`tautulli`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Jellystat (`jellystat`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 需外部 PostgreSQL。 |
+| Stirling PDF (`stirling-pdf`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Wizarr (`wizarr`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Gitea (`gitea`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Miniflux (`miniflux`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 需外部 PostgreSQL。 |
+| Portainer (`portainer`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 需挂载 docker.sock。 |
+| Nginx Proxy Manager (`nginx-proxy-manager`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Firefly III (`firefly-iii`) | Productivity | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| phpMyAdmin (`phpmyadmin`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| FreshRSS (`freshrss`) | Productivity | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Prowlarr (`prowlarr`) | Downloaders | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Bazarr (`bazarr`) | Downloaders | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| homer (`homer`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Paperless-ngx (`paperless-ngx`) | Productivity | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Dashy (`dashy`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Watchtower (`watchtower`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 需挂载 docker.sock。 |
+| ChangeDetection.io (`changedetection`) | Monitoring | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Caddy (`caddy`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Dozzle (`dozzle`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 需挂载 docker.sock。 |
+| ntfy (`ntfy`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Gotify (`gotify`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Node Exporter (`node-exporter`) | Monitoring | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Prometheus (`prometheus`) | Monitoring | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Pi-hole (`pihole`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 需 host 网络并避让宿主 dnsmasq。 |
+| Gatus (`gatus`) | Monitoring | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Alertmanager (`alertmanager`) | Monitoring | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| PostgreSQL (`postgres`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Redis (`redis`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Eclipse Mosquitto (`mosquitto`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| MariaDB (`mariadb`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Node-RED (`node-red`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Grafana (`grafana`) | Monitoring | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Memcached (`memcached`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Homebridge (`homebridge`) | Home Automation | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 建议 host 网络；需改默认配对码。 |
+| REST Server (`rest-server`) | Backup | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Actual Budget (`actual-budget`) | Productivity | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| MinIO (`minio`) | Cloud | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 必须设置 MINIO_ROOT_USER/PASSWORD。 |
+| HomeBox (`homebox`) | Productivity | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| NocoDB (`nocodb`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Apprise API (`apprise-api`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Mealie (`mealie`) | Productivity | Python 3.14 源码构建。 | 不支持 HEIF/HEIC。 | 持久化 /app/data；UID 911。 |
-| ChineseSubFinder (`chinesesubfinder`) | Media | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| LANraragi (`lanraragi`) | Media | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| OwnTone (`owntone`) | Media | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| MyMind (`mymind`) | Media | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 无额外外部依赖。 |
-| WebVirtCloud (`webvirtcloud`) | Developer | 未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。 | 无已知缺失功能（尚未逐项做上游功能回归）。 | 需 libvirt/KVM 与 SSH 凭据。 |
+| ChineseSubFinder (`chinesesubfinder`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| LANraragi (`lanraragi`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| OwnTone (`owntone`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| MyMind (`mymind`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| WebVirtCloud (`webvirtcloud`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 需 libvirt/KVM 与 SSH 凭据。 |
 | Penpot (backend) (`penpot-backend`) | Developer | Penpot 前后端拆成两个镜像；后端用 JDK 21 运行官方 jar。 | 无 exporter（PDF/PNG 导出会 502）；无 admin-console/MCP。 | 需 PostgreSQL + Redis；PENPOT_SECRET_KEY 必填。 |
 | Penpot (frontend) (`penpot-frontend`) | Developer | Penpot 前端单独成镜像，通过 nginx 反代后端。 | 同上；导出功能未移植。 | 需同时部署 penpot-backend、PostgreSQL、Redis。 |
 | Hermes (`hermes`) | Developer | 使用 Python 3.14 独立构建；镜像保留 gcc/rust 工具链。 | 不支持 HEIC/HEIF；computer_use 在 loongarch64 不可用。 | 默认无 WebUI 密码；镜像约 3.68GB。 |

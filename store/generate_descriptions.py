@@ -181,12 +181,12 @@ for cat, ids in GROUPS.items():
 # Behavior differences / missing features / extra dependencies.
 # Keep this in sync with docs/LOONG64-QUIRKS.md.
 DEFAULT_QUIRK = {
-    "zh": "未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。",
-    "en": "No known behavior difference from upstream; only the image architecture is linux/loong64.",
-    "missing_zh": "无已知缺失功能（尚未逐项做上游功能回归）。",
-    "missing_en": "No known missing feature (not yet fully regression-tested against upstream).",
-    "deps_zh": "无额外外部依赖。",
-    "deps_en": "No extra external dependency.",
+    "zh": "此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。",
+    "en": "LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.",
+    "missing_zh": "未逐项验证上游全部功能；请以镜像说明中的限制为准。",
+    "missing_en": "Upstream features were not verified item by item; treat the image notes as the limitation list.",
+    "deps_zh": "无额外外部依赖（镜像说明中另有注明的除外）。",
+    "deps_en": "No extra external dependency unless the image notes say otherwise.",
 }
 
 QUIRKS = {

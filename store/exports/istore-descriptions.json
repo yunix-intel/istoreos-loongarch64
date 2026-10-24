@@ -31,8 +31,8 @@
       },
       "category": "Security",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：Rust；镜像内置宿主 glibc 2.41 闭包（显式 loader 启动）</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: Rust；镜像内置宿主 glibc 2.41 闭包（显式 loader 启动）</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：Rust；镜像内置宿主 glibc 2.41 闭包（显式 loader 启动）</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: Rust；镜像内置宿主 glibc 2.41 闭包（显式 loader 启动）</p>"
       }
     },
     "uptimekuma": {
@@ -42,8 +42,8 @@
       },
       "category": "Monitoring",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：Node 20 + 源码编 sqlite3</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: Node 20 + 源码编 sqlite3</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：Node 20 + 源码编 sqlite3</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: Node 20 + 源码编 sqlite3</p>"
       }
     },
     "mihomo": {
@@ -53,8 +53,8 @@
       },
       "category": "Networking",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：scratch 单二进制，配置需挂载</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: scratch 单二进制，配置需挂载</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：scratch 单二进制，配置需挂载</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: scratch 单二进制，配置需挂载</p>"
       }
     },
     "easytier": {
@@ -64,8 +64,8 @@
       },
       "category": "Networking",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：scratch 单二进制，配置需挂载</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: scratch 单二进制，配置需挂载</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：scratch 单二进制，配置需挂载</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: scratch 单二进制，配置需挂载</p>"
       }
     },
     "syncthing": {
@@ -75,8 +75,8 @@
       },
       "category": "Cloud",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v2.1.6 官方 loong64 包；注意 v2 CLI 用双横线 `--home=`</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v2.1.6 官方 loong64 包；注意 v2 CLI 用双横线 `--home=`</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v2.1.6 官方 loong64 包；注意 v2 CLI 用双横线 `--home=`</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v2.1.6 官方 loong64 包；注意 v2 CLI 用双横线 `--home=`</p>"
       }
     },
     "adguardhome": {
@@ -86,8 +86,8 @@
       },
       "category": "Networking",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：需 host 网络并避让宿主 dnsmasq。</p><p>镜像说明：官方无 loong64 资产，源码自编 + 官方前端；53 端口需映射避让宿主 dnsmasq</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: Requires host networking; avoid the host dnsmasq on port 53.</p><p>Image notes: 官方无 loong64 资产，源码自编 + 官方前端；53 端口需映射避让宿主 dnsmasq</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：需 host 网络并避让宿主 dnsmasq。</p><p>镜像说明：官方无 loong64 资产，源码自编 + 官方前端；53 端口需映射避让宿主 dnsmasq</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: Requires host networking; avoid the host dnsmasq on port 53.</p><p>Image notes: 官方无 loong64 资产，源码自编 + 官方前端；53 端口需映射避让宿主 dnsmasq</p>"
       }
     },
     "memos": {
@@ -97,8 +97,8 @@
       },
       "category": "Productivity",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v0.31.0 源码编（官方无 loong64）；纯 Go sqlite；前端在 x64 上编（rolldown 无 loong64 binding），产物架构无关</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v0.31.0 源码编（官方无 loong64）；纯 Go sqlite；前端在 x64 上编（rolldown 无 loong64 binding），产物架构无关</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v0.31.0 源码编（官方无 loong64）；纯 Go sqlite；前端在 x64 上编（rolldown 无 loong64 binding），产物架构无关</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v0.31.0 源码编（官方无 loong64）；纯 Go sqlite；前端在 x64 上编（rolldown 无 loong64 binding），产物架构无关</p>"
       }
     },
     "gogs": {
@@ -108,8 +108,8 @@
       },
       "category": "Developer",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v0.14.3 源码编；0.14 起 sqlite 已纯 Go（不需要 CGO）；镜像带 git</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v0.14.3 源码编；0.14 起 sqlite 已纯 Go（不需要 CGO）；镜像带 git</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v0.14.3 源码编；0.14 起 sqlite 已纯 Go（不需要 CGO）；镜像带 git</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v0.14.3 源码编；0.14 起 sqlite 已纯 Go（不需要 CGO）；镜像带 git</p>"
       }
     },
     "filebrowser": {
@@ -119,8 +119,8 @@
       },
       "category": "Cloud",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v2.63.23 源码编；**上游 2026-09-01 已归档**，无后续安全修复；默认监听改 0.0.0.0（v2.63 默认 127.0.0.1）</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v2.63.23 源码编；**上游 2026-09-01 已归档**，无后续安全修复；默认监听改 0.0.0.0（v2.63 默认 127.0.0.1）</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v2.63.23 源码编；**上游 2026-09-01 已归档**，无后续安全修复；默认监听改 0.0.0.0（v2.63 默认 127.0.0.1）</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v2.63.23 源码编；**上游 2026-09-01 已归档**，无后续安全修复；默认监听改 0.0.0.0（v2.63 默认 127.0.0.1）</p>"
       }
     },
     "qbittorrent-ee": {
@@ -130,8 +130,8 @@
       },
       "category": "Downloaders",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v5.2.4.10 官方 loong64 静态包；Host header 校验会拒绝端口映射不一致的访问，建议 `--webui-port` 与映射端口一致</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v5.2.4.10 官方 loong64 静态包；Host header 校验会拒绝端口映射不一致的访问，建议 `--webui-port` 与映射端口一致</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v5.2.4.10 官方 loong64 静态包；Host header 校验会拒绝端口映射不一致的访问，建议 `--webui-port` 与映射端口一致</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v5.2.4.10 官方 loong64 静态包；Host header 校验会拒绝端口映射不一致的访问，建议 `--webui-port` 与映射端口一致</p>"
       }
     },
     "it-tools": {
@@ -141,8 +141,8 @@
       },
       "category": "Developer",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：纯静态站点 + nginx；Vite 4/rollup 3 可在龙芯本机直接编</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 纯静态站点 + nginx；Vite 4/rollup 3 可在龙芯本机直接编</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：纯静态站点 + nginx；Vite 4/rollup 3 可在龙芯本机直接编</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 纯静态站点 + nginx；Vite 4/rollup 3 可在龙芯本机直接编</p>"
       }
     },
     "excalidraw": {
@@ -152,8 +152,8 @@
       },
       "category": "Media",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v0.18.1；Vite 5 + rollup 4（自带 loongarch64 binding）；需 Node 22（用 /opt/node22-abi2）</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v0.18.1；Vite 5 + rollup 4（自带 loongarch64 binding）；需 Node 22（用 /opt/node22-abi2）</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v0.18.1；Vite 5 + rollup 4（自带 loongarch64 binding）；需 Node 22（用 /opt/node22-abi2）</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v0.18.1；Vite 5 + rollup 4（自带 loongarch64 binding）；需 Node 22（用 /opt/node22-abi2）</p>"
       }
     },
     "kopia": {
@@ -174,8 +174,8 @@
       },
       "category": "Productivity",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v1.47.0；Python 3.13 源码编 + uwsgi；cryptography 需 Rust 源码编；`UWSGI_MAX_FD=4096` 必设（否则 uwsgi 路由进程吃 8GB）</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v1.47.0；Python 3.13 源码编 + uwsgi；cryptography 需 Rust 源码编；`UWSGI_MAX_FD=4096` 必设（否则 uwsgi 路由进程吃 8GB）</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v1.47.0；Python 3.13 源码编 + uwsgi；cryptography 需 Rust 源码编；`UWSGI_MAX_FD=4096` 必设（否则 uwsgi 路由进程吃 8GB）</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v1.47.0；Python 3.13 源码编 + uwsgi；cryptography 需 Rust 源码编；`UWSGI_MAX_FD=4096` 必设（否则 uwsgi 路由进程吃 8GB）</p>"
       }
     },
     "heimdall": {
@@ -185,8 +185,8 @@
       },
       "category": "Utilities",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：2.8.3；PHP 8.4.26 自编（源里只有 8.3）+ nginx/php-fpm；数据在 /config（.env/sqlite/storage）</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 2.8.3；PHP 8.4.26 自编（源里只有 8.3）+ nginx/php-fpm；数据在 /config（.env/sqlite/storage）</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：2.8.3；PHP 8.4.26 自编（源里只有 8.3）+ nginx/php-fpm；数据在 /config（.env/sqlite/storage）</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 2.8.3；PHP 8.4.26 自编（源里只有 8.3）+ nginx/php-fpm；数据在 /config（.env/sqlite/storage）</p>"
       }
     },
     "nextcloud": {
@@ -207,8 +207,8 @@
       },
       "category": "Productivity",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v1.3.0；PHP 8.3 + nginx/php-fpm；**config.inc.php 与 typecho.db 在站点根目录**（不在挂载卷内，重建容器前需一并备份）</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v1.3.0；PHP 8.3 + nginx/php-fpm；**config.inc.php 与 typecho.db 在站点根目录**（不在挂载卷内，重建容器前需一并备份）</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v1.3.0；PHP 8.3 + nginx/php-fpm；**config.inc.php 与 typecho.db 在站点根目录**（不在挂载卷内，重建容器前需一并备份）</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v1.3.0；PHP 8.3 + nginx/php-fpm；**config.inc.php 与 typecho.db 在站点根目录**（不在挂载卷内，重建容器前需一并备份）</p>"
       }
     },
     "wallabag": {
@@ -218,8 +218,8 @@
       },
       "category": "Productivity",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：2.6.14；PHP 8.3 + nginx/php-fpm；2.6 起无网页安装向导，entrypoint 首次启动 CLI 安装（默认 wallabag/wallabag）</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 2.6.14；PHP 8.3 + nginx/php-fpm；2.6 起无网页安装向导，entrypoint 首次启动 CLI 安装（默认 wallabag/wallabag）</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：2.6.14；PHP 8.3 + nginx/php-fpm；2.6 起无网页安装向导，entrypoint 首次启动 CLI 安装（默认 wallabag/wallabag）</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 2.6.14；PHP 8.3 + nginx/php-fpm；2.6 起无网页安装向导，entrypoint 首次启动 CLI 安装（默认 wallabag/wallabag）</p>"
       }
     },
     "drawio": {
@@ -229,8 +229,8 @@
       },
       "category": "Media",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v32.5.5；直接取源码仓库预构建 `src/main/webapp`，无需 npm/maven；hash 路由</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v32.5.5；直接取源码仓库预构建 `src/main/webapp`，无需 npm/maven；hash 路由</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v32.5.5；直接取源码仓库预构建 `src/main/webapp`，无需 npm/maven；hash 路由</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v32.5.5；直接取源码仓库预构建 `src/main/webapp`，无需 npm/maven；hash 路由</p>"
       }
     },
     "jackett": {
@@ -240,8 +240,8 @@
       },
       "category": "Downloaders",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v0.24.2867；.NET 9 源码编，自带运行时；需宿主 libstdc++ 6.0.33（已内置）</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v0.24.2867；.NET 9 源码编，自带运行时；需宿主 libstdc++ 6.0.33（已内置）</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v0.24.2867；.NET 9 源码编，自带运行时；需宿主 libstdc++ 6.0.33（已内置）</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v0.24.2867；.NET 9 源码编，自带运行时；需宿主 libstdc++ 6.0.33（已内置）</p>"
       }
     },
     "xteve": {
@@ -251,8 +251,8 @@
       },
       "category": "Media",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：2.2.0.200；Go 静态编（升级 x/sys 支持 loong64）；自带 ffmpeg（占大头，可瘦身）</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 2.2.0.200；Go 静态编（升级 x/sys 支持 loong64）；自带 ffmpeg（占大头，可瘦身）</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：2.2.0.200；Go 静态编（升级 x/sys 支持 loong64）；自带 ffmpeg（占大头，可瘦身）</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 2.2.0.200；Go 静态编（升级 x/sys 支持 loong64）；自带 ffmpeg（占大头，可瘦身）</p>"
       }
     },
     "one-api": {
@@ -262,8 +262,8 @@
       },
       "category": "Developer",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v0.6.10；三套前端主题本机编；go-sqlite3 需 CGO 静态链接（`-linkmode external -extldflags -static`）</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v0.6.10；三套前端主题本机编；go-sqlite3 需 CGO 静态链接（`-linkmode external -extldflags -static`）</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v0.6.10；三套前端主题本机编；go-sqlite3 需 CGO 静态链接（`-linkmode external -extldflags -static`）</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v0.6.10；三套前端主题本机编；go-sqlite3 需 CGO 静态链接（`-linkmode external -extldflags -static`）</p>"
       }
     },
     "code-server": {
@@ -273,8 +273,8 @@
       },
       "category": "Developer",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：4.141.0 + VS Code 1.141；**必须 Node 24**（Node 20 缺 `module.registerHooks`）；自编静态 ripgrep 15.2</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 4.141.0 + VS Code 1.141；**必须 Node 24**（Node 20 缺 `module.registerHooks`）；自编静态 ripgrep 15.2</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：4.141.0 + VS Code 1.141；**必须 Node 24**（Node 20 缺 `module.registerHooks`）；自编静态 ripgrep 15.2</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 4.141.0 + VS Code 1.141；**必须 Node 24**（Node 20 缺 `module.registerHooks`）；自编静态 ripgrep 15.2</p>"
       }
     },
     "dpanel": {
@@ -284,8 +284,8 @@
       },
       "category": "Developer",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：需挂载 docker.sock。</p><p>镜像说明：v1.11.1；Go + CGO sqlite（CGO=0 会 panic）；需 docker.sock；8807 端口</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: Requires docker.sock.</p><p>Image notes: v1.11.1；Go + CGO sqlite（CGO=0 会 panic）；需 docker.sock；8807 端口</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：需挂载 docker.sock。</p><p>镜像说明：v1.11.1；Go + CGO sqlite（CGO=0 会 panic）；需 docker.sock；8807 端口</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: Requires docker.sock.</p><p>Image notes: v1.11.1；Go + CGO sqlite（CGO=0 会 panic）；需 docker.sock；8807 端口</p>"
       }
     },
     "shiori": {
@@ -295,8 +295,8 @@
       },
       "category": "Productivity",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v1.8.0；Go 静态编；8080 端口；生产建议设 `SHIORI_HTTP_SECRET_KEY`</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v1.8.0；Go 静态编；8080 端口；生产建议设 `SHIORI_HTTP_SECRET_KEY`</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v1.8.0；Go 静态编；8080 端口；生产建议设 `SHIORI_HTTP_SECRET_KEY`</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v1.8.0；Go 静态编；8080 端口；生产建议设 `SHIORI_HTTP_SECRET_KEY`</p>"
       }
     },
     "jellyseerr": {
@@ -306,8 +306,8 @@
       },
       "category": "Media",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v3.5.0；Next 16 用 WASM SWC（无 loong64 binding）；sharp 不可用 → `images.unoptimized`；5055 端口</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v3.5.0；Next 16 用 WASM SWC（无 loong64 binding）；sharp 不可用 → `images.unoptimized`；5055 端口</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v3.5.0；Next 16 用 WASM SWC（无 loong64 binding）；sharp 不可用 → `images.unoptimized`；5055 端口</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v3.5.0；Next 16 用 WASM SWC（无 loong64 binding）；sharp 不可用 → `images.unoptimized`；5055 端口</p>"
       }
     },
     "audiobookshelf": {
@@ -317,8 +317,8 @@
       },
       "category": "Media",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v2.37.1；Node 22 + sqlite3/nusqlite3 源码编；前端在 x64 构建（Tailwind oxide 无 loong64）；13378 端口</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v2.37.1；Node 22 + sqlite3/nusqlite3 源码编；前端在 x64 构建（Tailwind oxide 无 loong64）；13378 端口</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v2.37.1；Node 22 + sqlite3/nusqlite3 源码编；前端在 x64 构建（Tailwind oxide 无 loong64）；13378 端口</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v2.37.1；Node 22 + sqlite3/nusqlite3 源码编；前端在 x64 构建（Tailwind oxide 无 loong64）；13378 端口</p>"
       }
     },
     "calibre-web": {
@@ -328,8 +328,8 @@
       },
       "category": "Media",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：0.6.27；Python 3.11 + Rust 源码编 lxml/nh3/cryptography；8083 端口；书库挂 /books</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 0.6.27；Python 3.11 + Rust 源码编 lxml/nh3/cryptography；8083 端口；书库挂 /books</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：0.6.27；Python 3.11 + Rust 源码编 lxml/nh3/cryptography；8083 端口；书库挂 /books</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 0.6.27；Python 3.11 + Rust 源码编 lxml/nh3/cryptography；8083 端口；书库挂 /books</p>"
       }
     },
     "homarr": {
@@ -339,8 +339,8 @@
       },
       "category": "Networking",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：需 Redis。</p><p>镜像说明：v2.6.0；Next 16 WASM SWC + Node 24 + redis；Bun/Turbo 无 loong64 改用 pnpm；7575 端口</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: Requires Redis.</p><p>Image notes: v2.6.0；Next 16 WASM SWC + Node 24 + redis；Bun/Turbo 无 loong64 改用 pnpm；7575 端口</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：需 Redis。</p><p>镜像说明：v2.6.0；Next 16 WASM SWC + Node 24 + redis；Bun/Turbo 无 loong64 改用 pnpm；7575 端口</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: Requires Redis.</p><p>Image notes: v2.6.0；Next 16 WASM SWC + Node 24 + redis；Bun/Turbo 无 loong64 改用 pnpm；7575 端口</p>"
       }
     },
     "openwebui": {
@@ -350,8 +350,8 @@
       },
       "category": "Developer",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v0.12.3 **轻量模式**：无 torch/onnxruntime/whisper/OCR，聊天对接 Ollama/OpenAI 正常；本地 RAG 需外部 pgvector</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v0.12.3 **轻量模式**：无 torch/onnxruntime/whisper/OCR，聊天对接 Ollama/OpenAI 正常；本地 RAG 需外部 pgvector</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v0.12.3 **轻量模式**：无 torch/onnxruntime/whisper/OCR，聊天对接 Ollama/OpenAI 正常；本地 RAG 需外部 pgvector</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v0.12.3 **轻量模式**：无 torch/onnxruntime/whisper/OCR，聊天对接 Ollama/OpenAI 正常；本地 RAG 需外部 pgvector</p>"
       }
     },
     "kodexplorer": {
@@ -361,8 +361,8 @@
       },
       "category": "Cloud",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：4.55；PHP 8.3 + nginx/php-fpm；首启为环境检查/设置管理员；默认 admin/admin</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 4.55；PHP 8.3 + nginx/php-fpm；首启为环境检查/设置管理员；默认 admin/admin</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：4.55；PHP 8.3 + nginx/php-fpm；首启为环境检查/设置管理员；默认 admin/admin</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 4.55；PHP 8.3 + nginx/php-fpm；首启为环境检查/设置管理员；默认 admin/admin</p>"
       }
     },
     "homeassistant": {
@@ -372,8 +372,8 @@
       },
       "category": "Home Automation",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：建议 host 网络以发现设备。</p><p>镜像说明：Core 2026.10.2；Python 3.14 自编；cryptography/grpcio/Pillow/aiohttp 等全源码编；cloud/camera 集成需运行期编译器，未预装</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: Host networking is recommended for device discovery.</p><p>Image notes: Core 2026.10.2；Python 3.14 自编；cryptography/grpcio/Pillow/aiohttp 等全源码编；cloud/camera 集成需运行期编译器，未预装</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：建议 host 网络以发现设备。</p><p>镜像说明：Core 2026.10.2；Python 3.14 自编；cryptography/grpcio/Pillow/aiohttp 等全源码编；cloud/camera 集成需运行期编译器，未预装</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: Host networking is recommended for device discovery.</p><p>Image notes: Core 2026.10.2；Python 3.14 自编；cryptography/grpcio/Pillow/aiohttp 等全源码编；cloud/camera 集成需运行期编译器，未预装</p>"
       }
     },
     "sonarr": {
@@ -383,8 +383,8 @@
       },
       "category": "Downloaders",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v4.0.20；.NET 9 运行时 + 自写 Mono.Posix loong64 兼容层；8989</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v4.0.20；.NET 9 运行时 + 自写 Mono.Posix loong64 兼容层；8989</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v4.0.20；.NET 9 运行时 + 自写 Mono.Posix loong64 兼容层；8989</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v4.0.20；.NET 9 运行时 + 自写 Mono.Posix loong64 兼容层；8989</p>"
       }
     },
     "radarr": {
@@ -394,8 +394,8 @@
       },
       "category": "Downloaders",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v6.4.4；同上；自编译 e_sqlite3；7878</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v6.4.4；同上；自编译 e_sqlite3；7878</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v6.4.4；同上；自编译 e_sqlite3；7878</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v6.4.4；同上；自编译 e_sqlite3；7878</p>"
       }
     },
     "tautulli": {
@@ -405,8 +405,8 @@
       },
       "category": "Media",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v2.18.2；纯 Python；8181</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v2.18.2；纯 Python；8181</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v2.18.2；纯 Python；8181</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v2.18.2；纯 Python；8181</p>"
       }
     },
     "jellystat": {
@@ -416,8 +416,8 @@
       },
       "category": "Media",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：需外部 PostgreSQL。</p><p>镜像说明：1.1.12；Node 20 + 降级 Vite 6；**需要外部 PostgreSQL**；3000</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: Requires external PostgreSQL.</p><p>Image notes: 1.1.12；Node 20 + 降级 Vite 6；**需要外部 PostgreSQL**；3000</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：需外部 PostgreSQL。</p><p>镜像说明：1.1.12；Node 20 + 降级 Vite 6；**需要外部 PostgreSQL**；3000</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: Requires external PostgreSQL.</p><p>Image notes: 1.1.12；Node 20 + 降级 Vite 6；**需要外部 PostgreSQL**；3000</p>"
       }
     },
     "stirling-pdf": {
@@ -427,8 +427,8 @@
       },
       "category": "Media",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v3.2.0；官方 jar + Java 25；精简版未装 LibreOffice/OCR，相关端点自动禁用；8080</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v3.2.0；官方 jar + Java 25；精简版未装 LibreOffice/OCR，相关端点自动禁用；8080</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v3.2.0；官方 jar + Java 25；精简版未装 LibreOffice/OCR，相关端点自动禁用；8080</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v3.2.0；官方 jar + Java 25；精简版未装 LibreOffice/OCR，相关端点自动禁用；8080</p>"
       }
     },
     "wizarr": {
@@ -438,8 +438,8 @@
       },
       "category": "Utilities",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v2026.10.1；Python 3.13 自编；前端静态资源取自官方 amd64 镜像（架构无关）；5690</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v2026.10.1；Python 3.13 自编；前端静态资源取自官方 amd64 镜像（架构无关）；5690</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v2026.10.1；Python 3.13 自编；前端静态资源取自官方 amd64 镜像（架构无关）；5690</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v2026.10.1；Python 3.13 自编；前端静态资源取自官方 amd64 镜像（架构无关）；5690</p>"
       }
     },
     "gitea": {
@@ -449,8 +449,8 @@
       },
       "category": "Developer",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v28.2.0；Go 1.27 自编；modernc SQLite；入口脚本生成 app.ini；3000</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v28.2.0；Go 1.27 自编；modernc SQLite；入口脚本生成 app.ini；3000</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v28.2.0；Go 1.27 自编；modernc SQLite；入口脚本生成 app.ini；3000</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v28.2.0；Go 1.27 自编；modernc SQLite；入口脚本生成 app.ini；3000</p>"
       }
     },
     "miniflux": {
@@ -460,8 +460,8 @@
       },
       "category": "Utilities",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：需外部 PostgreSQL。</p><p>镜像说明：v2.3.3；上游已删 SQLite 支持，必须提供 PostgreSQL DSN；8080</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: Requires external PostgreSQL.</p><p>Image notes: v2.3.3；上游已删 SQLite 支持，必须提供 PostgreSQL DSN；8080</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：需外部 PostgreSQL。</p><p>镜像说明：v2.3.3；上游已删 SQLite 支持，必须提供 PostgreSQL DSN；8080</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: Requires external PostgreSQL.</p><p>Image notes: v2.3.3；上游已删 SQLite 支持，必须提供 PostgreSQL DSN；8080</p>"
       }
     },
     "portainer": {
@@ -471,8 +471,8 @@
       },
       "category": "Developer",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：需挂载 docker.sock。</p><p>镜像说明：2.45.2 LTS；Go 自编 + 前端本机 pnpm/webpack；需挂 docker.sock；9000</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: Requires docker.sock.</p><p>Image notes: 2.45.2 LTS；Go 自编 + 前端本机 pnpm/webpack；需挂 docker.sock；9000</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：需挂载 docker.sock。</p><p>镜像说明：2.45.2 LTS；Go 自编 + 前端本机 pnpm/webpack；需挂 docker.sock；9000</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: Requires docker.sock.</p><p>Image notes: 2.45.2 LTS；Go 自编 + 前端本机 pnpm/webpack；需挂 docker.sock；9000</p>"
       }
     },
     "nginx-proxy-manager": {
@@ -482,8 +482,8 @@
       },
       "category": "Networking",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v2.16.0；Node 22 + nginx；前端在 x64 编 dist；自写 entrypoint 替代 s6-overlay；81/443</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v2.16.0；Node 22 + nginx；前端在 x64 编 dist；自写 entrypoint 替代 s6-overlay；81/443</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v2.16.0；Node 22 + nginx；前端在 x64 编 dist；自写 entrypoint 替代 s6-overlay；81/443</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v2.16.0；Node 22 + nginx；前端在 x64 编 dist；自写 entrypoint 替代 s6-overlay；81/443</p>"
       }
     },
     "firefly-iii": {
@@ -493,8 +493,8 @@
       },
       "category": "Productivity",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v6.7.9；PHP 8.5 自编（上游要求 ≥8.5）+ nginx；SQLite 自动迁移/种子；8080</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v6.7.9；PHP 8.5 自编（上游要求 ≥8.5）+ nginx；SQLite 自动迁移/种子；8080</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v6.7.9；PHP 8.5 自编（上游要求 ≥8.5）+ nginx；SQLite 自动迁移/种子；8080</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v6.7.9；PHP 8.5 自编（上游要求 ≥8.5）+ nginx；SQLite 自动迁移/种子；8080</p>"
       }
     },
     "phpmyadmin": {
@@ -504,8 +504,8 @@
       },
       "category": "Utilities",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：5.2.3；PHP 8.3 + nginx/php-fpm；无需数据库即可开登录页；8080</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 5.2.3；PHP 8.3 + nginx/php-fpm；无需数据库即可开登录页；8080</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：5.2.3；PHP 8.3 + nginx/php-fpm；无需数据库即可开登录页；8080</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 5.2.3；PHP 8.3 + nginx/php-fpm；无需数据库即可开登录页；8080</p>"
       }
     },
     "freshrss": {
@@ -515,8 +515,8 @@
       },
       "category": "Productivity",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：1.30.1；PHP 8.3 + nginx/php-fpm；SQLite 自动安装（admin/adminadmin）；8080</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 1.30.1；PHP 8.3 + nginx/php-fpm；SQLite 自动安装（admin/adminadmin）；8080</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：1.30.1；PHP 8.3 + nginx/php-fpm；SQLite 自动安装（admin/adminadmin）；8080</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 1.30.1；PHP 8.3 + nginx/php-fpm；SQLite 自动安装（admin/adminadmin）；8080</p>"
       }
     },
     "prowlarr": {
@@ -526,8 +526,8 @@
       },
       "category": "Downloaders",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：2.6.5；.NET 9 + 自编 Mono.Posix/e_sqlite3；9696</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 2.6.5；.NET 9 + 自编 Mono.Posix/e_sqlite3；9696</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：2.6.5；.NET 9 + 自编 Mono.Posix/e_sqlite3；9696</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 2.6.5；.NET 9 + 自编 Mono.Posix/e_sqlite3；9696</p>"
       }
     },
     "bazarr": {
@@ -537,8 +537,8 @@
       },
       "category": "Downloaders",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：1.6.2；Python 3.11 + lxml/Pillow 源码编；webrtcvad 补 loongarch 分支；含 ffmpeg/7za；6767</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 1.6.2；Python 3.11 + lxml/Pillow 源码编；webrtcvad 补 loongarch 分支；含 ffmpeg/7za；6767</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：1.6.2；Python 3.11 + lxml/Pillow 源码编；webrtcvad 补 loongarch 分支；含 ffmpeg/7za；6767</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 1.6.2；Python 3.11 + lxml/Pillow 源码编；webrtcvad 补 loongarch 分支；含 ffmpeg/7za；6767</p>"
       }
     },
     "homer": {
@@ -548,8 +548,8 @@
       },
       "category": "Networking",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v26.08.3；openEuler nginx 1.24 + 官方静态包；8080</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v26.08.3；openEuler nginx 1.24 + 官方静态包；8080</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v26.08.3；openEuler nginx 1.24 + 官方静态包；8080</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v26.08.3；openEuler nginx 1.24 + 官方静态包；8080</p>"
       }
     },
     "paperless-ngx": {
@@ -559,8 +559,8 @@
       },
       "category": "Productivity",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：3.3.2；qpdf 12.4.2 自编（pikepdf 10.17 要求）；tesseract eng/chi_sim/osd；AI 关闭、unpaper 无；单容器含 redis/celery worker/beat/consumer；8000</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 3.3.2；qpdf 12.4.2 自编（pikepdf 10.17 要求）；tesseract eng/chi_sim/osd；AI 关闭、unpaper 无；单容器含 redis/celery worker/beat/consumer；8000</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：3.3.2；qpdf 12.4.2 自编（pikepdf 10.17 要求）；tesseract eng/chi_sim/osd；AI 关闭、unpaper 无；单容器含 redis/celery worker/beat/consumer；8000</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 3.3.2；qpdf 12.4.2 自编（pikepdf 10.17 要求）；tesseract eng/chi_sim/osd；AI 关闭、unpaper 无；单容器含 redis/celery worker/beat/consumer；8000</p>"
       }
     },
     "dashy": {
@@ -570,8 +570,8 @@
       },
       "category": "Networking",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：4.8.0；官方预构建 `dist/` + nginx 1.24；配置挂载 `/usr/share/nginx/html/conf.yml`；8080</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 4.8.0；官方预构建 `dist/` + nginx 1.24；配置挂载 `/usr/share/nginx/html/conf.yml`；8080</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：4.8.0；官方预构建 `dist/` + nginx 1.24；配置挂载 `/usr/share/nginx/html/conf.yml`；8080</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 4.8.0；官方预构建 `dist/` + nginx 1.24；配置挂载 `/usr/share/nginx/html/conf.yml`；8080</p>"
       }
     },
     "watchtower": {
@@ -581,8 +581,8 @@
       },
       "category": "Utilities",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：需挂载 docker.sock。</p><p>镜像说明：v1.7.1；Go 静态二进制 + CA 证书；需挂 `/var/run/docker.sock`；`--label-enable` 只更新带标签容器</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: Requires docker.sock.</p><p>Image notes: v1.7.1；Go 静态二进制 + CA 证书；需挂 `/var/run/docker.sock`；`--label-enable` 只更新带标签容器</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：需挂载 docker.sock。</p><p>镜像说明：v1.7.1；Go 静态二进制 + CA 证书；需挂 `/var/run/docker.sock`；`--label-enable` 只更新带标签容器</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: Requires docker.sock.</p><p>Image notes: v1.7.1；Go 静态二进制 + CA 证书；需挂 `/var/run/docker.sock`；`--label-enable` 只更新带标签容器</p>"
       }
     },
     "changedetection": {
@@ -592,8 +592,8 @@
       },
       "category": "Monitoring",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：0.60.9；SQLite；内置 Firefox 140.11ESR + geckodriver 0.37.1；Selenium 步骤适配层支持 Goto/点击/输入/等待/选择/按键/滚动/JS/复选框等（不再依赖 Playwright）；OpenCV 4.5.2 + numpy 1.26.4，SSIM 可用；Chrome 远程仍可 `WEBDRIVER_BROWSER=chrome` + `WEBDRIVER_URL`；5000</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 0.60.9；SQLite；内置 Firefox 140.11ESR + geckodriver 0.37.1；Selenium 步骤适配层支持 Goto/点击/输入/等待/选择/按键/滚动/JS/复选框等（不再依赖 Playwright）；OpenCV 4.5.2 + numpy 1.26.4，SSIM 可用；Chrome 远程仍可 `WEBDRIVER_BROWSER=chrome` + `WEBDRIVER_URL`；5000</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：0.60.9；SQLite；内置 Firefox 140.11ESR + geckodriver 0.37.1；Selenium 步骤适配层支持 Goto/点击/输入/等待/选择/按键/滚动/JS/复选框等（不再依赖 Playwright）；OpenCV 4.5.2 + numpy 1.26.4，SSIM 可用；Chrome 远程仍可 `WEBDRIVER_BROWSER=chrome` + `WEBDRIVER_URL`；5000</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 0.60.9；SQLite；内置 Firefox 140.11ESR + geckodriver 0.37.1；Selenium 步骤适配层支持 Goto/点击/输入/等待/选择/按键/滚动/JS/复选框等（不再依赖 Playwright）；OpenCV 4.5.2 + numpy 1.26.4，SSIM 可用；Chrome 远程仍可 `WEBDRIVER_BROWSER=chrome` + `WEBDRIVER_URL`；5000</p>"
       }
     },
     "caddy": {
@@ -603,8 +603,8 @@
       },
       "category": "Networking",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：纯 Go 静态编；scratch + CA；默认 Caddyfile 监听 8080；挂载自己的 Caddyfile 覆盖，80/443/8080</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 纯 Go 静态编；scratch + CA；默认 Caddyfile 监听 8080；挂载自己的 Caddyfile 覆盖，80/443/8080</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：纯 Go 静态编；scratch + CA；默认 Caddyfile 监听 8080；挂载自己的 Caddyfile 覆盖，80/443/8080</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 纯 Go 静态编；scratch + CA；默认 Caddyfile 监听 8080；挂载自己的 Caddyfile 覆盖，80/443/8080</p>"
       }
     },
     "dozzle": {
@@ -614,8 +614,8 @@
       },
       "category": "Developer",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：需挂载 docker.sock。</p><p>镜像说明：前端 Bun 1.4.3/Vite 在 x86 WSL2 构建（产物架构无关），Go 1.27.2 在 A 编 loong64；scratch；需挂 docker.sock；8080</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: Requires docker.sock.</p><p>Image notes: 前端 Bun 1.4.3/Vite 在 x86 WSL2 构建（产物架构无关），Go 1.27.2 在 A 编 loong64；scratch；需挂 docker.sock；8080</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：需挂载 docker.sock。</p><p>镜像说明：前端 Bun 1.4.3/Vite 在 x86 WSL2 构建（产物架构无关），Go 1.27.2 在 A 编 loong64；scratch；需挂 docker.sock；8080</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: Requires docker.sock.</p><p>Image notes: 前端 Bun 1.4.3/Vite 在 x86 WSL2 构建（产物架构无关），Go 1.27.2 在 A 编 loong64；scratch；需挂 docker.sock；8080</p>"
       }
     },
     "ntfy": {
@@ -625,8 +625,8 @@
       },
       "category": "Utilities",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：2.32.0；Go CGO（go-sqlite3）在 openEuler 容器编；前端 Vite 在 x86 WSL2 构建；8080；挂 `/var/cache/ntfy`、`/etc/ntfy`</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 2.32.0；Go CGO（go-sqlite3）在 openEuler 容器编；前端 Vite 在 x86 WSL2 构建；8080；挂 `/var/cache/ntfy`、`/etc/ntfy`</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：2.32.0；Go CGO（go-sqlite3）在 openEuler 容器编；前端 Vite 在 x86 WSL2 构建；8080；挂 `/var/cache/ntfy`、`/etc/ntfy`</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 2.32.0；Go CGO（go-sqlite3）在 openEuler 容器编；前端 Vite 在 x86 WSL2 构建；8080；挂 `/var/cache/ntfy`、`/etc/ntfy`</p>"
       }
     },
     "gotify": {
@@ -636,8 +636,8 @@
       },
       "category": "Utilities",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：3.1.1；Go CGO（go-sqlite3）在 openEuler 容器编；UI Vite 8 在 x86 WSL2 构建；8080；数据卷 `/data`</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 3.1.1；Go CGO（go-sqlite3）在 openEuler 容器编；UI Vite 8 在 x86 WSL2 构建；8080；数据卷 `/data`</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：3.1.1；Go CGO（go-sqlite3）在 openEuler 容器编；UI Vite 8 在 x86 WSL2 构建；8080；数据卷 `/data`</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 3.1.1；Go CGO（go-sqlite3）在 openEuler 容器编；UI Vite 8 在 x86 WSL2 构建；8080；数据卷 `/data`</p>"
       }
     },
     "node-exporter": {
@@ -647,8 +647,8 @@
       },
       "category": "Monitoring",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：1.12.1；纯 Go 静态编；scratch + CA；9100；采集宿主指标需挂 `/proc`、`/sys`、`/`</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 1.12.1；纯 Go 静态编；scratch + CA；9100；采集宿主指标需挂 `/proc`、`/sys`、`/`</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：1.12.1；纯 Go 静态编；scratch + CA；9100；采集宿主指标需挂 `/proc`、`/sys`、`/`</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 1.12.1；纯 Go 静态编；scratch + CA；9100；采集宿主指标需挂 `/proc`、`/sys`、`/`</p>"
       }
     },
     "prometheus": {
@@ -658,8 +658,8 @@
       },
       "category": "Monitoring",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：3.15.0；UI 用 Vite 8 在 x86 WSL2 构建，Go `-tags builtinassets` 嵌入；TSDB `/prometheus`；9090</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 3.15.0；UI 用 Vite 8 在 x86 WSL2 构建，Go `-tags builtinassets` 嵌入；TSDB `/prometheus`；9090</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：3.15.0；UI 用 Vite 8 在 x86 WSL2 构建，Go `-tags builtinassets` 嵌入；TSDB `/prometheus`；9090</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 3.15.0；UI 用 Vite 8 在 x86 WSL2 构建，Go `-tags builtinassets` 嵌入；TSDB `/prometheus`；9090</p>"
       }
     },
     "pihole": {
@@ -669,8 +669,8 @@
       },
       "category": "Networking",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：需 host 网络并避让宿主 dnsmasq。</p><p>镜像说明：FTL 6.8 + web 6.6.1；C/C++，静态 nettle 3.10；上游 `pihole` CLI + `gravity.sh` + `pihole-adlist`（add/list/remove）；DNS 53 / Web 80；`/etc/pihole`</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: Requires host networking; avoid the host dnsmasq on port 53.</p><p>Image notes: FTL 6.8 + web 6.6.1；C/C++，静态 nettle 3.10；上游 `pihole` CLI + `gravity.sh` + `pihole-adlist`（add/list/remove）；DNS 53 / Web 80；`/etc/pihole`</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：需 host 网络并避让宿主 dnsmasq。</p><p>镜像说明：FTL 6.8 + web 6.6.1；C/C++，静态 nettle 3.10；上游 `pihole` CLI + `gravity.sh` + `pihole-adlist`（add/list/remove）；DNS 53 / Web 80；`/etc/pihole`</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: Requires host networking; avoid the host dnsmasq on port 53.</p><p>Image notes: FTL 6.8 + web 6.6.1；C/C++，静态 nettle 3.10；上游 `pihole` CLI + `gravity.sh` + `pihole-adlist`（add/list/remove）；DNS 53 / Web 80；`/etc/pihole`</p>"
       }
     },
     "gatus": {
@@ -680,8 +680,8 @@
       },
       "category": "Monitoring",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：5.37.0；Go 静态编；自带 `web/static`；scratch；默认配置监控 Prometheus；8080</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 5.37.0；Go 静态编；自带 `web/static`；scratch；默认配置监控 Prometheus；8080</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：5.37.0；Go 静态编；自带 `web/static`；scratch；默认配置监控 Prometheus；8080</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 5.37.0；Go 静态编；自带 `web/static`；scratch；默认配置监控 Prometheus；8080</p>"
       }
     },
     "alertmanager": {
@@ -691,8 +691,8 @@
       },
       "category": "Monitoring",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：0.34.1；Elm + Vite 前端在 x86 WSL2 构建后 `go:embed`；Go 静态编；openEuler + curl 健康检查；9093 Web / 9094 gossip；以 nobody 运行；默认配置只收不发，生产需挂载自己的 alertmanager.yml</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 0.34.1；Elm + Vite 前端在 x86 WSL2 构建后 `go:embed`；Go 静态编；openEuler + curl 健康检查；9093 Web / 9094 gossip；以 nobody 运行；默认配置只收不发，生产需挂载自己的 alertmanager.yml</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：0.34.1；Elm + Vite 前端在 x86 WSL2 构建后 `go:embed`；Go 静态编；openEuler + curl 健康检查；9093 Web / 9094 gossip；以 nobody 运行；默认配置只收不发，生产需挂载自己的 alertmanager.yml</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 0.34.1；Elm + Vite 前端在 x86 WSL2 构建后 `go:embed`；Go 静态编；openEuler + curl 健康检查；9093 Web / 9094 gossip；以 nobody 运行；默认配置只收不发，生产需挂载自己的 alertmanager.yml</p>"
       }
     },
     "postgres": {
@@ -702,8 +702,8 @@
       },
       "category": "Utilities",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：15.18（openEuler 包）；官方无 loong64；entrypoint 支持 POSTGRES_USER/PASSWORD/DB/HOST_AUTH_METHOD；PGDATA `/var/lib/postgresql/data`；5432；日志走 stdout</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 15.18（openEuler 包）；官方无 loong64；entrypoint 支持 POSTGRES_USER/PASSWORD/DB/HOST_AUTH_METHOD；PGDATA `/var/lib/postgresql/data`；5432；日志走 stdout</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：15.18（openEuler 包）；官方无 loong64；entrypoint 支持 POSTGRES_USER/PASSWORD/DB/HOST_AUTH_METHOD；PGDATA `/var/lib/postgresql/data`；5432；日志走 stdout</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 15.18（openEuler 包）；官方无 loong64；entrypoint 支持 POSTGRES_USER/PASSWORD/DB/HOST_AUTH_METHOD；PGDATA `/var/lib/postgresql/data`；5432；日志走 stdout</p>"
       }
     },
     "redis": {
@@ -713,8 +713,8 @@
       },
       "category": "Utilities",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：7.2.14（openEuler 包）；AOF+RDB；`/data`；6379；默认 protected-mode no，公网必须设 `REDIS_PASSWORD`；UID/GID 998:996</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 7.2.14（openEuler 包）；AOF+RDB；`/data`；6379；默认 protected-mode no，公网必须设 `REDIS_PASSWORD`；UID/GID 998:996</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：7.2.14（openEuler 包）；AOF+RDB；`/data`；6379；默认 protected-mode no，公网必须设 `REDIS_PASSWORD`；UID/GID 998:996</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 7.2.14（openEuler 包）；AOF+RDB；`/data`；6379；默认 protected-mode no，公网必须设 `REDIS_PASSWORD`；UID/GID 998:996</p>"
       }
     },
     "mosquitto": {
@@ -724,8 +724,8 @@
       },
       "category": "Utilities",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：2.0.20（openEuler EPOL）；持久化 `/mosquitto/data`；1883；默认 allow_anonymous true，公网必须关匿名并配 passwd；含 mosquitto_pub/sub/passwd；UID/GID 998:996</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 2.0.20（openEuler EPOL）；持久化 `/mosquitto/data`；1883；默认 allow_anonymous true，公网必须关匿名并配 passwd；含 mosquitto_pub/sub/passwd；UID/GID 998:996</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：2.0.20（openEuler EPOL）；持久化 `/mosquitto/data`；1883；默认 allow_anonymous true，公网必须关匿名并配 passwd；含 mosquitto_pub/sub/passwd；UID/GID 998:996</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 2.0.20（openEuler EPOL）；持久化 `/mosquitto/data`；1883；默认 allow_anonymous true，公网必须关匿名并配 passwd；含 mosquitto_pub/sub/passwd；UID/GID 998:996</p>"
       }
     },
     "mariadb": {
@@ -735,8 +735,8 @@
       },
       "category": "Utilities",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：10.11.18（openEuler 包）；`MYSQL_ROOT_PASSWORD/DATABASE/USER/PASSWORD/ALLOW_EMPTY_PASSWORD`；`/var/lib/mysql`；3306；root 仅 localhost；日志走 stderr；UID/GID 27</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 10.11.18（openEuler 包）；`MYSQL_ROOT_PASSWORD/DATABASE/USER/PASSWORD/ALLOW_EMPTY_PASSWORD`；`/var/lib/mysql`；3306；root 仅 localhost；日志走 stderr；UID/GID 27</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：10.11.18（openEuler 包）；`MYSQL_ROOT_PASSWORD/DATABASE/USER/PASSWORD/ALLOW_EMPTY_PASSWORD`；`/var/lib/mysql`；3306；root 仅 localhost；日志走 stderr；UID/GID 27</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 10.11.18（openEuler 包）；`MYSQL_ROOT_PASSWORD/DATABASE/USER/PASSWORD/ALLOW_EMPTY_PASSWORD`；`/var/lib/mysql`；3306；root 仅 localhost；日志走 stderr；UID/GID 27</p>"
       }
     },
     "node-red": {
@@ -746,8 +746,8 @@
       },
       "category": "Developer",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：5.0.8 + Node 24.22.1；基于 `yunixintel/node`；多阶段构建；1880；`/data`；保留 npm 支持 palette；UID 1001</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 5.0.8 + Node 24.22.1；基于 `yunixintel/node`；多阶段构建；1880；`/data`；保留 npm 支持 palette；UID 1001</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：5.0.8 + Node 24.22.1；基于 `yunixintel/node`；多阶段构建；1880；`/data`；保留 npm 支持 palette；UID 1001</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 5.0.8 + Node 24.22.1；基于 `yunixintel/node`；多阶段构建；1880；`/data`；保留 npm 支持 palette；UID 1001</p>"
       }
     },
     "grafana": {
@@ -757,8 +757,8 @@
       },
       "category": "Monitoring",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：13.2.4；前端 WSL Node22/Yarn4 webpack 构建，删 source map；Go 1.27/CGO0 `-tags oss`；UID/GID 472；`/var/lib/grafana`；3000；默认 admin/admin；不含 renderer 与额外 bundled 插件</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 13.2.4；前端 WSL Node22/Yarn4 webpack 构建，删 source map；Go 1.27/CGO0 `-tags oss`；UID/GID 472；`/var/lib/grafana`；3000；默认 admin/admin；不含 renderer 与额外 bundled 插件</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：13.2.4；前端 WSL Node22/Yarn4 webpack 构建，删 source map；Go 1.27/CGO0 `-tags oss`；UID/GID 472；`/var/lib/grafana`；3000；默认 admin/admin；不含 renderer 与额外 bundled 插件</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 13.2.4；前端 WSL Node22/Yarn4 webpack 构建，删 source map；Go 1.27/CGO0 `-tags oss`；UID/GID 472；`/var/lib/grafana`；3000；默认 admin/admin；不含 renderer 与额外 bundled 插件</p>"
       }
     },
     "memcached": {
@@ -768,8 +768,8 @@
       },
       "category": "Networking",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：1.6.42（openEuler 包）；默认 64MB/1024 连接/4 线程；`MEMCACHED_*` 可调；11211；无认证、无持久化，禁止公网暴露；UID/GID 998:996</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 1.6.42（openEuler 包）；默认 64MB/1024 连接/4 线程；`MEMCACHED_*` 可调；11211；无认证、无持久化，禁止公网暴露；UID/GID 998:996</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：1.6.42（openEuler 包）；默认 64MB/1024 连接/4 线程；`MEMCACHED_*` 可调；11211；无认证、无持久化，禁止公网暴露；UID/GID 998:996</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 1.6.42（openEuler 包）；默认 64MB/1024 连接/4 线程；`MEMCACHED_*` 可调；11211；无认证、无持久化，禁止公网暴露；UID/GID 998:996</p>"
       }
     },
     "homebridge": {
@@ -779,8 +779,8 @@
       },
       "category": "Home Automation",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：建议 host 网络；需改默认配对码。</p><p>镜像说明：2.4.0 + Config UI 5.29.0 + Node 24.22.1；基于 `yunixintel/node`；node-pty 源码编 loong64；hb-service run；建议 host 网络；`/homebridge`；8581/51826；UID 1000</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: Host networking recommended; change the default pairing code.</p><p>Image notes: 2.4.0 + Config UI 5.29.0 + Node 24.22.1；基于 `yunixintel/node`；node-pty 源码编 loong64；hb-service run；建议 host 网络；`/homebridge`；8581/51826；UID 1000</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：建议 host 网络；需改默认配对码。</p><p>镜像说明：2.4.0 + Config UI 5.29.0 + Node 24.22.1；基于 `yunixintel/node`；node-pty 源码编 loong64；hb-service run；建议 host 网络；`/homebridge`；8581/51826；UID 1000</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: Host networking recommended; change the default pairing code.</p><p>Image notes: 2.4.0 + Config UI 5.29.0 + Node 24.22.1；基于 `yunixintel/node`；node-pty 源码编 loong64；hb-service run；建议 host 网络；`/homebridge`；8581/51826；UID 1000</p>"
       }
     },
     "rest-server": {
@@ -790,8 +790,8 @@
       },
       "category": "Backup",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：0.14.0；Go 静态二进制 12MB；openEuler + httpd-tools（htpasswd）；`/data`；8000；默认开认证，先 create_user 再重启；可 DISABLE_AUTHENTICATION=1；无 TLS</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 0.14.0；Go 静态二进制 12MB；openEuler + httpd-tools（htpasswd）；`/data`；8000；默认开认证，先 create_user 再重启；可 DISABLE_AUTHENTICATION=1；无 TLS</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：0.14.0；Go 静态二进制 12MB；openEuler + httpd-tools（htpasswd）；`/data`；8000；默认开认证，先 create_user 再重启；可 DISABLE_AUTHENTICATION=1；无 TLS</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 0.14.0；Go 静态二进制 12MB；openEuler + httpd-tools（htpasswd）；`/data`；8000；默认开认证，先 create_user 再重启；可 DISABLE_AUTHENTICATION=1；无 TLS</p>"
       }
     },
     "actual-budget": {
@@ -801,8 +801,8 @@
       },
       "category": "Productivity",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：26.10.0（@actual-app/sync-server）+ Node 24.22.1；`/opt/node24`；`/data`；5006；UID 1002；better-sqlite3 需手动 node-gyp 编 loong64；无内置 TLS</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 26.10.0（@actual-app/sync-server）+ Node 24.22.1；`/opt/node24`；`/data`；5006；UID 1002；better-sqlite3 需手动 node-gyp 编 loong64；无内置 TLS</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：26.10.0（@actual-app/sync-server）+ Node 24.22.1；`/opt/node24`；`/data`；5006；UID 1002；better-sqlite3 需手动 node-gyp 编 loong64；无内置 TLS</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 26.10.0（@actual-app/sync-server）+ Node 24.22.1；`/opt/node24`；`/data`；5006；UID 1002；better-sqlite3 需手动 node-gyp 编 loong64；无内置 TLS</p>"
       }
     },
     "minio": {
@@ -812,8 +812,8 @@
       },
       "category": "Cloud",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：必须设置 MINIO_ROOT_USER/PASSWORD。</p><p>镜像说明：RELEASE.2025-10-15T17-29-55Z；Go 1.27 源码编；`/data`；9000/9001；UID 1000；必须设 MINIO_ROOT_USER/PASSWORD；AGPLv3；单盘无纠删码</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: MINIO_ROOT_USER/PASSWORD are required.</p><p>Image notes: RELEASE.2025-10-15T17-29-55Z；Go 1.27 源码编；`/data`；9000/9001；UID 1000；必须设 MINIO_ROOT_USER/PASSWORD；AGPLv3；单盘无纠删码</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：必须设置 MINIO_ROOT_USER/PASSWORD。</p><p>镜像说明：RELEASE.2025-10-15T17-29-55Z；Go 1.27 源码编；`/data`；9000/9001；UID 1000；必须设 MINIO_ROOT_USER/PASSWORD；AGPLv3；单盘无纠删码</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: MINIO_ROOT_USER/PASSWORD are required.</p><p>Image notes: RELEASE.2025-10-15T17-29-55Z；Go 1.27 源码编；`/data`；9000/9001；UID 1000；必须设 MINIO_ROOT_USER/PASSWORD；AGPLv3；单盘无纠删码</p>"
       }
     },
     "homebox": {
@@ -823,8 +823,8 @@
       },
       "category": "Productivity",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v0.10.3；Nuxt 静态前端 embed；Go 1.27；modernc sqlite 需升到 1.61 支持 loong64；`/data`；7745；UID 1000；默认允许注册</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v0.10.3；Nuxt 静态前端 embed；Go 1.27；modernc sqlite 需升到 1.61 支持 loong64；`/data`；7745；UID 1000；默认允许注册</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v0.10.3；Nuxt 静态前端 embed；Go 1.27；modernc sqlite 需升到 1.61 支持 loong64；`/data`；7745；UID 1000；默认允许注册</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v0.10.3；Nuxt 静态前端 embed；Go 1.27；modernc sqlite 需升到 1.61 支持 loong64；`/data`；7745；UID 1000；默认允许注册</p>"
       }
     },
     "nocodb": {
@@ -834,8 +834,8 @@
       },
       "category": "Developer",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：0.301.3 + Node 24.22.1；npm 需 --ignore-scripts 跳过 only-allow pnpm；sqlite3 手动 node-gyp 编 loong64；自定义 docker-main runner；`/data`；8080；UID 1000</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 0.301.3 + Node 24.22.1；npm 需 --ignore-scripts 跳过 only-allow pnpm；sqlite3 手动 node-gyp 编 loong64；自定义 docker-main runner；`/data`；8080；UID 1000</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：0.301.3 + Node 24.22.1；npm 需 --ignore-scripts 跳过 only-allow pnpm；sqlite3 手动 node-gyp 编 loong64；自定义 docker-main runner；`/data`；8080；UID 1000</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 0.301.3 + Node 24.22.1；npm 需 --ignore-scripts 跳过 only-allow pnpm；sqlite3 手动 node-gyp 编 loong64；自定义 docker-main runner；`/data`；8080；UID 1000</p>"
       }
     },
     "apprise-api": {
@@ -845,8 +845,8 @@
       },
       "category": "Utilities",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：2.0.1 + Python 3.11；系统 cryptography 42/gevent 22.10.2；pycares 需 cmake；nginx+supervisor+gunicorn；`/config`、`/attach`、`/plugin`；8000</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 2.0.1 + Python 3.11；系统 cryptography 42/gevent 22.10.2；pycares 需 cmake；nginx+supervisor+gunicorn；`/config`、`/attach`、`/plugin`；8000</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：2.0.1 + Python 3.11；系统 cryptography 42/gevent 22.10.2；pycares 需 cmake；nginx+supervisor+gunicorn；`/config`、`/attach`、`/plugin`；8000</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 2.0.1 + Python 3.11；系统 cryptography 42/gevent 22.10.2；pycares 需 cmake；nginx+supervisor+gunicorn；`/config`、`/attach`、`/plugin`；8000</p>"
       }
     },
     "mealie": {
@@ -867,8 +867,8 @@
       },
       "category": "Media",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：v0.55.2 Lite；Go + Quasar 前端（x86 构建）；go-webrtcvad 补 LoongArch 分支；`/config`、`/media`；19035；UID 1026；内置 ffmpeg</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: v0.55.2 Lite；Go + Quasar 前端（x86 构建）；go-webrtcvad 补 LoongArch 分支；`/config`、`/media`；19035；UID 1026；内置 ffmpeg</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v0.55.2 Lite；Go + Quasar 前端（x86 构建）；go-webrtcvad 补 LoongArch 分支；`/config`、`/media`；19035；UID 1026；内置 ffmpeg</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v0.55.2 Lite；Go + Quasar 前端（x86 构建）；go-webrtcvad 补 LoongArch 分支；`/config`、`/media`；19035；UID 1026；内置 ffmpeg</p>"
       }
     },
     "lanraragi": {
@@ -878,8 +878,8 @@
       },
       "category": "Media",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：0.9.81；Perl + 126 个 CPAN 模块；内置 Redis；需设置 PERL5LIB loongarch64 路径；`content`/`thumb`/`database`；3000；UID 9001</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 0.9.81；Perl + 126 个 CPAN 模块；内置 Redis；需设置 PERL5LIB loongarch64 路径；`content`/`thumb`/`database`；3000；UID 9001</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：0.9.81；Perl + 126 个 CPAN 模块；内置 Redis；需设置 PERL5LIB loongarch64 路径；`content`/`thumb`/`database`；3000；UID 9001</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 0.9.81；Perl + 126 个 CPAN 模块；内置 Redis；需设置 PERL5LIB loongarch64 路径；`content`/`thumb`/`database`；3000；UID 9001</p>"
       }
     },
     "owntone": {
@@ -889,8 +889,8 @@
       },
       "category": "Media",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：29.3；DAAP/DACP/AirPlay；容器内启动 dbus + avahi；`/srv/music`、`/var/cache/owntone`；3689；UID 998</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 29.3；DAAP/DACP/AirPlay；容器内启动 dbus + avahi；`/srv/music`、`/var/cache/owntone`；3689；UID 998</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：29.3；DAAP/DACP/AirPlay；容器内启动 dbus + avahi；`/srv/music`、`/var/cache/owntone`；3689；UID 998</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 29.3；DAAP/DACP/AirPlay；容器内启动 dbus + avahi；`/srv/music`、`/var/cache/owntone`；3689；UID 998</p>"
       }
     },
     "mymind": {
@@ -900,8 +900,8 @@
       },
       "category": "Media",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：无额外外部依赖。</p><p>镜像说明：纯静态思维导图；nginx；32 个文件；无后端/无持久化；80</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: No extra external dependency.</p><p>Image notes: 纯静态思维导图；nginx；32 个文件；无后端/无持久化；80</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：纯静态思维导图；nginx；32 个文件；无后端/无持久化；80</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: 纯静态思维导图；nginx；32 个文件；无后端/无持久化；80</p>"
       }
     },
     "webvirtcloud": {
@@ -911,8 +911,8 @@
       },
       "category": "Developer",
       "description_html": {
-        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。</p><p>缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。</p><p>额外依赖：需 libvirt/KVM 与 SSH 凭据。</p><p>镜像说明：Django 4.2 + Python 3.11 + libvirt + noVNC；gunicorn/novncd/nginx 三进程；`/srv/webvirtcloud/data`、`/var/www/.ssh`；80；UID 33</p>",
-        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: No known behavior difference from upstream; only the image architecture is linux/loong64.</p><p>Missing features: No known missing feature (not yet fully regression-tested against upstream).</p><p>Extra dependencies: Requires libvirt/KVM and SSH credentials.</p><p>Image notes: Django 4.2 + Python 3.11 + libvirt + noVNC；gunicorn/novncd/nginx 三进程；`/srv/webvirtcloud/data`、`/var/www/.ssh`；80；UID 33</p>"
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：需 libvirt/KVM 与 SSH 凭据。</p><p>镜像说明：Django 4.2 + Python 3.11 + libvirt + noVNC；gunicorn/novncd/nginx 三进程；`/srv/webvirtcloud/data`、`/var/www/.ssh`；80；UID 33</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: Requires libvirt/KVM and SSH credentials.</p><p>Image notes: Django 4.2 + Python 3.11 + libvirt + noVNC；gunicorn/novncd/nginx 三进程；`/srv/webvirtcloud/data`、`/var/www/.ssh`；80；UID 33</p>"
       }
     },
     "penpot-backend": {
