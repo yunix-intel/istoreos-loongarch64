@@ -1,0 +1,31 @@
+--- a/docker-entrypoint.sh
++++ b/docker-entrypoint.sh
+@@ -63,16 +63,24 @@
+         echo "YTDL_NIGHTLY_UPDATE_TIME is set to ${YTDL_NIGHTLY_UPDATE_TIME}; upgrading yt-dlp on startup"
+         do_upgrade || true
+     fi
+-    echo "Starting BgUtils POT Provider"
+-    gosu "${PUID}":"${PGID}" bgutil-pot server >/tmp/bgutil-pot.log 2>&1 &
++    if command -v bgutil-pot >/dev/null 2>&1; then
++        echo "Starting BgUtils POT Provider"
++        gosu "${PUID}":"${PGID}" bgutil-pot server >/tmp/bgutil-pot.log 2>&1 &
++    else
++        echo "bgutil-pot not installed; PO token provider disabled"
++    fi
+     echo "Running MeTube as user ${PUID}:${PGID}"
+     run_supervised gosu "${PUID}":"${PGID}" python3 app/main.py
+     exit $?
+ else
+     echo "User set by docker; running MeTube as `id -u`:`id -g`"
+     disable_nightly_for_non_root
+-    echo "Starting BgUtils POT Provider"
+-    bgutil-pot server >/tmp/bgutil-pot.log 2>&1 &
++    if command -v bgutil-pot >/dev/null 2>&1; then
++        echo "Starting BgUtils POT Provider"
++        bgutil-pot server >/tmp/bgutil-pot.log 2>&1 &
++    else
++        echo "bgutil-pot not installed; PO token provider disabled"
++    fi
+     run_supervised python3 app/main.py
+     exit $?
+ fi

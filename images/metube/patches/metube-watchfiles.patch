@@ -1,0 +1,29 @@
+--- a/app/main.py
++++ b/app/main.py
+@@ -17,7 +17,25 @@
+ import re
+ import time
+ from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
+-from watchfiles import awatch
++# LoongArch build: watchfiles has no loong64 wheel and needs a Rust extension.
++# Poll the watched directory instead; callers compare file signatures anyway.
++async def awatch(*paths, **kwargs):
++    seen = {}
++    while True:
++        changed = set()
++        for path in paths:
++            try:
++                stamp = os.stat(path).st_mtime_ns
++            except OSError:
++                continue
++            if path not in seen:
++                seen[path] = stamp
++            elif seen[path] != stamp:
++                seen[path] = stamp
++                changed.add((None, str(path)))
++        if changed:
++            yield changed
++        await asyncio.sleep(1.0)
+ 
+ import bg_tasks
+ import format_catalog

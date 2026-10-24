@@ -633,6 +633,21 @@ docker run -d --name matomo --network matomo -p 8080:80 \
 - 归档：`docker exec matomo php /var/www/matomo/console core:archive --url=http://<host>:8080/`。
 - 完整说明见 [../images/matomo/BUILD.md](../images/matomo/BUILD.md)。
 
+### MeTube
+
+```bash
+docker run -d --name metube -p 8082:8082 \
+  -v /srv/downloads:/downloads \
+  -e PUID=1111 -e PGID=1111 \
+  yunixintel/metube:loong64
+```
+
+- Web UI：`http://<host>:8082/`；健康检查 `/`。
+- `/downloads` 存视频与 `.metube` 状态；宿主目录建议 `chown 1111:1111`。
+- 默认以 Node 24 作为 yt-dlp 的 JS runtime；用户显式设置 `YTDL_OPTIONS` 时覆盖默认值。
+- 无 Brotli 解压、无 `bgutil-pot`；部分 YouTube 视频可能需要 cookies。
+- 完整说明见 [../images/metube/BUILD.md](../images/metube/BUILD.md)。
+
 ### Woodpecker CI（server + agent）
 
 ```bash

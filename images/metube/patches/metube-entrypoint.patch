@@ -1,0 +1,49 @@
+--- a/docker-entrypoint.sh
++++ b/docker-entrypoint.sh
+@@ -1,9 +1,15 @@
+ #!/bin/sh
+ 
+-PUID="${UID:-$PUID}"
+-PGID="${GID:-$PGID}"
++PUID="${PUID:-$UID}"
++PGID="${PGID:-$GID}"
+ AUDIO_DOWNLOAD_DIR="${AUDIO_DOWNLOAD_DIR:-$DOWNLOAD_DIR}"
+ 
++# LoongArch image defaults: use the bundled Node 24 as yt-dlp's JS runtime.
++if [ -z "${YTDL_OPTIONS:-}" ]; then
++    YTDL_OPTIONS='{"js_runtimes":{"node":{}}}'
++    export YTDL_OPTIONS
++fi
++
+ echo "Setting umask to ${UMASK}"
+ umask ${UMASK}
+ echo "Creating download directory (${DOWNLOAD_DIR}), audio download directory (${AUDIO_DOWNLOAD_DIR}), state directory (${STATE_DIR}), and temp dir (${TEMP_DIR})"
+@@ -63,16 +69,24 @@
+         echo "YTDL_NIGHTLY_UPDATE_TIME is set to ${YTDL_NIGHTLY_UPDATE_TIME}; upgrading yt-dlp on startup"
+         do_upgrade || true
+     fi
+-    echo "Starting BgUtils POT Provider"
+-    gosu "${PUID}":"${PGID}" bgutil-pot server >/tmp/bgutil-pot.log 2>&1 &
++    if command -v bgutil-pot >/dev/null 2>&1; then
++        echo "Starting BgUtils POT Provider"
++        gosu "${PUID}":"${PGID}" bgutil-pot server >/tmp/bgutil-pot.log 2>&1 &
++    else
++        echo "bgutil-pot not installed; PO token provider disabled"
++    fi
+     echo "Running MeTube as user ${PUID}:${PGID}"
+     run_supervised gosu "${PUID}":"${PGID}" python3 app/main.py
+     exit $?
+ else
+     echo "User set by docker; running MeTube as `id -u`:`id -g`"
+     disable_nightly_for_non_root
+-    echo "Starting BgUtils POT Provider"
+-    bgutil-pot server >/tmp/bgutil-pot.log 2>&1 &
++    if command -v bgutil-pot >/dev/null 2>&1; then
++        echo "Starting BgUtils POT Provider"
++        bgutil-pot server >/tmp/bgutil-pot.log 2>&1 &
++    else
++        echo "bgutil-pot not installed; PO token provider disabled"
++    fi
+     run_supervised python3 app/main.py
+     exit $?
+ fi

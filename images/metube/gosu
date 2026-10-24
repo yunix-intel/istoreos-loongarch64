@@ -1,0 +1,6 @@
+#!/bin/sh
+cred="$1"
+shift
+uid="${cred%%:*}"
+gid="${cred##*:}"
+exec setpriv --reuid="$uid" --regid="$gid" --clear-groups "$@"

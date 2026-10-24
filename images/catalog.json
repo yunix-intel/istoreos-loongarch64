@@ -726,5 +726,12 @@
     "architecture": "linux/loong64",
     "verification": "10 个端口 3000–3006/3008–3010 全 200、photos `/gallery` 200、WASM `application/wasm`、占位符 0",
     "notes": "ente commit 1353a65；10 个 Next.js 16.4.2 静态导出；nginx 1.30；必须设 `ENTE_API_ORIGIN`；无 Next 服务端/API/图片优化器；需配 ente-server"
+  },
+  {
+    "image": "yunixintel/metube",
+    "size": "约 441MB (Hub)",
+    "architecture": "linux/loong64",
+    "verification": "`/` 200、`POST /add` 下载 YouTube 短视频 finished、文件合并 464KB、healthy",
+    "notes": "2026.10.23；Python 3.13.7 + yt-dlp 2026.10.21 + Node 24 + ffmpeg 6.1.1；`/downloads`；8082；UID 1111；watchfiles 用轮询替代；无 Brotli；无 bgutil-pot"
   }
 ]

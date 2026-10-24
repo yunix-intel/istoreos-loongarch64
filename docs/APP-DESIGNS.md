@@ -156,7 +156,7 @@
 | go2rtc | 未记录 | 待锁定 |
 | Komga | 1.29.1 | 调研值，待复核 |
 | Matomo | 未记录 | 待锁定 |
-| MeTube | 未记录 | 待锁定 |
+| MeTube | 未记录 | 已锁定：tag `2026.10.23`，commit `0f3fc1d` |
 | SABnzbd | 未记录 | 待锁定 |
 | Autobrr | 未记录 | 待锁定 |
 | Woodpecker | v3.19.0 | 调研值，待复核 |
@@ -498,7 +498,7 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 | 风险 | 比 Umami 重；归档 cron 需要文档化；官方镜像仅 amd64/arm64 |
 | 估算 | 镜像约 500–700MB；3–5 天 |
 
-### P3-03 MeTube
+### P3-03 MeTube ✅ 已实现（2026-10-24）
 
 | 项 | 设计 |
 |---|---|
@@ -864,7 +864,7 @@ WantedBy=multi-user.target
 | Q-04 | Scrutiny 在容器内识别 `/dev/sd*` 的稳定方式 | Scrutiny | SATA/NVMe 两种真机测试 |
 | Q-05 | Z2M serialport 在 Node 24 下的源码编参数 | Zigbee2MQTT | 构建 spike |
 | Q-06 | SABnzbd 的 unrar 许可与分发方式 | SABnzbd | 法务/许可复核后再做 |
-| Q-07 | MeTube 去掉 curl-cffi/deno 后 yt-dlp 的 JS runtime 行为 | MeTube | 下载测试 |
+| Q-07 | MeTube 去掉 curl-cffi/deno 后 yt-dlp 的 JS runtime 行为 | MeTube | **已关闭**：默认 `YTDL_OPTIONS` 指定 Node 24；实测下载成功 |
 | Q-08 | Woodpecker agent 的 docker.sock 权限模型 | Woodpecker | 安全评审 + compose 示例 |
 | Q-09 | Karakeep 所需 Chromium 在 loong64 的可用性 | Karakeep | 先验证浏览器，失败则不做 |
 | Q-10 | OMV 的 Debian 基线是否匹配 Loongnix 25 | OMV | Gate 0 O-01 |
