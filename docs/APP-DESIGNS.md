@@ -167,7 +167,7 @@
 | Joplin Server | 未记录 | 待锁定 |
 | wg-easy | 未记录 | 待锁定 |
 | Registry | 未记录 | 已锁定：`v3.1.2`，commit `3220848` |
-| Pocket ID | 未记录 | 待锁定 |
+| Pocket ID | 未记录 | 已锁定：`v2.9.0`，commit `49cb131` |
 | Unpackerr | 未记录 | 已锁定：`v0.9.9`，commit `afaf4c6` |
 
 ---
@@ -628,7 +628,7 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 - 端口 5000；`/var/lib/registry`；配置 `config.yml`；TLS 由反代或证书挂载。
 - 健康检查 `/v2/`；估算 1 天。
 
-### P4-08 Pocket ID
+### P4-08 Pocket ID ✅ 已实现（2026-10-24）
 
 - 上游 `pocket-id/pocket-id`；Go + SvelteKit；**前端需在 x86 构建**，不能用“纯 Go 单二进制”假设。
 - 端口 1411；`/data`；`APP_URL`、`ENCRYPTION_KEY`；UID 1122。

@@ -712,6 +712,21 @@ docker run -d --name unpackerr \
 - 健康检查为 `pgrep`，只代表进程存活，不代表 *arr 可达。
 - 完整说明见 [../images/unpackerr/BUILD.md](../images/unpackerr/BUILD.md)。
 
+### Pocket ID
+
+```bash
+docker run -d --name pocket-id -p 1411:1411 \
+  -e APP_URL=http://<host>:1411 \
+  -v pocket-id-data:/data \
+  yunixintel/pocket-id:loong64
+```
+
+- Web：`http://<host>:1411/`；健康 `/healthz`（204）。
+- `/data` 存 SQLite、上传文件与 `encryption-key`，必须持久化。
+- `APP_URL` 必须是外部可访问地址；首次向导创建管理员。
+- 与 Authelia 二选一。
+- 完整说明见 [../images/pocket-id/BUILD.md](../images/pocket-id/BUILD.md)。
+
 ### Woodpecker CI（server + agent）
 
 ```bash
