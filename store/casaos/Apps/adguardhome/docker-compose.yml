@@ -28,11 +28,11 @@ x-casaos:
 
       架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
 
-      龙芯版说明：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。
+      龙芯版说明：官方无 loong64 资产，源码自编 + 官方前端。
 
-      缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。
+      缺失功能：53 端口需避让宿主 dnsmasq。
 
-      额外依赖：需 host 网络并避让宿主 dnsmasq。
+      额外依赖：建议 host 网络；3000 Web；持久化 work/conf。
 
       镜像说明：官方无 loong64 资产，源码自编 + 官方前端；53 端口需映射避让宿主 dnsmasq'
     en_us: '**LoongArch notes**
@@ -40,12 +40,11 @@ x-casaos:
 
       Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
 
-      LoongArch notes: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested
-      item by item. Limitations in the image notes also apply.
+      LoongArch notes: No official loong64 asset; built from source with the official frontend.
 
-      Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.
+      Missing features: Port 53 conflicts with the host dnsmasq.
 
-      Extra dependencies: Requires host networking; avoid the host dnsmasq on port 53.
+      Extra dependencies: Host networking recommended; web on 3000; persist work/conf.
 
       Image notes: 官方无 loong64 资产，源码自编 + 官方前端；53 端口需映射避让宿主 dnsmasq'
   developer: Home

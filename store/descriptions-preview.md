@@ -11,11 +11,11 @@
 | Mihomo (`mihomo`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | EasyTier (`easytier`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Syncthing (`syncthing`) | Cloud | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
-| AdGuard Home (`adguardhome`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 需 host 网络并避让宿主 dnsmasq。 |
+| AdGuard Home (`adguardhome`) | Networking | 官方无 loong64 资产，源码自编 + 官方前端。 | 53 端口需避让宿主 dnsmasq。 | 建议 host 网络；3000 Web；持久化 work/conf。 |
 | Memos (`memos`) | Productivity | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Gogs (`gogs`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
-| File Browser (`filebrowser`) | Cloud | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
-| qBittorrent (Enhanced Edition) (`qbittorrent-ee`) | Downloaders | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| File Browser (`filebrowser`) | Cloud | 上游已于 2026-09-01 归档，无后续安全修复；镜像默认监听 0.0.0.0（v2.63 上游默认 127.0.0.1）。 | 无上游安全更新。 | 8080；持久化 /srv 与数据库。 |
+| qBittorrent (Enhanced Edition) (`qbittorrent-ee`) | Downloaders | 官方 loong64 静态包；WebUI 校验 Host header。 | 端口映射与 WebUI 端口不一致时会拒绝访问。 | 建议让 WebUI 端口与宿主映射端口一致。 |
 | IT-Tools (`it-tools`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Excalidraw (`excalidraw`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Kopia (`kopia`) | Backup | Web UI 强制 Basic 认证。 | 默认凭据需修改。 | 仓库存储需持久化。 |
@@ -28,65 +28,65 @@
 | Jackett (`jackett`) | Downloaders | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | xTeVe (`xteve`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | One API (`one-api`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
-| code-server (`code-server`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| code-server (`code-server`) | Developer | 4.141.0 + VS Code 1.141，必须 Node 24；自编静态 ripgrep。 | Node 20 缺少 module.registerHooks，不能替换运行时。 | 8443；持久化 /home/coder。 |
 | DPanel (`dpanel`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 需挂载 docker.sock。 |
 | Shiori (`shiori`) | Productivity | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
-| Jellyseerr (`jellyseerr`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Jellyseerr (`jellyseerr`) | Media | Next 16 使用 WASM SWC 在 x86 构建；sharp 不可用，图片优化关闭。 | 无 Next 图片优化器；依赖上游请求服务。 | 需 Sonarr/Radarr 等上游服务；5055。 |
 | Audiobookshelf (`audiobookshelf`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Calibre-Web (`calibre-web`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
-| Homarr (`homarr`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 需 Redis。 |
-| Open WebUI (`openwebui`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Homarr (`homarr`) | Networking | Next 16 WASM SWC + Node 24；未使用 Bun/Turbo。 | Bun/Turbo 构建链未移植；依赖 Redis。 | 需 Redis；7575。 |
+| Open WebUI (`openwebui`) | Developer | 仅推理模式：不含 torch/onnxruntime/whisper/OCR 与内置模型。 | 本地推理、语音、OCR 不可用；RAG 需外部 pgvector。 | 需外部 Ollama/OpenAI 兼容服务；RAG 需 PostgreSQL + pgvector。 |
 | KodExplorer (`kodexplorer`) | Cloud | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Home Assistant (`homeassistant`) | Home Automation | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 建议 host 网络以发现设备。 |
 | Sonarr (`sonarr`) | Downloaders | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Radarr (`radarr`) | Downloaders | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Tautulli (`tautulli`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
-| Jellystat (`jellystat`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 需外部 PostgreSQL。 |
-| Stirling PDF (`stirling-pdf`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Jellystat (`jellystat`) | Media | Node 20 + Vite 6。 | 无 SQLite 路径，必须外部 PostgreSQL。 | 需 PostgreSQL；3000。 |
+| Stirling PDF (`stirling-pdf`) | Media | 官方 jar + Java 25。 | 未装 LibreOffice/OCR，相关转换不可用。 | 8080；首次可按需在 UI 配置。 |
 | Wizarr (`wizarr`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Gitea (`gitea`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
-| Miniflux (`miniflux`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 需外部 PostgreSQL。 |
+| Miniflux (`miniflux`) | Utilities | 上游已删除 SQLite 支持，必须提供 PostgreSQL DSN。 | 不支持 SQLite。 | 需 PostgreSQL；8080。 |
 | Portainer (`portainer`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 需挂载 docker.sock。 |
-| Nginx Proxy Manager (`nginx-proxy-manager`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Nginx Proxy Manager (`nginx-proxy-manager`) | Networking | 前端在 x64 构建；自定义 entrypoint 替代 s6-overlay。 | s6-overlay 的进程管理行为未完全复刻。 | 81/443；持久化 data 与 letsencrypt。 |
 | Firefly III (`firefly-iii`) | Productivity | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | phpMyAdmin (`phpmyadmin`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | FreshRSS (`freshrss`) | Productivity | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Prowlarr (`prowlarr`) | Downloaders | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Bazarr (`bazarr`) | Downloaders | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | homer (`homer`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
-| Paperless-ngx (`paperless-ngx`) | Productivity | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Paperless-ngx (`paperless-ngx`) | Productivity | qpdf 12.4.2 自编以支持 pikepdf；AI 功能关闭；未装 unpaper。 | 无 AI 分类/实体识别；无 unpaper 后处理。 | 需 Redis + celery worker/beat/consumer；8000。 |
 | Dashy (`dashy`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Watchtower (`watchtower`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 需挂载 docker.sock。 |
-| ChangeDetection.io (`changedetection`) | Monitoring | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| ChangeDetection.io (`changedetection`) | Monitoring | 使用 Firefox 140.11 ESR + geckodriver/Selenium，不是 Playwright；OpenCV SSIM 使用 numpy 1.26.4。 | 无本地 Chrome；可配置远程 Chrome WebDriver。 | 需 --shm-size=1g；5000；持久化 /datastore。 |
 | Caddy (`caddy`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Dozzle (`dozzle`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 需挂载 docker.sock。 |
 | ntfy (`ntfy`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Gotify (`gotify`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Node Exporter (`node-exporter`) | Monitoring | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Prometheus (`prometheus`) | Monitoring | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
-| Pi-hole (`pihole`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 需 host 网络并避让宿主 dnsmasq。 |
+| Pi-hole (`pihole`) | Networking | FTL 6.8 源码编，版本自报 UNKNOWN；内置 pihole CLI 与 pihole-adlist。 | 需 host 网络；宿主 dnsmasq 占用 53 时不可用。 | 53/tcp+udp、80；持久化 /etc/pihole。 |
 | Gatus (`gatus`) | Monitoring | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Alertmanager (`alertmanager`) | Monitoring | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | PostgreSQL (`postgres`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
-| Redis (`redis`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
-| Eclipse Mosquitto (`mosquitto`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Redis (`redis`) | Utilities | openEuler 7.2.14 包；AOF+RDB。 | 默认 protected-mode no，必须配密码或限制网络。 | 6379；持久化 /data。 |
+| Eclipse Mosquitto (`mosquitto`) | Utilities | openEuler 2.0.20 包。 | 默认 allow_anonymous true，公网必须配 passwd。 | 1883；持久化 /mosquitto/data。 |
 | MariaDB (`mariadb`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Node-RED (`node-red`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
-| Grafana (`grafana`) | Monitoring | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
-| Memcached (`memcached`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
-| Homebridge (`homebridge`) | Home Automation | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 建议 host 网络；需改默认配对码。 |
-| REST Server (`rest-server`) | Backup | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Grafana (`grafana`) | Monitoring | 前端在 x86 构建；Go CGO-free 编。 | 未内置 renderer；默认 admin/admin。 | 3000；持久化 /var/lib/grafana。 |
+| Memcached (`memcached`) | Networking | openEuler 1.6.42 包；默认 64MB/1024 连接。 | 无认证、无持久化，禁止公网暴露。 | 11211；用 MEMCACHED_* 调整。 |
+| Homebridge (`homebridge`) | Home Automation | Homebridge 2.4.0 + Config UI 5.29.0 + Node 24；node-pty 源码编 loongarch64。 | 建议 host 网络；默认配对码需修改。 | 8581 Web、51826；持久化 /homebridge。 |
+| REST Server (`rest-server`) | Backup | Go 静态编译，镜像约 12MB。 | 默认开启认证；无 TLS。 | 8000；用 httpd-tools 的 htpasswd 建用户。 |
 | Actual Budget (`actual-budget`) | Productivity | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
-| MinIO (`minio`) | Cloud | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 必须设置 MINIO_ROOT_USER/PASSWORD。 |
+| MinIO (`minio`) | Cloud | Go 源码编；单目录模式无纠删码。 | 无纠删码/多盘冗余；无内置 TLS。 | 必须设 MINIO_ROOT_USER/PASSWORD；AGPLv3；9000/9001。 |
 | HomeBox (`homebox`) | Productivity | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | NocoDB (`nocodb`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
-| Apprise API (`apprise-api`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Apprise API (`apprise-api`) | Utilities | Python 3.11 + 系统 cryptography/gevent；nginx+supervisor+gunicorn。 | 默认无认证/无 TLS。 | 8000；持久化 /config、/attach、/plugin。 |
 | Mealie (`mealie`) | Productivity | Python 3.14 源码构建。 | 不支持 HEIF/HEIC。 | 持久化 /app/data；UID 911。 |
 | ChineseSubFinder (`chinesesubfinder`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
-| LANraragi (`lanraragi`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
-| OwnTone (`owntone`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| LANraragi (`lanraragi`) | Media | Perl 0.9.81 + 126 个 CPAN 模块；内置 Redis。 | 默认无认证。 | 3000；持久化 content/thumb/database；UID 9001。 |
+| OwnTone (`owntone`) | Media | DAAP/DACP/AirPlay 服务端；运行期需 dbus 与 avahi。 | AirPlay 发现依赖宿主网络与 avahi。 | 3689；挂载 /srv/music 与缓存。 |
 | MyMind (`mymind`) | Media | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
-| WebVirtCloud (`webvirtcloud`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 需 libvirt/KVM 与 SSH 凭据。 |
+| WebVirtCloud (`webvirtcloud`) | Developer | Django 4.2 + Python 3.11 + libvirt + noVNC。 | 需真实 libvirt/KVM 与 SSH 凭据；noVNC WebSocket 需反代。 | 80；持久化 data 与 .ssh。 |
 | Penpot (backend) (`penpot-backend`) | Developer | Penpot 前后端拆成两个镜像；后端用 JDK 21 运行官方 jar。 | 无 exporter（PDF/PNG 导出会 502）；无 admin-console/MCP。 | 需 PostgreSQL + Redis；PENPOT_SECRET_KEY 必填。 |
 | Penpot (frontend) (`penpot-frontend`) | Developer | Penpot 前端单独成镜像，通过 nginx 反代后端。 | 同上；导出功能未移植。 | 需同时部署 penpot-backend、PostgreSQL、Redis。 |
 | Hermes (`hermes`) | Developer | 使用 Python 3.14 独立构建；镜像保留 gcc/rust 工具链。 | 不支持 HEIC/HEIF；computer_use 在 loongarch64 不可用。 | 默认无 WebUI 密码；镜像约 3.68GB。 |

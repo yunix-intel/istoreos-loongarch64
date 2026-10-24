@@ -31,11 +31,11 @@ x-casaos:
 
       架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
 
-      龙芯版说明：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。
+      龙芯版说明：上游已于 2026-09-01 归档，无后续安全修复；镜像默认监听 0.0.0.0（v2.63 上游默认 127.0.0.1）。
 
-      缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。
+      缺失功能：无上游安全更新。
 
-      额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。
+      额外依赖：8080；持久化 /srv 与数据库。
 
       镜像说明：v2.63.23 源码编；**上游 2026-09-01 已归档**，无后续安全修复；默认监听改 0.0.0.0（v2.63 默认 127.0.0.1）'
     en_us: '**LoongArch notes**
@@ -43,12 +43,12 @@ x-casaos:
 
       Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
 
-      LoongArch notes: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested
-      item by item. Limitations in the image notes also apply.
+      LoongArch notes: Upstream was archived on 2026-09-01 with no further security fixes; the image listens on 0.0.0.0 (v2.63
+      upstream defaults to 127.0.0.1).
 
-      Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.
+      Missing features: No upstream security updates.
 
-      Extra dependencies: No extra external dependency unless the image notes say otherwise.
+      Extra dependencies: Port 8080; persist /srv and the database.
 
       Image notes: v2.63.23 源码编；**上游 2026-09-01 已归档**，无后续安全修复；默认监听改 0.0.0.0（v2.63 默认 127.0.0.1）'
   developer: FileBrowser
