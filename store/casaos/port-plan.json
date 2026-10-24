@@ -1,0 +1,778 @@
+{
+  "schema": 1,
+  "generated": "2026-10-24",
+  "range": "18001-18110",
+  "note": "Existing 18 definitions keep 18001-18018; new apps reserved from 18101. Verify no host conflicts before publishing.",
+  "apps": [
+    {
+      "id": "actual-budget",
+      "image": "yunixintel/actual-budget",
+      "host_port": 18101,
+      "source": "reserved",
+      "category": "Productivity"
+    },
+    {
+      "id": "adguardhome",
+      "image": "yunixintel/adguardhome",
+      "host_port": 18006,
+      "source": "existing-definition",
+      "category": "Networking"
+    },
+    {
+      "id": "alertmanager",
+      "image": "yunixintel/alertmanager",
+      "host_port": 18102,
+      "source": "reserved",
+      "category": "Monitoring"
+    },
+    {
+      "id": "apprise-api",
+      "image": "yunixintel/apprise-api",
+      "host_port": 18103,
+      "source": "reserved",
+      "category": "Utilities"
+    },
+    {
+      "id": "audiobookshelf",
+      "image": "yunixintel/audiobookshelf",
+      "host_port": 18104,
+      "source": "reserved",
+      "category": "Media"
+    },
+    {
+      "id": "authelia",
+      "image": "yunixintel/authelia",
+      "host_port": 18105,
+      "source": "reserved",
+      "category": "Security"
+    },
+    {
+      "id": "autobrr",
+      "image": "yunixintel/autobrr",
+      "host_port": 18106,
+      "source": "reserved",
+      "category": "Downloaders"
+    },
+    {
+      "id": "backrest",
+      "image": "yunixintel/backrest",
+      "host_port": 18107,
+      "source": "reserved",
+      "category": "Backup"
+    },
+    {
+      "id": "bazarr",
+      "image": "yunixintel/bazarr",
+      "host_port": 18108,
+      "source": "reserved",
+      "category": "Downloaders"
+    },
+    {
+      "id": "bookstack",
+      "image": "yunixintel/bookstack",
+      "host_port": 18109,
+      "source": "reserved",
+      "category": "Productivity"
+    },
+    {
+      "id": "caddy",
+      "image": "yunixintel/caddy",
+      "host_port": 18110,
+      "source": "reserved",
+      "category": "Networking"
+    },
+    {
+      "id": "calibre-web",
+      "image": "yunixintel/calibre-web",
+      "host_port": 18111,
+      "source": "reserved",
+      "category": "Media"
+    },
+    {
+      "id": "changedetection",
+      "image": "yunixintel/changedetection",
+      "host_port": 18112,
+      "source": "reserved",
+      "category": "Monitoring"
+    },
+    {
+      "id": "chinesesubfinder",
+      "image": "yunixintel/chinesesubfinder",
+      "host_port": 18113,
+      "source": "reserved",
+      "category": "Media"
+    },
+    {
+      "id": "code-server",
+      "image": "yunixintel/code-server",
+      "host_port": 18114,
+      "source": "reserved",
+      "category": "Developer"
+    },
+    {
+      "id": "dashy",
+      "image": "yunixintel/dashy",
+      "host_port": 18115,
+      "source": "reserved",
+      "category": "Networking"
+    },
+    {
+      "id": "dozzle",
+      "image": "yunixintel/dozzle",
+      "host_port": 18116,
+      "source": "reserved",
+      "category": "Developer"
+    },
+    {
+      "id": "dpanel",
+      "image": "yunixintel/dpanel",
+      "host_port": 18117,
+      "source": "reserved",
+      "category": "Developer"
+    },
+    {
+      "id": "drawio",
+      "image": "yunixintel/drawio",
+      "host_port": 18118,
+      "source": "reserved",
+      "category": "Media"
+    },
+    {
+      "id": "easytier",
+      "image": "yunixintel/easytier",
+      "host_port": 18119,
+      "source": "reserved",
+      "category": "Networking"
+    },
+    {
+      "id": "ente-server",
+      "image": "yunixintel/ente-server",
+      "host_port": 18120,
+      "source": "reserved",
+      "category": "Cloud"
+    },
+    {
+      "id": "ente-web",
+      "image": "yunixintel/ente-web",
+      "host_port": 18121,
+      "source": "reserved",
+      "category": "Cloud"
+    },
+    {
+      "id": "excalidraw",
+      "image": "yunixintel/excalidraw",
+      "host_port": 18016,
+      "source": "existing-definition",
+      "category": "Media"
+    },
+    {
+      "id": "filebrowser",
+      "image": "yunixintel/filebrowser",
+      "host_port": 18018,
+      "source": "existing-definition",
+      "category": "Cloud"
+    },
+    {
+      "id": "firefly-iii",
+      "image": "yunixintel/firefly-iii",
+      "host_port": 18122,
+      "source": "reserved",
+      "category": "Productivity"
+    },
+    {
+      "id": "freshrss",
+      "image": "yunixintel/freshrss",
+      "host_port": 18123,
+      "source": "reserved",
+      "category": "Productivity"
+    },
+    {
+      "id": "gatus",
+      "image": "yunixintel/gatus",
+      "host_port": 18124,
+      "source": "reserved",
+      "category": "Monitoring"
+    },
+    {
+      "id": "gitea",
+      "image": "yunixintel/gitea",
+      "host_port": 18125,
+      "source": "reserved",
+      "category": "Developer"
+    },
+    {
+      "id": "go2rtc",
+      "image": "yunixintel/go2rtc",
+      "host_port": 18126,
+      "source": "reserved",
+      "category": "Media"
+    },
+    {
+      "id": "gogs",
+      "image": "yunixintel/gogs",
+      "host_port": 18010,
+      "source": "existing-definition",
+      "category": "Developer"
+    },
+    {
+      "id": "gotify",
+      "image": "yunixintel/gotify",
+      "host_port": 18127,
+      "source": "reserved",
+      "category": "Utilities"
+    },
+    {
+      "id": "grafana",
+      "image": "yunixintel/grafana",
+      "host_port": 18128,
+      "source": "reserved",
+      "category": "Monitoring"
+    },
+    {
+      "id": "headscale",
+      "image": "yunixintel/headscale",
+      "host_port": 18129,
+      "source": "reserved",
+      "category": "Networking"
+    },
+    {
+      "id": "heimdall",
+      "image": "yunixintel/heimdall",
+      "host_port": 18012,
+      "source": "existing-definition",
+      "category": "Utilities"
+    },
+    {
+      "id": "hermes",
+      "image": "yunixintel/hermes",
+      "host_port": 18130,
+      "source": "reserved",
+      "category": "Developer"
+    },
+    {
+      "id": "homarr",
+      "image": "yunixintel/homarr",
+      "host_port": 18131,
+      "source": "reserved",
+      "category": "Networking"
+    },
+    {
+      "id": "homeassistant",
+      "image": "yunixintel/homeassistant",
+      "host_port": 18132,
+      "source": "reserved",
+      "category": "Home Automation"
+    },
+    {
+      "id": "homebox",
+      "image": "yunixintel/homebox",
+      "host_port": 18133,
+      "source": "reserved",
+      "category": "Productivity"
+    },
+    {
+      "id": "homebridge",
+      "image": "yunixintel/homebridge",
+      "host_port": 18134,
+      "source": "reserved",
+      "category": "Home Automation"
+    },
+    {
+      "id": "homer",
+      "image": "yunixintel/homer",
+      "host_port": 18135,
+      "source": "reserved",
+      "category": "Networking"
+    },
+    {
+      "id": "it-tools",
+      "image": "yunixintel/it-tools",
+      "host_port": 18015,
+      "source": "existing-definition",
+      "category": "Developer"
+    },
+    {
+      "id": "jackett",
+      "image": "yunixintel/jackett",
+      "host_port": 18136,
+      "source": "reserved",
+      "category": "Downloaders"
+    },
+    {
+      "id": "jellyfin",
+      "image": "yunixintel/jellyfin",
+      "host_port": 18001,
+      "source": "existing-definition",
+      "category": "Media"
+    },
+    {
+      "id": "jellyseerr",
+      "image": "yunixintel/jellyseerr",
+      "host_port": 18137,
+      "source": "reserved",
+      "category": "Media"
+    },
+    {
+      "id": "jellystat",
+      "image": "yunixintel/jellystat",
+      "host_port": 18138,
+      "source": "reserved",
+      "category": "Media"
+    },
+    {
+      "id": "kodexplorer",
+      "image": "yunixintel/kodexplorer",
+      "host_port": 18139,
+      "source": "reserved",
+      "category": "Cloud"
+    },
+    {
+      "id": "kopia",
+      "image": "yunixintel/kopia",
+      "host_port": 18013,
+      "source": "existing-definition",
+      "category": "Backup"
+    },
+    {
+      "id": "lanraragi",
+      "image": "yunixintel/lanraragi",
+      "host_port": 18140,
+      "source": "reserved",
+      "category": "Media"
+    },
+    {
+      "id": "linkding",
+      "image": "yunixintel/linkding",
+      "host_port": 18011,
+      "source": "existing-definition",
+      "category": "Productivity"
+    },
+    {
+      "id": "mariadb",
+      "image": "yunixintel/mariadb",
+      "host_port": 18141,
+      "source": "reserved",
+      "category": "Utilities"
+    },
+    {
+      "id": "matomo",
+      "image": "yunixintel/matomo",
+      "host_port": 18142,
+      "source": "reserved",
+      "category": "Productivity"
+    },
+    {
+      "id": "mealie",
+      "image": "yunixintel/mealie",
+      "host_port": 18143,
+      "source": "reserved",
+      "category": "Productivity"
+    },
+    {
+      "id": "mediamtx",
+      "image": "yunixintel/mediamtx",
+      "host_port": 18144,
+      "source": "reserved",
+      "category": "Media"
+    },
+    {
+      "id": "memcached",
+      "image": "yunixintel/memcached",
+      "host_port": 18145,
+      "source": "reserved",
+      "category": "Networking"
+    },
+    {
+      "id": "memos",
+      "image": "yunixintel/memos",
+      "host_port": 18009,
+      "source": "existing-definition",
+      "category": "Productivity"
+    },
+    {
+      "id": "metube",
+      "image": "yunixintel/metube",
+      "host_port": 18146,
+      "source": "reserved",
+      "category": "Downloaders"
+    },
+    {
+      "id": "mihomo",
+      "image": "yunixintel/mihomo",
+      "host_port": 18147,
+      "source": "reserved",
+      "category": "Networking"
+    },
+    {
+      "id": "miniflux",
+      "image": "yunixintel/miniflux",
+      "host_port": 18148,
+      "source": "reserved",
+      "category": "Utilities"
+    },
+    {
+      "id": "minio",
+      "image": "yunixintel/minio",
+      "host_port": 18149,
+      "source": "reserved",
+      "category": "Cloud"
+    },
+    {
+      "id": "mosquitto",
+      "image": "yunixintel/mosquitto",
+      "host_port": 18150,
+      "source": "reserved",
+      "category": "Utilities"
+    },
+    {
+      "id": "mymind",
+      "image": "yunixintel/mymind",
+      "host_port": 18151,
+      "source": "reserved",
+      "category": "Media"
+    },
+    {
+      "id": "navidrome",
+      "image": "yunixintel/navidrome",
+      "host_port": 18002,
+      "source": "existing-definition",
+      "category": "Media"
+    },
+    {
+      "id": "nextcloud",
+      "image": "yunixintel/nextcloud",
+      "host_port": 18017,
+      "source": "existing-definition",
+      "category": "Cloud"
+    },
+    {
+      "id": "nginx-proxy-manager",
+      "image": "yunixintel/nginx-proxy-manager",
+      "host_port": 18152,
+      "source": "reserved",
+      "category": "Networking"
+    },
+    {
+      "id": "nocodb",
+      "image": "yunixintel/nocodb",
+      "host_port": 18153,
+      "source": "reserved",
+      "category": "Developer"
+    },
+    {
+      "id": "node-exporter",
+      "image": "yunixintel/node-exporter",
+      "host_port": 18154,
+      "source": "reserved",
+      "category": "Monitoring"
+    },
+    {
+      "id": "node-red",
+      "image": "yunixintel/node-red",
+      "host_port": 18155,
+      "source": "reserved",
+      "category": "Developer"
+    },
+    {
+      "id": "ntfy",
+      "image": "yunixintel/ntfy",
+      "host_port": 18156,
+      "source": "reserved",
+      "category": "Utilities"
+    },
+    {
+      "id": "one-api",
+      "image": "yunixintel/one-api",
+      "host_port": 18157,
+      "source": "reserved",
+      "category": "Developer"
+    },
+    {
+      "id": "openwebui",
+      "image": "yunixintel/openwebui",
+      "host_port": 18158,
+      "source": "reserved",
+      "category": "Developer"
+    },
+    {
+      "id": "owntone",
+      "image": "yunixintel/owntone",
+      "host_port": 18159,
+      "source": "reserved",
+      "category": "Media"
+    },
+    {
+      "id": "paperless-ngx",
+      "image": "yunixintel/paperless-ngx",
+      "host_port": 18160,
+      "source": "reserved",
+      "category": "Productivity"
+    },
+    {
+      "id": "penpot-backend",
+      "image": "yunixintel/penpot-backend",
+      "host_port": 18161,
+      "source": "reserved",
+      "category": "Developer"
+    },
+    {
+      "id": "penpot-frontend",
+      "image": "yunixintel/penpot-frontend",
+      "host_port": 18162,
+      "source": "reserved",
+      "category": "Developer"
+    },
+    {
+      "id": "phpmyadmin",
+      "image": "yunixintel/phpmyadmin",
+      "host_port": 18163,
+      "source": "reserved",
+      "category": "Utilities"
+    },
+    {
+      "id": "pihole",
+      "image": "yunixintel/pihole",
+      "host_port": 18164,
+      "source": "reserved",
+      "category": "Networking"
+    },
+    {
+      "id": "piwigo",
+      "image": "yunixintel/piwigo",
+      "host_port": 18165,
+      "source": "reserved",
+      "category": "Cloud"
+    },
+    {
+      "id": "pocket-id",
+      "image": "yunixintel/pocket-id",
+      "host_port": 18166,
+      "source": "reserved",
+      "category": "Security"
+    },
+    {
+      "id": "portainer",
+      "image": "yunixintel/portainer",
+      "host_port": 18167,
+      "source": "reserved",
+      "category": "Developer"
+    },
+    {
+      "id": "postgres",
+      "image": "yunixintel/postgres",
+      "host_port": 18168,
+      "source": "reserved",
+      "category": "Utilities"
+    },
+    {
+      "id": "prometheus",
+      "image": "yunixintel/prometheus",
+      "host_port": 18169,
+      "source": "reserved",
+      "category": "Monitoring"
+    },
+    {
+      "id": "prowlarr",
+      "image": "yunixintel/prowlarr",
+      "host_port": 18170,
+      "source": "reserved",
+      "category": "Downloaders"
+    },
+    {
+      "id": "qbittorrent-ee",
+      "image": "yunixintel/qbittorrent-ee",
+      "host_port": 18014,
+      "source": "existing-definition",
+      "category": "Downloaders"
+    },
+    {
+      "id": "radarr",
+      "image": "yunixintel/radarr",
+      "host_port": 18171,
+      "source": "reserved",
+      "category": "Downloaders"
+    },
+    {
+      "id": "readeck",
+      "image": "yunixintel/readeck",
+      "host_port": 18172,
+      "source": "reserved",
+      "category": "Productivity"
+    },
+    {
+      "id": "redis",
+      "image": "yunixintel/redis",
+      "host_port": 18173,
+      "source": "reserved",
+      "category": "Utilities"
+    },
+    {
+      "id": "registry",
+      "image": "yunixintel/registry",
+      "host_port": 18174,
+      "source": "reserved",
+      "category": "Developer"
+    },
+    {
+      "id": "rest-server",
+      "image": "yunixintel/rest-server",
+      "host_port": 18175,
+      "source": "reserved",
+      "category": "Backup"
+    },
+    {
+      "id": "sabnzbd",
+      "image": "yunixintel/sabnzbd",
+      "host_port": 18176,
+      "source": "reserved",
+      "category": "Downloaders"
+    },
+    {
+      "id": "scrutiny",
+      "image": "yunixintel/scrutiny",
+      "host_port": 18177,
+      "source": "reserved",
+      "category": "Monitoring"
+    },
+    {
+      "id": "sftpgo",
+      "image": "yunixintel/sftpgo",
+      "host_port": 18178,
+      "source": "reserved",
+      "category": "Cloud"
+    },
+    {
+      "id": "shiori",
+      "image": "yunixintel/shiori",
+      "host_port": 18179,
+      "source": "reserved",
+      "category": "Productivity"
+    },
+    {
+      "id": "smartctl-exporter",
+      "image": "yunixintel/smartctl-exporter",
+      "host_port": 18180,
+      "source": "reserved",
+      "category": "Monitoring"
+    },
+    {
+      "id": "sonarr",
+      "image": "yunixintel/sonarr",
+      "host_port": 18181,
+      "source": "reserved",
+      "category": "Downloaders"
+    },
+    {
+      "id": "stirling-pdf",
+      "image": "yunixintel/stirling-pdf",
+      "host_port": 18182,
+      "source": "reserved",
+      "category": "Media"
+    },
+    {
+      "id": "syncthing",
+      "image": "yunixintel/syncthing",
+      "host_port": 18005,
+      "source": "existing-definition",
+      "category": "Cloud"
+    },
+    {
+      "id": "tautulli",
+      "image": "yunixintel/tautulli",
+      "host_port": 18183,
+      "source": "reserved",
+      "category": "Media"
+    },
+    {
+      "id": "typecho",
+      "image": "yunixintel/typecho",
+      "host_port": 18184,
+      "source": "reserved",
+      "category": "Productivity"
+    },
+    {
+      "id": "unpackerr",
+      "image": "yunixintel/unpackerr",
+      "host_port": 18185,
+      "source": "reserved",
+      "category": "Downloaders"
+    },
+    {
+      "id": "uptimekuma",
+      "image": "yunixintel/uptimekuma",
+      "host_port": 18004,
+      "source": "existing-definition",
+      "category": "Monitoring"
+    },
+    {
+      "id": "vaultwarden",
+      "image": "yunixintel/vaultwarden",
+      "host_port": 18003,
+      "source": "existing-definition",
+      "category": "Security"
+    },
+    {
+      "id": "vikunja",
+      "image": "yunixintel/vikunja",
+      "host_port": 18186,
+      "source": "reserved",
+      "category": "Productivity"
+    },
+    {
+      "id": "wallabag",
+      "image": "yunixintel/wallabag",
+      "host_port": 18187,
+      "source": "reserved",
+      "category": "Productivity"
+    },
+    {
+      "id": "watchtower",
+      "image": "yunixintel/watchtower",
+      "host_port": 18188,
+      "source": "reserved",
+      "category": "Utilities"
+    },
+    {
+      "id": "webvirtcloud",
+      "image": "yunixintel/webvirtcloud",
+      "host_port": 18189,
+      "source": "reserved",
+      "category": "Developer"
+    },
+    {
+      "id": "wizarr",
+      "image": "yunixintel/wizarr",
+      "host_port": 18190,
+      "source": "reserved",
+      "category": "Utilities"
+    },
+    {
+      "id": "woodpecker-agent",
+      "image": "yunixintel/woodpecker-agent",
+      "host_port": 18191,
+      "source": "reserved",
+      "category": "Developer"
+    },
+    {
+      "id": "woodpecker-server",
+      "image": "yunixintel/woodpecker-server",
+      "host_port": 18192,
+      "source": "reserved",
+      "category": "Developer"
+    },
+    {
+      "id": "xteve",
+      "image": "yunixintel/xteve",
+      "host_port": 18193,
+      "source": "reserved",
+      "category": "Media"
+    },
+    {
+      "id": "zigbee2mqtt",
+      "image": "yunixintel/zigbee2mqtt",
+      "host_port": 18194,
+      "source": "reserved",
+      "category": "Home Automation"
+    }
+  ]
+}
