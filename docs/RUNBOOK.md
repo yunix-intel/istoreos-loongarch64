@@ -548,6 +548,24 @@ docker run -d --name backrest -p 9898:9898 \
 - 默认无 TLS/无认证；公网放在反代之后。
 - 完整说明见 [../images/backrest/BUILD.md](../images/backrest/BUILD.md)。
 
+### Authelia
+
+```bash
+docker run -d --name authelia -p 9091:9091 \
+  -e AUTH_DOMAIN=example.com \
+  -e AUTH_URL=https://auth.example.com \
+  -e AUTH_DEFAULT_REDIRECT_URL=https://app.example.com \
+  -e ADMIN_USER=admin -e ADMIN_PASSWORD='change-me' \
+  -v authelia-config:/config \
+  yunixintel/authelia:loong64
+```
+
+- 门户 `http://<host>:9091/`；健康 `/api/health`。
+- 首次启动自动生成配置/用户/密钥；`/config` 必须持久化。
+- 默认 `one_factor`，所有请求需登录；forward-auth 在反代配置。
+- 无 TLS 终止，公网必须放在 HTTPS 反代之后。
+- 完整说明见 [../images/authelia/BUILD.md](../images/authelia/BUILD.md)。
+
 ### NocoDB
 
 ```bash
@@ -676,7 +694,7 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 97 个镜像）
+## 3. 端口索引（全部 98 个镜像）
 
 ### 从端口索引生成最小启动命令
 
@@ -730,6 +748,7 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | scrutiny | 8080 | `/opt/scrutiny/config`；`--device` + SYS_RAWIO | SQLite 历史；collector 需手动/cron 触发 |
 | headscale | 8080, 9090 | `/etc/headscale`、`/var/lib/headscale` | UID 1106；无 Web UI；CLI 建用户/key |
 | backrest | 9898 | `/data`、`/config`、`/cache` | UID 1108；内置 restic；首次 UI 建账号/仓库 |
+| authelia | 9091 | `/config` | UID 1107；自动生成配置/用户/密钥；需 HTTPS 反代 |
 | nocodb | 8080 | `/data` | UID 1000；SQLite；`NC_DB` 用 `?d=` |
 | apprise-api | 8000 | `/config`、`/attach`、`/plugin` | 默认无认证/无 TLS |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |

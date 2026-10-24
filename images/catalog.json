@@ -677,5 +677,12 @@
     "architecture": "linux/loong64",
     "verification": "Web UI `/` 200；restic 0.19.1 loong64；SQLite oplog 迁移完成；healthy",
     "notes": "v1.14.1 + restic 0.19.1；`/data`、`/config`、`/cache`；9898；UID 1108；首次 UI 建账号/仓库；默认无认证"
+  },
+  {
+    "image": "yunixintel/authelia",
+    "size": "约 139MB (Hub)",
+    "architecture": "linux/loong64",
+    "verification": "`/api/health` 200、门户 `/` 200；SQLite 迁移 0→29；healthy",
+    "notes": "v4.39.28；CGO SQLite；自动生成配置/用户/密钥；`/config`；9091；UID 1107；需 HTTPS 反代；默认 one_factor"
   }
 ]

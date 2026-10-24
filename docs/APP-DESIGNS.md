@@ -390,7 +390,9 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 | 风险 | 无 Web UI；密钥/域名/DERP 配置需文档；不要把私钥打进镜像 |
 | 估算 | 镜像约 80–120MB；1–2 天 |
 
-### P2-04 Authelia
+### P2-04 Authelia（已发布）
+
+**状态：已构建并推送。** v4.39.28，digest `sha256:e05a03ac…d83a`；构建记录见 [../images/authelia/BUILD.md](../images/authelia/BUILD.md)。
 
 | 项 | 设计 |
 |---|---|

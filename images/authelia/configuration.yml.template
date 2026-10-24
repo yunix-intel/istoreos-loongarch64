@@ -1,0 +1,39 @@
+theme: auto
+server:
+  address: 'tcp://0.0.0.0:9091'
+log:
+  level: info
+totp:
+  issuer: authelia
+  period: 30
+  skew: 1
+authentication_backend:
+  file:
+    path: /config/users_database.yml
+    password:
+      algorithm: argon2
+      argon2:
+        variant: argon2id
+        iterations: 3
+        memory: 65536
+        parallelism: 4
+        key_length: 32
+        salt_length: 16
+access_control:
+  default_policy: one_factor
+session:
+  secret: '${AUTHELIA_SESSION_SECRET}'
+  cookies:
+    - domain: '${AUTH_DOMAIN}'
+      authelia_url: '${AUTH_URL}'
+      default_redirection_url: '${AUTH_DEFAULT_REDIRECT_URL}'
+storage:
+  encryption_key: '${AUTHELIA_STORAGE_ENCRYPTION_KEY}'
+  local:
+    path: /config/db.sqlite3
+identity_validation:
+  reset_password:
+    jwt_secret: '${AUTHELIA_STORAGE_ENCRYPTION_KEY}'
+notifier:
+  filesystem:
+    filename: /config/notifications.txt

@@ -1,6 +1,6 @@
 # loongarch64 应用镜像
 
-共 97 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
+共 98 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
 `loong64`（浮动）与 `24.10-la5`（与 GitHub Release 对齐）。
 
 拉取：
@@ -92,6 +92,7 @@ docker pull yunixintel/jellyfin:loong64
 | `yunixintel/scrutiny` | 242MB（Hub 145MB） | `/web/` 200、`/api/health` true、NVMe collector 读到型号/温度/通电小时；healthy | 0.9.5 + SQLite metrics 补丁；不依赖 InfluxDB；`/opt/scrutiny/config`；8080；需设备直通；collector 外部调度 |
 | `yunixintel/headscale` | 约 137MB（Hub） | `/health` 200、metrics 9090、users/preauthkeys 成功；healthy | v0.29.5；Go 单二进制；无 Web UI；`/etc/headscale`、`/var/lib/headscale`；8080/9090；UID 1106 |
 | `yunixintel/backrest` | 约 160MB（Hub） | Web UI `/` 200、restic 0.19.1 loong64、oplog 迁移完成；healthy | v1.14.1；`/data`、`/config`、`/cache`；9898；UID 1108；首次 UI 建账号/仓库 |
+| `yunixintel/authelia` | 约 139MB（Hub） | `/api/health` 200、门户 `/` 200、SQLite 迁移 0→29；healthy | v4.39.28；CGO SQLite；自动生成配置/用户/密钥；`/config`；9091；UID 1107 |
 | `yunixintel/nocodb` | 1.58GB | `/api/v1/health` 200；`/` 302→`/dashboard/` 200；SQLite 初始化；健康检查 healthy | 0.301.3 + Node 24；npm 需 `--ignore-scripts`；sqlite3 手动编 loong64；自定义 runner；`/data`；8080；UID 1000 |
 | `yunixintel/apprise-api` | 1.03GB | `/` 200；`/status` OK；stateless `/notify/` 进入通知流程；健康检查 healthy | 2.0.1 + Python 3.11；系统 cryptography/gevent；pycares 需 cmake；nginx+supervisor+gunicorn；`/config`、`/attach`、`/plugin`；8000 |
 | `yunixintel/homebox` | 346MB | `/` 200；`/api/v1/status` health=true；版本 v0.10.3；SQLite 初始化；健康检查 healthy | v0.10.3；Nuxt 静态前端 embed；Go 1.27；modernc sqlite 升到 1.61 支持 loong64；`/data`；7745；UID 1000；默认允许注册 |

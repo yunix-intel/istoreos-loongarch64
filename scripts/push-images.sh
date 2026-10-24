@@ -19,6 +19,7 @@ IMAGES=(
   adguardhome
   alertmanager
   audiobookshelf
+  authelia
   backrest
   bazarr
   caddy

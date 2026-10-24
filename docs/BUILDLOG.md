@@ -540,3 +540,5 @@
 - 2026-10-24 Headscale v0.29.5（P2-03）：Go 1.27.2 `CGO_ENABLED=0` 单二进制；配置来自上游 `config-example.yaml`，entrypoint 按环境变量改 server_url/listen/metrics。首次启动需 `/var/run/headscale` 可写，否则 unix socket 创建失败；`users create` 与 `preauthkeys create` 验证通过，`/health` 200、metrics 9090、healthy。镜像 137MB，digest `sha256:603650be…b3fb`，已推送双 tag。
 
 - 2026-10-24 Backrest v1.14.1（P2-05）：React/Vite 前端在 x86 构建（pnpm 11 需 `--ignore-scripts` 后 `pnpm rebuild esbuild @parcel/watcher`），Go 1.27.2 `CGO_ENABLED=0` embed dist；restic 0.19.1 源码编 loong64 放 PATH。Web UI 200、restic 版本正确、SQLite oplog 迁移完成、healthy；未做实际仓库备份/恢复。镜像 160MB，digest `sha256:955cae89…79eb`，已推送双 tag。
+
+- 2026-10-24 Authelia v4.39.28（P2-04）：前端 React/Vite 在 x86 构建，复制仓库 `api/` 资产；后端 Go 1.27.2 CGO SQLite 在 openEuler 容器内编。entrypoint 自动生成 session/storage 密钥、argon2 管理员、configuration.yml，并先 validate-config。`/api/health` 200、门户 200、SQLite 迁移 0→29、healthy；未做完整登录/TOTP/forward-auth 联调。镜像 139MB，digest `sha256:e05a03ac…d83a`，已推送双 tag。
