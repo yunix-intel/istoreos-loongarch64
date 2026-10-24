@@ -477,7 +477,9 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 | 风险 | sqlite-jdbc native 是硬门槛；HEIF/JXL 封面不可用 |
 | 估算 | 镜像约 400–600MB；4–6 天 |
 
-### P3-02 Matomo
+### P3-02 Matomo（已发布）
+
+**状态：已构建并推送。** 5.14.2，digest `sha256:b1e7baec…1bc2`；构建记录见 [../images/matomo/BUILD.md](../images/matomo/BUILD.md)。
 
 | 项 | 设计 |
 |---|---|

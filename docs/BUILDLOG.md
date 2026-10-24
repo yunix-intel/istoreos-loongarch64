@@ -546,3 +546,5 @@
 - 2026-10-24 Ente server（P2-02，仅 server）：Go 1.27.2 CGO-free 编 museum；运行阶段带 configurations/migrations/mail-templates/web-templates；entrypoint 首次生成 museum.yaml（DB/S3/三个密钥，jwt 必须 URL-safe base64）。PostgreSQL+MinIO 三桶下 `/ping` 200、迁移完成、healthy；Web 端 10 个 Next 应用 + Rust WASM 未完成，暂不发布 ente-web。镜像 123MB，digest `sha256:bfac0212…9d7e`，已推送双 tag。
 
 - 2026-10-24 Autobrr（P3-05）：Vue/Vite 前端 x86 构建，Go 1.27.2 CGO-free embed；SQLite 迁移完成，`/` 200、`/api/healthz/liveness` 200、healthy。`HOME`/`XDG_*` 全部指向 `/config` 并持久化；默认无认证。镜像 131MB，digest `sha256:32f91a31…dcf7`，已推送双 tag。
+
+- 2026-10-24 Matomo 5.14.2（P3-02）：官方 `matomo.zip` 完整包（含 vendor）；PHP 8.3 + nginx/php-fpm，`php-pecl-zip` 单独安装。`/index.php` 安装向导 200、PHP 扩展齐全、healthy；Matomo 无 CLI 安装器，保留 Web 向导。镜像 193MB，digest `sha256:b1e7baec…1bc2`，已推送双 tag。

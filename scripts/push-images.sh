@@ -62,6 +62,7 @@ IMAGES=(
   lanraragi
   linkding
   mariadb
+  matomo
   mealie
   memcached
   memos

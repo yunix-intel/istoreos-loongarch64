@@ -23,6 +23,7 @@
 | Authelia | 自动生成配置/用户库/密钥；单机 SQLite | 无内置 TLS；默认 one_factor，forward-auth 需反代配置 | `AUTH_DOMAIN`/`AUTH_URL` 必须是 HTTPS 正式域名；`/config` 持久化 |
 | Ente server | 仅 API；museum.yaml 首次启动生成 | Web 图库未包含；需 PostgreSQL + S3/MinIO 三桶 | `/data/museum.yaml` 含密钥必须备份；S3 bucket 需预先创建 |
 | Autobrr | 前端 x86 构建后内嵌；SQLite | 默认无认证；需自配 IRC/下载器 | `/config` 持久化；公网加反代认证 |
+| Matomo | 官方完整包；PHP 8.3 | 首次必须走 Web 安装向导；无 CLI 安装 | 必须 MariaDB/MySQL；`config`/`tmp` 持久化；归档需 cron |
 | Mealie | Python 3.14 自编 | HEIF/HEIC 不支持 | `/app/data`；UID 911 |
 | Nextcloud | 当前镜像使用 SQLite | 生产不建议 SQLite；无外部 DB 自动配置 | 仅测试/轻量使用；`config`/`data` 持久化 |
 | Navidrome | Go + 系统 taglib | DSD 已编，但真实播放未全量验证 | 音乐目录只读挂载 |

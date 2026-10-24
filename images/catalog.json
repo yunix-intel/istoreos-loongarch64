@@ -698,5 +698,12 @@
     "architecture": "linux/loong64",
     "verification": "`/` 200、`/api/healthz/liveness` 200；SQLite 迁移完成；healthy",
     "notes": "master 2026-10；Go 单二进制 + 内嵌 Vue；`/config`；7474；UID 1113；默认无认证；需自配 IRC/下载器"
+  },
+  {
+    "image": "yunixintel/matomo",
+    "size": "约 193MB (Hub)",
+    "architecture": "linux/loong64",
+    "verification": "`/index.php` 200、安装向导可打开；PHP 扩展齐全；healthy",
+    "notes": "5.14.2；PHP 8.3 + nginx/php-fpm；必须 MariaDB/MySQL；`config`/`tmp` 持久化；80；安装向导建管理员"
   }
 ]
