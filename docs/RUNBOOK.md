@@ -418,6 +418,29 @@ docker run -d --name sftpgo -p 8080:8080 -p 2022:2022 \
 - 公网使用必须配 TLS 或反代；默认 Web 无 HTTPS。
 - 完整说明见 [../images/sftpgo/BUILD.md](../images/sftpgo/BUILD.md)。
 
+### BookStack
+
+```bash
+docker network create bookstack
+docker run -d --name bookstack-db --network bookstack \
+  -e MYSQL_ROOT_PASSWORD='change-me' -e MYSQL_DATABASE=bookstack \
+  -e MYSQL_USER=bookstack -e MYSQL_PASSWORD='bookpass' \
+  -v bookstack-db:/var/lib/mysql yunixintel/mariadb:loong64
+docker run -d --name bookstack --network bookstack -p 8080:80 \
+  -e APP_URL=http://<host>:8080 -e DB_HOST=bookstack-db \
+  -e DB_DATABASE=bookstack -e DB_USERNAME=bookstack -e DB_PASSWORD='bookpass' \
+  -v bookstack-storage:/var/www/bookstack/storage \
+  -v bookstack-uploads:/var/www/bookstack/public/uploads \
+  yunixintel/bookstack:loong64
+```
+
+- Web：`http://<host>:8080/`；健康检查 `/login`。
+- 必须外接 MariaDB/MySQL；不支持 SQLite。
+- `storage`（含 `app.key`）与 `public/uploads` 必须持久化。
+- 首次创建管理员：
+  `docker exec -u nginx -w /var/www/bookstack bookstack php artisan bookstack:create-admin --email=... --name=... --password=... --initial`。
+- 完整说明见 [../images/bookstack/BUILD.md](../images/bookstack/BUILD.md)。
+
 ### NocoDB
 
 ```bash
@@ -546,7 +569,7 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 90 个镜像）
+## 3. 端口索引（全部 91 个镜像）
 
 ### 从端口索引生成最小启动命令
 
@@ -593,6 +616,7 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | zigbee2mqtt | 8080 | `/app/data`；`--device /dev/ttyACM0 --group-add dialout` | UID 1101；需 USB 协调器；无适配器会退出 |
 | smartctl-exporter | 9633 | `/run/udev:ro`；`--device /dev/nvme0` | 需 SYS_RAWIO/SYS_ADMIN；只读指标 |
 | sftpgo | 8080, 2022 | `/srv/sftpgo/data`、`/var/lib/sftpgo`、`/srv/sftpgo/backups` | UID 1103；首次安装页建管理员；默认无 TLS |
+| bookstack | 80 | `/var/www/bookstack/storage`、`/var/www/bookstack/public/uploads` | 必须 MariaDB；`app.key` 持久化；首次用 artisan 建管理员 |
 | nocodb | 8080 | `/data` | UID 1000；SQLite；`NC_DB` 用 `?d=` |
 | apprise-api | 8000 | `/config`、`/attach`、`/plugin` | 默认无认证/无 TLS |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |

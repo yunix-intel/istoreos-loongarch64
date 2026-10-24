@@ -8,7 +8,7 @@
 - [x] 私有库（istore-la-private：模板+脚本+重打流程）
 - [x] 多形态发布规范（ghcr/版本对应/红线）
 - [x] **六个应用镜像**（jellyfin / navidrome / vaultwarden / uptimekuma / mihomo / easytier），已上架 Docker Hub `yunixintel/*`，见 [IMAGES.md](IMAGES.md)
-- [x] **镜像池扩至 42 只（历史节点；当前 90 只见 [IMAGES.md](IMAGES.md)）**：syncthing、adguardhome、memos、gogs、filebrowser、qbittorrent-ee、it-tools、excalidraw、kopia、linkding、heimdall、nextcloud、typecho、wallabag、drawio、jackett、xteve、one-api、code-server、casaos、dpanel、shiori、jellyseerr、audiobookshelf、calibre-web、homarr、openwebui、kodexplorer、stirling-pdf、wizarr、homeassistant、sonarr、radarr、tautulli、jellystat、prowlarr、bazarr，全部上架（双 tag）；技术栈覆盖 Go/Node/.NET/Rust/C++/Python/PHP
+- [x] **镜像池扩至 42 只（历史节点；当前 91 只见 [IMAGES.md](IMAGES.md)）**：syncthing、adguardhome、memos、gogs、filebrowser、qbittorrent-ee、it-tools、excalidraw、kopia、linkding、heimdall、nextcloud、typecho、wallabag、drawio、jackett、xteve、one-api、code-server、casaos、dpanel、shiori、jellyseerr、audiobookshelf、calibre-web、homarr、openwebui、kodexplorer、stirling-pdf、wizarr、homeassistant、sonarr、radarr、tautulli、jellystat、prowlarr、bazarr，全部上架（双 tag）；技术栈覆盖 Go/Node/.NET/Rust/C++/Python/PHP
 - [x] **CasaOS 评估完成**：代码可编、安装脚本架构误判需补丁、与 iStore 互补不可同装；MVP 2–4 人日，见 [CASAOS-PLAN.md](CASAOS-PLAN.md)
 - [x] **dockermanager 点绿**（LuCI 列出宿主容器，零报错；ipk 已进个人版预置）
 - [x] **podman 全链路**（CGO podman + conmon/runc/crun + netavark；嵌套 `--network={none,host}` 跑通）

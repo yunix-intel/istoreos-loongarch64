@@ -628,5 +628,12 @@
     "architecture": "linux/loong64",
     "verification": "Web 302→setup；管理员登录后 `/web/admin/users` 200；SQLite/host key 生成；2022 监听；healthy",
     "notes": "v2.7.6；Go + CGO SQLite；Web 8080、SFTP 2022；`/srv/sftpgo/data`、`/var/lib/sftpgo`；UID 1103；首次安装页创建管理员"
+  },
+  {
+    "image": "yunixintel/bookstack",
+    "size": "约 600MB (Hub 214MB)",
+    "architecture": "linux/loong64",
+    "verification": "MariaDB 迁移全部完成；`/login` 200；healthy；`bookstack:create-admin` 成功",
+    "notes": "v26.09.2；PHP 8.3 + nginx/php-fpm；必须 MariaDB/MySQL；`storage`/`public/uploads` 持久化；`app.key` 0600；80"
   }
 ]

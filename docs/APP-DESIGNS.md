@@ -271,7 +271,9 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 | 风险 | 默认管理员密码必须首次输出/强制修改；FTP 明文默认关闭 |
 | 估算 | 镜像约 120–200MB；1–2 天 |
 
-### P1-04 BookStack
+### P1-04 BookStack（已发布）
+
+**状态：已构建并推送。** v26.09.2，digest `sha256:20304871…efba`；构建记录见 [../images/bookstack/BUILD.md](../images/bookstack/BUILD.md)。
 
 **目标**：书籍/章节/页面结构的 Wiki，带权限、搜索、附件。
 

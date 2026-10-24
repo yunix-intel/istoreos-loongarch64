@@ -5,10 +5,10 @@
 | 计划项 | 出处 | 状态 | 证据与说明 |
 |---|---|---|---|
 | la1–la5 连续发版，la5 内置 docker+podman | ROADMAP/NAMING | ✅ | 6 个 tag 全公开；la5 Release 10-19 发布，5 附件、316MB；最近的 CI 全绿（la2/la3 历史 Release 仅 2 附件） |
-| 90 只应用镜像上 Docker Hub | ROADMAP | ✅ | Hub 90 仓库（含 freshrss、homer、paperless-ngx、dashy、watchtower、changedetection、caddy、dozzle、ntfy、gotify、node-exporter、prometheus、pihole、gatus、alertmanager、postgres、redis、mosquitto、mariadb、node-red、grafana、memcached、homebridge、rest-server、node、actual-budget、minio、homebox、nocodb、apprise-api、mealie、chinesesubfinder、lanraragi、owntone、mymind、webvirtcloud、penpot-backend、penpot-frontend、hermes、zigbee2mqtt、smartctl-exporter、sftpgo）；逐个核验均含 `loong64`+`24.10-la5` 双 tag，均 loong64 单架构 |
+| 91 只应用镜像上 Docker Hub | ROADMAP | ✅ | Hub 91 仓库（含 freshrss、homer、paperless-ngx、dashy、watchtower、changedetection、caddy、dozzle、ntfy、gotify、node-exporter、prometheus、pihole、gatus、alertmanager、postgres、redis、mosquitto、mariadb、node-red、grafana、memcached、homebridge、rest-server、node、actual-budget、minio、homebox、nocodb、apprise-api、mealie、chinesesubfinder、lanraragi、owntone、mymind、webvirtcloud、penpot-backend、penpot-frontend、hermes、zigbee2mqtt、smartctl-exporter、sftpgo、bookstack）；逐个核验均含 `loong64`+`24.10-la5` 双 tag，均 loong64 单架构 |
 | 原始 iStore 133 商店覆盖 | STORE-APP-LIST | ✅ | 113 可用中 29 个已有镜像（22 + 本轮 7）；76 个原生/LuCI；8 个有明确阻塞证据（见 BLOCKED-APPS.md）；待补可做 0；见 STORE-COVERAGE.md |
-| 文档与实物一致 | IMAGES/README/STORE-APP-LIST | ✅ | README/IMAGES 均为 90 只；CasaOS 已标注“磁盘验证前不发布”；GAPS 本次同步 |
-| 镜像推送可复现 | 私有库 | ✅ | push-images.sh 已覆盖 90 只；本地 tag 名与 Hub 仓库名不一致时按脚本注释先 `docker tag` |
+| 文档与实物一致 | IMAGES/README/STORE-APP-LIST | ✅ | README/IMAGES 均为 91 只；CasaOS 已标注“磁盘验证前不发布”；GAPS 本次同步 |
+| 镜像推送可复现 | 私有库 | ✅ | push-images.sh 已覆盖 91 只；本地 tag 名与 Hub 仓库名不一致时按脚本注释先 `docker tag` |
 | CasaOS P1+P2 | CASAOS §7 | ✅ | 7 个 ELF、网关/UI、18 应用商店、memos 安装实测 |
 | CasaOS P3 系统集成 | CASAOS §8/§10 | 🟡 | 开发/系统集成完成：7 unit、6 服务、CLI、安装/卸载、NBD 链路已验；**2026-10-23 审查发现 3 个 BLOCKER**（白名单未下沉到写 API、首启管理员可被抢先、端口冲突）及运维缺口；发布闸门仍关闭，见 APP-DESIGNS 5.1/7.5 |
 | CasaOS local-storage 磁盘能力 | CASAOS §9/§10 | 🟡 | 8G NBD 盘验证：挂载、写读、卸载、服务重启按 UUID 自挂、格式化全过；真实 SATA/USB 盘的 SMART、udevil 拔插、真机重启待测；`IsDiskSupported` 白名单会过滤 loop/dm/nbd |

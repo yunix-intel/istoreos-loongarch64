@@ -14,6 +14,7 @@ TAG_RELEASE="${RELEASE:-24.10-la5}"   # 与 GitHub Release 对齐，可覆盖
 
 IMAGES=(
   actual-budget
+  bookstack
   apprise-api
   adguardhome
   alertmanager
