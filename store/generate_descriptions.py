@@ -566,6 +566,49 @@ def main():
         json.dump(doc, f, ensure_ascii=False, indent=2)
         f.write("\n")
 
+    casaos_export = os.path.join(ROOT, "store", "exports", "casaos-descriptions.json")
+    istore_export = os.path.join(ROOT, "store", "exports", "istore-descriptions.json")
+    os.makedirs(os.path.dirname(casaos_export), exist_ok=True)
+    with io.open(casaos_export, "w", encoding="utf-8", newline="\n") as f:
+        json.dump(
+            {
+                "schema": 1,
+                "generated": doc["generated"],
+                "apps": {
+                    k: {
+                        "title": v["title"],
+                        "category": v["category"],
+                        "tagline": v["tagline"],
+                        "description": v["casaos_description"],
+                    }
+                    for k, v in apps.items()
+                },
+            },
+            f,
+            ensure_ascii=False,
+            indent=2,
+        )
+        f.write("\n")
+    with io.open(istore_export, "w", encoding="utf-8", newline="\n") as f:
+        json.dump(
+            {
+                "schema": 1,
+                "generated": doc["generated"],
+                "apps": {
+                    k: {
+                        "title": v["title"],
+                        "category": v["category"],
+                        "description_html": v["istore_description_html"],
+                    }
+                    for k, v in apps.items()
+                },
+            },
+            f,
+            ensure_ascii=False,
+            indent=2,
+        )
+        f.write("\n")
+
     with io.open(OUT_MD, "w", encoding="utf-8", newline="\n") as f:
         f.write("# 商店卡片“龙芯版说明”预览\n\n")
         f.write(f"共 {len(apps)} 个可安装应用（不含运行时基础镜像 node）。\n\n")

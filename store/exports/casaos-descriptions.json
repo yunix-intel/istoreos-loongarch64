@@ -1,0 +1,1656 @@
+{
+  "schema": 1,
+  "generated": "2026-10-24",
+  "apps": {
+    "jellyfin": {
+      "title": {
+        "zh_cn": "Jellyfin",
+        "en_us": "Jellyfin"
+      },
+      "category": "Media",
+      "tagline": {
+        "zh_cn": "Jellyfin 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Jellyfin LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：.NET 9 自编 + ImageSharp 编码器。\n缺失功能：无 ICC 色彩管理；纯托管性能低于 Skia；硬件转码未验证。\n额外依赖：媒体目录与 config 需持久化。\n镜像说明：.NET 9 自编；**自 2026-10-19 起内置 ImageSharp 编码器**（缩略图/Trickplay/拼图/BlurHash 全可用，含 Noto CJK 字体）；代价：纯托管性能较 Skia 慢、无 ICC 色彩管理",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Built from source with .NET 9 and the ImageSharp encoder.\nMissing features: No ICC color management; managed performance is below Skia; hardware transcoding is unverified.\nExtra dependencies: Persist the media directories and config.\nImage notes: .NET 9 自编；**自 2026-10-19 起内置 ImageSharp 编码器**（缩略图/Trickplay/拼图/BlurHash 全可用，含 Noto CJK 字体）；代价：纯托管性能较 Skia 慢、无 ICC 色彩管理"
+      }
+    },
+    "navidrome": {
+      "title": {
+        "zh_cn": "Navidrome",
+        "en_us": "Navidrome"
+      },
+      "category": "Media",
+      "tagline": {
+        "zh_cn": "Navidrome 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Navidrome LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：Go + 系统 taglib；DSD 已编译。\n缺失功能：DSD 真实播放尚未全量验证。\n额外依赖：音乐目录需只读挂载。\n镜像说明：Go + 系统 taglib 2.0.2，**DSD 完整**",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Go with system taglib; DSD support is compiled in.\nMissing features: Real DSD playback has not been fully verified.\nExtra dependencies: Mount the music directory read-only.\nImage notes: Go + 系统 taglib 2.0.2，**DSD 完整**"
+      }
+    },
+    "vaultwarden": {
+      "title": {
+        "zh_cn": "Vaultwarden",
+        "en_us": "Vaultwarden"
+      },
+      "category": "Security",
+      "tagline": {
+        "zh_cn": "Vaultwarden 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Vaultwarden LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：Rust；镜像内置宿主 glibc 2.41 闭包（显式 loader 启动）",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: Rust；镜像内置宿主 glibc 2.41 闭包（显式 loader 启动）"
+      }
+    },
+    "uptimekuma": {
+      "title": {
+        "zh_cn": "Uptime Kuma",
+        "en_us": "Uptime Kuma"
+      },
+      "category": "Monitoring",
+      "tagline": {
+        "zh_cn": "Uptime Kuma 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Uptime Kuma LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：Node 20 + 源码编 sqlite3",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: Node 20 + 源码编 sqlite3"
+      }
+    },
+    "mihomo": {
+      "title": {
+        "zh_cn": "Mihomo",
+        "en_us": "Mihomo"
+      },
+      "category": "Networking",
+      "tagline": {
+        "zh_cn": "Mihomo 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Mihomo LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：scratch 单二进制，配置需挂载",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: scratch 单二进制，配置需挂载"
+      }
+    },
+    "easytier": {
+      "title": {
+        "zh_cn": "EasyTier",
+        "en_us": "EasyTier"
+      },
+      "category": "Networking",
+      "tagline": {
+        "zh_cn": "EasyTier 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "EasyTier LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：scratch 单二进制，配置需挂载",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: scratch 单二进制，配置需挂载"
+      }
+    },
+    "syncthing": {
+      "title": {
+        "zh_cn": "Syncthing",
+        "en_us": "Syncthing"
+      },
+      "category": "Cloud",
+      "tagline": {
+        "zh_cn": "Syncthing 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Syncthing LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v2.1.6 官方 loong64 包；注意 v2 CLI 用双横线 `--home=`",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v2.1.6 官方 loong64 包；注意 v2 CLI 用双横线 `--home=`"
+      }
+    },
+    "adguardhome": {
+      "title": {
+        "zh_cn": "AdGuard Home",
+        "en_us": "AdGuard Home"
+      },
+      "category": "Networking",
+      "tagline": {
+        "zh_cn": "AdGuard Home 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "AdGuard Home LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：需 host 网络并避让宿主 dnsmasq。\n镜像说明：官方无 loong64 资产，源码自编 + 官方前端；53 端口需映射避让宿主 dnsmasq",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: Requires host networking; avoid the host dnsmasq on port 53.\nImage notes: 官方无 loong64 资产，源码自编 + 官方前端；53 端口需映射避让宿主 dnsmasq"
+      }
+    },
+    "memos": {
+      "title": {
+        "zh_cn": "Memos",
+        "en_us": "Memos"
+      },
+      "category": "Productivity",
+      "tagline": {
+        "zh_cn": "Memos 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Memos LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v0.31.0 源码编（官方无 loong64）；纯 Go sqlite；前端在 x64 上编（rolldown 无 loong64 binding），产物架构无关",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v0.31.0 源码编（官方无 loong64）；纯 Go sqlite；前端在 x64 上编（rolldown 无 loong64 binding），产物架构无关"
+      }
+    },
+    "gogs": {
+      "title": {
+        "zh_cn": "Gogs",
+        "en_us": "Gogs"
+      },
+      "category": "Developer",
+      "tagline": {
+        "zh_cn": "Gogs 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Gogs LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v0.14.3 源码编；0.14 起 sqlite 已纯 Go（不需要 CGO）；镜像带 git",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v0.14.3 源码编；0.14 起 sqlite 已纯 Go（不需要 CGO）；镜像带 git"
+      }
+    },
+    "filebrowser": {
+      "title": {
+        "zh_cn": "File Browser",
+        "en_us": "File Browser"
+      },
+      "category": "Cloud",
+      "tagline": {
+        "zh_cn": "File Browser 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "File Browser LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v2.63.23 源码编；**上游 2026-09-01 已归档**，无后续安全修复；默认监听改 0.0.0.0（v2.63 默认 127.0.0.1）",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v2.63.23 源码编；**上游 2026-09-01 已归档**，无后续安全修复；默认监听改 0.0.0.0（v2.63 默认 127.0.0.1）"
+      }
+    },
+    "qbittorrent-ee": {
+      "title": {
+        "zh_cn": "qBittorrent (Enhanced Edition)",
+        "en_us": "qBittorrent (Enhanced Edition)"
+      },
+      "category": "Downloaders",
+      "tagline": {
+        "zh_cn": "qBittorrent (Enhanced Edition) 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "qBittorrent (Enhanced Edition) LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v5.2.4.10 官方 loong64 静态包；Host header 校验会拒绝端口映射不一致的访问，建议 `--webui-port` 与映射端口一致",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v5.2.4.10 官方 loong64 静态包；Host header 校验会拒绝端口映射不一致的访问，建议 `--webui-port` 与映射端口一致"
+      }
+    },
+    "it-tools": {
+      "title": {
+        "zh_cn": "IT-Tools",
+        "en_us": "IT-Tools"
+      },
+      "category": "Developer",
+      "tagline": {
+        "zh_cn": "IT-Tools 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "IT-Tools LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：纯静态站点 + nginx；Vite 4/rollup 3 可在龙芯本机直接编",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 纯静态站点 + nginx；Vite 4/rollup 3 可在龙芯本机直接编"
+      }
+    },
+    "excalidraw": {
+      "title": {
+        "zh_cn": "Excalidraw",
+        "en_us": "Excalidraw"
+      },
+      "category": "Media",
+      "tagline": {
+        "zh_cn": "Excalidraw 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Excalidraw LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v0.18.1；Vite 5 + rollup 4（自带 loongarch64 binding）；需 Node 22（用 /opt/node22-abi2）",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v0.18.1；Vite 5 + rollup 4（自带 loongarch64 binding）；需 Node 22（用 /opt/node22-abi2）"
+      }
+    },
+    "kopia": {
+      "title": {
+        "zh_cn": "Kopia",
+        "en_us": "Kopia"
+      },
+      "category": "Backup",
+      "tagline": {
+        "zh_cn": "Kopia 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Kopia LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：Web UI 强制 Basic 认证。\n缺失功能：默认凭据需修改。\n额外依赖：仓库存储需持久化。\n镜像说明：v0.23.1 源码编；为 loong64 打了 Stat_t.Dev/Rdev 类型补丁；Web UI 强制 Basic 认证（默认 admin/kopia）",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: The web UI enforces Basic authentication.\nMissing features: Change the default credentials.\nExtra dependencies: Persist the repository storage.\nImage notes: v0.23.1 源码编；为 loong64 打了 Stat_t.Dev/Rdev 类型补丁；Web UI 强制 Basic 认证（默认 admin/kopia）"
+      }
+    },
+    "linkding": {
+      "title": {
+        "zh_cn": "Linkding",
+        "en_us": "Linkding"
+      },
+      "category": "Productivity",
+      "tagline": {
+        "zh_cn": "Linkding 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Linkding LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v1.47.0；Python 3.13 源码编 + uwsgi；cryptography 需 Rust 源码编；`UWSGI_MAX_FD=4096` 必设（否则 uwsgi 路由进程吃 8GB）",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v1.47.0；Python 3.13 源码编 + uwsgi；cryptography 需 Rust 源码编；`UWSGI_MAX_FD=4096` 必设（否则 uwsgi 路由进程吃 8GB）"
+      }
+    },
+    "heimdall": {
+      "title": {
+        "zh_cn": "Heimdall",
+        "en_us": "Heimdall"
+      },
+      "category": "Utilities",
+      "tagline": {
+        "zh_cn": "Heimdall 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Heimdall LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：2.8.3；PHP 8.4.26 自编（源里只有 8.3）+ nginx/php-fpm；数据在 /config（.env/sqlite/storage）",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 2.8.3；PHP 8.4.26 自编（源里只有 8.3）+ nginx/php-fpm；数据在 /config（.env/sqlite/storage）"
+      }
+    },
+    "nextcloud": {
+      "title": {
+        "zh_cn": "Nextcloud",
+        "en_us": "Nextcloud"
+      },
+      "category": "Cloud",
+      "tagline": {
+        "zh_cn": "Nextcloud 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Nextcloud LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：当前镜像使用 SQLite。\n缺失功能：生产不建议 SQLite；无外部数据库自动配置。\n额外依赖：仅适合测试/轻量使用；持久化 config 与 data。\n镜像说明：33.0.10；PHP 8.3 + nginx/php-fpm；SQLite（测试用，生产建议 MySQL/MariaDB）；首次启动生成 config.php",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: The current image uses SQLite.\nMissing features: SQLite is not recommended for production; no automatic external DB setup.\nExtra dependencies: Suitable for testing/light use; persist config and data.\nImage notes: 33.0.10；PHP 8.3 + nginx/php-fpm；SQLite（测试用，生产建议 MySQL/MariaDB）；首次启动生成 config.php"
+      }
+    },
+    "typecho": {
+      "title": {
+        "zh_cn": "Typecho",
+        "en_us": "Typecho"
+      },
+      "category": "Productivity",
+      "tagline": {
+        "zh_cn": "Typecho 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Typecho LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v1.3.0；PHP 8.3 + nginx/php-fpm；**config.inc.php 与 typecho.db 在站点根目录**（不在挂载卷内，重建容器前需一并备份）",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v1.3.0；PHP 8.3 + nginx/php-fpm；**config.inc.php 与 typecho.db 在站点根目录**（不在挂载卷内，重建容器前需一并备份）"
+      }
+    },
+    "wallabag": {
+      "title": {
+        "zh_cn": "Wallabag",
+        "en_us": "Wallabag"
+      },
+      "category": "Productivity",
+      "tagline": {
+        "zh_cn": "Wallabag 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Wallabag LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：2.6.14；PHP 8.3 + nginx/php-fpm；2.6 起无网页安装向导，entrypoint 首次启动 CLI 安装（默认 wallabag/wallabag）",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 2.6.14；PHP 8.3 + nginx/php-fpm；2.6 起无网页安装向导，entrypoint 首次启动 CLI 安装（默认 wallabag/wallabag）"
+      }
+    },
+    "drawio": {
+      "title": {
+        "zh_cn": "draw.io",
+        "en_us": "draw.io"
+      },
+      "category": "Media",
+      "tagline": {
+        "zh_cn": "draw.io 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "draw.io LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v32.5.5；直接取源码仓库预构建 `src/main/webapp`，无需 npm/maven；hash 路由",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v32.5.5；直接取源码仓库预构建 `src/main/webapp`，无需 npm/maven；hash 路由"
+      }
+    },
+    "jackett": {
+      "title": {
+        "zh_cn": "Jackett",
+        "en_us": "Jackett"
+      },
+      "category": "Downloaders",
+      "tagline": {
+        "zh_cn": "Jackett 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Jackett LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v0.24.2867；.NET 9 源码编，自带运行时；需宿主 libstdc++ 6.0.33（已内置）",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v0.24.2867；.NET 9 源码编，自带运行时；需宿主 libstdc++ 6.0.33（已内置）"
+      }
+    },
+    "xteve": {
+      "title": {
+        "zh_cn": "xTeVe",
+        "en_us": "xTeVe"
+      },
+      "category": "Media",
+      "tagline": {
+        "zh_cn": "xTeVe 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "xTeVe LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：2.2.0.200；Go 静态编（升级 x/sys 支持 loong64）；自带 ffmpeg（占大头，可瘦身）",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 2.2.0.200；Go 静态编（升级 x/sys 支持 loong64）；自带 ffmpeg（占大头，可瘦身）"
+      }
+    },
+    "one-api": {
+      "title": {
+        "zh_cn": "One API",
+        "en_us": "One API"
+      },
+      "category": "Developer",
+      "tagline": {
+        "zh_cn": "One API 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "One API LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v0.6.10；三套前端主题本机编；go-sqlite3 需 CGO 静态链接（`-linkmode external -extldflags -static`）",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v0.6.10；三套前端主题本机编；go-sqlite3 需 CGO 静态链接（`-linkmode external -extldflags -static`）"
+      }
+    },
+    "code-server": {
+      "title": {
+        "zh_cn": "code-server",
+        "en_us": "code-server"
+      },
+      "category": "Developer",
+      "tagline": {
+        "zh_cn": "code-server 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "code-server LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：4.141.0 + VS Code 1.141；**必须 Node 24**（Node 20 缺 `module.registerHooks`）；自编静态 ripgrep 15.2",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 4.141.0 + VS Code 1.141；**必须 Node 24**（Node 20 缺 `module.registerHooks`）；自编静态 ripgrep 15.2"
+      }
+    },
+    "dpanel": {
+      "title": {
+        "zh_cn": "DPanel",
+        "en_us": "DPanel"
+      },
+      "category": "Developer",
+      "tagline": {
+        "zh_cn": "DPanel 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "DPanel LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：需挂载 docker.sock。\n镜像说明：v1.11.1；Go + CGO sqlite（CGO=0 会 panic）；需 docker.sock；8807 端口",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: Requires docker.sock.\nImage notes: v1.11.1；Go + CGO sqlite（CGO=0 会 panic）；需 docker.sock；8807 端口"
+      }
+    },
+    "shiori": {
+      "title": {
+        "zh_cn": "Shiori",
+        "en_us": "Shiori"
+      },
+      "category": "Productivity",
+      "tagline": {
+        "zh_cn": "Shiori 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Shiori LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v1.8.0；Go 静态编；8080 端口；生产建议设 `SHIORI_HTTP_SECRET_KEY`",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v1.8.0；Go 静态编；8080 端口；生产建议设 `SHIORI_HTTP_SECRET_KEY`"
+      }
+    },
+    "jellyseerr": {
+      "title": {
+        "zh_cn": "Jellyseerr",
+        "en_us": "Jellyseerr"
+      },
+      "category": "Media",
+      "tagline": {
+        "zh_cn": "Jellyseerr 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Jellyseerr LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v3.5.0；Next 16 用 WASM SWC（无 loong64 binding）；sharp 不可用 → `images.unoptimized`；5055 端口",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v3.5.0；Next 16 用 WASM SWC（无 loong64 binding）；sharp 不可用 → `images.unoptimized`；5055 端口"
+      }
+    },
+    "audiobookshelf": {
+      "title": {
+        "zh_cn": "Audiobookshelf",
+        "en_us": "Audiobookshelf"
+      },
+      "category": "Media",
+      "tagline": {
+        "zh_cn": "Audiobookshelf 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Audiobookshelf LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v2.37.1；Node 22 + sqlite3/nusqlite3 源码编；前端在 x64 构建（Tailwind oxide 无 loong64）；13378 端口",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v2.37.1；Node 22 + sqlite3/nusqlite3 源码编；前端在 x64 构建（Tailwind oxide 无 loong64）；13378 端口"
+      }
+    },
+    "calibre-web": {
+      "title": {
+        "zh_cn": "Calibre-Web",
+        "en_us": "Calibre-Web"
+      },
+      "category": "Media",
+      "tagline": {
+        "zh_cn": "Calibre-Web 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Calibre-Web LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：0.6.27；Python 3.11 + Rust 源码编 lxml/nh3/cryptography；8083 端口；书库挂 /books",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 0.6.27；Python 3.11 + Rust 源码编 lxml/nh3/cryptography；8083 端口；书库挂 /books"
+      }
+    },
+    "homarr": {
+      "title": {
+        "zh_cn": "Homarr",
+        "en_us": "Homarr"
+      },
+      "category": "Networking",
+      "tagline": {
+        "zh_cn": "Homarr 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Homarr LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：需 Redis。\n镜像说明：v2.6.0；Next 16 WASM SWC + Node 24 + redis；Bun/Turbo 无 loong64 改用 pnpm；7575 端口",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: Requires Redis.\nImage notes: v2.6.0；Next 16 WASM SWC + Node 24 + redis；Bun/Turbo 无 loong64 改用 pnpm；7575 端口"
+      }
+    },
+    "openwebui": {
+      "title": {
+        "zh_cn": "Open WebUI",
+        "en_us": "Open WebUI"
+      },
+      "category": "Developer",
+      "tagline": {
+        "zh_cn": "Open WebUI 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Open WebUI LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v0.12.3 **轻量模式**：无 torch/onnxruntime/whisper/OCR，聊天对接 Ollama/OpenAI 正常；本地 RAG 需外部 pgvector",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v0.12.3 **轻量模式**：无 torch/onnxruntime/whisper/OCR，聊天对接 Ollama/OpenAI 正常；本地 RAG 需外部 pgvector"
+      }
+    },
+    "kodexplorer": {
+      "title": {
+        "zh_cn": "KodExplorer",
+        "en_us": "KodExplorer"
+      },
+      "category": "Cloud",
+      "tagline": {
+        "zh_cn": "KodExplorer 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "KodExplorer LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：4.55；PHP 8.3 + nginx/php-fpm；首启为环境检查/设置管理员；默认 admin/admin",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 4.55；PHP 8.3 + nginx/php-fpm；首启为环境检查/设置管理员；默认 admin/admin"
+      }
+    },
+    "homeassistant": {
+      "title": {
+        "zh_cn": "Home Assistant",
+        "en_us": "Home Assistant"
+      },
+      "category": "Home Automation",
+      "tagline": {
+        "zh_cn": "Home Assistant 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Home Assistant LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：建议 host 网络以发现设备。\n镜像说明：Core 2026.10.2；Python 3.14 自编；cryptography/grpcio/Pillow/aiohttp 等全源码编；cloud/camera 集成需运行期编译器，未预装",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: Host networking is recommended for device discovery.\nImage notes: Core 2026.10.2；Python 3.14 自编；cryptography/grpcio/Pillow/aiohttp 等全源码编；cloud/camera 集成需运行期编译器，未预装"
+      }
+    },
+    "sonarr": {
+      "title": {
+        "zh_cn": "Sonarr",
+        "en_us": "Sonarr"
+      },
+      "category": "Downloaders",
+      "tagline": {
+        "zh_cn": "Sonarr 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Sonarr LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v4.0.20；.NET 9 运行时 + 自写 Mono.Posix loong64 兼容层；8989",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v4.0.20；.NET 9 运行时 + 自写 Mono.Posix loong64 兼容层；8989"
+      }
+    },
+    "radarr": {
+      "title": {
+        "zh_cn": "Radarr",
+        "en_us": "Radarr"
+      },
+      "category": "Downloaders",
+      "tagline": {
+        "zh_cn": "Radarr 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Radarr LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v6.4.4；同上；自编译 e_sqlite3；7878",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v6.4.4；同上；自编译 e_sqlite3；7878"
+      }
+    },
+    "tautulli": {
+      "title": {
+        "zh_cn": "Tautulli",
+        "en_us": "Tautulli"
+      },
+      "category": "Media",
+      "tagline": {
+        "zh_cn": "Tautulli 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Tautulli LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v2.18.2；纯 Python；8181",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v2.18.2；纯 Python；8181"
+      }
+    },
+    "jellystat": {
+      "title": {
+        "zh_cn": "Jellystat",
+        "en_us": "Jellystat"
+      },
+      "category": "Media",
+      "tagline": {
+        "zh_cn": "Jellystat 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Jellystat LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：需外部 PostgreSQL。\n镜像说明：1.1.12；Node 20 + 降级 Vite 6；**需要外部 PostgreSQL**；3000",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: Requires external PostgreSQL.\nImage notes: 1.1.12；Node 20 + 降级 Vite 6；**需要外部 PostgreSQL**；3000"
+      }
+    },
+    "stirling-pdf": {
+      "title": {
+        "zh_cn": "Stirling PDF",
+        "en_us": "Stirling PDF"
+      },
+      "category": "Media",
+      "tagline": {
+        "zh_cn": "Stirling PDF 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Stirling PDF LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v3.2.0；官方 jar + Java 25；精简版未装 LibreOffice/OCR，相关端点自动禁用；8080",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v3.2.0；官方 jar + Java 25；精简版未装 LibreOffice/OCR，相关端点自动禁用；8080"
+      }
+    },
+    "wizarr": {
+      "title": {
+        "zh_cn": "Wizarr",
+        "en_us": "Wizarr"
+      },
+      "category": "Utilities",
+      "tagline": {
+        "zh_cn": "Wizarr 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Wizarr LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v2026.10.1；Python 3.13 自编；前端静态资源取自官方 amd64 镜像（架构无关）；5690",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v2026.10.1；Python 3.13 自编；前端静态资源取自官方 amd64 镜像（架构无关）；5690"
+      }
+    },
+    "gitea": {
+      "title": {
+        "zh_cn": "Gitea",
+        "en_us": "Gitea"
+      },
+      "category": "Developer",
+      "tagline": {
+        "zh_cn": "Gitea 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Gitea LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v28.2.0；Go 1.27 自编；modernc SQLite；入口脚本生成 app.ini；3000",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v28.2.0；Go 1.27 自编；modernc SQLite；入口脚本生成 app.ini；3000"
+      }
+    },
+    "miniflux": {
+      "title": {
+        "zh_cn": "Miniflux",
+        "en_us": "Miniflux"
+      },
+      "category": "Utilities",
+      "tagline": {
+        "zh_cn": "Miniflux 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Miniflux LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：需外部 PostgreSQL。\n镜像说明：v2.3.3；上游已删 SQLite 支持，必须提供 PostgreSQL DSN；8080",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: Requires external PostgreSQL.\nImage notes: v2.3.3；上游已删 SQLite 支持，必须提供 PostgreSQL DSN；8080"
+      }
+    },
+    "portainer": {
+      "title": {
+        "zh_cn": "Portainer",
+        "en_us": "Portainer"
+      },
+      "category": "Developer",
+      "tagline": {
+        "zh_cn": "Portainer 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Portainer LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：需挂载 docker.sock。\n镜像说明：2.45.2 LTS；Go 自编 + 前端本机 pnpm/webpack；需挂 docker.sock；9000",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: Requires docker.sock.\nImage notes: 2.45.2 LTS；Go 自编 + 前端本机 pnpm/webpack；需挂 docker.sock；9000"
+      }
+    },
+    "nginx-proxy-manager": {
+      "title": {
+        "zh_cn": "Nginx Proxy Manager",
+        "en_us": "Nginx Proxy Manager"
+      },
+      "category": "Networking",
+      "tagline": {
+        "zh_cn": "Nginx Proxy Manager 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Nginx Proxy Manager LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v2.16.0；Node 22 + nginx；前端在 x64 编 dist；自写 entrypoint 替代 s6-overlay；81/443",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v2.16.0；Node 22 + nginx；前端在 x64 编 dist；自写 entrypoint 替代 s6-overlay；81/443"
+      }
+    },
+    "firefly-iii": {
+      "title": {
+        "zh_cn": "Firefly III",
+        "en_us": "Firefly III"
+      },
+      "category": "Productivity",
+      "tagline": {
+        "zh_cn": "Firefly III 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Firefly III LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v6.7.9；PHP 8.5 自编（上游要求 ≥8.5）+ nginx；SQLite 自动迁移/种子；8080",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v6.7.9；PHP 8.5 自编（上游要求 ≥8.5）+ nginx；SQLite 自动迁移/种子；8080"
+      }
+    },
+    "phpmyadmin": {
+      "title": {
+        "zh_cn": "phpMyAdmin",
+        "en_us": "phpMyAdmin"
+      },
+      "category": "Utilities",
+      "tagline": {
+        "zh_cn": "phpMyAdmin 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "phpMyAdmin LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：5.2.3；PHP 8.3 + nginx/php-fpm；无需数据库即可开登录页；8080",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 5.2.3；PHP 8.3 + nginx/php-fpm；无需数据库即可开登录页；8080"
+      }
+    },
+    "freshrss": {
+      "title": {
+        "zh_cn": "FreshRSS",
+        "en_us": "FreshRSS"
+      },
+      "category": "Productivity",
+      "tagline": {
+        "zh_cn": "FreshRSS 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "FreshRSS LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：1.30.1；PHP 8.3 + nginx/php-fpm；SQLite 自动安装（admin/adminadmin）；8080",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 1.30.1；PHP 8.3 + nginx/php-fpm；SQLite 自动安装（admin/adminadmin）；8080"
+      }
+    },
+    "prowlarr": {
+      "title": {
+        "zh_cn": "Prowlarr",
+        "en_us": "Prowlarr"
+      },
+      "category": "Downloaders",
+      "tagline": {
+        "zh_cn": "Prowlarr 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Prowlarr LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：2.6.5；.NET 9 + 自编 Mono.Posix/e_sqlite3；9696",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 2.6.5；.NET 9 + 自编 Mono.Posix/e_sqlite3；9696"
+      }
+    },
+    "bazarr": {
+      "title": {
+        "zh_cn": "Bazarr",
+        "en_us": "Bazarr"
+      },
+      "category": "Downloaders",
+      "tagline": {
+        "zh_cn": "Bazarr 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Bazarr LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：1.6.2；Python 3.11 + lxml/Pillow 源码编；webrtcvad 补 loongarch 分支；含 ffmpeg/7za；6767",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 1.6.2；Python 3.11 + lxml/Pillow 源码编；webrtcvad 补 loongarch 分支；含 ffmpeg/7za；6767"
+      }
+    },
+    "homer": {
+      "title": {
+        "zh_cn": "homer",
+        "en_us": "homer"
+      },
+      "category": "Networking",
+      "tagline": {
+        "zh_cn": "homer 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "homer LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v26.08.3；openEuler nginx 1.24 + 官方静态包；8080",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v26.08.3；openEuler nginx 1.24 + 官方静态包；8080"
+      }
+    },
+    "paperless-ngx": {
+      "title": {
+        "zh_cn": "Paperless-ngx",
+        "en_us": "Paperless-ngx"
+      },
+      "category": "Productivity",
+      "tagline": {
+        "zh_cn": "Paperless-ngx 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Paperless-ngx LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：3.3.2；qpdf 12.4.2 自编（pikepdf 10.17 要求）；tesseract eng/chi_sim/osd；AI 关闭、unpaper 无；单容器含 redis/celery worker/beat/consumer；8000",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 3.3.2；qpdf 12.4.2 自编（pikepdf 10.17 要求）；tesseract eng/chi_sim/osd；AI 关闭、unpaper 无；单容器含 redis/celery worker/beat/consumer；8000"
+      }
+    },
+    "dashy": {
+      "title": {
+        "zh_cn": "Dashy",
+        "en_us": "Dashy"
+      },
+      "category": "Networking",
+      "tagline": {
+        "zh_cn": "Dashy 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Dashy LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：4.8.0；官方预构建 `dist/` + nginx 1.24；配置挂载 `/usr/share/nginx/html/conf.yml`；8080",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 4.8.0；官方预构建 `dist/` + nginx 1.24；配置挂载 `/usr/share/nginx/html/conf.yml`；8080"
+      }
+    },
+    "watchtower": {
+      "title": {
+        "zh_cn": "Watchtower",
+        "en_us": "Watchtower"
+      },
+      "category": "Utilities",
+      "tagline": {
+        "zh_cn": "Watchtower 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Watchtower LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：需挂载 docker.sock。\n镜像说明：v1.7.1；Go 静态二进制 + CA 证书；需挂 `/var/run/docker.sock`；`--label-enable` 只更新带标签容器",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: Requires docker.sock.\nImage notes: v1.7.1；Go 静态二进制 + CA 证书；需挂 `/var/run/docker.sock`；`--label-enable` 只更新带标签容器"
+      }
+    },
+    "changedetection": {
+      "title": {
+        "zh_cn": "ChangeDetection.io",
+        "en_us": "ChangeDetection.io"
+      },
+      "category": "Monitoring",
+      "tagline": {
+        "zh_cn": "ChangeDetection.io 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "ChangeDetection.io LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：0.60.9；SQLite；内置 Firefox 140.11ESR + geckodriver 0.37.1；Selenium 步骤适配层支持 Goto/点击/输入/等待/选择/按键/滚动/JS/复选框等（不再依赖 Playwright）；OpenCV 4.5.2 + numpy 1.26.4，SSIM 可用；Chrome 远程仍可 `WEBDRIVER_BROWSER=chrome` + `WEBDRIVER_URL`；5000",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 0.60.9；SQLite；内置 Firefox 140.11ESR + geckodriver 0.37.1；Selenium 步骤适配层支持 Goto/点击/输入/等待/选择/按键/滚动/JS/复选框等（不再依赖 Playwright）；OpenCV 4.5.2 + numpy 1.26.4，SSIM 可用；Chrome 远程仍可 `WEBDRIVER_BROWSER=chrome` + `WEBDRIVER_URL`；5000"
+      }
+    },
+    "caddy": {
+      "title": {
+        "zh_cn": "Caddy",
+        "en_us": "Caddy"
+      },
+      "category": "Networking",
+      "tagline": {
+        "zh_cn": "Caddy 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Caddy LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：纯 Go 静态编；scratch + CA；默认 Caddyfile 监听 8080；挂载自己的 Caddyfile 覆盖，80/443/8080",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 纯 Go 静态编；scratch + CA；默认 Caddyfile 监听 8080；挂载自己的 Caddyfile 覆盖，80/443/8080"
+      }
+    },
+    "dozzle": {
+      "title": {
+        "zh_cn": "Dozzle",
+        "en_us": "Dozzle"
+      },
+      "category": "Developer",
+      "tagline": {
+        "zh_cn": "Dozzle 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Dozzle LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：需挂载 docker.sock。\n镜像说明：前端 Bun 1.4.3/Vite 在 x86 WSL2 构建（产物架构无关），Go 1.27.2 在 A 编 loong64；scratch；需挂 docker.sock；8080",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: Requires docker.sock.\nImage notes: 前端 Bun 1.4.3/Vite 在 x86 WSL2 构建（产物架构无关），Go 1.27.2 在 A 编 loong64；scratch；需挂 docker.sock；8080"
+      }
+    },
+    "ntfy": {
+      "title": {
+        "zh_cn": "ntfy",
+        "en_us": "ntfy"
+      },
+      "category": "Utilities",
+      "tagline": {
+        "zh_cn": "ntfy 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "ntfy LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：2.32.0；Go CGO（go-sqlite3）在 openEuler 容器编；前端 Vite 在 x86 WSL2 构建；8080；挂 `/var/cache/ntfy`、`/etc/ntfy`",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 2.32.0；Go CGO（go-sqlite3）在 openEuler 容器编；前端 Vite 在 x86 WSL2 构建；8080；挂 `/var/cache/ntfy`、`/etc/ntfy`"
+      }
+    },
+    "gotify": {
+      "title": {
+        "zh_cn": "Gotify",
+        "en_us": "Gotify"
+      },
+      "category": "Utilities",
+      "tagline": {
+        "zh_cn": "Gotify 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Gotify LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：3.1.1；Go CGO（go-sqlite3）在 openEuler 容器编；UI Vite 8 在 x86 WSL2 构建；8080；数据卷 `/data`",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 3.1.1；Go CGO（go-sqlite3）在 openEuler 容器编；UI Vite 8 在 x86 WSL2 构建；8080；数据卷 `/data`"
+      }
+    },
+    "node-exporter": {
+      "title": {
+        "zh_cn": "Node Exporter",
+        "en_us": "Node Exporter"
+      },
+      "category": "Monitoring",
+      "tagline": {
+        "zh_cn": "Node Exporter 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Node Exporter LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：1.12.1；纯 Go 静态编；scratch + CA；9100；采集宿主指标需挂 `/proc`、`/sys`、`/`",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 1.12.1；纯 Go 静态编；scratch + CA；9100；采集宿主指标需挂 `/proc`、`/sys`、`/`"
+      }
+    },
+    "prometheus": {
+      "title": {
+        "zh_cn": "Prometheus",
+        "en_us": "Prometheus"
+      },
+      "category": "Monitoring",
+      "tagline": {
+        "zh_cn": "Prometheus 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Prometheus LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：3.15.0；UI 用 Vite 8 在 x86 WSL2 构建，Go `-tags builtinassets` 嵌入；TSDB `/prometheus`；9090",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 3.15.0；UI 用 Vite 8 在 x86 WSL2 构建，Go `-tags builtinassets` 嵌入；TSDB `/prometheus`；9090"
+      }
+    },
+    "pihole": {
+      "title": {
+        "zh_cn": "Pi-hole",
+        "en_us": "Pi-hole"
+      },
+      "category": "Networking",
+      "tagline": {
+        "zh_cn": "Pi-hole 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Pi-hole LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：需 host 网络并避让宿主 dnsmasq。\n镜像说明：FTL 6.8 + web 6.6.1；C/C++，静态 nettle 3.10；上游 `pihole` CLI + `gravity.sh` + `pihole-adlist`（add/list/remove）；DNS 53 / Web 80；`/etc/pihole`",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: Requires host networking; avoid the host dnsmasq on port 53.\nImage notes: FTL 6.8 + web 6.6.1；C/C++，静态 nettle 3.10；上游 `pihole` CLI + `gravity.sh` + `pihole-adlist`（add/list/remove）；DNS 53 / Web 80；`/etc/pihole`"
+      }
+    },
+    "gatus": {
+      "title": {
+        "zh_cn": "Gatus",
+        "en_us": "Gatus"
+      },
+      "category": "Monitoring",
+      "tagline": {
+        "zh_cn": "Gatus 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Gatus LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：5.37.0；Go 静态编；自带 `web/static`；scratch；默认配置监控 Prometheus；8080",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 5.37.0；Go 静态编；自带 `web/static`；scratch；默认配置监控 Prometheus；8080"
+      }
+    },
+    "alertmanager": {
+      "title": {
+        "zh_cn": "Alertmanager",
+        "en_us": "Alertmanager"
+      },
+      "category": "Monitoring",
+      "tagline": {
+        "zh_cn": "Alertmanager 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Alertmanager LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：0.34.1；Elm + Vite 前端在 x86 WSL2 构建后 `go:embed`；Go 静态编；openEuler + curl 健康检查；9093 Web / 9094 gossip；以 nobody 运行；默认配置只收不发，生产需挂载自己的 alertmanager.yml",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 0.34.1；Elm + Vite 前端在 x86 WSL2 构建后 `go:embed`；Go 静态编；openEuler + curl 健康检查；9093 Web / 9094 gossip；以 nobody 运行；默认配置只收不发，生产需挂载自己的 alertmanager.yml"
+      }
+    },
+    "postgres": {
+      "title": {
+        "zh_cn": "PostgreSQL",
+        "en_us": "PostgreSQL"
+      },
+      "category": "Utilities",
+      "tagline": {
+        "zh_cn": "PostgreSQL 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "PostgreSQL LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：15.18（openEuler 包）；官方无 loong64；entrypoint 支持 POSTGRES_USER/PASSWORD/DB/HOST_AUTH_METHOD；PGDATA `/var/lib/postgresql/data`；5432；日志走 stdout",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 15.18（openEuler 包）；官方无 loong64；entrypoint 支持 POSTGRES_USER/PASSWORD/DB/HOST_AUTH_METHOD；PGDATA `/var/lib/postgresql/data`；5432；日志走 stdout"
+      }
+    },
+    "redis": {
+      "title": {
+        "zh_cn": "Redis",
+        "en_us": "Redis"
+      },
+      "category": "Utilities",
+      "tagline": {
+        "zh_cn": "Redis 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Redis LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：7.2.14（openEuler 包）；AOF+RDB；`/data`；6379；默认 protected-mode no，公网必须设 `REDIS_PASSWORD`；UID/GID 998:996",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 7.2.14（openEuler 包）；AOF+RDB；`/data`；6379；默认 protected-mode no，公网必须设 `REDIS_PASSWORD`；UID/GID 998:996"
+      }
+    },
+    "mosquitto": {
+      "title": {
+        "zh_cn": "Eclipse Mosquitto",
+        "en_us": "Eclipse Mosquitto"
+      },
+      "category": "Utilities",
+      "tagline": {
+        "zh_cn": "Eclipse Mosquitto 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Eclipse Mosquitto LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：2.0.20（openEuler EPOL）；持久化 `/mosquitto/data`；1883；默认 allow_anonymous true，公网必须关匿名并配 passwd；含 mosquitto_pub/sub/passwd；UID/GID 998:996",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 2.0.20（openEuler EPOL）；持久化 `/mosquitto/data`；1883；默认 allow_anonymous true，公网必须关匿名并配 passwd；含 mosquitto_pub/sub/passwd；UID/GID 998:996"
+      }
+    },
+    "mariadb": {
+      "title": {
+        "zh_cn": "MariaDB",
+        "en_us": "MariaDB"
+      },
+      "category": "Utilities",
+      "tagline": {
+        "zh_cn": "MariaDB 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "MariaDB LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：10.11.18（openEuler 包）；`MYSQL_ROOT_PASSWORD/DATABASE/USER/PASSWORD/ALLOW_EMPTY_PASSWORD`；`/var/lib/mysql`；3306；root 仅 localhost；日志走 stderr；UID/GID 27",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 10.11.18（openEuler 包）；`MYSQL_ROOT_PASSWORD/DATABASE/USER/PASSWORD/ALLOW_EMPTY_PASSWORD`；`/var/lib/mysql`；3306；root 仅 localhost；日志走 stderr；UID/GID 27"
+      }
+    },
+    "node-red": {
+      "title": {
+        "zh_cn": "Node-RED",
+        "en_us": "Node-RED"
+      },
+      "category": "Developer",
+      "tagline": {
+        "zh_cn": "Node-RED 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Node-RED LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：5.0.8 + Node 24.22.1；基于 `yunixintel/node`；多阶段构建；1880；`/data`；保留 npm 支持 palette；UID 1001",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 5.0.8 + Node 24.22.1；基于 `yunixintel/node`；多阶段构建；1880；`/data`；保留 npm 支持 palette；UID 1001"
+      }
+    },
+    "grafana": {
+      "title": {
+        "zh_cn": "Grafana",
+        "en_us": "Grafana"
+      },
+      "category": "Monitoring",
+      "tagline": {
+        "zh_cn": "Grafana 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Grafana LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：13.2.4；前端 WSL Node22/Yarn4 webpack 构建，删 source map；Go 1.27/CGO0 `-tags oss`；UID/GID 472；`/var/lib/grafana`；3000；默认 admin/admin；不含 renderer 与额外 bundled 插件",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 13.2.4；前端 WSL Node22/Yarn4 webpack 构建，删 source map；Go 1.27/CGO0 `-tags oss`；UID/GID 472；`/var/lib/grafana`；3000；默认 admin/admin；不含 renderer 与额外 bundled 插件"
+      }
+    },
+    "memcached": {
+      "title": {
+        "zh_cn": "Memcached",
+        "en_us": "Memcached"
+      },
+      "category": "Networking",
+      "tagline": {
+        "zh_cn": "Memcached 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Memcached LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：1.6.42（openEuler 包）；默认 64MB/1024 连接/4 线程；`MEMCACHED_*` 可调；11211；无认证、无持久化，禁止公网暴露；UID/GID 998:996",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 1.6.42（openEuler 包）；默认 64MB/1024 连接/4 线程；`MEMCACHED_*` 可调；11211；无认证、无持久化，禁止公网暴露；UID/GID 998:996"
+      }
+    },
+    "homebridge": {
+      "title": {
+        "zh_cn": "Homebridge",
+        "en_us": "Homebridge"
+      },
+      "category": "Home Automation",
+      "tagline": {
+        "zh_cn": "Homebridge 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Homebridge LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：建议 host 网络；需改默认配对码。\n镜像说明：2.4.0 + Config UI 5.29.0 + Node 24.22.1；基于 `yunixintel/node`；node-pty 源码编 loong64；hb-service run；建议 host 网络；`/homebridge`；8581/51826；UID 1000",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: Host networking recommended; change the default pairing code.\nImage notes: 2.4.0 + Config UI 5.29.0 + Node 24.22.1；基于 `yunixintel/node`；node-pty 源码编 loong64；hb-service run；建议 host 网络；`/homebridge`；8581/51826；UID 1000"
+      }
+    },
+    "rest-server": {
+      "title": {
+        "zh_cn": "REST Server",
+        "en_us": "REST Server"
+      },
+      "category": "Backup",
+      "tagline": {
+        "zh_cn": "REST Server 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "REST Server LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：0.14.0；Go 静态二进制 12MB；openEuler + httpd-tools（htpasswd）；`/data`；8000；默认开认证，先 create_user 再重启；可 DISABLE_AUTHENTICATION=1；无 TLS",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 0.14.0；Go 静态二进制 12MB；openEuler + httpd-tools（htpasswd）；`/data`；8000；默认开认证，先 create_user 再重启；可 DISABLE_AUTHENTICATION=1；无 TLS"
+      }
+    },
+    "actual-budget": {
+      "title": {
+        "zh_cn": "Actual Budget",
+        "en_us": "Actual Budget"
+      },
+      "category": "Productivity",
+      "tagline": {
+        "zh_cn": "Actual Budget 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Actual Budget LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：26.10.0（@actual-app/sync-server）+ Node 24.22.1；`/opt/node24`；`/data`；5006；UID 1002；better-sqlite3 需手动 node-gyp 编 loong64；无内置 TLS",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 26.10.0（@actual-app/sync-server）+ Node 24.22.1；`/opt/node24`；`/data`；5006；UID 1002；better-sqlite3 需手动 node-gyp 编 loong64；无内置 TLS"
+      }
+    },
+    "minio": {
+      "title": {
+        "zh_cn": "MinIO",
+        "en_us": "MinIO"
+      },
+      "category": "Cloud",
+      "tagline": {
+        "zh_cn": "MinIO 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "MinIO LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：必须设置 MINIO_ROOT_USER/PASSWORD。\n镜像说明：RELEASE.2025-10-15T17-29-55Z；Go 1.27 源码编；`/data`；9000/9001；UID 1000；必须设 MINIO_ROOT_USER/PASSWORD；AGPLv3；单盘无纠删码",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: MINIO_ROOT_USER/PASSWORD are required.\nImage notes: RELEASE.2025-10-15T17-29-55Z；Go 1.27 源码编；`/data`；9000/9001；UID 1000；必须设 MINIO_ROOT_USER/PASSWORD；AGPLv3；单盘无纠删码"
+      }
+    },
+    "homebox": {
+      "title": {
+        "zh_cn": "HomeBox",
+        "en_us": "HomeBox"
+      },
+      "category": "Productivity",
+      "tagline": {
+        "zh_cn": "HomeBox 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "HomeBox LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v0.10.3；Nuxt 静态前端 embed；Go 1.27；modernc sqlite 需升到 1.61 支持 loong64；`/data`；7745；UID 1000；默认允许注册",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v0.10.3；Nuxt 静态前端 embed；Go 1.27；modernc sqlite 需升到 1.61 支持 loong64；`/data`；7745；UID 1000；默认允许注册"
+      }
+    },
+    "nocodb": {
+      "title": {
+        "zh_cn": "NocoDB",
+        "en_us": "NocoDB"
+      },
+      "category": "Developer",
+      "tagline": {
+        "zh_cn": "NocoDB 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "NocoDB LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：0.301.3 + Node 24.22.1；npm 需 --ignore-scripts 跳过 only-allow pnpm；sqlite3 手动 node-gyp 编 loong64；自定义 docker-main runner；`/data`；8080；UID 1000",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 0.301.3 + Node 24.22.1；npm 需 --ignore-scripts 跳过 only-allow pnpm；sqlite3 手动 node-gyp 编 loong64；自定义 docker-main runner；`/data`；8080；UID 1000"
+      }
+    },
+    "apprise-api": {
+      "title": {
+        "zh_cn": "Apprise API",
+        "en_us": "Apprise API"
+      },
+      "category": "Utilities",
+      "tagline": {
+        "zh_cn": "Apprise API 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Apprise API LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：2.0.1 + Python 3.11；系统 cryptography 42/gevent 22.10.2；pycares 需 cmake；nginx+supervisor+gunicorn；`/config`、`/attach`、`/plugin`；8000",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 2.0.1 + Python 3.11；系统 cryptography 42/gevent 22.10.2；pycares 需 cmake；nginx+supervisor+gunicorn；`/config`、`/attach`、`/plugin`；8000"
+      }
+    },
+    "mealie": {
+      "title": {
+        "zh_cn": "Mealie",
+        "en_us": "Mealie"
+      },
+      "category": "Productivity",
+      "tagline": {
+        "zh_cn": "Mealie 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Mealie LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：Python 3.14 源码构建。\n缺失功能：不支持 HEIF/HEIC。\n额外依赖：持久化 /app/data；UID 911。\n镜像说明：3.29.0；Python 3.14.8 自编；Nuxt 前端 x86 构建；Rust 1.99 编 orjson/pydantic-core/curl-cffi；`/app/data`；9000；UID 911；HEIF/HEIC 不支持（libheif 缺失，stub）",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Built from source with Python 3.14.\nMissing features: No HEIF/HEIC support.\nExtra dependencies: Persist /app/data; UID 911.\nImage notes: 3.29.0；Python 3.14.8 自编；Nuxt 前端 x86 构建；Rust 1.99 编 orjson/pydantic-core/curl-cffi；`/app/data`；9000；UID 911；HEIF/HEIC 不支持（libheif 缺失，stub）"
+      }
+    },
+    "chinesesubfinder": {
+      "title": {
+        "zh_cn": "ChineseSubFinder",
+        "en_us": "ChineseSubFinder"
+      },
+      "category": "Media",
+      "tagline": {
+        "zh_cn": "ChineseSubFinder 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "ChineseSubFinder LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：v0.55.2 Lite；Go + Quasar 前端（x86 构建）；go-webrtcvad 补 LoongArch 分支；`/config`、`/media`；19035；UID 1026；内置 ffmpeg",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: v0.55.2 Lite；Go + Quasar 前端（x86 构建）；go-webrtcvad 补 LoongArch 分支；`/config`、`/media`；19035；UID 1026；内置 ffmpeg"
+      }
+    },
+    "lanraragi": {
+      "title": {
+        "zh_cn": "LANraragi",
+        "en_us": "LANraragi"
+      },
+      "category": "Media",
+      "tagline": {
+        "zh_cn": "LANraragi 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "LANraragi LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：0.9.81；Perl + 126 个 CPAN 模块；内置 Redis；需设置 PERL5LIB loongarch64 路径；`content`/`thumb`/`database`；3000；UID 9001",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 0.9.81；Perl + 126 个 CPAN 模块；内置 Redis；需设置 PERL5LIB loongarch64 路径；`content`/`thumb`/`database`；3000；UID 9001"
+      }
+    },
+    "owntone": {
+      "title": {
+        "zh_cn": "OwnTone",
+        "en_us": "OwnTone"
+      },
+      "category": "Media",
+      "tagline": {
+        "zh_cn": "OwnTone 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "OwnTone LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：29.3；DAAP/DACP/AirPlay；容器内启动 dbus + avahi；`/srv/music`、`/var/cache/owntone`；3689；UID 998",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 29.3；DAAP/DACP/AirPlay；容器内启动 dbus + avahi；`/srv/music`、`/var/cache/owntone`；3689；UID 998"
+      }
+    },
+    "mymind": {
+      "title": {
+        "zh_cn": "MyMind",
+        "en_us": "MyMind"
+      },
+      "category": "Media",
+      "tagline": {
+        "zh_cn": "MyMind 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "MyMind LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：无额外外部依赖。\n镜像说明：纯静态思维导图；nginx；32 个文件；无后端/无持久化；80",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: No extra external dependency.\nImage notes: 纯静态思维导图；nginx；32 个文件；无后端/无持久化；80"
+      }
+    },
+    "webvirtcloud": {
+      "title": {
+        "zh_cn": "WebVirtCloud",
+        "en_us": "WebVirtCloud"
+      },
+      "category": "Developer",
+      "tagline": {
+        "zh_cn": "WebVirtCloud 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "WebVirtCloud LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：未发现与上游应用的已知行为差异；仅镜像架构为 linux/loong64。\n缺失功能：无已知缺失功能（尚未逐项做上游功能回归）。\n额外依赖：需 libvirt/KVM 与 SSH 凭据。\n镜像说明：Django 4.2 + Python 3.11 + libvirt + noVNC；gunicorn/novncd/nginx 三进程；`/srv/webvirtcloud/data`、`/var/www/.ssh`；80；UID 33",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: No known behavior difference from upstream; only the image architecture is linux/loong64.\nMissing features: No known missing feature (not yet fully regression-tested against upstream).\nExtra dependencies: Requires libvirt/KVM and SSH credentials.\nImage notes: Django 4.2 + Python 3.11 + libvirt + noVNC；gunicorn/novncd/nginx 三进程；`/srv/webvirtcloud/data`、`/var/www/.ssh`；80；UID 33"
+      }
+    },
+    "penpot-backend": {
+      "title": {
+        "zh_cn": "Penpot (backend)",
+        "en_us": "Penpot (backend)"
+      },
+      "category": "Developer",
+      "tagline": {
+        "zh_cn": "Penpot (backend) 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Penpot (backend) LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：Penpot 前后端拆成两个镜像；后端用 JDK 21 运行官方 jar。\n缺失功能：无 exporter（PDF/PNG 导出会 502）；无 admin-console/MCP。\n额外依赖：需 PostgreSQL + Redis；PENPOT_SECRET_KEY 必填。\n镜像说明：2.18.3；复用官方 uberjar（Java 21 字节码）+ openEuler JDK 21；需外部 PostgreSQL/Redis；`PENPOT_SECRET_KEY` 必填；exporter 未移植",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Penpot is split into frontend and backend images; the backend runs the official jar on JDK 21.\nMissing features: No exporter (PDF/PNG export returns 502); no admin console/MCP.\nExtra dependencies: Requires PostgreSQL and Redis; PENPOT_SECRET_KEY is mandatory.\nImage notes: 2.18.3；复用官方 uberjar（Java 21 字节码）+ openEuler JDK 21；需外部 PostgreSQL/Redis；`PENPOT_SECRET_KEY` 必填；exporter 未移植"
+      }
+    },
+    "penpot-frontend": {
+      "title": {
+        "zh_cn": "Penpot (frontend)",
+        "en_us": "Penpot (frontend)"
+      },
+      "category": "Developer",
+      "tagline": {
+        "zh_cn": "Penpot (frontend) 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Penpot (frontend) LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：Penpot 前端单独成镜像，通过 nginx 反代后端。\n缺失功能：同上；导出功能未移植。\n额外依赖：需同时部署 penpot-backend、PostgreSQL、Redis。\n镜像说明：2.18.3 静态前端；nginx + envsubst；`/api`/`/assets`/`/ws/notifications` 反代 backend；8080；需与 backend 同网络",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Separate Penpot frontend image, reverse-proxying the backend with nginx.\nMissing features: Same as backend; exporter is not ported.\nExtra dependencies: Requires penpot-backend, PostgreSQL and Redis.\nImage notes: 2.18.3 静态前端；nginx + envsubst；`/api`/`/assets`/`/ws/notifications` 反代 backend；8080；需与 backend 同网络"
+      }
+    },
+    "hermes": {
+      "title": {
+        "zh_cn": "Hermes",
+        "en_us": "Hermes"
+      },
+      "category": "Developer",
+      "tagline": {
+        "zh_cn": "Hermes 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Hermes LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：使用 Python 3.14 独立构建；镜像保留 gcc/rust 工具链。\n缺失功能：不支持 HEIC/HEIF；computer_use 在 loongarch64 不可用。\n额外依赖：默认无 WebUI 密码；镜像约 3.68GB。\n镜像说明：Hermes agent/webui master；Python 3.14.8；browser-harness/Pillow 冲突用 --no-deps+过滤依赖；pillow-heif/HEIC 不支持；`/data/.hermes`、`/workspace`；8787；UID 1000",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Built with a standalone Python 3.14; the image keeps gcc/rust toolchains.\nMissing features: No HEIC/HEIF support; computer_use is unavailable on loongarch64.\nExtra dependencies: No default WebUI password; image is about 3.68GB.\nImage notes: Hermes agent/webui master；Python 3.14.8；browser-harness/Pillow 冲突用 --no-deps+过滤依赖；pillow-heif/HEIC 不支持；`/data/.hermes`、`/workspace`；8787；UID 1000"
+      }
+    },
+    "zigbee2mqtt": {
+      "title": {
+        "zh_cn": "Zigbee2MQTT",
+        "en_us": "Zigbee2MQTT"
+      },
+      "category": "Home Automation",
+      "tagline": {
+        "zh_cn": "Zigbee2MQTT 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Zigbee2MQTT LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：Node 24 + pnpm；serialport 针对 loongarch64 源码编译。\n缺失功能：没有 USB 协调器时容器会退出。\n额外依赖：需 /dev/ttyACM0 或 /dev/serial/by-id/*，以及 dialout 组。\n镜像说明：2.14.2；Node 24 + pnpm；serialport 源码编 loong64；运行阶段含 systemd-udev；`/app/data`；8080；UID 1101；需 USB 协调器",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Node 24 with pnpm; serialport is compiled from source for loongarch64.\nMissing features: The container exits when no USB coordinator is present.\nExtra dependencies: Requires /dev/ttyACM0 or /dev/serial/by-id/* and the dialout group.\nImage notes: 2.14.2；Node 24 + pnpm；serialport 源码编 loong64；运行阶段含 systemd-udev；`/app/data`；8080；UID 1101；需 USB 协调器"
+      }
+    },
+    "smartctl-exporter": {
+      "title": {
+        "zh_cn": "smartctl_exporter",
+        "en_us": "smartctl_exporter"
+      },
+      "category": "Monitoring",
+      "tagline": {
+        "zh_cn": "smartctl_exporter 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "smartctl_exporter LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：仅暴露 Prometheus 指标，没有 UI 和历史库。\n缺失功能：无内置历史/告警。\n额外依赖：需 SYS_RAWIO/SYS_ADMIN 与设备直通；默认无认证。\n镜像说明：v0.15.0；Go 单二进制 + smartmontools；9633；需 SYS_RAWIO/SYS_ADMIN 与设备直通；替代 Scrutiny（其强制 InfluxDB）",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Exposes Prometheus metrics only; no UI or history database.\nMissing features: No built-in history or alerting.\nExtra dependencies: Requires SYS_RAWIO/SYS_ADMIN and device passthrough; no auth by default.\nImage notes: v0.15.0；Go 单二进制 + smartmontools；9633；需 SYS_RAWIO/SYS_ADMIN 与设备直通；替代 Scrutiny（其强制 InfluxDB）"
+      }
+    },
+    "sftpgo": {
+      "title": {
+        "zh_cn": "SFTPGo",
+        "en_us": "SFTPGo"
+      },
+      "category": "Cloud",
+      "tagline": {
+        "zh_cn": "SFTPGo 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "SFTPGo LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：Go + CGO SQLite；首次进入安装页创建管理员。\n缺失功能：默认不创建管理员；FTP/WebDAV 默认关闭。\n额外依赖：持久化 /srv/sftpgo/data 与 /var/lib/sftpgo；公网需 TLS。\n镜像说明：v2.7.6；Go + CGO SQLite；Web 8080、SFTP 2022；`/srv/sftpgo/data`、`/var/lib/sftpgo`；UID 1103；首次安装页创建管理员",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Go with CGO SQLite; the first visit opens the setup page.\nMissing features: No default admin; FTP/WebDAV are disabled by default.\nExtra dependencies: Persist /srv/sftpgo/data and /var/lib/sftpgo; use TLS on the public network.\nImage notes: v2.7.6；Go + CGO SQLite；Web 8080、SFTP 2022；`/srv/sftpgo/data`、`/var/lib/sftpgo`；UID 1103；首次安装页创建管理员"
+      }
+    },
+    "bookstack": {
+      "title": {
+        "zh_cn": "BookStack",
+        "en_us": "BookStack"
+      },
+      "category": "Productivity",
+      "tagline": {
+        "zh_cn": "BookStack 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "BookStack LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：PHP 8.3 + nginx/php-fpm；首次启动自动生成 .env。\n缺失功能：必须使用 MariaDB/MySQL，不支持 SQLite。\n额外依赖：需 MariaDB/MySQL；持久化 storage 与 public/uploads；首次用 artisan 建管理员。\n镜像说明：v26.09.2；PHP 8.3 + nginx/php-fpm；必须 MariaDB/MySQL；`storage`/`public/uploads` 持久化；`app.key` 0600；80",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: PHP 8.3 with nginx/php-fpm; .env is generated on first start.\nMissing features: Requires MariaDB/MySQL; SQLite is not supported.\nExtra dependencies: Requires MariaDB/MySQL; persist storage and public/uploads; create the admin with artisan.\nImage notes: v26.09.2；PHP 8.3 + nginx/php-fpm；必须 MariaDB/MySQL；`storage`/`public/uploads` 持久化；`app.key` 0600；80"
+      }
+    },
+    "vikunja": {
+      "title": {
+        "zh_cn": "Vikunja",
+        "en_us": "Vikunja"
+      },
+      "category": "Productivity",
+      "tagline": {
+        "zh_cn": "Vikunja 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Vikunja LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：Vue 前端在 x86 构建；后端 Go + CGO SQLite。\n缺失功能：默认允许注册，生产环境需关闭。\n额外依赖：service.interface 必须为 0.0.0.0:3456；PUBLICURL 必须正确；持久化 /db。\n镜像说明：v2.7.1；Vue 前端 x86 构建 + Go CGO SQLite；`/app/vikunja/files`、`/db`；3456；UID 1104；`service.interface=0.0.0.0:3456`；JWT secret 持久化",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Vue frontend is built on x86; backend is Go with CGO SQLite.\nMissing features: Registration is enabled by default; disable it in production.\nExtra dependencies: service.interface must be 0.0.0.0:3456; PUBLICURL must be correct; persist /db.\nImage notes: v2.7.1；Vue 前端 x86 构建 + Go CGO SQLite；`/app/vikunja/files`、`/db`；3456；UID 1104；`service.interface=0.0.0.0:3456`；JWT secret 持久化"
+      }
+    },
+    "piwigo": {
+      "title": {
+        "zh_cn": "Piwigo",
+        "en_us": "Piwigo"
+      },
+      "category": "Cloud",
+      "tagline": {
+        "zh_cn": "Piwigo 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Piwigo LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：首次启动自动 POST install.php 完成安装。\n缺失功能：必须使用 MariaDB/MySQL。\n额外依赖：需 MariaDB/MySQL；持久化 local、_data、galleries、upload。\n镜像说明：16.4.0；PHP 8.3 + nginx/php-fpm；必须 MariaDB/MySQL；`local`/`_data`/`galleries`/`upload` 持久化；80",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Runs install.php automatically on first start.\nMissing features: Requires MariaDB/MySQL.\nExtra dependencies: Requires MariaDB/MySQL; persist local, _data, galleries and upload.\nImage notes: 16.4.0；PHP 8.3 + nginx/php-fpm；必须 MariaDB/MySQL；`local`/`_data`/`galleries`/`upload` 持久化；80"
+      }
+    },
+    "go2rtc": {
+      "title": {
+        "zh_cn": "go2rtc",
+        "en_us": "go2rtc"
+      },
+      "category": "Media",
+      "tagline": {
+        "zh_cn": "go2rtc 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "go2rtc LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：单二进制，无 ffmpeg 依赖。\n缺失功能：默认无摄像头流配置、无认证。\n额外依赖：1984 API、8554 RTSP、8555 WebRTC；跨 NAT 需配置 candidates。\n镜像说明：1.9.14；Go 单二进制；1984 API、8554 RTSP、8555 WebRTC；`/config`；UID 1109；默认无认证、无摄像头配置",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Single binary; no ffmpeg dependency.\nMissing features: No default camera streams and no authentication.\nExtra dependencies: Ports 1984 API, 8554 RTSP, 8555 WebRTC; configure candidates behind NAT.\nImage notes: 1.9.14；Go 单二进制；1984 API、8554 RTSP、8555 WebRTC；`/config`；UID 1109；默认无认证、无摄像头配置"
+      }
+    },
+    "scrutiny": {
+      "title": {
+        "zh_cn": "Scrutiny",
+        "en_us": "Scrutiny"
+      },
+      "category": "Monitoring",
+      "tagline": {
+        "zh_cn": "Scrutiny 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Scrutiny LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：使用 SQLite metrics 补丁，不再依赖 InfluxDB；历史数据保存在 SQLite。\n缺失功能：不迁移旧 InfluxDB 历史；无保留/降采样任务；collector 需外部 cron/exec 触发。\n额外依赖：需 SYS_RAWIO/SYS_ADMIN 与磁盘设备直通；运行镜像含 libstdc++/libgcc。\n镜像说明：0.9.5 + SQLite metrics 补丁；不再依赖 InfluxDB；`/opt/scrutiny/config`；8080；需 SYS_RAWIO/SYS_ADMIN 与设备直通；collector 外部调度",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Uses a SQLite metrics patch instead of InfluxDB; history is stored in SQLite.\nMissing features: No migration of old InfluxDB history; no retention/downsampling jobs; collector must be triggered externally.\nExtra dependencies: Requires SYS_RAWIO/SYS_ADMIN and disk device passthrough; image includes libstdc++/libgcc.\nImage notes: 0.9.5 + SQLite metrics 补丁；不再依赖 InfluxDB；`/opt/scrutiny/config`；8080；需 SYS_RAWIO/SYS_ADMIN 与设备直通；collector 外部调度"
+      }
+    },
+    "headscale": {
+      "title": {
+        "zh_cn": "Headscale",
+        "en_us": "Headscale"
+      },
+      "category": "Networking",
+      "tagline": {
+        "zh_cn": "Headscale 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Headscale LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：单二进制，无 Web UI；通过 CLI/API 管理。\n缺失功能：无图形界面；gRPC 默认仅本机。\n额外依赖：HEADSCALE_SERVER_URL 必填；持久化 /etc/headscale 与 /var/lib/headscale。\n镜像说明：v0.29.5；Go 单二进制；无 Web UI；`/etc/headscale`、`/var/lib/headscale`；8080/9090；UID 1106；gRPC 默认仅本机",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Single binary without a web UI; managed via CLI/API.\nMissing features: No GUI; gRPC listens on localhost by default.\nExtra dependencies: HEADSCALE_SERVER_URL is required; persist /etc/headscale and /var/lib/headscale.\nImage notes: v0.29.5；Go 单二进制；无 Web UI；`/etc/headscale`、`/var/lib/headscale`；8080/9090；UID 1106；gRPC 默认仅本机"
+      }
+    },
+    "backrest": {
+      "title": {
+        "zh_cn": "Backrest",
+        "en_us": "Backrest"
+      },
+      "category": "Backup",
+      "tagline": {
+        "zh_cn": "Backrest 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Backrest LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：前端在 x86 构建后内嵌；自带 restic 0.19.1。\n缺失功能：首次需在 UI 建账号/仓库；默认无认证。\n额外依赖：持久化 /data、/config、/cache；备份源目录需额外挂载。\n镜像说明：v1.14.1 + restic 0.19.1；`/data`、`/config`、`/cache`；9898；UID 1108；首次 UI 建账号/仓库；默认无认证",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Frontend is built on x86 and embedded; bundles restic 0.19.1.\nMissing features: Create the account/repository in the UI first; no auth by default.\nExtra dependencies: Persist /data, /config and /cache; mount the backup source directories separately.\nImage notes: v1.14.1 + restic 0.19.1；`/data`、`/config`、`/cache`；9898；UID 1108；首次 UI 建账号/仓库；默认无认证"
+      }
+    },
+    "authelia": {
+      "title": {
+        "zh_cn": "Authelia",
+        "en_us": "Authelia"
+      },
+      "category": "Security",
+      "tagline": {
+        "zh_cn": "Authelia 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Authelia LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：自动生成配置/用户库/密钥；单机 SQLite。\n缺失功能：无内置 TLS；默认 one_factor，forward-auth 需反代配置。\n额外依赖：AUTH_DOMAIN/AUTH_URL 必须是 HTTPS 正式域名；持久化 /config。\n镜像说明：v4.39.28；CGO SQLite；自动生成配置/用户/密钥；`/config`；9091；UID 1107；需 HTTPS 反代；默认 one_factor",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Generates config, user database and secrets automatically; single-node SQLite.\nMissing features: No built-in TLS; one_factor by default; forward-auth needs reverse-proxy config.\nExtra dependencies: AUTH_DOMAIN/AUTH_URL must be real HTTPS domains; persist /config.\nImage notes: v4.39.28；CGO SQLite；自动生成配置/用户/密钥；`/config`；9091；UID 1107；需 HTTPS 反代；默认 one_factor"
+      }
+    },
+    "ente-server": {
+      "title": {
+        "zh_cn": "Ente Server",
+        "en_us": "Ente Server"
+      },
+      "category": "Cloud",
+      "tagline": {
+        "zh_cn": "Ente Server 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Ente Server LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：仅 API；museum.yaml 首次启动生成。\n缺失功能：不自带 Web 图库，需要 ente-web。\n额外依赖：需 PostgreSQL + S3/MinIO 三个桶；/data/museum.yaml 含密钥必须备份。\n镜像说明：ente server master；Go 单二进制；需 PostgreSQL + S3/MinIO；`/data/museum.yaml` 含密钥；8080；UID 1105；Web 端暂未包含",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: API only; museum.yaml is generated on first start.\nMissing features: No web gallery; use ente-web.\nExtra dependencies: Requires PostgreSQL and three S3/MinIO buckets; back up /data/museum.yaml (contains keys).\nImage notes: ente server master；Go 单二进制；需 PostgreSQL + S3/MinIO；`/data/museum.yaml` 含密钥；8080；UID 1105；Web 端暂未包含"
+      }
+    },
+    "autobrr": {
+      "title": {
+        "zh_cn": "Autobrr",
+        "en_us": "Autobrr"
+      },
+      "category": "Downloaders",
+      "tagline": {
+        "zh_cn": "Autobrr 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Autobrr LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：前端在 x86 构建后内嵌；使用 SQLite。\n缺失功能：默认无认证；需自行配置 IRC 和下载器。\n额外依赖：持久化 /config；公网需反代认证。\n镜像说明：master 2026-10；Go 单二进制 + 内嵌 Vue；`/config`；7474；UID 1113；默认无认证；需自配 IRC/下载器",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Frontend is built on x86 and embedded; uses SQLite.\nMissing features: No auth by default; configure IRC and download clients yourself.\nExtra dependencies: Persist /config; add reverse-proxy auth on the public network.\nImage notes: master 2026-10；Go 单二进制 + 内嵌 Vue；`/config`；7474；UID 1113；默认无认证；需自配 IRC/下载器"
+      }
+    },
+    "matomo": {
+      "title": {
+        "zh_cn": "Matomo",
+        "en_us": "Matomo"
+      },
+      "category": "Productivity",
+      "tagline": {
+        "zh_cn": "Matomo 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Matomo LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：官方完整包；PHP 8.3 + nginx/php-fpm。\n缺失功能：首次必须走 Web 安装向导；没有 CLI 安装器。\n额外依赖：必须 MariaDB/MySQL；持久化 config/tmp；归档需 cron。\n镜像说明：5.14.2；PHP 8.3 + nginx/php-fpm；必须 MariaDB/MySQL；`config`/`tmp` 持久化；80；安装向导建管理员",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Official full package; PHP 8.3 with nginx/php-fpm.\nMissing features: First run requires the web installer; there is no CLI installer.\nExtra dependencies: Requires MariaDB/MySQL; persist config/tmp; archiving needs cron.\nImage notes: 5.14.2；PHP 8.3 + nginx/php-fpm；必须 MariaDB/MySQL；`config`/`tmp` 持久化；80；安装向导建管理员"
+      }
+    },
+    "woodpecker-server": {
+      "title": {
+        "zh_cn": "Woodpecker CI (server)",
+        "en_us": "Woodpecker CI (server)"
+      },
+      "category": "Developer",
+      "tagline": {
+        "zh_cn": "Woodpecker CI (server) 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Woodpecker CI (server) LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：前端 x86 构建后内嵌；CGO SQLite。\n缺失功能：不配置 forge（Gitea/GitHub 等）无法启动；无内置账号体系。\n额外依赖：持久化 /var/lib/woodpecker；WOODPECKER_HOST 必须是外部可访问 URL。\n镜像说明：3.19.0；必须配置一个 forge（Gitea/GitHub 等）才能启动；`/var/lib/woodpecker` 持久化；8000 HTTP/9000 gRPC；自动生成 agent/grpc secret",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Frontend is built on x86 and embedded; CGO SQLite.\nMissing features: Cannot start without a forge (Gitea/GitHub/etc.); no built-in account system.\nExtra dependencies: Persist /var/lib/woodpecker; WOODPECKER_HOST must be an externally reachable URL.\nImage notes: 3.19.0；必须配置一个 forge（Gitea/GitHub 等）才能启动；`/var/lib/woodpecker` 持久化；8000 HTTP/9000 gRPC；自动生成 agent/grpc secret"
+      }
+    },
+    "woodpecker-agent": {
+      "title": {
+        "zh_cn": "Woodpecker CI (agent)",
+        "en_us": "Woodpecker CI (agent)"
+      },
+      "category": "Developer",
+      "tagline": {
+        "zh_cn": "Woodpecker CI (agent) 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Woodpecker CI (agent) LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：Go CGO-free；UID 1114。\n缺失功能：无业务端口，仅 3000 健康检查；必须能访问 Docker daemon。\n额外依赖：挂载 docker.sock 并加匹配的 --group-add；agent secret 与 server 一致；等同宿主 root。\n镜像说明：3.19.0；UID/GID 1114；需 `docker.sock` 与匹配的 `--group-add`；`WOODPECKER_AGENT_SECRET` 与 server 一致；3000 仅健康检查",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: CGO-free Go binary; UID 1114.\nMissing features: No service port; 3000 is health only; requires Docker daemon access.\nExtra dependencies: Mount docker.sock and add the matching --group-add; share the agent secret with the server; equivalent to host root.\nImage notes: 3.19.0；UID/GID 1114；需 `docker.sock` 与匹配的 `--group-add`；`WOODPECKER_AGENT_SECRET` 与 server 一致；3000 仅健康检查"
+      }
+    },
+    "ente-web": {
+      "title": {
+        "zh_cn": "Ente Web",
+        "en_us": "Ente Web"
+      },
+      "category": "Cloud",
+      "tagline": {
+        "zh_cn": "Ente Web 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Ente Web LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：10 个 Next 应用纯静态导出，由 nginx 托管。\n缺失功能：无 Next 服务端/API/图片优化器；未知路径回退到 index.html；不保证逐字节可复现。\n额外依赖：必须设置 ENTE_API_ORIGIN；端口 3000–3006、3008–3010。\n镜像说明：ente commit 1353a65；10 个 Next.js 16.4.2 静态导出；nginx 1.30；必须设 `ENTE_API_ORIGIN`；无 Next 服务端/API/图片优化器；需配 ente-server",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Ten Next.js apps exported statically and served by nginx.\nMissing features: No Next server/API/image optimizer; unknown paths fall back to index.html; not byte-for-byte reproducible.\nExtra dependencies: ENTE_API_ORIGIN is required; ports 3000–3006 and 3008–3010.\nImage notes: ente commit 1353a65；10 个 Next.js 16.4.2 静态导出；nginx 1.30；必须设 `ENTE_API_ORIGIN`；无 Next 服务端/API/图片优化器；需配 ente-server"
+      }
+    },
+    "metube": {
+      "title": {
+        "zh_cn": "MeTube",
+        "en_us": "MeTube"
+      },
+      "category": "Downloaders",
+      "tagline": {
+        "zh_cn": "MeTube 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "MeTube LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：Python 3.13 自编；Angular 前端在 x86 构建。\n缺失功能：无 Brotli 解压；无内置 bgutil-pot；ffmpeg 为 6.1.1 而非上游 8.1。\n额外依赖：持久化 /downloads 并 chown 1111；默认用 Node 24 作为 yt-dlp JS runtime；8082。\n镜像说明：2026.10.23；Python 3.13.7 + yt-dlp 2026.10.21 + Node 24 + ffmpeg 6.1.1；`/downloads`；8082；UID 1111；watchfiles 用轮询替代；无 Brotli；无 bgutil-pot",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Self-built Python 3.13; Angular frontend built on x86.\nMissing features: No Brotli decompression; no bundled bgutil-pot; ffmpeg 6.1.1 instead of upstream 8.1.\nExtra dependencies: Persist /downloads and chown to 1111; Node 24 is the default yt-dlp JS runtime; port 8082.\nImage notes: 2026.10.23；Python 3.13.7 + yt-dlp 2026.10.21 + Node 24 + ffmpeg 6.1.1；`/downloads`；8082；UID 1111；watchfiles 用轮询替代；无 Brotli；无 bgutil-pot"
+      }
+    },
+    "sabnzbd": {
+      "title": {
+        "zh_cn": "SABnzbd",
+        "en_us": "SABnzbd"
+      },
+      "category": "Downloaders",
+      "tagline": {
+        "zh_cn": "SABnzbd 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "SABnzbd LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：Python 3.11 + venv；par2/unrar 源码编译。\n缺失功能：无 orjson（ujson 回退，性能略低）；unrar 为闭源 freeware。\n额外依赖：持久化 /config 与 /downloads；UI 根路径是 / 而不是 /sabnzbd/。\n镜像说明：5.1.3；Python 3.11 + openEuler cryptography；par2cmdline 0.8.1 + unrar 7.13；`/config`、`/downloads`；8080；UID 1112；orjson 用 ujson 回退；未接真实 Usenet",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Python 3.11 venv; par2 and unrar built from source.\nMissing features: No orjson (ujson fallback, slightly slower); unrar is closed-source freeware.\nExtra dependencies: Persist /config and /downloads; the UI root is /, not /sabnzbd/.\nImage notes: 5.1.3；Python 3.11 + openEuler cryptography；par2cmdline 0.8.1 + unrar 7.13；`/config`、`/downloads`；8080；UID 1112；orjson 用 ujson 回退；未接真实 Usenet"
+      }
+    },
+    "mediamtx": {
+      "title": {
+        "zh_cn": "MediaMTX",
+        "en_us": "MediaMTX"
+      },
+      "category": "Media",
+      "tagline": {
+        "zh_cn": "MediaMTX 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "MediaMTX LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：Go 单二进制，配置内嵌。\n缺失功能：无 Web 管理界面/持久化；API 默认仅本机白名单。\n额外依赖：8554/1935/8888/8889/8890/9997；NAT 后 WebRTC 需配 additional hosts；与 go2rtc 二选一。\n镜像说明：1.9.3；Go 单二进制；8554/1935/8888/8889/8890/9997；`api: yes`（上游默认 no）；UID 1115；API 默认仅本机白名单；无持久化",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Single Go binary with embedded configuration.\nMissing features: No web admin UI or persistence; API is localhost-only by default.\nExtra dependencies: Ports 8554/1935/8888/8889/8890/9997; configure additional hosts for WebRTC behind NAT; use instead of go2rtc.\nImage notes: 1.9.3；Go 单二进制；8554/1935/8888/8889/8890/9997；`api: yes`（上游默认 no）；UID 1115；API 默认仅本机白名单；无持久化"
+      }
+    },
+    "registry": {
+      "title": {
+        "zh_cn": "Docker Registry",
+        "en_us": "Docker Registry"
+      },
+      "category": "Developer",
+      "tagline": {
+        "zh_cn": "Docker Registry 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Docker Registry LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：Go 单二进制；首次启动生成 htpasswd。\n缺失功能：无 Web UI、无 TLS、无多实例共享存储；删除后需手动 GC。\n额外依赖：持久化 /var/lib/registry 与 /auth；/auth/password 是唯一密码来源；Docker CLI 需 insecure-registries。\n镜像说明：3.1.2；Go 单二进制；`/var/lib/registry`、`/auth`；5000；UID 1121；首启生成 admin 随机密码与 htpasswd；HTTP secret 持久化；无 TLS",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Single Go binary; htpasswd is generated on first start.\nMissing features: No web UI, no TLS, no shared storage across instances; run GC manually after deletes.\nExtra dependencies: Persist /var/lib/registry and /auth; /auth/password is the only password source; Docker CLI needs insecure-registries.\nImage notes: 3.1.2；Go 单二进制；`/var/lib/registry`、`/auth`；5000；UID 1121；首启生成 admin 随机密码与 htpasswd；HTTP secret 持久化；无 TLS"
+      }
+    },
+    "unpackerr": {
+      "title": {
+        "zh_cn": "Unpackerr",
+        "en_us": "Unpackerr"
+      },
+      "category": "Downloaders",
+      "tagline": {
+        "zh_cn": "Unpackerr 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Unpackerr LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：Go 单二进制；需要升级 x/sys 才能支持 loongarch64。\n缺失功能：无 Web UI/端口；健康检查仅进程存活；未接真实 *arr。\n额外依赖：持久化 /config 与 /downloads，路径必须与 *arr 一致；unrar 为闭源 freeware。\n镜像说明：0.9.9；Go 单二进制；无 UI/端口；`/config`、`/downloads`；UID 1123；需把 x/sys 升到 v0.35.0；unrar 7.13 + 7za；健康检查仅进程存活",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Single Go binary; requires an x/sys upgrade for loongarch64.\nMissing features: No web UI/port; health check is process-only; not tested against a real *arr.\nExtra dependencies: Persist /config and /downloads with paths identical to *arr; unrar is closed-source freeware.\nImage notes: 0.9.9；Go 单二进制；无 UI/端口；`/config`、`/downloads`；UID 1123；需把 x/sys 升到 v0.35.0；unrar 7.13 + 7za；健康检查仅进程存活"
+      }
+    },
+    "pocket-id": {
+      "title": {
+        "zh_cn": "Pocket ID",
+        "en_us": "Pocket ID"
+      },
+      "category": "Security",
+      "tagline": {
+        "zh_cn": "Pocket ID 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Pocket ID LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：SvelteKit 前端在 x86 构建后内嵌；Go 单二进制。\n缺失功能：未做邮件 SMTP/SCIM/Passkey 全链路；与 Authelia 二选一。\n额外依赖：持久化 /data（含加密密钥）；APP_URL 必填为外部地址；1411。\n镜像说明：2.9.0；SvelteKit 前端 x86 构建后 embed；Go 单二进制；`/data`；1411；UID 1122；`APP_URL` 与 `ENCRYPTION_KEY` 注意；健康检查用 curl 不用内置子命令",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: SvelteKit frontend built on x86 and embedded; single Go binary.\nMissing features: SMTP/SCIM/Passkey flows are not fully tested; choose instead of Authelia.\nExtra dependencies: Persist /data (including the encryption key); APP_URL must be the external address; port 1411.\nImage notes: 2.9.0；SvelteKit 前端 x86 构建后 embed；Go 单二进制；`/data`；1411；UID 1122；`APP_URL` 与 `ENCRYPTION_KEY` 注意；健康检查用 curl 不用内置子命令"
+      }
+    },
+    "readeck": {
+      "title": {
+        "zh_cn": "Readeck",
+        "en_us": "Readeck"
+      },
+      "category": "Productivity",
+      "tagline": {
+        "zh_cn": "Readeck 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "Readeck LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：gulp 前端在 x86 构建；Go 使用 CGO/mattn sqlite。\n缺失功能：CGO-free 的 modernc 旧版缺 loongarch64 定义；未做完整抓取联调。\n额外依赖：持久化 /data；8000；与 Wallabag/Shiori 重叠。\n镜像说明：0.9.2；Go CGO（mattn sqlite）+ gulp 前端 x86 构建；`/data`；8000；UID 1117；CGO-free 的 modernc 旧版缺 loongarch64；未做完整抓取联调",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: gulp frontend built on x86; Go uses CGO/mattn sqlite.\nMissing features: The pinned pure-Go modernc sqlite lacks loongarch64 definitions; full archiving was not tested.\nExtra dependencies: Persist /data; port 8000; overlaps with Wallabag/Shiori.\nImage notes: 0.9.2；Go CGO（mattn sqlite）+ gulp 前端 x86 构建；`/data`；8000；UID 1117；CGO-free 的 modernc 旧版缺 loongarch64；未做完整抓取联调"
+      }
+    }
+  }
+}
