@@ -482,6 +482,21 @@ docker run -d --name piwigo --network piwigo -p 8080:80 \
 - `local`/`_data`/`galleries`/`upload` 必须持久化；必须外接 MariaDB/MySQL。
 - 完整说明见 [../images/piwigo/BUILD.md](../images/piwigo/BUILD.md)。
 
+### go2rtc
+
+```bash
+docker run -d --name go2rtc \
+  -p 1984:1984 -p 8554:8554 -p 8555:8555 \
+  -v go2rtc-config:/config \
+  yunixintel/go2rtc:loong64
+```
+
+- Web/API：`http://<host>:1984/`；RTSP `rtsp://<host>:8554/<stream>`。
+- WebRTC 8555/tcp+udp；跨 NAT 需配 `webrtc.candidates` 或反代。
+- `/config/go2rtc.yaml` 只开端口，摄像头流由用户添加。
+- API 默认无认证；公网必须加反代认证或 `api.username/password`。
+- 完整说明见 [../images/go2rtc/BUILD.md](../images/go2rtc/BUILD.md)。
+
 ### NocoDB
 
 ```bash
@@ -610,7 +625,7 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 93 个镜像）
+## 3. 端口索引（全部 94 个镜像）
 
 ### 从端口索引生成最小启动命令
 
@@ -660,6 +675,7 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | bookstack | 80 | `/var/www/bookstack/storage`、`/var/www/bookstack/public/uploads` | 必须 MariaDB；`app.key` 持久化；首次用 artisan 建管理员 |
 | vikunja | 3456 | `/app/vikunja/files`、`/db` | UID 1104；SQLite；JWT secret 持久化；默认允许注册 |
 | piwigo | 80 | `local`、`_data`、`galleries`、`upload` | 必须 MariaDB；首次自动安装；管理员 `/identification.php` |
+| go2rtc | 1984, 8554, 8555 | `/config` | UID 1109；默认无认证；需自配摄像头流 |
 | nocodb | 8080 | `/data` | UID 1000；SQLite；`NC_DB` 用 `?d=` |
 | apprise-api | 8000 | `/config`、`/attach`、`/plugin` | 默认无认证/无 TLS |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |

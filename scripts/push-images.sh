@@ -38,6 +38,7 @@ IMAGES=(
   gitea
   gogs
   gotify
+  go2rtc
   grafana
   heimdall
   hermes

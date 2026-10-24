@@ -1,6 +1,6 @@
 # loongarch64 应用镜像
 
-共 93 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
+共 94 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
 `loong64`（浮动）与 `24.10-la5`（与 GitHub Release 对齐）。
 
 拉取：
@@ -88,6 +88,7 @@ docker pull yunixintel/jellyfin:loong64
 | `yunixintel/bookstack` | 约 600MB（Hub 214MB） | MariaDB 迁移完成、`/login` 200；healthy | v26.09.2；PHP 8.3 + nginx/php-fpm；必须 MariaDB；`storage`/`public/uploads` 持久化；80 |
 | `yunixintel/vikunja` | 约 169MB（Hub） | `/` 200、`/health` 200、`/api/v1/info` v2.7.1、注册/登录 200；healthy | v2.7.1；Vue x86 构建 + Go CGO SQLite；3456；`/db` 与 files 持久化；UID 1104 |
 | `yunixintel/piwigo` | 约 550MB（Hub 179MB） | 首次自动安装成功、`/` 200、`/identification.php` 200；healthy | 16.4.0；PHP 8.3 + nginx/php-fpm；必须 MariaDB；`local`/`_data`/`galleries`/`upload` 持久化；80 |
+| `yunixintel/go2rtc` | 约 111MB（Hub） | `/` 200、`/api/streams` `{}`、RTSP 8554/WebRTC 8555 监听；healthy | 1.9.14；Go 单二进制；1984 API；`/config`；UID 1109；默认无认证 |
 | `yunixintel/nocodb` | 1.58GB | `/api/v1/health` 200；`/` 302→`/dashboard/` 200；SQLite 初始化；健康检查 healthy | 0.301.3 + Node 24；npm 需 `--ignore-scripts`；sqlite3 手动编 loong64；自定义 runner；`/data`；8080；UID 1000 |
 | `yunixintel/apprise-api` | 1.03GB | `/` 200；`/status` OK；stateless `/notify/` 进入通知流程；健康检查 healthy | 2.0.1 + Python 3.11；系统 cryptography/gevent；pycares 需 cmake；nginx+supervisor+gunicorn；`/config`、`/attach`、`/plugin`；8000 |
 | `yunixintel/homebox` | 346MB | `/` 200；`/api/v1/status` health=true；版本 v0.10.3；SQLite 初始化；健康检查 healthy | v0.10.3；Nuxt 静态前端 embed；Go 1.27；modernc sqlite 升到 1.61 支持 loong64；`/data`；7745；UID 1000；默认允许注册 |

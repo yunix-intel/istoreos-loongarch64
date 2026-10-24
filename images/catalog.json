@@ -649,5 +649,12 @@
     "architecture": "linux/loong64",
     "verification": "首次自动安装成功；`/` 200、`/identification.php` 200；MariaDB 中 admin/guest 用户存在；healthy",
     "notes": "16.4.0；PHP 8.3 + nginx/php-fpm；必须 MariaDB/MySQL；`local`/`_data`/`galleries`/`upload` 持久化；80"
+  },
+  {
+    "image": "yunixintel/go2rtc",
+    "size": "约 111MB (Hub)",
+    "architecture": "linux/loong64",
+    "verification": "`/` 200、`/api/streams` 返回 `{}`；RTSP 8554/WebRTC 8555 监听；healthy",
+    "notes": "1.9.14；Go 单二进制；1984 API、8554 RTSP、8555 WebRTC；`/config`；UID 1109；默认无认证、无摄像头配置"
   }
 ]

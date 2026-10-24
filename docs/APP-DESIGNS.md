@@ -425,7 +425,9 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 | 风险 | restic 无 loong64 release，必须源码编；恢复测试要隔离目录 |
 | 估算 | 镜像约 150–250MB；2–4 天 |
 
-### P2-06 go2rtc
+### P2-06 go2rtc（已发布）
+
+**状态：已构建并推送。** 1.9.14，digest `sha256:03aa0422…3def`；构建记录见 [../images/go2rtc/BUILD.md](../images/go2rtc/BUILD.md)。
 
 | 项 | 设计 |
 |---|---|

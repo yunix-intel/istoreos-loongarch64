@@ -1,13 +1,13 @@
 # 应用镜像 Dockerfile 目录
 
-本目录是 93 个 `yunixintel/*:loong64` 镜像的构建材料索引。
+本目录是 94 个 `yunixintel/*:loong64` 镜像的构建材料索引。
 
 > **仅支持 linux/loong64**。Docker Hub 仓库名统一为 `yunixintel/<app>`（不带架构后缀），架构由 `:loong64` / `:24.10-la5` tag 与 manifest 标识；`catalog.json` 每条记录包含 `"architecture": "linux/loong64"`。x86_64 / ARM 镜像不存在。
 
-- `images/<app>/Dockerfile`：保留了 91 个镜像的 Dockerfile（部分带 `Dockerfile.*` 构建阶段）。
-- `images/<app>/BUILD.md`：93 个应用每个都有独立构建记录；无 Dockerfile 的 10 个镜像也在
+- `images/<app>/Dockerfile`：保留了 92 个镜像的 Dockerfile（部分带 `Dockerfile.*` 构建阶段）。
+- `images/<app>/BUILD.md`：94 个应用每个都有独立构建记录；无 Dockerfile 的 10 个镜像也在
   对应目录的 BUILD.md 给出归档配方和上游版本。
-- `catalog.json`：93 个镜像的名称、大小、验证结论、端口/限制说明、`architecture`，机读索引。
+- `catalog.json`：94 个镜像的名称、大小、验证结论、端口/限制说明、`architecture`，机读索引。
 - 未保留 Dockerfile 的 10 个镜像：adguardhome、code-server、easytier、firefly-iii、
   gitea、memos、mihomo、miniflux、phpmyadmin、vaultwarden。它们的源码版本与重建步骤
   见各自的 `BUILD.md` 和 [../docs/IMAGE-BUILD.md](../docs/IMAGE-BUILD.md) 第 3 节。
@@ -61,6 +61,7 @@
 | bookstack | 上游源码 + Composer vendor + nginx/php-fpm 配置 |
 | vikunja | 上游源码 + 预构建 `frontend/dist` + Go CGO 二进制 |
 | piwigo | 上游源码 + nginx/php-fpm 配置；无 vendor |
+| go2rtc | 上游源码 + Go 静态二进制 + 默认 `go2rtc.yaml` |
 
 具体工具链、CGO/glibc、Vite 8 x86 构建、qpdf/jq/Firefox/OpenCV 补丁见
 [../docs/IMAGE-BUILD.md](../docs/IMAGE-BUILD.md)。
@@ -68,4 +69,4 @@
 ## 标签约定
 
 所有镜像同时打 `loong64` 与 `24.10-la5`，推送脚本在私有库
-`scripts/push-images.sh`，覆盖 93 只。
+`scripts/push-images.sh`，覆盖 94 只。
