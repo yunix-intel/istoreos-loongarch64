@@ -129,3 +129,14 @@ sudo systemctl enable --now casaos.target
    安装包/补丁 sha256 锚定，需补入验收。
 
 完整设计与审查记录见 [APP-DESIGNS.md](APP-DESIGNS.md) 5.1 与 7.5。
+
+## 9. 2026-10-24 新 SATA SSD 状态
+
+- 设备：`/dev/sda`，Asgard AS2TS3-S7，2.04TB，SATA，SMART 健康（无待映射/离线不可修正扇区，
+  温度 42°C，通电次数 6）。
+- 分区：GPT，`sda1` 16MB Microsoft reserved，`sda2` 1.9TB NTFS，卷标“新加卷”。
+- **不是空盘**：只读挂载 `sda2` 可见约 525GB 已用数据（`电厂规程文件`、`DCS`、
+  `机械手_手套文档`、`秦山AI`、`.codex` 等）。未做任何写入/格式化。
+- 因此 C-02（真实盘格式化/重建）不能直接在该盘执行；需要先确认数据已备份或有其他空盘。
+  C-01（挂载/SMART/热插拔/重启）可先做只读部分，但写入类验收必须等确认。
+- 新盘 SMART 已可用，之前“SSD 不识别”的阻塞已解除；当前阻塞变为“盘上有数据，需确认是否可清空”。
