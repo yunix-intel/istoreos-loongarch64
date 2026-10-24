@@ -10,7 +10,7 @@
 | `platform/istore-loong64.md` | iStoreOS 平台级说明（公版 la5 / 私人 p1） |
 | `generate_descriptions.py` | 从 `images/catalog.json` 与差异表生成卡片文案 |
 | `validate_descriptions.py` | 校验应用集合、架构标识和四个必填字段 |
-| `loong64-descriptions.json` | 110 个可安装应用的机读文案（不含运行时基础镜像 `node`） |
+| `loong64-descriptions.json` | 111 个可安装应用的机读文案（不含运行时基础镜像 `node`） |
 | `exports/casaos-descriptions.json` | 可直接映射到 CasaOS `x-casaos` 的 title/category/tagline/description |
 | `exports/istore-descriptions.json` | 可直接写入 iStore app-meta description 的 HTML（中/英） |
 | `casaos/Apps/<id>/docker-compose.yml` | CasaOS 应用定义（当前 18 个已导入并注入说明，其余待生成） |
