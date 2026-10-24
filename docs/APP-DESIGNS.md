@@ -168,7 +168,7 @@
 | wg-easy | 未记录 | 待锁定 |
 | Registry | 未记录 | 已锁定：`v3.1.2`，commit `3220848` |
 | Pocket ID | 未记录 | 待锁定 |
-| Unpackerr | 未记录 | 待锁定 |
+| Unpackerr | 未记录 | 已锁定：`v0.9.9`，commit `afaf4c6` |
 
 ---
 
@@ -634,7 +634,7 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 - 端口 1411；`/data`；`APP_URL`、`ENCRYPTION_KEY`；UID 1122。
 - 健康检查 `/health`；与 Authelia 二选一。估算 2–4 天。
 
-### P4-09 Unpackerr
+### P4-09 Unpackerr ✅ 已实现（2026-10-24）
 
 - 上游 `Unpackerr/unpackerr`；Go 单二进制。
 - 无 Web 端口；`/config`；`UN_*` 环境变量指向 *arr API。

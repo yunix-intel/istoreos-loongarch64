@@ -695,6 +695,23 @@ docker exec registry cat /auth/password
 - 无 TLS；公网必须反代。Docker CLI 推送需在 daemon 配置 `insecure-registries`。
 - 完整说明见 [../images/registry/BUILD.md](../images/registry/BUILD.md)。
 
+### Unpackerr
+
+```bash
+docker run -d --name unpackerr \
+  -v /srv/unpackerr:/config \
+  -v /srv/downloads:/downloads \
+  -e UN_SONARR_0_URL=http://sonarr:8989 \
+  -e UN_SONARR_0_API_KEY=*** \
+  -e UN_SONARR_0_PATHS_0=/downloads \
+  yunixintel/unpackerr:loong64
+```
+
+- 无 Web UI/端口；配置 `/config/unpackerr.conf`（首启从示例生成）或 `UN_*` 环境变量。
+- `/downloads` 必须与 Sonarr/Radarr 的完成目录使用同一路径映射，否则找不到文件。
+- 健康检查为 `pgrep`，只代表进程存活，不代表 *arr 可达。
+- 完整说明见 [../images/unpackerr/BUILD.md](../images/unpackerr/BUILD.md)。
+
 ### Woodpecker CI（server + agent）
 
 ```bash

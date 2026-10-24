@@ -754,5 +754,12 @@
     "architecture": "linux/loong64",
     "verification": "匿名 401、admin 认证通过、crane 推送/拉取成功、`_catalog` 正常；healthy",
     "notes": "3.1.2；Go 单二进制；`/var/lib/registry`、`/auth`；5000；UID 1121；首启生成 admin 随机密码与 htpasswd；HTTP secret 持久化；无 TLS"
+  },
+  {
+    "image": "yunixintel/unpackerr",
+    "size": "约 100MB (Hub)",
+    "architecture": "linux/loong64",
+    "verification": "v0.9.9 启动、`/config/unpackerr.conf` 自动生成、假 Sonarr 轮询、`pgrep` healthy",
+    "notes": "0.9.9；Go 单二进制；无 UI/端口；`/config`、`/downloads`；UID 1123；需把 x/sys 升到 v0.35.0；unrar 7.13 + 7za；健康检查仅进程存活"
   }
 ]
