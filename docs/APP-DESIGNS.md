@@ -370,7 +370,9 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 
 **设计决策**：先做 server + web + 文档化 compose；不把 Ente 伪装成单镜像。
 
-### P2-03 Headscale
+### P2-03 Headscale（已发布）
+
+**状态：已构建并推送。** v0.29.5，digest `sha256:603650be…b3fb`；构建记录见 [../images/headscale/BUILD.md](../images/headscale/BUILD.md)。
 
 | 项 | 设计 |
 |---|---|

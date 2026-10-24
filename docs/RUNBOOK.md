@@ -515,6 +515,23 @@ docker run -d --name scrutiny -p 8080:8080 \
 - 不再依赖 InfluxDB；SMART 历史在 SQLite。
 - 完整说明见 [../images/scrutiny/BUILD.md](../images/scrutiny/BUILD.md)。
 
+### Headscale
+
+```bash
+docker run -d --name headscale -p 8080:8080 -p 9090:9090 \
+  -e HEADSCALE_SERVER_URL=https://headscale.example.com \
+  -v headscale-config:/etc/headscale \
+  -v headscale-data:/var/lib/headscale \
+  yunixintel/headscale:loong64
+```
+
+- HTTP/API `8080`；metrics `9090`；健康 `/health`。
+- 创建用户：`docker exec headscale headscale users create <name>`。
+- preauth key：`docker exec headscale headscale preauthkeys create --user <id>`。
+- 无 Web UI；`/etc/headscale` 与 `/var/lib/headscale` 必须持久化。
+- 公网需 HTTPS 反代；gRPC 默认只监听容器内 127.0.0.1。
+- 完整说明见 [../images/headscale/BUILD.md](../images/headscale/BUILD.md)。
+
 ### NocoDB
 
 ```bash
@@ -643,7 +660,7 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 95 个镜像）
+## 3. 端口索引（全部 96 个镜像）
 
 ### 从端口索引生成最小启动命令
 
@@ -695,6 +712,7 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | piwigo | 80 | `local`、`_data`、`galleries`、`upload` | 必须 MariaDB；首次自动安装；管理员 `/identification.php` |
 | go2rtc | 1984, 8554, 8555 | `/config` | UID 1109；默认无认证；需自配摄像头流 |
 | scrutiny | 8080 | `/opt/scrutiny/config`；`--device` + SYS_RAWIO | SQLite 历史；collector 需手动/cron 触发 |
+| headscale | 8080, 9090 | `/etc/headscale`、`/var/lib/headscale` | UID 1106；无 Web UI；CLI 建用户/key |
 | nocodb | 8080 | `/data` | UID 1000；SQLite；`NC_DB` 用 `?d=` |
 | apprise-api | 8000 | `/config`、`/attach`、`/plugin` | 默认无认证/无 TLS |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |

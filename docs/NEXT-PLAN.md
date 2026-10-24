@@ -2,7 +2,7 @@
 
 制定日期：2026-10-23  
 状态：**计划，未开工**。本文件只排期，不代表已构建或已承诺发布日期。  
-依据：现有 95 个镜像、[STORE-COVERAGE.md](STORE-COVERAGE.md) 的 8 个阻塞结论、
+依据：现有 96 个镜像、[STORE-COVERAGE.md](STORE-COVERAGE.md) 的 8 个阻塞结论、
 以及两份独立子代理调研（存储/媒体方向、生产力/自动化方向）。
 
 对应详细设计：[APP-DESIGNS.md](APP-DESIGNS.md)。本文件只排期；具体构建路径与运行时契约在设计稿中。
@@ -272,9 +272,10 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 |---|---|---|
 | S-C1 | 为全部已发布镜像生成 `appstore/loong64/Apps/<id>/docker-compose.yml` | 每个应用有 `x-casaos` metadata、`architectures: [loong64]`、`port_map` |
 | S-C2 | 分配宿主端口（从 18001 起，避开已占用）并更新 `loong64-overrides.json` | 端口无冲突；`image_count`/`app_definition_count` 与实际一致 |
-| S-C3 | 补分类、图标、描述、推荐位 | 商店 UI 分类正确，无空图标/断链 |
+| S-C3 | 补分类、图标、描述、推荐位 | 商店 UI 分类正确，无空图标/断链；**每张卡片必须有“龙芯版说明”区块** |
 | S-C4 | 重建 `loong64-only` 商店并做干净安装 | 新机器只点商店即可安装；不手动 `docker pull` |
 | S-C5 | 验证升级/卸载/数据保留 | 应用升级不丢卷；卸载可选保留数据 |
+| S-C6 | 龙芯差异披露 | 卡片描述包含 `linux/loong64` 标识、与上游应用的行为/功能差异、缺失功能、外部依赖；来源为 `catalog.json` notes + [LOONG64-QUIRKS.md](LOONG64-QUIRKS.md) |
 
 ### 公开 iStore（la5）与私人 iStore（p1）
 
@@ -285,7 +286,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 | S-I3 | 处理依赖与 sidecar（MariaDB/Redis/PostgreSQL 等） | 应用可启动，不要求用户手工补容器 |
 | S-I4 | la5 公开固件干净安装一次 | 商店点击安装成功，UI 可打开 |
 | S-I5 | p1 私人固件干净安装一次 | 私人版同样可安装；私人配置不进入公开 feed |
-| S-I6 | 文档：镜像架构、端口、卷、已知限制、卸载 | 用户不读源码即可完成安装 |
+| S-I6 | 文档与差异披露：镜像架构、端口、卷、已知限制、卸载 | 应用详情页/描述必须显示“龙芯版说明”：与上游应用的行为差异、缺失功能、外部依赖；不能只写“可安装” |
 
 ### 明确不做
 
@@ -353,7 +354,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [x] P1-05 Vikunja（已发布，`25333510…a0a3`）
 - [x] P2-01 Piwigo（已发布，`289fca6c…f8b9`）
 - [ ] P2-02 Ente（多服务）
-- [ ] P2-03 Headscale
+- [x] P2-03 Headscale（已发布，`603650be…b3fb`）
 - [ ] P2-04 Authelia
 - [ ] P2-05 Backrest
 - [x] P2-06 go2rtc（已发布，`03aa0422…3def`）
@@ -399,6 +400,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [ ] S-C3 CasaOS 分类/图标/描述
 - [ ] S-C4 CasaOS 干净安装
 - [ ] S-C5 CasaOS 升级/卸载
+- [ ] S-C6 CasaOS 龙芯差异披露
 - [ ] S-I1 iStore app-meta 镜像覆盖
 - [ ] S-I2 iStore 自定义 feed
 - [ ] S-I3 iStore 依赖/sidecar

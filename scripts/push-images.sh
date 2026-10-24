@@ -40,6 +40,7 @@ IMAGES=(
   gotify
   go2rtc
   grafana
+  headscale
   heimdall
   hermes
   homarr
