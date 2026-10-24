@@ -6,6 +6,8 @@
 
 本文件回答“每个工作项具体怎么造”：26 个应用镜像 + CasaOS + OMV，共 **28 个工作项**。
 它不替代 `images/<app>/BUILD.md`（构建完成后的事实记录）。
+商店接入（CasaOS 私人商店 / iStore 私人版 p1 / 公开版 la5）不在逐应用设计中展开，
+统一放到所有应用完成后的 [NEXT-PLAN.md](NEXT-PLAN.md) §9.5。
 
 ---
 

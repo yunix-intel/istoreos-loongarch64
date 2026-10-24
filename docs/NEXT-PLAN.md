@@ -259,6 +259,40 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 12. 升级/回滚：写清停服务、备份、换镜像、迁移、回滚步骤；说明是否支持降级。
 13. 可观测性：健康端点/Gatus 监控项、日志位置、资源基线（内存/CPU/磁盘）。
 
+## 9.5 商店同步：CasaOS 与 iStore（最后阶段）
+
+**启动条件：P1–P4 所有在研应用完成构建、测试、推送后，才启动本阶段。**
+范围包括 **CasaOS 私人商店、iStore 私人版（p1）、iStore 公开版（la5）**。
+在此之前不把“商店可直接安装”算作已完成；当前 CasaOS 私有商店只有 26 个镜像/18 个定义，
+公开 iStore 的 app-meta 仍指向上游镜像。
+
+### CasaOS
+
+| ID | 任务 | 验收 |
+|---|---|---|
+| S-C1 | 为全部已发布镜像生成 `appstore/loong64/Apps/<id>/docker-compose.yml` | 每个应用有 `x-casaos` metadata、`architectures: [loong64]`、`port_map` |
+| S-C2 | 分配宿主端口（从 18001 起，避开已占用）并更新 `loong64-overrides.json` | 端口无冲突；`image_count`/`app_definition_count` 与实际一致 |
+| S-C3 | 补分类、图标、描述、推荐位 | 商店 UI 分类正确，无空图标/断链 |
+| S-C4 | 重建 `loong64-only` 商店并做干净安装 | 新机器只点商店即可安装；不手动 `docker pull` |
+| S-C5 | 验证升级/卸载/数据保留 | 应用升级不丢卷；卸载可选保留数据 |
+
+### 公开 iStore（la5）与私人 iStore（p1）
+
+| ID | 任务 | 验收 |
+|---|---|---|
+| S-I1 | 为已覆盖应用建立自定义 app-meta 覆盖，`image_name=yunixintel/<app>:loong64` | 安装时拉取 loong64 镜像，不拉上游 x86/ARM |
+| S-I2 | 生成/托管自定义 feed（opkg/ipk 或商店 JSON） | 公开/私人固件都可添加该源并看到应用 |
+| S-I3 | 处理依赖与 sidecar（MariaDB/Redis/PostgreSQL 等） | 应用可启动，不要求用户手工补容器 |
+| S-I4 | la5 公开固件干净安装一次 | 商店点击安装成功，UI 可打开 |
+| S-I5 | p1 私人固件干净安装一次 | 私人版同样可安装；私人配置不进入公开 feed |
+| S-I6 | 文档：镜像架构、端口、卷、已知限制、卸载 | 用户不读源码即可完成安装 |
+
+### 明确不做
+
+- 不在应用未完成前先做商店条目，避免“商店有卡片但镜像不可用”。
+- 不把上游镜像名替换成我们的镜像却不验证启动；每个条目必须过一次安装测试。
+- 不在公开商店里放需要私有凭据/真实节点配置的应用。
+
 ## 10. 明确不做
 
 ### 证据否决
@@ -357,3 +391,17 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [ ] O-07 OMV A/B 交付计划（条件触发）
 - [ ] O-08 OMV 许可/卸载/回滚
 - [ ] O-09 OMV 状态同步
+
+### 商店同步（最后阶段）
+
+- [ ] S-C1 CasaOS 全量应用定义
+- [ ] S-C2 CasaOS 端口与 overrides
+- [ ] S-C3 CasaOS 分类/图标/描述
+- [ ] S-C4 CasaOS 干净安装
+- [ ] S-C5 CasaOS 升级/卸载
+- [ ] S-I1 iStore app-meta 镜像覆盖
+- [ ] S-I2 iStore 自定义 feed
+- [ ] S-I3 iStore 依赖/sidecar
+- [ ] S-I4 la5 公开版干净安装
+- [ ] S-I5 p1 私人版干净安装
+- [ ] S-I6 商店文档
