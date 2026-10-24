@@ -1,0 +1,59 @@
+name: nextcloud
+services:
+  nextcloud:
+    image: yunixintel/nextcloud:loong64
+    container_name: nextcloud
+    ports:
+    - target: 80
+      published: '18017'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /var/www/html
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: nextcloud
+  author: loong64-port
+  category: Cloud
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：当前镜像使用 SQLite。
+
+      缺失功能：生产不建议 SQLite；无外部数据库自动配置。
+
+      额外依赖：仅适合测试/轻量使用；持久化 config 与 data。
+
+      镜像说明：33.0.10；PHP 8.3 + nginx/php-fpm；SQLite（测试用，生产建议 MySQL/MariaDB）；首次启动生成 config.php'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: The current image uses SQLite.
+
+      Missing features: SQLite is not recommended for production; no automatic external DB setup.
+
+      Extra dependencies: Suitable for testing/light use; persist config and data.
+
+      Image notes: 33.0.10；PHP 8.3 + nginx/php-fpm；SQLite（测试用，生产建议 MySQL/MariaDB）；首次启动生成 config.php'
+  developer: Nextcloud
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/nextcloud/icon.png
+  tagline:
+    zh_cn: Nextcloud 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Nextcloud LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Nextcloud
+    en_us: Nextcloud
+  index: /
+  port_map: '18017'

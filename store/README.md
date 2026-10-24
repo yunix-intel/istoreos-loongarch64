@@ -12,6 +12,8 @@
 | `loong64-descriptions.json` | 110 个可安装应用的机读文案（不含运行时基础镜像 `node`） |
 | `exports/casaos-descriptions.json` | 可直接映射到 CasaOS `x-casaos` 的 title/category/tagline/description |
 | `exports/istore-descriptions.json` | 可直接写入 iStore app-meta description 的 HTML（中/英） |
+| `casaos/Apps/<id>/docker-compose.yml` | CasaOS 应用定义（当前 18 个已导入并注入说明，其余待生成） |
+| `casaos/apply_descriptions.py` | 将导出的 title/category/tagline/description 写回 CasaOS 定义 |
 | `descriptions-preview.md` | 人工复核用的表格预览 |
 
 ## 必备字段

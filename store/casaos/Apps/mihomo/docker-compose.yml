@@ -1,0 +1,57 @@
+name: mihomo
+services:
+  mihomo:
+    image: yunixintel/mihomo:loong64
+    container_name: mihomo
+    network_mode: host
+    cap_add:
+    - NET_ADMIN
+    environment:
+      TZ: $TZ
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: mihomo
+  author: loong64-port
+  category: Networking
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。
+
+      缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。
+
+      额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。
+
+      镜像说明：scratch 单二进制，配置需挂载'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested
+      item by item. Limitations in the image notes also apply.
+
+      Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.
+
+      Extra dependencies: No extra external dependency unless the image notes say otherwise.
+
+      Image notes: scratch 单二进制，配置需挂载'
+  developer: Mihomo
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Mihomo/icon.png
+  tagline:
+    zh_cn: Mihomo 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Mihomo LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Mihomo
+    en_us: Mihomo
+  index: /
+  port_map: ''

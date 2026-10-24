@@ -1,0 +1,61 @@
+name: jellyfin
+services:
+  jellyfin:
+    image: yunixintel/jellyfin:loong64
+    container_name: jellyfin
+    ports:
+    - target: 8096
+      published: '18001'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: jellyfin
+  author: loong64-port
+  category: Media
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：.NET 9 自编 + ImageSharp 编码器。
+
+      缺失功能：无 ICC 色彩管理；纯托管性能低于 Skia；硬件转码未验证。
+
+      额外依赖：媒体目录与 config 需持久化。
+
+      镜像说明：.NET 9 自编；**自 2026-10-19 起内置 ImageSharp 编码器**（缩略图/Trickplay/拼图/BlurHash 全可用，含 Noto CJK 字体）；代价：纯托管性能较 Skia 慢、无 ICC
+      色彩管理'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Built from source with .NET 9 and the ImageSharp encoder.
+
+      Missing features: No ICC color management; managed performance is below Skia; hardware transcoding is unverified.
+
+      Extra dependencies: Persist the media directories and config.
+
+      Image notes: .NET 9 自编；**自 2026-10-19 起内置 ImageSharp 编码器**（缩略图/Trickplay/拼图/BlurHash 全可用，含 Noto CJK 字体）；代价：纯托管性能较 Skia
+      慢、无 ICC 色彩管理'
+  developer: Jellyfin
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/jellyfin/icon.png
+  tagline:
+    zh_cn: Jellyfin 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Jellyfin LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Jellyfin
+    en_us: Jellyfin
+  index: /
+  port_map: '18001'

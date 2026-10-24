@@ -1,0 +1,59 @@
+name: kopia
+services:
+  kopia:
+    image: yunixintel/kopia:loong64
+    container_name: kopia
+    ports:
+    - target: 51515
+      published: '18013'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: kopia
+  author: loong64-port
+  category: Backup
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：Web UI 强制 Basic 认证。
+
+      缺失功能：默认凭据需修改。
+
+      额外依赖：仓库存储需持久化。
+
+      镜像说明：v0.23.1 源码编；为 loong64 打了 Stat_t.Dev/Rdev 类型补丁；Web UI 强制 Basic 认证（默认 admin/kopia）'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: The web UI enforces Basic authentication.
+
+      Missing features: Change the default credentials.
+
+      Extra dependencies: Persist the repository storage.
+
+      Image notes: v0.23.1 源码编；为 loong64 打了 Stat_t.Dev/Rdev 类型补丁；Web UI 强制 Basic 认证（默认 admin/kopia）'
+  developer: Kopia
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/kopia/icon.png
+  tagline:
+    zh_cn: Kopia 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Kopia LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Kopia
+    en_us: Kopia
+  index: /
+  port_map: '18013'

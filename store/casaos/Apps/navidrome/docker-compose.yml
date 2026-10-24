@@ -1,0 +1,59 @@
+name: navidrome
+services:
+  navidrome:
+    image: yunixintel/navidrome:loong64
+    container_name: navidrome
+    ports:
+    - target: 4533
+      published: '18002'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /data
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: navidrome
+  author: loong64-port
+  category: Media
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：Go + 系统 taglib；DSD 已编译。
+
+      缺失功能：DSD 真实播放尚未全量验证。
+
+      额外依赖：音乐目录需只读挂载。
+
+      镜像说明：Go + 系统 taglib 2.0.2，**DSD 完整**'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Go with system taglib; DSD support is compiled in.
+
+      Missing features: Real DSD playback has not been fully verified.
+
+      Extra dependencies: Mount the music directory read-only.
+
+      Image notes: Go + 系统 taglib 2.0.2，**DSD 完整**'
+  developer: Navidrome
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/navidrome/icon.png
+  tagline:
+    zh_cn: Navidrome 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Navidrome LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Navidrome
+    en_us: Navidrome
+  index: /
+  port_map: '18002'

@@ -1,0 +1,63 @@
+name: filebrowser
+services:
+  filebrowser:
+    image: yunixintel/filebrowser:loong64
+    container_name: filebrowser
+    ports:
+    - target: 8080
+      published: '18018'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/database
+      target: /database
+    - type: bind
+      source: /DATA
+      target: /srv
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: filebrowser
+  author: loong64-port
+  category: Cloud
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。
+
+      缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。
+
+      额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。
+
+      镜像说明：v2.63.23 源码编；**上游 2026-09-01 已归档**，无后续安全修复；默认监听改 0.0.0.0（v2.63 默认 127.0.0.1）'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested
+      item by item. Limitations in the image notes also apply.
+
+      Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.
+
+      Extra dependencies: No extra external dependency unless the image notes say otherwise.
+
+      Image notes: v2.63.23 源码编；**上游 2026-09-01 已归档**，无后续安全修复；默认监听改 0.0.0.0（v2.63 默认 127.0.0.1）'
+  developer: FileBrowser
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FileBrowser/icon.png
+  tagline:
+    zh_cn: File Browser 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: File Browser LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: File Browser
+    en_us: File Browser
+  index: /
+  port_map: '18018'
