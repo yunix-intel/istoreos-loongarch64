@@ -740,5 +740,12 @@
     "architecture": "linux/loong64",
     "verification": "`/wizard/` 200、`mode=version` 5.1.3、par2 create+verify 通过、unrar 7.13、healthy",
     "notes": "5.1.3；Python 3.11 + openEuler cryptography；par2cmdline 0.8.1 + unrar 7.13；`/config`、`/downloads`；8080；UID 1112；orjson 用 ujson 回退；未接真实 Usenet"
+  },
+  {
+    "image": "yunixintel/mediamtx",
+    "size": "约 108MB (Hub)",
+    "architecture": "linux/loong64",
+    "verification": "RTSP 发布 ready、HLS `/test/index.m3u8` 200、WebRTC `/test/` 200、API 容器内 200；healthy",
+    "notes": "1.9.3；Go 单二进制；8554/1935/8888/8889/8890/9997；`api: yes`（上游默认 no）；UID 1115；API 默认仅本机白名单；无持久化"
   }
 ]

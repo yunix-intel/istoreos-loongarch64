@@ -1,6 +1,6 @@
 # 应用镜像构建手册（loong64）
 
-本文件说明 106 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 96 个镜像的 Dockerfile；
+本文件说明 107 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 97 个镜像的 Dockerfile；
 其余 10 个早期镜像的 Dockerfile 未保留，但下方给出源码版本、关键步骤和构建日志入口。
 
 ## 0. 共同约定
@@ -165,7 +165,7 @@ Config UI 5 由 `hb-service run` 同时启动 UI 和 Homebridge，单独跑 `hom
 > adguardhome、code-server、easytier、firefly-iii、gitea、memos、mihomo、miniflux、
 > phpmyadmin、vaultwarden 共 10 个。
 
-## 3.5 2026-10 新增的 27 个镜像
+## 3.5 2026-10 新增的 28 个镜像
 
 | 镜像 | 上游 | 关键步骤/坑 |
 |---|---|---|
@@ -196,6 +196,7 @@ Config UI 5 由 `hb-service run` 同时启动 UI 和 Homebridge，单独跑 `hom
 | woodpecker-agent | v3.19.0 | Go CGO-free；UID 1114；需 `docker.sock` + `--group-add`；3000 健康检查 |
 | metube | 2026.10.23 | Angular x86 构建；openEuler 内编 Python 3.13.7；yt-dlp + Node 24 + ffmpeg；watchfiles 轮询补丁；无 Brotli/bgutil-pot |
 | sabnzbd | 5.1.3 | Python 3.11 + venv；orjson 用 ujson 回退、cryptography 用系统包；par2cmdline 需 `--build=loongarch64-...`；unrar 源码 |
+| mediamtx | 1.9.3 | Go 静态编；先写 `internal/core/VERSION` 并 `go generate` 下载 hls.js；配置默认开 API |
 
 逐应用细节见 `images/<app>/BUILD.md`。无法移植的 8 个商店应用见
 [BLOCKED-APPS.md](BLOCKED-APPS.md)。
@@ -204,4 +205,4 @@ Config UI 5 由 `hb-service run` 同时启动 UI 和 Homebridge，单独跑 `hom
 
 构建完成后记录：镜像大小、`docker inspect` 架构、启动日志、HTTP/健康检查、digest。
 统一推送到 `docker.io/yunixintel/<app>:loong64` 与 `:24.10-la5`。
-`scripts/push-images.sh`（私有库）覆盖全部 106 只。
+`scripts/push-images.sh`（私有库）覆盖全部 107 只。

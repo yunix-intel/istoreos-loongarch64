@@ -577,7 +577,7 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 
 ## 4. P4 候选设计（进入开发前先 spike）
 
-### P4-01 MediaMTX
+### P4-01 MediaMTX ✅ 已实现（2026-10-24）
 
 - 上游 `bluenviron/mediamtx`；Go 静态二进制；openEuler 运行。
 - 端口 8554/tcp（RTSP）、8888/tcp（HLS）、8889/tcp（WebRTC HTTP）、8189/udp（WebRTC ICE）、9997/tcp（API，默认只绑回环）；配置 `/mediamtx.yml`；UID 1115。

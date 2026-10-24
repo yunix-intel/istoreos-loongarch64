@@ -662,6 +662,23 @@ docker run -d --name sabnzbd -p 8080:8080 \
 - 自带 `par2` 0.8.1 与 `unrar` 7.13；无 orjson，JSON 走 ujson。
 - 完整说明见 [../images/sabnzbd/BUILD.md](../images/sabnzbd/BUILD.md)。
 
+### MediaMTX
+
+```bash
+docker run -d --name mediamtx \
+  -p 8554:8554 -p 1935:1935 -p 8888:8888 -p 8889:8889 \
+  -p 8189:8189/udp -p 8890:8890/udp -p 9997:9997 \
+  yunixintel/mediamtx:loong64
+```
+
+- RTSP 8554、RTMP 1935、HLS 8888、WebRTC 8889、SRT 8890/udp、API 9997；
+  RTSP UDP 传输还需放通 8000–8001/udp。
+- 推流：`ffmpeg -re -i in.mp4 -c copy -f rtsp rtsp://<host>:8554/live`。
+- HLS：`http://<host>:8888/live/`；WebRTC：`http://<host>:8889/live/`。
+- API 默认仅允许本机白名单；端口映射访问 401，需要在 `mediamtx.yml` 加用户/网段。
+- 与 go2rtc 功能重叠，二选一。
+- 完整说明见 [../images/mediamtx/BUILD.md](../images/mediamtx/BUILD.md)。
+
 ### Woodpecker CI（server + agent）
 
 ```bash
