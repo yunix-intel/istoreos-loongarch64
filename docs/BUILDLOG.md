@@ -544,3 +544,5 @@
 - 2026-10-24 Authelia v4.39.28（P2-04）：前端 React/Vite 在 x86 构建，复制仓库 `api/` 资产；后端 Go 1.27.2 CGO SQLite 在 openEuler 容器内编。entrypoint 自动生成 session/storage 密钥、argon2 管理员、configuration.yml，并先 validate-config。`/api/health` 200、门户 200、SQLite 迁移 0→29、healthy；未做完整登录/TOTP/forward-auth 联调。镜像 139MB，digest `sha256:e05a03ac…d83a`，已推送双 tag。
 
 - 2026-10-24 Ente server（P2-02，仅 server）：Go 1.27.2 CGO-free 编 museum；运行阶段带 configurations/migrations/mail-templates/web-templates；entrypoint 首次生成 museum.yaml（DB/S3/三个密钥，jwt 必须 URL-safe base64）。PostgreSQL+MinIO 三桶下 `/ping` 200、迁移完成、healthy；Web 端 10 个 Next 应用 + Rust WASM 未完成，暂不发布 ente-web。镜像 123MB，digest `sha256:bfac0212…9d7e`，已推送双 tag。
+
+- 2026-10-24 Autobrr（P3-05）：Vue/Vite 前端 x86 构建，Go 1.27.2 CGO-free embed；SQLite 迁移完成，`/` 200、`/api/healthz/liveness` 200、healthy。`HOME`/`XDG_*` 全部指向 `/config` 并持久化；默认无认证。镜像 131MB，digest `sha256:32f91a31…dcf7`，已推送双 tag。

@@ -533,7 +533,9 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 | 风险 | `unrar` 是 freeware，许可需复核；无 loong64 预编译包 |
 | 估算 | 镜像约 400–600MB；4–6 天 |
 
-### P3-05 Autobrr
+### P3-05 Autobrr（已发布）
+
+**状态：已构建并推送。** digest `sha256:32f91a31…dcf7`；构建记录见 [../images/autobrr/BUILD.md](../images/autobrr/BUILD.md)。
 
 | 项 | 设计 |
 |---|---|

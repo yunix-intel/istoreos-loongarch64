@@ -691,5 +691,12 @@
     "architecture": "linux/loong64",
     "verification": "`/ping` 200；PostgreSQL 迁移、MinIO 三桶可用；healthy",
     "notes": "ente server master；Go 单二进制；需 PostgreSQL + S3/MinIO；`/data/museum.yaml` 含密钥；8080；UID 1105；Web 端暂未包含"
+  },
+  {
+    "image": "yunixintel/autobrr",
+    "size": "约 131MB (Hub)",
+    "architecture": "linux/loong64",
+    "verification": "`/` 200、`/api/healthz/liveness` 200；SQLite 迁移完成；healthy",
+    "notes": "master 2026-10；Go 单二进制 + 内嵌 Vue；`/config`；7474；UID 1113；默认无认证；需自配 IRC/下载器"
   }
 ]

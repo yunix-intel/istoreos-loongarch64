@@ -2,7 +2,7 @@
 
 制定日期：2026-10-23  
 状态：**计划，未开工**。本文件只排期，不代表已构建或已承诺发布日期。  
-依据：现有 99 个镜像、[STORE-COVERAGE.md](STORE-COVERAGE.md) 的 8 个阻塞结论、
+依据：现有 100 个镜像、[STORE-COVERAGE.md](STORE-COVERAGE.md) 的 8 个阻塞结论、
 以及两份独立子代理调研（存储/媒体方向、生产力/自动化方向）。
 
 对应详细设计：[APP-DESIGNS.md](APP-DESIGNS.md)。本文件只排期；具体构建路径与运行时契约在设计稿中。
@@ -362,7 +362,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [ ] P3-02 Matomo
 - [ ] P3-03 MeTube
 - [ ] P3-04 SABnzbd
-- [ ] P3-05 Autobrr
+- [x] P3-05 Autobrr（已发布，`32f91a31…dcf7`）
 - [ ] P3-06 Woodpecker CI
 - [ ] P4-01 MediaMTX
 - [ ] P4-02 Karakeep（暂停：sharp/Chromium 无 loong64）

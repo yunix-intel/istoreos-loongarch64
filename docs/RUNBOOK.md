@@ -584,6 +584,20 @@ docker run -d --name ente-server --network ente -p 8080:8080 \
 - 镜像只含 API，Web 图库待 `ente-web`。
 - 完整说明见 [../images/ente-server/BUILD.md](../images/ente-server/BUILD.md)。
 
+### Autobrr
+
+```bash
+docker run -d --name autobrr -p 7474:7474 \
+  -v autobrr-config:/config \
+  yunixintel/autobrr:loong64
+```
+
+- Web UI：`http://<host>:7474/`；健康 `/api/healthz/liveness`。
+- `/config` 存 `config.toml` 与 SQLite，必须持久化。
+- 首次在 UI 配置 IRC 网络、filter、qBittorrent 等下载器。
+- 默认无认证/无 TLS；公网必须加反代认证。
+- 完整说明见 [../images/autobrr/BUILD.md](../images/autobrr/BUILD.md)。
+
 ### NocoDB
 
 ```bash
@@ -712,7 +726,7 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 99 个镜像）
+## 3. 端口索引（全部 100 个镜像）
 
 ### 从端口索引生成最小启动命令
 
@@ -768,6 +782,7 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | backrest | 9898 | `/data`、`/config`、`/cache` | UID 1108；内置 restic；首次 UI 建账号/仓库 |
 | authelia | 9091 | `/config` | UID 1107；自动生成配置/用户/密钥；需 HTTPS 反代 |
 | ente-server | 8080 | `/data` | UID 1105；需 PostgreSQL + S3/MinIO；Web 端未包含 |
+| autobrr | 7474 | `/config` | UID 1113；默认无认证；需自配 IRC/下载器 |
 | nocodb | 8080 | `/data` | UID 1000；SQLite；`NC_DB` 用 `?d=` |
 | apprise-api | 8000 | `/config`、`/attach`、`/plugin` | 默认无认证/无 TLS |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |

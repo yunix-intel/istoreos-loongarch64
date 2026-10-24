@@ -19,6 +19,7 @@ IMAGES=(
   adguardhome
   alertmanager
   audiobookshelf
+  autobrr
   authelia
   backrest
   bazarr
