@@ -566,6 +566,24 @@ docker run -d --name authelia -p 9091:9091 \
 - 无 TLS 终止，公网必须放在 HTTPS 反代之后。
 - 完整说明见 [../images/authelia/BUILD.md](../images/authelia/BUILD.md)。
 
+### Ente server
+
+```bash
+docker network create ente
+# PostgreSQL + MinIO + mc 建桶见 images/ente-server/BUILD.md
+docker run -d --name ente-server --network ente -p 8080:8080 \
+  -e ENTE_DB_HOST=ente-pg -e ENTE_DB_NAME=ente_db \
+  -e ENTE_DB_USER=pguser -e ENTE_DB_PASSWORD=pgpass \
+  -e ENTE_S3_ENDPOINT=ente-minio:9000 \
+  -e ENTE_S3_KEY=minioadmin -e ENTE_S3_SECRET=minioadmin \
+  -v ente-data:/data yunixintel/ente-server:loong64
+```
+
+- API `/ping`；需 PostgreSQL + S3/MinIO，三个 bucket 必须先建。
+- `/data/museum.yaml` 含 DB/S3 与加密密钥，必须持久化并备份。
+- 镜像只含 API，Web 图库待 `ente-web`。
+- 完整说明见 [../images/ente-server/BUILD.md](../images/ente-server/BUILD.md)。
+
 ### NocoDB
 
 ```bash
@@ -694,7 +712,7 @@ docker run -d --name gatus -p 8080:8080 \
 默认配置监控 `http://127.0.0.1:9090/-/healthy`；生产请挂自己的 `config.yaml`。
 状态页 `/`，API `/api/v1/endpoints/statuses`。
 
-## 3. 端口索引（全部 98 个镜像）
+## 3. 端口索引（全部 99 个镜像）
 
 ### 从端口索引生成最小启动命令
 
@@ -749,6 +767,7 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | headscale | 8080, 9090 | `/etc/headscale`、`/var/lib/headscale` | UID 1106；无 Web UI；CLI 建用户/key |
 | backrest | 9898 | `/data`、`/config`、`/cache` | UID 1108；内置 restic；首次 UI 建账号/仓库 |
 | authelia | 9091 | `/config` | UID 1107；自动生成配置/用户/密钥；需 HTTPS 反代 |
+| ente-server | 8080 | `/data` | UID 1105；需 PostgreSQL + S3/MinIO；Web 端未包含 |
 | nocodb | 8080 | `/data` | UID 1000；SQLite；`NC_DB` 用 `?d=` |
 | apprise-api | 8000 | `/config`、`/attach`、`/plugin` | 默认无认证/无 TLS |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |

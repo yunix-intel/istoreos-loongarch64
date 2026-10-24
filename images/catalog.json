@@ -684,5 +684,12 @@
     "architecture": "linux/loong64",
     "verification": "`/api/health` 200、门户 `/` 200；SQLite 迁移 0→29；healthy",
     "notes": "v4.39.28；CGO SQLite；自动生成配置/用户/密钥；`/config`；9091；UID 1107；需 HTTPS 反代；默认 one_factor"
+  },
+  {
+    "image": "yunixintel/ente-server",
+    "size": "约 123MB (Hub)",
+    "architecture": "linux/loong64",
+    "verification": "`/ping` 200；PostgreSQL 迁移、MinIO 三桶可用；healthy",
+    "notes": "ente server master；Go 单二进制；需 PostgreSQL + S3/MinIO；`/data/museum.yaml` 含密钥；8080；UID 1105；Web 端暂未包含"
   }
 ]

@@ -2,7 +2,7 @@
 
 制定日期：2026-10-23  
 状态：**计划，未开工**。本文件只排期，不代表已构建或已承诺发布日期。  
-依据：现有 98 个镜像、[STORE-COVERAGE.md](STORE-COVERAGE.md) 的 8 个阻塞结论、
+依据：现有 99 个镜像、[STORE-COVERAGE.md](STORE-COVERAGE.md) 的 8 个阻塞结论、
 以及两份独立子代理调研（存储/媒体方向、生产力/自动化方向）。
 
 对应详细设计：[APP-DESIGNS.md](APP-DESIGNS.md)。本文件只排期；具体构建路径与运行时契约在设计稿中。
@@ -353,7 +353,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [x] P1-04 BookStack（已发布，`20304871…efba`）
 - [x] P1-05 Vikunja（已发布，`25333510…a0a3`）
 - [x] P2-01 Piwigo（已发布，`289fca6c…f8b9`）
-- [ ] P2-02 Ente（多服务）
+- [x] P2-02 Ente server（已发布，`bfac0212…9d7e`）；ente-web 待做
 - [x] P2-03 Headscale（已发布，`603650be…b3fb`）
 - [x] P2-04 Authelia（已发布，`e05a03ac…d83a`）
 - [x] P2-05 Backrest（已发布，`955cae89…79eb`）

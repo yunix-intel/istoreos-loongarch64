@@ -32,6 +32,7 @@ IMAGES=(
   dozzle
   drawio
   easytier
+  ente-server
   excalidraw
   filebrowser
   firefly-iii

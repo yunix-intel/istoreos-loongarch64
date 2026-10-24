@@ -347,7 +347,9 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 | 风险 | UI 较老；必须 MariaDB；首次安装向导需可写 `local/` |
 | 估算 | 镜像约 400–500MB；2–3 天 |
 
-### P2-02 Ente（museum + web）
+### P2-02 Ente（server 已发布；web 待做）
+
+**状态：ente-server 已构建并推送；ente-web 未完成。** server digest `sha256:bfac0212…9d7e`；构建记录见 [../images/ente-server/BUILD.md](../images/ente-server/BUILD.md)。
 
 | 项 | 设计 |
 |---|---|
