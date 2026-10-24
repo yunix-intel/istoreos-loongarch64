@@ -606,13 +606,21 @@ Karakeep 0.34.1 的正文归档不依赖 Chromium，Chromium 只影响 JS 渲染
 - 端口 8000；`/data`；UID 1117；健康检查 `/`。
 - 风险：前端构建依赖 Node；与 Wallabag/Shiori 重叠。估算 2–4 天。
 
-### P4-04 Linkwarden（审查后：暂缓，BLOCKER）
+### P4-04 Linkwarden（2026-10-25 研究：有条件 Go，5–7 天）
 
-**状态：暂缓。** `apps/web/package.json` 依赖 Prisma、Playwright 1.57（`postinstall: playwright install --with-deps chromium`）和 sharp 0.35；Prisma engines 没有 loong64，和 Umami 被排除的原因相同。除非改用无 Prisma/Playwright 的构建路径，否则不做。
+**状态：有条件 Go。** 研究结论见 [research/linkwarden-unblock.md](research/linkwarden-unblock.md)：
+Prisma 7.10.1 的 WASM query compiler + `@prisma/adapter-pg` 可去掉 Rust 引擎；
+99 个迁移用自写 SQL 迁移器在 PostgreSQL 15.18 上全部跑通；Loongnix 自带 LBrowser
+（Chromium 138）可被 Playwright 1.57 以 `executablePath` 驱动；sharp 源码 0 引用，删依赖
+并设 `images.unoptimized` 即可；bcrypt 换 bcryptjs。
 
-- 上游 `linkwarden/linkwarden`；Next.js + PostgreSQL；搜索/归档可能依赖 Meilisearch；Node 24。
-- 端口 3000；`DATABASE_URL`、`NEXTAUTH_SECRET`、`NEXTAUTH_URL`；按上游 compose 增加 Meilisearch（若需要）。
-- 风险：Prisma/Playwright/sharp 无 loong64；多服务；浏览器归档依赖。估算 4–7 天（若依赖解决）。
+- 上游 `linkwarden/linkwarden` v2.16.3；Next 15 + PostgreSQL；Node 22/24。
+- 端口 3000；`DATABASE_URL`、`NEXTAUTH_SECRET`、`NEXTAUTH_URL`；`/data`。
+- 首发可无 Meilisearch（Prisma `contains` 回退）；浏览器可内置 LBrowser、挂载宿主或
+  `DISABLE_BROWSER=true`（后者仅书签 CRUD）。
+- 风险：Prisma 7 旧 generator 在 v8 移除需 pin；LBrowser 再分发许可；Chromium 138 与
+  Playwright 1.57 的复杂页面回归；自写迁移器需保持 `_prisma_migrations` 兼容。
+- 工作量 5–7 天（无浏览器 4–5 天）。
 
 ### P4-05 Joplin Server（2026-10-24 研究：GO）
 

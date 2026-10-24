@@ -8,7 +8,7 @@
 | wg-easy | **Go（已发布）** | [wg-easy-unblock.md](wg-easy-unblock.md) | v15.4.0 已发布双 tag；复用 libsql loong64 绑定 + hash-wasm；真实隧道待验收 |
 | Joplin Server | **Go** | [joplin-unblock.md](joplin-unblock.md) | sharp/sqlite-vec 非服务端依赖；sqlite3 5.1.6 已过 16K 页门禁；PostgreSQL 路径仍建临时 SQLite |
 | Komga | **Go** | [komga-unblock.md](komga-unblock.md) | 官方 jar + 自编 loongarch64 `libsqlitejdbc.so`；已实测启动/迁移/重启；镜像收尾中 |
-| Linkwarden | 研究中 | — | Prisma/Playwright/sharp；研究替换 DB 层或降级 |
+| Linkwarden | **有条件 Go** | [linkwarden-unblock.md](linkwarden-unblock.md) | Prisma 7 WASM+adapter-pg；自写 99 个迁移；LBrowser/外部 browserless；sharp 可删；5–7 天 |
 
 ## 结论使用规则
 
