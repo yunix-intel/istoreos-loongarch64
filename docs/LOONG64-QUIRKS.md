@@ -28,6 +28,7 @@
 | MeTube | Python 3.13 自编；Angular 前端 x86 构建 | 无 Brotli 解压；无内置 `bgutil-pot`（部分 YouTube 视频需 cookies/远程 provider）；ffmpeg 为 6.1.1 而非上游 8.1 | `/downloads` 持久化并 `chown 1111`；默认 `YTDL_OPTIONS` 用 Node 24 作 JS runtime；8082 |
 | SABnzbd | Python 3.11 + venv；par2/unrar 源码编 | 无 orjson（ujson 回退，性能略低）；unrar 为闭源 freeware | `/config`、`/downloads` 持久化；UI 根路径 `/` 不是 `/sabnzbd/`；8080 |
 | MediaMTX | Go 单二进制；配置内嵌 | 无 Web 管理界面/持久化；API 默认仅本机白名单；`runOnInit` 等同容器内执行命令 | 8554/1935/8888/8889/8890/9997；NAT 后 WebRTC 需配 additional hosts；与 go2rtc 二选一 |
+| Registry | Go 单二进制；首启生成 htpasswd | 无 Web UI、无 TLS、无多实例共享存储；删除后需手动 GC | `/var/lib/registry` 与 `/auth` 持久化；`/auth/password` 是唯一密码来源；Docker CLI 需 insecure-registries |
 | Woodpecker server | 前端 x86 构建后内嵌；CGO SQLite | **不配置 forge（Gitea/GitHub 等）无法启动**；无内置账号体系，依赖 forge OAuth | `/var/lib/woodpecker` 持久化；`WOODPECKER_HOST` 必须是外部可访问 URL；agent/grpc secret 自动生成 |
 | Woodpecker agent | Go CGO-free；UID 1114 | 无业务端口，仅 3000 健康检查；必须能访问 Docker daemon | 挂 `docker.sock` 并 `--group-add <GID>`；`WOODPECKER_AGENT_SECRET` 与 server 一致；等同宿主 root，只接可信仓库 |
 | Mealie | Python 3.14 自编 | HEIF/HEIC 不支持 | `/app/data`；UID 911 |

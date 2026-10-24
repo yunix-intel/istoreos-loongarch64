@@ -1,6 +1,6 @@
 # loongarch64 应用镜像
 
-共 107 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
+共 108 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
 `loong64`（浮动）与 `24.10-la5`（与 GitHub Release 对齐）。
 
 拉取：
@@ -98,6 +98,7 @@ docker pull yunixintel/jellyfin:loong64
 | `yunixintel/metube` | 约 441MB（Hub） | `/` 200、`POST /add` 下载 YouTube 短视频成功、文件合并、healthy | 2026.10.23；Python 3.13.7 + yt-dlp 2026.10.21 + Node 24 + ffmpeg 6.1.1；`/downloads`；8082；UID 1111；无 Brotli/bgutil-pot |
 | `yunixintel/sabnzbd` | 约 139MB（Hub） | `/wizard/` 200、API version 5.1.3、par2 create/verify 通过、healthy | 5.1.3；Python 3.11 + system cryptography；par2cmdline 0.8.1 + unrar 7.13；`/config`、`/downloads`；8080；UID 1112；无 orjson |
 | `yunixintel/mediamtx` | 约 108MB（Hub） | RTSP 发布 ready、HLS 200、WebRTC 页面 200、API 容器内 200；healthy | 1.9.3；Go 单二进制；8554/1935/8888/8889/8890/9997；API 默认开；UID 1115；无持久化 |
+| `yunixintel/registry` | 约 124MB（Hub） | 匿名 401、admin 认证通过、crane 推送/拉取、`_catalog` 正常；healthy | 3.1.2；Go 单二进制；`/var/lib/registry`、`/auth`；5000；UID 1121；首启生成 htpasswd；无 TLS |
 | `yunixintel/autobrr` | 约 131MB（Hub） | `/` 200、`/api/healthz/liveness` 200、SQLite 迁移；healthy | master 2026-10；Go 单二进制 + 内嵌 Vue；`/config`；7474；UID 1113；默认无认证 |
 | `yunixintel/matomo` | 约 193MB（Hub） | `/index.php` 200、安装向导可打开、PHP 扩展齐全；healthy | 5.14.2；PHP 8.3 + nginx/php-fpm；必须 MariaDB；`config`/`tmp` 持久化；80 |
 | `yunixintel/woodpecker-server` | 约 133MB（Hub） | `/` 200、内嵌 UI 资源 200、`/api/healthz` 204；SQLite 迁移；healthy | 3.19.0；**必须配置 forge**（Gitea/GitHub）才能启动；`/var/lib/woodpecker`；8000/9000；自动生成 agent/grpc secret；UID 1114 |

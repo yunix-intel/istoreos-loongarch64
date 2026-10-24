@@ -747,5 +747,12 @@
     "architecture": "linux/loong64",
     "verification": "RTSP 发布 ready、HLS `/test/index.m3u8` 200、WebRTC `/test/` 200、API 容器内 200；healthy",
     "notes": "1.9.3；Go 单二进制；8554/1935/8888/8889/8890/9997；`api: yes`（上游默认 no）；UID 1115；API 默认仅本机白名单；无持久化"
+  },
+  {
+    "image": "yunixintel/registry",
+    "size": "约 124MB (Hub)",
+    "architecture": "linux/loong64",
+    "verification": "匿名 401、admin 认证通过、crane 推送/拉取成功、`_catalog` 正常；healthy",
+    "notes": "3.1.2；Go 单二进制；`/var/lib/registry`、`/auth`；5000；UID 1121；首启生成 admin 随机密码与 htpasswd；HTTP secret 持久化；无 TLS"
   }
 ]

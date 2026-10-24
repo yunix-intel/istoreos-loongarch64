@@ -166,7 +166,7 @@
 | Linkwarden | 未记录 | 待锁定 |
 | Joplin Server | 未记录 | 待锁定 |
 | wg-easy | 未记录 | 待锁定 |
-| Registry | 未记录 | 待锁定 |
+| Registry | 未记录 | 已锁定：`v3.1.2`，commit `3220848` |
 | Pocket ID | 未记录 | 待锁定 |
 | Unpackerr | 未记录 | 待锁定 |
 
@@ -622,7 +622,7 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 - 端口 51821/tcp（Web）+ 51820/udp（WireGuard）；`/etc/wireguard`；`WG_HOST`、`PASSWORD_HASH`；`NET_ADMIN`；`sysctl net.ipv4.conf.all.src_valid_mark=1`；必要时挂 `/lib/modules`。
 - 风险：宿主内核 WireGuard 模块；libsql 无 loong64；权限模型；与 Headscale/Tailscale 重叠。估算 2–4 天（若依赖解决）。
 
-### P4-07 Registry
+### P4-07 Registry ✅ 已实现（2026-10-24）
 
 - 上游 `distribution/distribution`；Go 静态二进制；openEuler。
 - 端口 5000；`/var/lib/registry`；配置 `config.yml`；TLS 由反代或证书挂载。

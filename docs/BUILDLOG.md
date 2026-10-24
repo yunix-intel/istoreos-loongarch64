@@ -549,6 +549,8 @@
 
 - 2026-10-24 Matomo 5.14.2（P3-02）：官方 `matomo.zip` 完整包（含 vendor）；PHP 8.3 + nginx/php-fpm，`php-pecl-zip` 单独安装。`/index.php` 安装向导 200、PHP 扩展齐全、healthy；Matomo 无 CLI 安装器，保留 Web 向导。镜像 193MB，digest `sha256:b1e7baec…1bc2`，已推送双 tag。
 
+- 2026-10-24 Registry 3.1.2（P4-07）：Go 1.27.2 静态编；仓库根已有 `registry/` 目录，二进制落在 `registry/registry`。默认匿名写入不安全，entrypoint 首启生成 admin + 24 字符随机密码与 htpasswd，并持久化 `REGISTRY_HTTP_SECRET`。`crane copy` 推送 mediamtx 成功，`_catalog` 正常，匿名 `/v2/` 401，healthy。镜像 381MB（Hub 124MB），digest `sha256:da519e59…0229`，已推送双 tag。
+
 - 2026-10-24 MediaMTX 1.9.3（P4-01）：Go 1.27.2 静态编；构建前必须写 `internal/core/VERSION` 并 `go generate ./internal/servers/hls`（下载 hls.js 1.5.17 校验 SHA256），否则 embed 报缺文件。上游配置 `api: no`，镜像改为 `api: yes`。ffmpeg 推 testsrc 到 RTSP 后路径 ready，HLS `/test/index.m3u8` 200、WebRTC `/test/` 200、容器内 API 200；宿主机映射访问 API 因默认白名单返回 401。镜像 313MB（Hub 108MB），digest `sha256:20d0edcb…26bb`，已推送双 tag。
 
 - 2026-10-24 SABnzbd 5.1.3（P3-04）：openEuler Python 3.11 + venv；`orjson` 过滤掉走 ujson 回退，`cryptography` 用系统 42.0.2 避免 Rust；par2cmdline 0.8.1 与 unrar 7.13 源码编。par2 的旧 `config.guess` 不认 loongarch64，configure 需 `--build=loongarch64-unknown-linux-gnu`；5.x UI 根路径是 `/`（303→`/wizard/`），健康检查不能打 `/sabnzbd/`。API version 5.1.3、par2 create/verify、unrar 可用，healthy；未接真实 Usenet。镜像 390MB（Hub 139MB），digest `sha256:1e20dee8…7d81`，已推送双 tag。

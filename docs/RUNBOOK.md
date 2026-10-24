@@ -679,6 +679,22 @@ docker run -d --name mediamtx \
 - 与 go2rtc 功能重叠，二选一。
 - 完整说明见 [../images/mediamtx/BUILD.md](../images/mediamtx/BUILD.md)。
 
+### Registry
+
+```bash
+docker run -d --name registry -p 5000:5000 \
+  -v registry-data:/var/lib/registry \
+  -v registry-auth:/auth \
+  yunixintel/registry:loong64
+docker exec registry cat /auth/password
+```
+
+- `/v2/` 匿名 401；用户名默认 `admin`，密码在 `/auth/password`，或首启用
+  `REGISTRY_USER`/`REGISTRY_PASSWORD` 指定。
+- 数据 `/var/lib/registry`，认证与 HTTP secret `/auth`，两者都必须持久化。
+- 无 TLS；公网必须反代。Docker CLI 推送需在 daemon 配置 `insecure-registries`。
+- 完整说明见 [../images/registry/BUILD.md](../images/registry/BUILD.md)。
+
 ### Woodpecker CI（server + agent）
 
 ```bash
