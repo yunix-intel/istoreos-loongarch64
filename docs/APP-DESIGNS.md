@@ -584,13 +584,18 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 - 健康检查首页/API；`runOnInit` 等于命令执行，文档必须警示；与 go2rtc 二选一。
 - 风险：WebRTC 公布地址；与 go2rtc 功能重叠。估算 1–2 天。
 
-### P4-02 Karakeep（审查后：暂缓，BLOCKER）
+### P4-02 Karakeep（2026-10-24 研究：有条件 Go，基础版）
 
-**状态：暂缓。** `apps/web/package.json` 依赖 `sharp ^0.35.5`，sharp 的 libvips 没有 loong64 预编译；加上网页归档需要 Chromium。除非先解决 sharp + Chromium，否则不做。
+**状态：可做基础版。** 研究结论见 [research/karakeep-unblock.md](research/karakeep-unblock.md)：
+Karakeep 0.34.1 的正文归档不依赖 Chromium，Chromium 只影响 JS 渲染/截图/PDF/反爬；
+无 sharp 时 banner 保留原图。首发方案为 SQLite + 静态抓取，搜索/截图/JS 页面通过
+外部 Meilisearch / browserless 侧车提供；原生 Chromium 与原生 Meilisearch 判 No-Go。
+预计基础版 4–5 天。
 
-- 上游 `karakeep-app/karakeep`；Node 24 + SQLite/Postgres；Chromium 用于网页归档；搜索可能依赖 Meilisearch（`MEILI_*`），开工前确认。
-- 端口 3000；`/data`；`NEXTAUTH_SECRET`、`NEXTAUTH_URL`、`DATABASE_URL`；浏览器/搜索服务按 compose 拆分。
-- 风险：Chromium loong64 可用性；sharp/libvips 无 loong64；Meilisearch 依赖；镜像体积大。估算 4–7 天（若依赖解决）。
+- 上游 `karakeep-app/karakeep` v0.34.1；Node 24 + better-sqlite3；`/data`；3000；UID 1116。
+- `NEXTAUTH_URL`/`NEXTAUTH_SECRET` 必填；首次创建 admin 后关闭注册。
+- 缺失：内置全文/语义搜索（需 Meili）、截图/PDF/JS 渲染（需外部 browserless）、视频保存。
+- 可选增强：自编 libvips 8.18.7 + sharp；先做 spike 再决定。
 
 ### P4-03 Readeck ✅ 已实现（2026-10-24）
 

@@ -124,7 +124,7 @@ P4 不进入当前排期；每项启动前先做 1 天以内的依赖 spike，�
 
 **审查后调整（2026-10-23）：**
 
-- **P4-02 Karakeep 暂停**：sharp/libvips 无 loong64 + Chromium 依赖。
+- **P4-02 Karakeep 有条件 Go**：基础版（SQLite + 静态抓取）可做；搜索/截图需外部 Meilisearch/browserless，原生 Chromium/Meilisearch No-Go。见 `docs/research/karakeep-unblock.md`。
 - **P4-04 Linkwarden 暂停**：Prisma engines 无 loong64 + Playwright/Chromium + sharp。
 - **P4-05 Joplin Server 暂缓**：sharp/sqlite-vec/sqlite3 无 loong64，先做 native spike。
 - **P4-06 wg-easy 暂缓**：libsql 无 loong64 预编译，先证明可从 Rust 源码构建。
@@ -365,7 +365,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [x] P3-05 Autobrr（已发布，`32f91a31…dcf7`）
 - [x] P3-06 Woodpecker CI
 - [x] P4-01 MediaMTX（已发布，`20d0edcb…26bb`）
-- [ ] P4-02 Karakeep（暂停：sharp/Chromium 无 loong64）
+- [ ] P4-02 Karakeep（基础版可行；待排期）
 - [x] P4-03 Readeck（已发布，`14c9426b…4719`）
 - [ ] P4-04 Linkwarden（暂停：Prisma/Playwright/sharp）
 - [ ] P4-05 Joplin Server（暂缓：sharp/sqlite-vec）
