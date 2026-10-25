@@ -368,7 +368,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [x] P4-02 Karakeep（已发布，`261827ea…f445`；基础版）
 - [x] P4-03 Readeck（已发布，`14c9426b…4719`）
 - [x] P4-04 Linkwarden（已发布，`742abfdd…b852`；基础版）
-- [x] P4-05 Joplin Server（已发布，`204c8b9a…39ef`）
+- [x] P4-05 Joplin Server（已发布，`59177faf…4bff`；CasaOS bind/healthcheck 修复）
 - [x] P4-06 wg-easy（已发布，`943cfc36…db84`；握手/转发/NAT/外网已验证）
 - [x] P4-07 Registry（已发布，`da519e59…0229`）
 - [x] P4-08 Pocket ID（已发布，`7c21de80…0cb4`）
@@ -382,7 +382,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [ ] C-03 CasaOS 24h 稳定性（24h soak 运行中，2026-10-26 21:06 结束）
 - [ ] C-04 CasaOS 发布闸门评审（3 个 BLOCKER 已修复；24h soak 运行中，重启待验）
 - [ ] C-05 CasaOS 上游 PR/issue
-- [ ] C-06 CasaOS 应用商店同步
+- [x] C-06 CasaOS 应用商店同步（115 个定义、dry-run 与安装包；UI 缓存待 soak 后重启）
 - [ ] O-01 OMV 目标版本与基线审计
 - [ ] O-02 OMV 依赖闭包
 - [ ] O-03 OMV QEMU-TCG 安装 spike
