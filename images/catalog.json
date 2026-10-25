@@ -789,5 +789,12 @@
     "architecture": "linux/loong64",
     "verification": "94+2+1 项迁移、`/` 200、health UP、重启持久化、最小 CBZ 扫描 1 系列/1 书/1 页；healthy",
     "notes": "1.29.1；官方 jar + 自编 loongarch64 libsqlitejdbc；JDK 21；`/config`、`/data`（可只读）；25600；UID 1110；HEIF/JXL/Kobo 未支持"
+  },
+  {
+    "image": "yunixintel/node-sharp",
+    "size": "约 157MB (Hub)",
+    "architecture": "linux/loong64",
+    "verification": "sharp.versions vips 8.18.7 / sharp 0.35.5；resize+WebP/JPEG/PNG 实测通过；ldd 无缺失",
+    "notes": "基础镜像：Node 24.22.1 + libvips 8.18.7 + sharp 0.35.5；`/opt/vips` 与 `/opt/node_modules/sharp` 可复用；仅 JPEG/PNG/WebP/TIFF；HEIF/JXL 未开"
   }
 ]

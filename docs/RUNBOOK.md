@@ -1005,6 +1005,7 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | readeck | 8000 | `/data` | UID 1117；CGO sqlite；首启引导页 |
 | wg-easy | 51820/udp, 51821 | `/etc/wireguard`；`/lib/modules:ro` | 需 NET_ADMIN/SYS_MODULE 与 sysctls；IPv4-only；真实隧道未验 |
 | komga | 25600 | `/config`、`/data`（可只读） | UID 1110；JDK 21；自编 sqlite JNI；HEIF/JXL/Kobo 未支持 |
+| node-sharp | — | `/opt/vips`、`/opt/node_modules/sharp` | 基础镜像；Node 24 + libvips 8.18.7 + sharp 0.35.5；非服务 |
 | nocodb | 8080 | `/data` | UID 1000；SQLite；`NC_DB` 用 `?d=` |
 | apprise-api | 8000 | `/config`、`/attach`、`/plugin` | 默认无认证/无 TLS |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |

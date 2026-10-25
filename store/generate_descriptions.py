@@ -19,7 +19,7 @@ CATALOG = os.path.join(ROOT, "images", "catalog.json")
 OUT_JSON = os.path.join(ROOT, "store", "loong64-descriptions.json")
 OUT_MD = os.path.join(ROOT, "store", "descriptions-preview.md")
 
-SKIP = {"node"}  # runtime base image, not an installable app
+SKIP = {"node", "node-sharp"}  # runtime base images, not installable apps
 
 NAMES = {
     "qbittorrent-ee": "qBittorrent (Enhanced Edition)",

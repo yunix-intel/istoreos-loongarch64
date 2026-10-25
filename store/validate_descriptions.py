@@ -20,7 +20,7 @@ def main():
     images = {x["image"] for x in catalog}
     errors = []
 
-    expected = {x["image"].split("/", 1)[1] for x in catalog} - {"node"}
+    expected = {x["image"].split("/", 1)[1] for x in catalog} - {"node", "node-sharp"}
     if set(apps) != expected:
         errors.append(f"app set mismatch: missing={sorted(expected - set(apps))} extra={sorted(set(apps) - expected)}")
     if doc.get("app_count") != len(expected):
