@@ -1,0 +1,103 @@
+# Linkwarden 2.16.3 (loong64) + LBrowser baked into the app image.
+#
+# PRIVATE / LOCAL USE ONLY.  The LBrowser deb ships no LICENSE/COPYING file,
+# so redistribution is not clearly permitted.  Never tag or push this image as
+# yunixintel/* or to Docker Hub.  Build output is local/linkwarden-private.
+#
+# Unlike Dockerfile (sidecar / host mount), this variant runs web, worker and
+# the browser in one container: no PLAYWRIGHT_WS_URL, no /opt/apps/lbrowser
+# bind mount.  entrypoint.sh keeps PLAYWRIGHT_WS_URL as an override: when it is
+# set, browser.ts prefers connectOverCDP; otherwise it launches
+# PLAYWRIGHT_LAUNCH_OPTIONS_EXECUTABLE_PATH locally ("Launching browser.").
+#
+# Runtime still needs --shm-size=1g (Chromium default /dev/shm is 64 MB).
+#
+# Build (BuildKit off, same as the public image):
+#   DOCKER_BUILDKIT=0 docker build --network=host \
+#       -f Dockerfile.private -t local/linkwarden-private:2.16.3-p1 .
+
+ARG LBROWSER_IMAGE=local/lbrowser-embedded:3.4.2293.2-local
+
+# LBrowser payload only; the embedded image already carries it at
+# /opt/apps/lbrowser.  Nothing is downloaded here and no dpkg/Perl is needed.
+FROM ${LBROWSER_IMAGE} AS lbrowser
+
+FROM yunixintel/linkwarden:2.16.3
+
+SHELL ["/bin/bash", "-c"]
+
+# Same runtime dependency set as images/lbrowser/Dockerfile (openEuler 24.03).
+# libstdc++/glibc 2.38 satisfy the Loongnix deb (>= 2.37).  ca-certificates and
+# tzdata are already in the base and are listed for parity with the shared
+# image; dnf skips them.
+RUN dnf install -y --setopt=install_weak_deps=False --setopt=tsflags=nodocs \
+        alsa-lib \
+        at-spi2-atk \
+        at-spi2-core \
+        avahi-libs \
+        ca-certificates \
+        cairo \
+        cups-libs \
+        dbus-libs \
+        expat \
+        fontconfig \
+        freetype \
+        gdk-pixbuf2 \
+        glib2 \
+        gnutls \
+        gtk2 \
+        gtk3 \
+        iproute \
+        kmod-libs \
+        krb5-libs \
+        libX11 \
+        libXcomposite \
+        libXcursor \
+        libXdamage \
+        libXext \
+        libXfixes \
+        libXi \
+        libXinerama \
+        libXrandr \
+        libXrender \
+        libatomic \
+        libdrm \
+        libffi \
+        libjpeg-turbo \
+        libpng \
+        libstdc++ \
+        libxcb \
+        libxkbcommon \
+        mesa-libgbm \
+        nspr \
+        nss \
+        pango \
+        pcre2 \
+        pulseaudio-libs \
+        systemd-libs \
+        tzdata \
+        dejavu-fonts \
+        google-noto-sans-cjk-sc-fonts && \
+    dnf clean all && rm -rf /var/cache/dnf /var/cache/yum && \
+    mkdir -p /opt/apps
+
+COPY --from=lbrowser /opt/apps/lbrowser /opt/apps/lbrowser
+
+RUN test -x /opt/apps/lbrowser/lbrowser && \
+    ! ldd /opt/apps/lbrowser/lbrowser | grep -q "not found"
+
+# Non-empty executable path keeps entrypoint.sh from setting DISABLE_BROWSER;
+# browser.ts then launches LBrowser in-process (PLAYWRIGHT_WS_URL still wins if
+# supplied at run time).
+ENV PLAYWRIGHT_LAUNCH_OPTIONS_EXECUTABLE_PATH=/opt/apps/lbrowser/lbrowser \
+    LBROWSER_EXECUTABLE=/opt/apps/lbrowser/lbrowser \
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8
+
+LABEL org.opencontainers.image.title="linkwarden-private" \
+      org.opencontainers.image.description="Linkwarden 2.16.3 with LBrowser 3.4.2293.2 baked in; private-only, do not redistribute" \
+      org.opencontainers.image.version="2.16.3-p1" \
+      local.private="true"
+
+# Inherited from yunixintel/linkwarden:2.16.3: WORKDIR /data, VOLUME
+# /data/data, EXPOSE 3000, HEALTHCHECK, ENTRYPOINT ["/entrypoint.sh"].

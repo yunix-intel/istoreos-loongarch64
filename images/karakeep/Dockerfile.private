@@ -1,0 +1,92 @@
+# Karakeep 0.34.1 (loong64) PRIVATE single-container image.
+#
+# LOCAL USE ONLY.  This image bakes LBrowser into the application image.  The
+# LBrowser package ships no LICENSE/COPYING/copyright file, so redistribution is
+# NOT clearly permitted.  Never push this image to Docker Hub or any registry.
+#
+# Layout inside the container:
+#   LBrowser       127.0.0.1:9223  (DevTools, always loopback-only)
+#   cdp-proxy      127.0.0.1:9222  (rewrites /json/*; BROWSER_WEB_URL points here)
+#   Karakeep web   0.0.0.0:3000
+#   Karakeep workers -> connectOverCDP http://127.0.0.1:9222
+#
+# There is no sidecar, no host bind mount and no extra port.
+
+FROM yunixintel/karakeep:0.34.1
+
+ENV PLAYWRIGHT_LAUNCH_OPTIONS_EXECUTABLE_PATH=/opt/apps/lbrowser/lbrowser \
+    LBROWSER_EXECUTABLE=/opt/apps/lbrowser/lbrowser \
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    CDP_LISTEN_HOST=127.0.0.1 \
+    CDP_LISTEN_PORT=9222 \
+    CDP_UPSTREAM_HOST=127.0.0.1 \
+    CDP_UPSTREAM_PORT=9223
+
+# Same runtime library set as images/lbrowser/Dockerfile.  The base image is
+# openEuler 24.03 (glibc 2.38), which satisfies the LBrowser deb's >= 2.37.
+# No dpkg/Perl: the payload comes from the already-unpacked embedded image.
+RUN dnf install -y --setopt=install_weak_deps=False --setopt=tsflags=nodocs \
+        alsa-lib \
+        at-spi2-atk \
+        at-spi2-core \
+        avahi-libs \
+        ca-certificates \
+        cairo \
+        cups-libs \
+        dbus-libs \
+        expat \
+        fontconfig \
+        freetype \
+        gdk-pixbuf2 \
+        glib2 \
+        gnutls \
+        gtk2 \
+        gtk3 \
+        iproute \
+        kmod-libs \
+        krb5-libs \
+        libX11 \
+        libXcomposite \
+        libXcursor \
+        libXdamage \
+        libXext \
+        libXfixes \
+        libXi \
+        libXinerama \
+        libXrandr \
+        libXrender \
+        libatomic \
+        libdrm \
+        libffi \
+        libjpeg-turbo \
+        libpng \
+        libstdc++ \
+        libxcb \
+        libxkbcommon \
+        mesa-libgbm \
+        nspr \
+        nss \
+        pango \
+        pcre2 \
+        pulseaudio-libs \
+        systemd-libs \
+        tzdata \
+        dejavu-fonts \
+        google-noto-sans-cjk-sc-fonts && \
+    dnf clean all && rm -rf /var/cache/dnf /var/cache/yum && \
+    mkdir -p /opt/apps/lbrowser /tmp/lbrowser-profile
+
+# Browser bytes come from the local-only embedded image (never redistributed).
+COPY --from=local/lbrowser-embedded:3.4.2293.2-local /opt/apps/lbrowser/ /opt/apps/lbrowser/
+
+# cdp-proxy.mjs is copied verbatim from images/lbrowser/cdp-proxy.mjs.
+COPY cdp-proxy.mjs /usr/local/lib/lbrowser/cdp-proxy.mjs
+COPY entrypoint.private.sh /entrypoint.private.sh
+
+RUN chmod 0755 /entrypoint.private.sh && \
+    chmod 0644 /usr/local/lib/lbrowser/cdp-proxy.mjs
+
+# Replaces the base entrypoint; it starts LBrowser + proxy, then hands the app
+# lifecycle to the original /entrypoint.sh (still present in the image).
+ENTRYPOINT ["/entrypoint.private.sh"]

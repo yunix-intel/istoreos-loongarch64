@@ -8,22 +8,17 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-  lbrowser:
-    image: local/lbrowser-embedded:3.4.2293.2-local
-    command: ["serve"]
-    shm_size: "1g"
-    restart: unless-stopped
-
   linkwarden:
-    image: yunixintel/linkwarden:loong64
-    depends_on: [postgres, lbrowser]
+    # private-only single image: LBrowser is baked in, no sidecar/host mount.
+    image: local/linkwarden-private:2.16.3-p1
+    depends_on: [postgres]
     ports: ["3000:3000"]
+    shm_size: "1g"
     environment:
       DATABASE_URL: postgresql://linkwarden:change-me@postgres:5432/linkwarden
       NEXTAUTH_URL: http://<host>:3000/api/v1/auth
       NEXTAUTH_SECRET: <openssl rand -base64 32>
       STORAGE_FOLDER: data
-      PLAYWRIGHT_WS_URL: http://lbrowser:9222
     volumes:
       - ./data:/data/data
 

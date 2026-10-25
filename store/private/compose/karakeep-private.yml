@@ -1,18 +1,12 @@
 services:
-  lbrowser:
-    image: local/lbrowser-embedded:3.4.2293.2-local
-    command: ["serve"]
-    shm_size: "1g"
-    restart: unless-stopped
-
   karakeep:
-    image: yunixintel/karakeep:loong64
-    depends_on: [lbrowser]
+    # private-only single image: LBrowser + CDP proxy + app in one container.
+    image: local/karakeep-private:0.34.1-p1
     ports: ["3000:3000"]
+    shm_size: "1g"
     environment:
       NEXTAUTH_URL: http://<host>:3000
       NEXTAUTH_SECRET: <openssl rand -base64 32>
-      BROWSER_WEB_URL: http://lbrowser:9222
       CRAWLER_STORE_PDF: "true"
     volumes:
       - ./data:/data
