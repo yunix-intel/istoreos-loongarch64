@@ -106,7 +106,7 @@ VOLUME ["/data"]
 EXPOSE 22300
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=90s --retries=5 \
-    CMD curl -fsS http://127.0.0.1:${APP_PORT:-22300}/api/ping >/dev/null || exit 1
+    CMD base="${APP_BASE_URL:-http://localhost:22300}"; hostport="${base#http://}"; hostport="${hostport%%/*}"; curl -fsS -H "Host: ${hostport}" "http://127.0.0.1:${APP_PORT:-22300}/api/ping" >/dev/null || exit 1
 
 LABEL org.opencontainers.image.title="Joplin Server" \
       org.opencontainers.image.description="Joplin sync server for linux/loong64" \

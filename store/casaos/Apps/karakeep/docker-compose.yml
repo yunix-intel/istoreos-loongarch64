@@ -1,0 +1,62 @@
+name: karakeep
+services:
+  karakeep:
+    image: yunixintel/karakeep:24.10-la5
+    container_name: karakeep
+    ports:
+    - target: 3000
+      published: '18140'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      NEXTAUTH_URL: http://localhost:18140
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: karakeep
+  author: loong64-port
+  category: Utilities
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：复用 node-sharp；Next 在 x86 构建；默认不内置 Chromium。
+
+      缺失功能：搜索需外部 Meilisearch（未配置时 API 500，无回退）；截图/PDF 需 LBrowser sidecar；PDF 默认关闭；monolith 需额外挂载；不提供视频；OCR/AI/多用户已验证。
+
+      额外依赖：BROWSER_WEB_URL 接 LBrowser（挂载宿主 /opt/apps/lbrowser:ro）；/data；3000；UID 1116。
+
+      镜像说明：0.34.1 基础版；SQLite + Node 24 + Next 16 + better-sqlite3；默认不内置 Chromium，浏览器用 `BROWSER_WEB_URL` 接 LBrowser sidecar；PDF
+      默认关闭；搜索需 Meilisearch（未配置 API 500）；`/data`；3000；UID 1116'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Reuses node-sharp; the Next app is built on x86; no Chromium is bundled by default.
+
+      Missing features: Search needs external Meilisearch (API 500 without it, no fallback); screenshots/PDF need an LBrowser
+      sidecar; PDF is off by default; monolith needs an extra mount; video is not provided; OCR, AI and multi-user are verified.
+
+      Extra dependencies: Point BROWSER_WEB_URL at an LBrowser sidecar (mount /opt/apps/lbrowser:ro); /data; port 3000; UID
+      1116.
+
+      Image notes: 0.34.1 基础版；SQLite + Node 24 + Next 16 + better-sqlite3；默认不内置 Chromium，浏览器用 `BROWSER_WEB_URL` 接 LBrowser
+      sidecar；PDF 默认关闭；搜索需 Meilisearch（未配置 API 500）；`/data`；3000；UID 1116'
+  developer: Karakeep
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/karakeep.png
+  tagline:
+    zh_cn: karakeep 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: karakeep LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: karakeep
+    en_us: karakeep
+  index: /
+  port_map: '18140'

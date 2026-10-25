@@ -1,0 +1,255 @@
+name: paperless-ngx
+services:
+  paperless-ngx:
+    image: yunixintel/paperless-ngx:24.10-la5
+    container_name: paperless-ngx
+    ports:
+    - target: 8000
+      published: '18164'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      PAPERLESS_REDIS: redis://paperless-redis:6379/0
+      PAPERLESS_DBENGINE: postgresql
+      PAPERLESS_DBHOST: paperless-postgres
+      PAPERLESS_DBPORT: '5432'
+      PAPERLESS_DBNAME: paperless
+      PAPERLESS_DBUSER: paperless
+      PAPERLESS_DBPASS: paperlesspass
+      PAPERLESS_SECRET_KEY: change-me-paperless-secret-key-0123456789abcdef
+      PAPERLESS_URL: http://localhost:18164
+      PAPERLESS_ADMIN_USER: admin
+      PAPERLESS_ADMIN_PASSWORD: change-me
+      PAPERLESS_OCR_LANGUAGE: eng+chi_sim
+      PAPERLESS_TIME_ZONE: UTC
+      PAPERLESS_AI_ENABLED: 'NO'
+      PAPERLESS_OCR_CLEAN: none
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    command:
+    - cd /usr/src/paperless/src && exec daphne -b 0.0.0.0 -p 8000 paperless.asgi:application
+    entrypoint:
+    - /bin/sh
+    - -c
+    depends_on:
+      paperless-migrate:
+        condition: service_completed_successfully
+      paperless-redis:
+        condition: service_healthy
+    restart: unless-stopped
+  paperless-migrate:
+    image: yunixintel/paperless-ngx:24.10-la5
+    container_name: paperless-migrate
+    environment:
+      TZ: $TZ
+      PAPERLESS_REDIS: redis://paperless-redis:6379/0
+      PAPERLESS_DBENGINE: postgresql
+      PAPERLESS_DBHOST: paperless-postgres
+      PAPERLESS_DBPORT: '5432'
+      PAPERLESS_DBNAME: paperless
+      PAPERLESS_DBUSER: paperless
+      PAPERLESS_DBPASS: paperlesspass
+      PAPERLESS_SECRET_KEY: change-me-paperless-secret-key-0123456789abcdef
+      PAPERLESS_URL: http://localhost:18164
+      PAPERLESS_ADMIN_USER: admin
+      PAPERLESS_ADMIN_PASSWORD: change-me
+      PAPERLESS_OCR_LANGUAGE: eng+chi_sim
+      PAPERLESS_TIME_ZONE: UTC
+      PAPERLESS_AI_ENABLED: 'NO'
+      PAPERLESS_OCR_CLEAN: none
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    command:
+    - cd /usr/src/paperless/src && python manage.py migrate --noinput && python manage.py manage_superuser || true
+    entrypoint:
+    - /bin/sh
+    - -c
+    depends_on:
+      paperless-postgres:
+        condition: service_healthy
+      paperless-redis:
+        condition: service_healthy
+    restart: 'no'
+  paperless-worker:
+    image: yunixintel/paperless-ngx:24.10-la5
+    container_name: paperless-worker
+    environment:
+      TZ: $TZ
+      PAPERLESS_REDIS: redis://paperless-redis:6379/0
+      PAPERLESS_DBENGINE: postgresql
+      PAPERLESS_DBHOST: paperless-postgres
+      PAPERLESS_DBPORT: '5432'
+      PAPERLESS_DBNAME: paperless
+      PAPERLESS_DBUSER: paperless
+      PAPERLESS_DBPASS: paperlesspass
+      PAPERLESS_SECRET_KEY: change-me-paperless-secret-key-0123456789abcdef
+      PAPERLESS_URL: http://localhost:18164
+      PAPERLESS_ADMIN_USER: admin
+      PAPERLESS_ADMIN_PASSWORD: change-me
+      PAPERLESS_OCR_LANGUAGE: eng+chi_sim
+      PAPERLESS_TIME_ZONE: UTC
+      PAPERLESS_AI_ENABLED: 'NO'
+      PAPERLESS_OCR_CLEAN: none
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    command:
+    - cd /usr/src/paperless/src && exec celery -A paperless worker --loglevel INFO
+    entrypoint:
+    - /bin/sh
+    - -c
+    depends_on:
+      paperless-migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
+  paperless-beat:
+    image: yunixintel/paperless-ngx:24.10-la5
+    container_name: paperless-beat
+    environment:
+      TZ: $TZ
+      PAPERLESS_REDIS: redis://paperless-redis:6379/0
+      PAPERLESS_DBENGINE: postgresql
+      PAPERLESS_DBHOST: paperless-postgres
+      PAPERLESS_DBPORT: '5432'
+      PAPERLESS_DBNAME: paperless
+      PAPERLESS_DBUSER: paperless
+      PAPERLESS_DBPASS: paperlesspass
+      PAPERLESS_SECRET_KEY: change-me-paperless-secret-key-0123456789abcdef
+      PAPERLESS_URL: http://localhost:18164
+      PAPERLESS_ADMIN_USER: admin
+      PAPERLESS_ADMIN_PASSWORD: change-me
+      PAPERLESS_OCR_LANGUAGE: eng+chi_sim
+      PAPERLESS_TIME_ZONE: UTC
+      PAPERLESS_AI_ENABLED: 'NO'
+      PAPERLESS_OCR_CLEAN: none
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    command:
+    - cd /usr/src/paperless/src && exec celery -A paperless beat --loglevel INFO
+    entrypoint:
+    - /bin/sh
+    - -c
+    depends_on:
+      paperless-migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
+  paperless-consumer:
+    image: yunixintel/paperless-ngx:24.10-la5
+    container_name: paperless-consumer
+    environment:
+      TZ: $TZ
+      PAPERLESS_REDIS: redis://paperless-redis:6379/0
+      PAPERLESS_DBENGINE: postgresql
+      PAPERLESS_DBHOST: paperless-postgres
+      PAPERLESS_DBPORT: '5432'
+      PAPERLESS_DBNAME: paperless
+      PAPERLESS_DBUSER: paperless
+      PAPERLESS_DBPASS: paperlesspass
+      PAPERLESS_SECRET_KEY: change-me-paperless-secret-key-0123456789abcdef
+      PAPERLESS_URL: http://localhost:18164
+      PAPERLESS_ADMIN_USER: admin
+      PAPERLESS_ADMIN_PASSWORD: change-me
+      PAPERLESS_OCR_LANGUAGE: eng+chi_sim
+      PAPERLESS_TIME_ZONE: UTC
+      PAPERLESS_AI_ENABLED: 'NO'
+      PAPERLESS_OCR_CLEAN: none
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    command:
+    - cd /usr/src/paperless/src && exec python manage.py document_consumer
+    entrypoint:
+    - /bin/sh
+    - -c
+    depends_on:
+      paperless-migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
+  paperless-postgres:
+    image: yunixintel/postgres:loong64
+    container_name: paperless-postgres
+    environment:
+      TZ: $TZ
+      POSTGRES_USER: paperless
+      POSTGRES_PASSWORD: paperlesspass
+      POSTGRES_DB: paperless
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/postgres
+      target: /var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - pg_isready -U "$${POSTGRES_USER:-postgres}" -d "$${POSTGRES_DB:-postgres}"
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+  paperless-redis:
+    image: yunixintel/redis:loong64
+    container_name: paperless-redis
+    environment:
+      TZ: $TZ
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/redis
+      target: /data
+    restart: unless-stopped
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - if [ -n "$$REDIS_PASSWORD" ]; then redis-cli -a "$$REDIS_PASSWORD" ping; else redis-cli ping; fi
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 5s
+x-casaos:
+  architectures:
+  - loong64
+  main: paperless-ngx
+  author: loong64-port
+  category: Productivity
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：qpdf 12.4.2 自编以支持 pikepdf；AI 功能关闭；未装 unpaper。
+
+      缺失功能：无 AI 分类/实体识别；无 unpaper 后处理。
+
+      额外依赖：需 Redis + celery worker/beat/consumer；8000。
+
+      镜像说明：3.3.2；qpdf 12.4.2 自编（pikepdf 10.17 要求）；tesseract eng/chi_sim/osd；AI 关闭、unpaper 无；单容器含 redis/celery worker/beat/consumer；8000'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: qpdf 12.4.2 is built for pikepdf; AI features are disabled; unpaper is not installed.
+
+      Missing features: No AI classification/entity extraction; no unpaper post-processing.
+
+      Extra dependencies: Requires Redis and celery worker/beat/consumer; port 8000.
+
+      Image notes: 3.3.2；qpdf 12.4.2 自编（pikepdf 10.17 要求）；tesseract eng/chi_sim/osd；AI 关闭、unpaper 无；单容器含 redis/celery worker/beat/consumer；8000'
+  developer: Paperless-ngx
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/paperless-ngx.png
+  tagline:
+    zh_cn: Paperless-ngx 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Paperless-ngx LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Paperless-ngx
+    en_us: Paperless-ngx
+  index: /
+  port_map: '18164'

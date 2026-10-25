@@ -1,0 +1,65 @@
+name: lanraragi
+services:
+  lanraragi:
+    image: yunixintel/lanraragi:24.10-la5
+    container_name: lanraragi
+    ports:
+    - target: 3000
+      published: '18143'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      LRR_NETWORK: http://*:3000
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/content
+      target: /home/koyomi/lanraragi/content
+    - type: bind
+      source: /DATA/AppData/$AppID/thumb
+      target: /home/koyomi/lanraragi/thumb
+    - type: bind
+      source: /DATA/AppData/$AppID/database
+      target: /home/koyomi/lanraragi/database
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: lanraragi
+  author: loong64-port
+  category: Media
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：Perl 0.9.81 + 126 个 CPAN 模块；内置 Redis。
+
+      缺失功能：默认无认证。
+
+      额外依赖：3000；持久化 content/thumb/database；UID 9001。
+
+      镜像说明：0.9.81；Perl + 126 个 CPAN 模块；内置 Redis；需设置 PERL5LIB loongarch64 路径；`content`/`thumb`/`database`；3000；UID 9001'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Perl 0.9.81 with 126 CPAN modules; bundles Redis.
+
+      Missing features: No authentication by default.
+
+      Extra dependencies: Port 3000; persist content/thumb/database; UID 9001.
+
+      Image notes: 0.9.81；Perl + 126 个 CPAN 模块；内置 Redis；需设置 PERL5LIB loongarch64 路径；`content`/`thumb`/`database`；3000；UID
+      9001'
+  developer: LANraragi
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/komga.png
+  tagline:
+    zh_cn: LANraragi 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: LANraragi LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: LANraragi
+    en_us: LANraragi
+  index: /
+  port_map: '18143'

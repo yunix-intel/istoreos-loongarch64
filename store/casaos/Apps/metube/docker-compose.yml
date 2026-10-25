@@ -1,0 +1,65 @@
+name: metube
+services:
+  metube:
+    image: yunixintel/metube:24.10-la5
+    container_name: metube
+    ports:
+    - target: 8082
+      published: '18150'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      PUID: '1111'
+      PGID: '1111'
+      DOWNLOAD_DIR: /downloads
+      STATE_DIR: /downloads/.metube
+      TEMP_DIR: /downloads
+      PORT: '8082'
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/downloads
+      target: /downloads
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: metube
+  author: loong64-port
+  category: Downloaders
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：Python 3.13 自编；Angular 前端在 x86 构建。
+
+      缺失功能：无 Brotli 解压；无内置 bgutil-pot；ffmpeg 为 6.1.1 而非上游 8.1。
+
+      额外依赖：持久化 /downloads 并 chown 1111；默认用 Node 24 作为 yt-dlp JS runtime；8082。
+
+      镜像说明：2026.10.23；Python 3.13.7 + yt-dlp 2026.10.21 + Node 24 + ffmpeg 6.1.1；`/downloads`；8082；UID 1111；watchfiles 用轮询替代；无
+      Brotli；无 bgutil-pot'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Self-built Python 3.13; Angular frontend built on x86.
+
+      Missing features: No Brotli decompression; no bundled bgutil-pot; ffmpeg 6.1.1 instead of upstream 8.1.
+
+      Extra dependencies: Persist /downloads and chown to 1111; Node 24 is the default yt-dlp JS runtime; port 8082.
+
+      Image notes: 2026.10.23；Python 3.13.7 + yt-dlp 2026.10.21 + Node 24 + ffmpeg 6.1.1；`/downloads`；8082；UID 1111；watchfiles
+      用轮询替代；无 Brotli；无 bgutil-pot'
+  developer: MeTube
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/metube.png
+  tagline:
+    zh_cn: MeTube 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: MeTube LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: MeTube
+    en_us: MeTube
+  index: /
+  port_map: '18150'

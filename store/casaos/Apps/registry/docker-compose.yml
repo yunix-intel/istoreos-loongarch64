@@ -1,0 +1,61 @@
+name: registry
+services:
+  registry:
+    image: yunixintel/registry:24.10-la5
+    container_name: registry
+    ports:
+    - target: 5000
+      published: '18178'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/registry
+      target: /var/lib/registry
+    - type: bind
+      source: /DATA/AppData/$AppID/auth
+      target: /auth
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: registry
+  author: loong64-port
+  category: Developer
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：Go 单二进制；首次启动生成 htpasswd。
+
+      缺失功能：无 Web UI、无 TLS、无多实例共享存储；删除后需手动 GC。
+
+      额外依赖：持久化 /var/lib/registry 与 /auth；/auth/password 是唯一密码来源；Docker CLI 需 insecure-registries。
+
+      镜像说明：3.1.2；Go 单二进制；`/var/lib/registry`、`/auth`；5000；UID 1121；首启生成 admin 随机密码与 htpasswd；HTTP secret 持久化；无 TLS'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Single Go binary; htpasswd is generated on first start.
+
+      Missing features: No web UI, no TLS, no shared storage across instances; run GC manually after deletes.
+
+      Extra dependencies: Persist /var/lib/registry and /auth; /auth/password is the only password source; Docker CLI needs
+      insecure-registries.
+
+      Image notes: 3.1.2；Go 单二进制；`/var/lib/registry`、`/auth`；5000；UID 1121；首启生成 admin 随机密码与 htpasswd；HTTP secret 持久化；无 TLS'
+  developer: Distribution
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/docker.png
+  tagline:
+    zh_cn: Docker Registry 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Docker Registry LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Docker Registry
+    en_us: Docker Registry
+  index: /v2/
+  port_map: '18178'

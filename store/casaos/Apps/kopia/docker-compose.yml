@@ -48,7 +48,7 @@ x-casaos:
 
       Image notes: v0.23.1 源码编；为 loong64 打了 Stat_t.Dev/Rdev 类型补丁；Web UI 强制 Basic 认证（默认 admin/kopia）'
   developer: Kopia
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/kopia/icon.png
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/kopia.png
   tagline:
     zh_cn: Kopia 的 LoongArch64 镜像，详见龙芯版说明。
     en_us: Kopia LoongArch64 image; see the LoongArch notes.

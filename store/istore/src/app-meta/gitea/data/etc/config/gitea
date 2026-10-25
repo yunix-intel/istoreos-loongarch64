@@ -1,0 +1,7 @@
+config main 'main'
+	option enabled '1'
+	option variant 'public'
+	option image ''
+	option host_port '18125'
+	option data_path '/srv/gitea/data'
+	option env_file '/etc/istore-loong64/env/gitea.env'

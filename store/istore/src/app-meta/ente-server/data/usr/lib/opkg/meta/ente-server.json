@@ -1,0 +1,223 @@
+{
+  "name": "ente-server",
+  "title": "Ente Server",
+  "title_en": "Ente Server",
+  "entry": "/cgi-bin/luci/admin/services/istore-loong64/app?app=ente-server",
+  "author": "yunix-intel",
+  "website": "https://github.com/yunix-intel/istoreos-loongarch64",
+  "version": "24.10-la5",
+  "release": 20261025,
+  "arch": [
+    "all"
+  ],
+  "description": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：仅 API；museum.yaml 首次启动生成。</p><p>缺失功能：不自带 Web 图库，需要 ente-web。</p><p>额外依赖：需 PostgreSQL + S3/MinIO 三个桶；/data/museum.yaml 含密钥必须备份。</p><p>镜像说明：ente server master；Go 单二进制；需 PostgreSQL + S3/MinIO；`/data/museum.yaml` 含密钥；8080；UID 1105；Web 端暂未包含</p>",
+  "description_en": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: API only; museum.yaml is generated on first start.</p><p>Missing features: No web gallery; use ente-web.</p><p>Extra dependencies: Requires PostgreSQL and three S3/MinIO buckets; back up /data/museum.yaml (contains keys).</p><p>Image notes: ente server master；Go 单二进制；需 PostgreSQL + S3/MinIO；`/data/museum.yaml` 含密钥；8080；UID 1105；Web 端暂未包含</p>",
+  "tags": [
+    "cloud",
+    "storage"
+  ],
+  "depends": [
+    "luci-app-istore-loong64",
+    "docker-deps"
+  ],
+  "loong64": {
+    "schema": 1,
+    "source": "dockerfile+runbook+override",
+    "image": "yunixintel/ente-server:24.10-la5",
+    "default_variant": "public",
+    "variants": [
+      {
+        "name": "public",
+        "image": "yunixintel/ente-server:24.10-la5",
+        "store_url": "https://github.com/yunix-intel/istoreos-loongarch64"
+      }
+    ],
+    "compose": "",
+    "ports": [
+      {
+        "name": "http",
+        "container": 8080,
+        "host": 18120,
+        "proto": "tcp",
+        "primary": true
+      }
+    ],
+    "volumes": [
+      {
+        "name": "data",
+        "host": "/srv/ente-server/data",
+        "container": "/data",
+        "mode": "rw",
+        "owner": "",
+        "primary": true,
+        "type": "dir",
+        "seed": ""
+      }
+    ],
+    "env": [
+      {
+        "key": "ENTE_DB_HOST",
+        "value": "ente-pg",
+        "required": true,
+        "variants": ""
+      },
+      {
+        "key": "ENTE_DB_NAME",
+        "value": "ente_db",
+        "required": true,
+        "variants": ""
+      },
+      {
+        "key": "ENTE_DB_USER",
+        "value": "pguser",
+        "required": true,
+        "variants": ""
+      },
+      {
+        "key": "ENTE_DB_PASSWORD",
+        "value": "${SECRET:pg_password}",
+        "required": true,
+        "variants": ""
+      },
+      {
+        "key": "ENTE_S3_ENDPOINT",
+        "value": "ente-minio:9000",
+        "required": true,
+        "variants": ""
+      },
+      {
+        "key": "ENTE_S3_KEY",
+        "value": "istoreadmin",
+        "required": true,
+        "variants": ""
+      },
+      {
+        "key": "ENTE_S3_SECRET",
+        "value": "${SECRET:minio_password}",
+        "required": true,
+        "variants": ""
+      }
+    ],
+    "sidecars": [
+      {
+        "name": "pg",
+        "full_name": "ente-pg",
+        "template": "postgres",
+        "image": "yunixintel/postgres:24.10-la5",
+        "command": [],
+        "shm_size": "",
+        "network": "",
+        "enabled_variants": [
+          "public",
+          "private"
+        ],
+        "preload": false,
+        "env": [
+          {
+            "key": "POSTGRES_USER",
+            "value": "pguser",
+            "required": true
+          },
+          {
+            "key": "POSTGRES_PASSWORD",
+            "value": "${SECRET:pg_password}",
+            "required": true
+          },
+          {
+            "key": "POSTGRES_DB",
+            "value": "ente_db",
+            "required": true
+          }
+        ],
+        "volumes": [
+          {
+            "name": "pgdata",
+            "host": "/srv/ente/pgdata",
+            "container": "/var/lib/postgresql/data",
+            "mode": "rw",
+            "owner": "26:26"
+          }
+        ],
+        "ports": [],
+        "health": {
+          "cmd": "pg_isready -U pguser -d ente_db",
+          "interval": "5s",
+          "timeout": "3s",
+          "retries": 30
+        }
+      },
+      {
+        "name": "minio",
+        "full_name": "ente-minio",
+        "template": "minio",
+        "image": "yunixintel/minio:24.10-la5",
+        "command": [],
+        "shm_size": "",
+        "network": "",
+        "enabled_variants": [
+          "public",
+          "private"
+        ],
+        "preload": false,
+        "env": [
+          {
+            "key": "MINIO_ROOT_USER",
+            "value": "istoreadmin",
+            "required": true
+          },
+          {
+            "key": "MINIO_ROOT_PASSWORD",
+            "value": "${SECRET:minio_password}",
+            "required": true
+          }
+        ],
+        "volumes": [
+          {
+            "name": "miniodata",
+            "host": "/srv/ente/miniodata",
+            "container": "/data",
+            "mode": "rw",
+            "owner": "1000:1000"
+          }
+        ],
+        "ports": [],
+        "health": {
+          "cmd": "",
+          "interval": "",
+          "timeout": "",
+          "retries": 15
+        }
+      }
+    ],
+    "needs_host_network": false,
+    "needs_docker_sock": false,
+    "docker_sock_ro": true,
+    "devices": [],
+    "cap_add": [],
+    "group_add": [],
+    "sysctls": [],
+    "shm_size": "",
+    "user": "",
+    "command": [],
+    "restart": "unless-stopped",
+    "network_group": "ente",
+    "requires_app": "",
+    "health": {},
+    "review": {
+      "automation": "manual",
+      "manual": [
+        "minio 启动后需用 mc 创建 b2-eu-cen 等 bucket"
+      ],
+      "notes": [
+        "PostgreSQL + MinIO sidecar；/data 必须持久化，museum.yaml 丢失后旧数据无法解密。",
+        "安装器会先启动 sidecar：ente-pg, ente-minio。",
+        "未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。"
+      ]
+    },
+    "category": "Cloud",
+    "image_size": "",
+    "title": "Ente Server",
+    "name": "ente-server",
+    "runtime": "APP_ID='ente-server'\nAPP_TITLE='Ente Server'\nAPP_IMAGE='yunixintel/ente-server:24.10-la5'\nAPP_DEFAULT_VARIANT='public'\nAPP_VARIANTS='public|yunixintel/ente-server:24.10-la5|https://github.com/yunix-intel/istoreos-loongarch64'\nAPP_PORTS='http|8080|18120|tcp|1'\nAPP_VOLUMES='data|/srv/ente-server/data|/data|rw||1|dir|'\nAPP_ENV='ENTE_DB_HOST|ente-pg|1|\nENTE_DB_NAME|ente_db|1|\nENTE_DB_USER|pguser|1|\nENTE_DB_PASSWORD|${SECRET:pg_password}|1|\nENTE_S3_ENDPOINT|ente-minio:9000|1|\nENTE_S3_KEY|istoreadmin|1|\nENTE_S3_SECRET|${SECRET:minio_password}|1|'\nAPP_SIDECARS='ente-pg|yunixintel/postgres:24.10-la5|||public,private|pg_isready -U pguser -d ente_db|5s|3s|30|0\nente-minio|yunixintel/minio:24.10-la5|||public,private||||15|0'\nAPP_SIDECAR_COMMAND=''\nAPP_SIDECAR_ENV='ente-pg|POSTGRES_USER|pguser|1\nente-pg|POSTGRES_PASSWORD|${SECRET:pg_password}|1\nente-pg|POSTGRES_DB|ente_db|1\nente-minio|MINIO_ROOT_USER|istoreadmin|1\nente-minio|MINIO_ROOT_PASSWORD|${SECRET:minio_password}|1'\nAPP_SIDECAR_VOLUMES='ente-pg|pgdata|/srv/ente/pgdata|/var/lib/postgresql/data|rw|26:26\nente-minio|miniodata|/srv/ente/miniodata|/data|rw|1000:1000'\nAPP_SIDECAR_PORTS=''\nAPP_DEVICES=''\nAPP_CAPS=''\nAPP_GROUPS=''\nAPP_SYSCTLS=''\nAPP_HOST_NETWORK='0'\nAPP_DOCKER_SOCK='0'\nAPP_DOCKER_SOCK_RO='1'\nAPP_SHM=''\nAPP_USER=''\nAPP_COMMAND=''\nAPP_RESTART='unless-stopped'\nAPP_NETWORK_GROUP='ente'\nAPP_REQUIRES_APP=''\nAPP_HEALTH_PATH=''\nAPP_HEALTH_PORT=''\nAPP_MANUAL='minio 启动后需用 mc 创建 b2-eu-cen 等 bucket'\nAPP_REVIEW='PostgreSQL + MinIO sidecar；/data 必须持久化，museum.yaml 丢失后旧数据无法解密。; 安装器会先启动 sidecar：ente-pg, ente-minio。; 未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。'\n"
+  }
+}

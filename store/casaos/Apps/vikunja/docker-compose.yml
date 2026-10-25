@@ -1,0 +1,63 @@
+name: vikunja
+services:
+  vikunja:
+    image: yunixintel/vikunja:24.10-la5
+    container_name: vikunja
+    ports:
+    - target: 3456
+      published: '18190'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      VIKUNJA_SERVICE_PUBLICURL: http://localhost:18190/
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/files
+      target: /app/vikunja/files
+    - type: bind
+      source: /DATA/AppData/$AppID/db
+      target: /db
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: vikunja
+  author: loong64-port
+  category: Productivity
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：Vue 前端在 x86 构建；后端 Go + CGO SQLite。
+
+      缺失功能：默认允许注册，生产环境需关闭。
+
+      额外依赖：service.interface 必须为 0.0.0.0:3456；PUBLICURL 必须正确；持久化 /db。
+
+      镜像说明：v2.7.1；Vue 前端 x86 构建 + Go CGO SQLite；`/app/vikunja/files`、`/db`；3456；UID 1104；`service.interface=0.0.0.0:3456`；JWT
+      secret 持久化'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Vue frontend is built on x86; backend is Go with CGO SQLite.
+
+      Missing features: Registration is enabled by default; disable it in production.
+
+      Extra dependencies: service.interface must be 0.0.0.0:3456; PUBLICURL must be correct; persist /db.
+
+      Image notes: v2.7.1；Vue 前端 x86 构建 + Go CGO SQLite；`/app/vikunja/files`、`/db`；3456；UID 1104；`service.interface=0.0.0.0:3456`；JWT
+      secret 持久化'
+  developer: Vikunja
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/vikunja.png
+  tagline:
+    zh_cn: Vikunja 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Vikunja LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Vikunja
+    en_us: Vikunja
+  index: /
+  port_map: '18190'

@@ -49,7 +49,7 @@ x-casaos:
 
       Image notes: v0.18.1；Vite 5 + rollup 4（自带 loongarch64 binding）；需 Node 22（用 /opt/node22-abi2）'
   developer: Excalidraw
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/excalidraw/icon.png
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/excalidraw.png
   tagline:
     zh_cn: Excalidraw 的 LoongArch64 镜像，详见龙芯版说明。
     en_us: Excalidraw LoongArch64 image; see the LoongArch notes.

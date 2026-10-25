@@ -1,0 +1,66 @@
+name: headscale
+services:
+  headscale:
+    image: yunixintel/headscale:24.10-la5
+    ports:
+    - target: 8080
+      published: '18129'
+      protocol: tcp
+    - target: 9090
+      published: '19113'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /etc/headscale
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /var/lib/headscale
+    environment:
+      TZ: $TZ
+      HEADSCALE_SERVER_URL: https://headscale.example.com
+      HEADSCALE_LISTEN_ADDR: 0.0.0.0:8080
+      HEADSCALE_METRICS_LISTEN_ADDR: 0.0.0.0:9090
+    restart: unless-stopped
+    container_name: headscale
+x-casaos:
+  architectures:
+  - loong64
+  main: headscale
+  author: loong64-port
+  category: Networking
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：单二进制，无 Web UI；通过 CLI/API 管理。
+
+      缺失功能：无图形界面；gRPC 默认仅本机。
+
+      额外依赖：HEADSCALE_SERVER_URL 必填；持久化 /etc/headscale 与 /var/lib/headscale。
+
+      镜像说明：v0.29.5；Go 单二进制；无 Web UI；`/etc/headscale`、`/var/lib/headscale`；8080/9090；UID 1106；gRPC 默认仅本机'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Single binary without a web UI; managed via CLI/API.
+
+      Missing features: No GUI; gRPC listens on localhost by default.
+
+      Extra dependencies: HEADSCALE_SERVER_URL is required; persist /etc/headscale and /var/lib/headscale.
+
+      Image notes: v0.29.5；Go 单二进制；无 Web UI；`/etc/headscale`、`/var/lib/headscale`；8080/9090；UID 1106；gRPC 默认仅本机'
+  developer: Headscale
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/headscale.png
+  tagline:
+    zh_cn: Headscale 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Headscale LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Headscale
+    en_us: Headscale
+  index: /health
+  port_map: '18129'

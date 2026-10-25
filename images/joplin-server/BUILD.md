@@ -3,8 +3,8 @@
 ## 结论
 
 - 镜像：`yunixintel/joplin-server:loong64`、`:24.10-la5`、`:3.7.21`
-- digest（三 tag 相同）：`sha256:204c8b9abe3107eb91d9bc1dc0f1fe156d50739230055fdc74b00338168539ef`
-- 大小：859MB（未压缩，`docker inspect .Size=859359342`）；registry 压缩后 273.2MiB / 8 层
+- digest（`loong64` / `24.10-la5` 相同）：`sha256:59177faf22ef40fc7579a609cb855911ad09a375b4ab14d3dbe1d1b77adb4bff`
+- 大小：859MB（未压缩，`docker inspect .Size=859361110`）；registry 压缩后约 273.4MiB
 - 架构：`linux/loong64`（`crane config` 返回 `"architecture":"loong64"`）
 - 上游：`laurent22/joplin` tag `v3.7.21`，commit `e41516e669efb693b009bedb21f3eb1fcbea4fc9`
 - 版本：`@joplin/server` 3.7.1（启动日志 `Starting server v3.7.1 (prod)`）/ Node.js 24.22.1 /
@@ -197,9 +197,11 @@ docker run -d --name joplin \
 | `COOKIES_SECURE` | 反向代理 TLS 时设 `true` |
 | `STORAGE_DRIVER` | 可选 `Type=Filesystem; Path=/data/storage`；默认数据库存储 |
 
-- 容器内 UID/GID 1119，`/data` 下 `logs`、`temp`、`resource`、`storage` 已建好并归属
-  1119；entrypoint 只 `chown 1119:1119 /data` 顶层，不递归。
-- **bind mount** 需宿主先 `chown -R 1119:1119 <dir>`，否则子目录不可写；命名卷无需处理。
+- 容器内 UID/GID 1119；entrypoint 在每次启动时用 `install -d -o 1119 -g 1119`
+  重建 `/data/{logs,temp,resource,storage}`，再 `chown 1119:1119 /data` 顶层，不递归。
+  bind mount 会遮住镜像内的子目录，因此这一步是必需的；无需宿主预先 `chown -R`。
+- healthcheck 使用 `APP_BASE_URL` 的 host:port 作为 `Host` 头访问 `127.0.0.1:22300/api/ping`。
+  Joplin 会拒绝 origin 不匹配的请求；固定用 `127.0.0.1` 作 Host 会一直 404。
 - 日志走 stdout（未装 PM2）；用 Docker `--log-opt max-size` 或宿主 logrotate。
 - `server/logs`、`server/temp`、`server/resource` 是指向 `/data/*` 的符号链接。
 - 主库在 PostgreSQL，但服务端仍会创建 `/data/temp/joplin.sqlite` 临时库，这是

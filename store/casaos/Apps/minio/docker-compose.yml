@@ -1,0 +1,62 @@
+name: minio
+services:
+  minio:
+    image: yunixintel/minio:24.10-la5
+    container_name: minio
+    ports:
+    - target: 9001
+      published: '18153'
+      protocol: tcp
+    - target: 9000
+      published: '18500'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: change-me-12345
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: minio
+  author: loong64-port
+  category: Cloud
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：Go 源码编；单目录模式无纠删码。
+
+      缺失功能：无纠删码/多盘冗余；无内置 TLS。
+
+      额外依赖：必须设 MINIO_ROOT_USER/PASSWORD；AGPLv3；9000/9001。
+
+      镜像说明：RELEASE.2025-10-15T17-29-55Z；Go 1.27 源码编；`/data`；9000/9001；UID 1000；必须设 MINIO_ROOT_USER/PASSWORD；AGPLv3；单盘无纠删码'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Built from Go source; single-directory mode has no erasure coding.
+
+      Missing features: No erasure coding or multi-disk redundancy; no built-in TLS.
+
+      Extra dependencies: MINIO_ROOT_USER/PASSWORD are required; AGPLv3; ports 9000/9001.
+
+      Image notes: RELEASE.2025-10-15T17-29-55Z；Go 1.27 源码编；`/data`；9000/9001；UID 1000；必须设 MINIO_ROOT_USER/PASSWORD；AGPLv3；单盘无纠删码'
+  developer: MinIO
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/minio.png
+  tagline:
+    zh_cn: MinIO 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: MinIO LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: MinIO
+    en_us: MinIO
+  index: /
+  port_map: '18153'

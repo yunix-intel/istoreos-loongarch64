@@ -1,0 +1,60 @@
+name: changedetection
+services:
+  changedetection:
+    image: yunixintel/changedetection:24.10-la5
+    ports:
+    - target: 5000
+      published: '18112'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/datastore
+      target: /datastore
+    environment:
+      TZ: $TZ
+    shm_size: 1g
+    restart: unless-stopped
+    container_name: changedetection
+x-casaos:
+  architectures:
+  - loong64
+  main: changedetection
+  author: loong64-port
+  category: Monitoring
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：使用 Firefox 140.11 ESR + geckodriver/Selenium，不是 Playwright；OpenCV SSIM 使用 numpy 1.26.4。
+
+      缺失功能：无本地 Chrome；可配置远程 Chrome WebDriver。
+
+      额外依赖：需 --shm-size=1g；5000；持久化 /datastore。
+
+      镜像说明：0.60.9；SQLite；内置 Firefox 140.11ESR + geckodriver 0.37.1；Selenium 步骤适配层支持 Goto/点击/输入/等待/选择/按键/滚动/JS/复选框等（不再依赖 Playwright）；OpenCV
+      4.5.2 + numpy 1.26.4，SSIM 可用；Chrome 远程仍可 `WEBDRIVER_BROWSER=chrome` + `WEBDRIVER_URL`；5000'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Uses Firefox 140.11 ESR with geckodriver/Selenium instead of Playwright; OpenCV SSIM uses numpy 1.26.4.
+
+      Missing features: No local Chrome; a remote Chrome WebDriver can be configured.
+
+      Extra dependencies: Needs --shm-size=1g; port 5000; persist /datastore.
+
+      Image notes: 0.60.9；SQLite；内置 Firefox 140.11ESR + geckodriver 0.37.1；Selenium 步骤适配层支持 Goto/点击/输入/等待/选择/按键/滚动/JS/复选框等（不再依赖
+      Playwright）；OpenCV 4.5.2 + numpy 1.26.4，SSIM 可用；Chrome 远程仍可 `WEBDRIVER_BROWSER=chrome` + `WEBDRIVER_URL`；5000'
+  developer: changedetection.io
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/changedetection.png
+  tagline:
+    zh_cn: ChangeDetection.io 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: ChangeDetection.io LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: ChangeDetection.io
+    en_us: ChangeDetection.io
+  index: /
+  port_map: '18112'

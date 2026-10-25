@@ -1,0 +1,55 @@
+name: homebridge
+services:
+  homebridge:
+    image: yunixintel/homebridge:24.10-la5
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /homebridge
+    environment:
+      TZ: $TZ
+    network_mode: host
+    restart: unless-stopped
+    container_name: homebridge
+x-casaos:
+  architectures:
+  - loong64
+  main: homebridge
+  author: loong64-port
+  category: Home Automation
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：Homebridge 2.4.0 + Config UI 5.29.0 + Node 24；node-pty 源码编 loongarch64。
+
+      缺失功能：建议 host 网络；默认配对码需修改。
+
+      额外依赖：8581 Web、51826；持久化 /homebridge。
+
+      镜像说明：2.4.0 + Config UI 5.29.0 + Node 24.22.1；基于 `yunixintel/node`；node-pty 源码编 loong64；hb-service run；建议 host 网络；`/homebridge`；8581/51826；UID
+      1000'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Homebridge 2.4.0 with Config UI 5.29.0 and Node 24; node-pty is built from source for loongarch64.
+
+      Missing features: Host networking recommended; change the default pairing code.
+
+      Extra dependencies: Ports 8581 and 51826; persist /homebridge.
+
+      Image notes: 2.4.0 + Config UI 5.29.0 + Node 24.22.1；基于 `yunixintel/node`；node-pty 源码编 loong64；hb-service run；建议 host
+      网络；`/homebridge`；8581/51826；UID 1000'
+  developer: Homebridge
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/homebridge.png
+  tagline:
+    zh_cn: Homebridge 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Homebridge LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Homebridge
+    en_us: Homebridge
+  index: /

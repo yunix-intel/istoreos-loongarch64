@@ -46,7 +46,7 @@ x-casaos:
 
       Image notes: scratch 单二进制，配置需挂载'
   developer: EasyTier
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/EasyTier/icon.png
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/tailscale.png
   tagline:
     zh_cn: EasyTier 的 LoongArch64 镜像，详见龙芯版说明。
     en_us: EasyTier LoongArch64 image; see the LoongArch notes.

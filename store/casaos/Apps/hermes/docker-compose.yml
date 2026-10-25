@@ -1,0 +1,62 @@
+name: hermes
+services:
+  hermes:
+    image: yunixintel/hermes:24.10-la5
+    ports:
+    - target: 8787
+      published: '18130'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data/.hermes
+    - type: bind
+      source: /DATA/AppData/$AppID/workspace
+      target: /workspace
+    environment:
+      TZ: $TZ
+    restart: unless-stopped
+    container_name: hermes
+x-casaos:
+  architectures:
+  - loong64
+  main: hermes
+  author: loong64-port
+  category: Developer
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：使用 Python 3.14 独立构建；镜像保留 gcc/rust 工具链。
+
+      缺失功能：不支持 HEIC/HEIF；computer_use 在 loongarch64 不可用。
+
+      额外依赖：默认无 WebUI 密码；镜像约 3.68GB。
+
+      镜像说明：Hermes agent/webui master；Python 3.14.8；browser-harness/Pillow 冲突用 --no-deps+过滤依赖；pillow-heif/HEIC 不支持；`/data/.hermes`、`/workspace`；8787；UID
+      1000'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Built with a standalone Python 3.14; the image keeps gcc/rust toolchains.
+
+      Missing features: No HEIC/HEIF support; computer_use is unavailable on loongarch64.
+
+      Extra dependencies: No default WebUI password; image is about 3.68GB.
+
+      Image notes: Hermes agent/webui master；Python 3.14.8；browser-harness/Pillow 冲突用 --no-deps+过滤依赖；pillow-heif/HEIC 不支持；`/data/.hermes`、`/workspace`；8787；UID
+      1000'
+  developer: Hermes
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/hermes-agent.png
+  tagline:
+    zh_cn: Hermes 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Hermes LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Hermes
+    en_us: Hermes
+  index: /
+  port_map: '18130'

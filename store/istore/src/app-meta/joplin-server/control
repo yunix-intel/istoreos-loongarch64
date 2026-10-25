@@ -1,0 +1,10 @@
+Package: app-meta-joplin-server
+Version: 1.0.0-r20261025
+Depends: libc, luci-app-istore-loong64, docker-deps
+Provides: app-meta-joplin-server-any
+SourceName: app-meta-joplin-server
+Section: meta
+Architecture: all
+Installed-Size: 9
+Maintainer: yunix-intel
+Description:  Metadata for joplin-server (LoongArch64)

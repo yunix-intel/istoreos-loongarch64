@@ -1,0 +1,59 @@
+name: grafana
+services:
+  grafana:
+    image: yunixintel/grafana:24.10-la5
+    ports:
+    - target: 3000
+      published: '18128'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /var/lib/grafana
+    environment:
+      TZ: $TZ
+    restart: unless-stopped
+    container_name: grafana
+x-casaos:
+  architectures:
+  - loong64
+  main: grafana
+  author: loong64-port
+  category: Monitoring
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：前端在 x86 构建；Go CGO-free 编。
+
+      缺失功能：未内置 renderer；默认 admin/admin。
+
+      额外依赖：3000；持久化 /var/lib/grafana。
+
+      镜像说明：13.2.4；前端 WSL Node22/Yarn4 webpack 构建，删 source map；Go 1.27/CGO0 `-tags oss`；UID/GID 472；`/var/lib/grafana`；3000；默认
+      admin/admin；不含 renderer 与额外 bundled 插件'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Frontend built on x86; Go binary is CGO-free.
+
+      Missing features: No bundled renderer; default admin/admin.
+
+      Extra dependencies: Port 3000; persist /var/lib/grafana.
+
+      Image notes: 13.2.4；前端 WSL Node22/Yarn4 webpack 构建，删 source map；Go 1.27/CGO0 `-tags oss`；UID/GID 472；`/var/lib/grafana`；3000；默认
+      admin/admin；不含 renderer 与额外 bundled 插件'
+  developer: Grafana Labs
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/grafana.png
+  tagline:
+    zh_cn: Grafana 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Grafana LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Grafana
+    en_us: Grafana
+  index: /
+  port_map: '18128'

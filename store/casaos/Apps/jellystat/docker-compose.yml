@@ -1,0 +1,88 @@
+name: jellystat
+services:
+  jellystat:
+    image: yunixintel/jellystat:24.10-la5
+    container_name: jellystat
+    ports:
+    - target: 3000
+      published: '18138'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      JWT_SECRET: change-me-jellystat-jwt-secret
+      POSTGRES_IP: jellystat-postgres
+      POSTGRES_PORT: '5432'
+      POSTGRES_USER: jellystat
+      POSTGRES_PASSWORD: jellystatpass
+      POSTGRES_DB: jellystat
+      POSTGRES_SSL: 'false'
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /app/data
+    depends_on:
+      jellystat-postgres:
+        condition: service_healthy
+    restart: unless-stopped
+  jellystat-postgres:
+    image: yunixintel/postgres:loong64
+    container_name: jellystat-postgres
+    environment:
+      TZ: $TZ
+      POSTGRES_USER: jellystat
+      POSTGRES_PASSWORD: jellystatpass
+      POSTGRES_DB: jellystat
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/postgres
+      target: /var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - pg_isready -U "$${POSTGRES_USER:-postgres}" -d "$${POSTGRES_DB:-postgres}"
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+x-casaos:
+  architectures:
+  - loong64
+  main: jellystat
+  author: loong64-port
+  category: Media
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：Node 20 + Vite 6。
+
+      缺失功能：无 SQLite 路径，必须外部 PostgreSQL。
+
+      额外依赖：需 PostgreSQL；3000。
+
+      镜像说明：1.1.12；Node 20 + 降级 Vite 6；**需要外部 PostgreSQL**；3000'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Node 20 with Vite 6.
+
+      Missing features: No SQLite path; external PostgreSQL is required.
+
+      Extra dependencies: Requires PostgreSQL; port 3000.
+
+      Image notes: 1.1.12；Node 20 + 降级 Vite 6；**需要外部 PostgreSQL**；3000'
+  developer: CyferShepard
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/jellystat.png
+  tagline:
+    zh_cn: Jellystat 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Jellystat LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Jellystat
+    en_us: Jellystat
+  index: /
+  port_map: '18138'

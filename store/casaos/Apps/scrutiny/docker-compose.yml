@@ -1,0 +1,69 @@
+name: scrutiny
+services:
+  scrutiny:
+    image: yunixintel/scrutiny:24.10-la5
+    container_name: scrutiny
+    ports:
+    - target: 8080
+      published: '18181'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /opt/scrutiny/config
+    - type: bind
+      source: /run/udev
+      target: /run/udev
+      read_only: true
+    cap_add:
+    - SYS_RAWIO
+    - SYS_ADMIN
+    devices:
+    - /dev/nvme0:/dev/nvme0
+    - /dev/nvme0n1:/dev/nvme0n1
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: scrutiny
+  author: loong64-port
+  category: Monitoring
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：使用 SQLite metrics 补丁，不再依赖 InfluxDB；历史数据保存在 SQLite。
+
+      缺失功能：不迁移旧 InfluxDB 历史；无保留/降采样任务；collector 需外部 cron/exec 触发。
+
+      额外依赖：需 SYS_RAWIO/SYS_ADMIN 与磁盘设备直通；运行镜像含 libstdc++/libgcc。
+
+      镜像说明：0.9.5 + SQLite metrics 补丁；不再依赖 InfluxDB；`/opt/scrutiny/config`；8080；需 SYS_RAWIO/SYS_ADMIN 与设备直通；collector 外部调度'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Uses a SQLite metrics patch instead of InfluxDB; history is stored in SQLite.
+
+      Missing features: No migration of old InfluxDB history; no retention/downsampling jobs; collector must be triggered
+      externally.
+
+      Extra dependencies: Requires SYS_RAWIO/SYS_ADMIN and disk device passthrough; image includes libstdc++/libgcc.
+
+      Image notes: 0.9.5 + SQLite metrics 补丁；不再依赖 InfluxDB；`/opt/scrutiny/config`；8080；需 SYS_RAWIO/SYS_ADMIN 与设备直通；collector
+      外部调度'
+  developer: AnalogJ
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/scrutiny.png
+  tagline:
+    zh_cn: Scrutiny 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Scrutiny LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Scrutiny
+    en_us: Scrutiny
+  index: /web/
+  port_map: '18181'

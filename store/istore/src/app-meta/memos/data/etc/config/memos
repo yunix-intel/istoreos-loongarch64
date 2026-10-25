@@ -1,0 +1,7 @@
+config main 'main'
+	option enabled '1'
+	option variant 'public'
+	option image ''
+	option host_port '18009'
+	option data_path '/srv/memos/data'
+	option env_file '/etc/istore-loong64/env/memos.env'

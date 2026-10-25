@@ -1,0 +1,61 @@
+name: owntone
+services:
+  owntone:
+    image: yunixintel/owntone:24.10-la5
+    container_name: owntone
+    ports:
+    - target: 3689
+      published: '18163'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+    volumes:
+    - type: bind
+      source: /DATA/Media/Music
+      target: /srv/music
+      read_only: true
+    - type: bind
+      source: /DATA/AppData/$AppID/cache
+      target: /var/cache/owntone
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: owntone
+  author: loong64-port
+  category: Media
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：DAAP/DACP/AirPlay 服务端；运行期需 dbus 与 avahi。
+
+      缺失功能：AirPlay 发现依赖宿主网络与 avahi。
+
+      额外依赖：3689；挂载 /srv/music 与缓存。
+
+      镜像说明：29.3；DAAP/DACP/AirPlay；容器内启动 dbus + avahi；`/srv/music`、`/var/cache/owntone`；3689；UID 998'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: DAAP/DACP/AirPlay server; needs dbus and avahi at runtime.
+
+      Missing features: AirPlay discovery depends on host networking and avahi.
+
+      Extra dependencies: Port 3689; mount /srv/music and the cache.
+
+      Image notes: 29.3；DAAP/DACP/AirPlay；容器内启动 dbus + avahi；`/srv/music`、`/var/cache/owntone`；3689；UID 998'
+  developer: OwnTone
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/owntone.png
+  tagline:
+    zh_cn: OwnTone 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: OwnTone LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: OwnTone
+    en_us: OwnTone
+  index: /
+  port_map: '18163'

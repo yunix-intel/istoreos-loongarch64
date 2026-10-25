@@ -822,7 +822,7 @@
     "image": "yunixintel/joplin-server",
     "size": "约 273MB (Hub)",
     "architecture": "linux/loong64",
-    "verification": "51 迁移、`/api/ping` 200、admin 改密、普通用户、含图笔记分享页/附件、重启持久化；healthy",
+    "verification": "51 迁移、`/api/ping` 200、admin 改密、普通用户、含图笔记分享页/附件、重启持久化；CasaOS 单 compose 安装（PG sidecar）健康；bind mount 子目录自动创建",
     "notes": "3.7.21；Node 24 + PostgreSQL；sqlite3 5.1.6 源码编（临时库）；Rollup 用 wasm 别名；`/data`；22300；UID 1119；无 sharp/sqlite-vec/PM2"
   }
 ]

@@ -1,0 +1,10 @@
+Package: app-meta-audiobookshelf
+Version: 1.0.0-r20261025
+Depends: libc, luci-app-istore-loong64, docker-deps
+Provides: app-meta-audiobookshelf-any
+SourceName: app-meta-audiobookshelf
+Section: meta
+Architecture: all
+Installed-Size: 5
+Maintainer: yunix-intel
+Description:  Metadata for audiobookshelf (LoongArch64)

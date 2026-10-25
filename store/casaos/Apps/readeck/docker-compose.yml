@@ -1,0 +1,59 @@
+name: readeck
+services:
+  readeck:
+    image: yunixintel/readeck:24.10-la5
+    container_name: readeck
+    ports:
+    - target: 8000
+      published: '18176'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      READECK_SERVER_HOST: 0.0.0.0
+      READECK_SERVER_PORT: '8000'
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: readeck
+  author: loong64-port
+  category: Productivity
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：gulp 前端在 x86 构建；Go 使用 CGO/mattn sqlite。
+
+      缺失功能：CGO-free 的 modernc 旧版缺 loongarch64 定义；未做完整抓取联调。
+
+      额外依赖：持久化 /data；8000；与 Wallabag/Shiori 重叠。
+
+      镜像说明：0.9.2；Go CGO（mattn sqlite）+ gulp 前端 x86 构建；`/data`；8000；UID 1117；CGO-free 的 modernc 旧版缺 loongarch64；未做完整抓取联调'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: gulp frontend built on x86; Go uses CGO/mattn sqlite.
+
+      Missing features: The pinned pure-Go modernc sqlite lacks loongarch64 definitions; full archiving was not tested.
+
+      Extra dependencies: Persist /data; port 8000; overlaps with Wallabag/Shiori.
+
+      Image notes: 0.9.2；Go CGO（mattn sqlite）+ gulp 前端 x86 构建；`/data`；8000；UID 1117；CGO-free 的 modernc 旧版缺 loongarch64；未做完整抓取联调'
+  developer: Readeck
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/readeck.png
+  tagline:
+    zh_cn: Readeck 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Readeck LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Readeck
+    en_us: Readeck
+  index: /
+  port_map: '18176'

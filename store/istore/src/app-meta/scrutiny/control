@@ -1,0 +1,10 @@
+Package: app-meta-scrutiny
+Version: 1.0.0-r20261025
+Depends: libc, luci-app-istore-loong64, docker-deps
+Provides: app-meta-scrutiny-any
+SourceName: app-meta-scrutiny
+Section: meta
+Architecture: all
+Installed-Size: 6
+Maintainer: yunix-intel
+Description:  Metadata for scrutiny (LoongArch64)

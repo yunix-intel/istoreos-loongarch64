@@ -1,0 +1,87 @@
+{
+  "name": "readeck",
+  "title": "Readeck",
+  "title_en": "Readeck",
+  "entry": "/cgi-bin/luci/admin/services/istore-loong64/app?app=readeck",
+  "author": "yunix-intel",
+  "website": "https://github.com/yunix-intel/istoreos-loongarch64",
+  "version": "24.10-la5",
+  "release": 20261025,
+  "arch": [
+    "all"
+  ],
+  "description": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：gulp 前端在 x86 构建；Go 使用 CGO/mattn sqlite。</p><p>缺失功能：CGO-free 的 modernc 旧版缺 loongarch64 定义；未做完整抓取联调。</p><p>额外依赖：持久化 /data；8000；与 Wallabag/Shiori 重叠。</p><p>镜像说明：0.9.2；Go CGO（mattn sqlite）+ gulp 前端 x86 构建；`/data`；8000；UID 1117；CGO-free 的 modernc 旧版缺 loongarch64；未做完整抓取联调</p>",
+  "description_en": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: gulp frontend built on x86; Go uses CGO/mattn sqlite.</p><p>Missing features: The pinned pure-Go modernc sqlite lacks loongarch64 definitions; full archiving was not tested.</p><p>Extra dependencies: Persist /data; port 8000; overlaps with Wallabag/Shiori.</p><p>Image notes: 0.9.2；Go CGO（mattn sqlite）+ gulp 前端 x86 构建；`/data`；8000；UID 1117；CGO-free 的 modernc 旧版缺 loongarch64；未做完整抓取联调</p>",
+  "tags": [
+    "productivity",
+    "tool"
+  ],
+  "depends": [
+    "luci-app-istore-loong64",
+    "docker-deps"
+  ],
+  "loong64": {
+    "schema": 1,
+    "source": "dockerfile+runbook+override",
+    "image": "yunixintel/readeck:24.10-la5",
+    "default_variant": "public",
+    "variants": [
+      {
+        "name": "public",
+        "image": "yunixintel/readeck:24.10-la5",
+        "store_url": "https://github.com/yunix-intel/istoreos-loongarch64"
+      }
+    ],
+    "compose": "",
+    "ports": [
+      {
+        "name": "http",
+        "container": 8000,
+        "host": 18176,
+        "proto": "tcp",
+        "primary": true
+      }
+    ],
+    "volumes": [
+      {
+        "name": "data",
+        "host": "/srv/readeck/data",
+        "container": "/data",
+        "mode": "rw",
+        "owner": "",
+        "primary": true,
+        "type": "dir",
+        "seed": ""
+      }
+    ],
+    "env": [],
+    "sidecars": [],
+    "needs_host_network": false,
+    "needs_docker_sock": false,
+    "docker_sock_ro": true,
+    "devices": [],
+    "cap_add": [],
+    "group_add": [],
+    "sysctls": [],
+    "shm_size": "",
+    "user": "",
+    "command": [],
+    "restart": "unless-stopped",
+    "network_group": "",
+    "requires_app": "",
+    "health": {},
+    "review": {
+      "automation": "auto",
+      "manual": [],
+      "notes": [
+        "CGO SQLite；/data 持久化；首启引导页。",
+        "未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。"
+      ]
+    },
+    "category": "Productivity",
+    "image_size": "",
+    "title": "Readeck",
+    "name": "readeck",
+    "runtime": "APP_ID='readeck'\nAPP_TITLE='Readeck'\nAPP_IMAGE='yunixintel/readeck:24.10-la5'\nAPP_DEFAULT_VARIANT='public'\nAPP_VARIANTS='public|yunixintel/readeck:24.10-la5|https://github.com/yunix-intel/istoreos-loongarch64'\nAPP_PORTS='http|8000|18176|tcp|1'\nAPP_VOLUMES='data|/srv/readeck/data|/data|rw||1|dir|'\nAPP_ENV=''\nAPP_SIDECARS=''\nAPP_SIDECAR_COMMAND=''\nAPP_SIDECAR_ENV=''\nAPP_SIDECAR_VOLUMES=''\nAPP_SIDECAR_PORTS=''\nAPP_DEVICES=''\nAPP_CAPS=''\nAPP_GROUPS=''\nAPP_SYSCTLS=''\nAPP_HOST_NETWORK='0'\nAPP_DOCKER_SOCK='0'\nAPP_DOCKER_SOCK_RO='1'\nAPP_SHM=''\nAPP_USER=''\nAPP_COMMAND=''\nAPP_RESTART='unless-stopped'\nAPP_NETWORK_GROUP=''\nAPP_REQUIRES_APP=''\nAPP_HEALTH_PATH=''\nAPP_HEALTH_PORT=''\nAPP_MANUAL=''\nAPP_REVIEW='CGO SQLite；/data 持久化；首启引导页。; 未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。'\n"
+  }
+}

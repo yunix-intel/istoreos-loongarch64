@@ -48,7 +48,7 @@ x-casaos:
 
       Image notes: 33.0.10；PHP 8.3 + nginx/php-fpm；SQLite（测试用，生产建议 MySQL/MariaDB）；首次启动生成 config.php'
   developer: Nextcloud
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/nextcloud/icon.png
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/nextcloud.png
   tagline:
     zh_cn: Nextcloud 的 LoongArch64 镜像，详见龙芯版说明。
     en_us: Nextcloud LoongArch64 image; see the LoongArch notes.

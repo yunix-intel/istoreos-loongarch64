@@ -18,3 +18,5 @@ docklib-src/
 cn-ip.yaml
 Country*.mmdb
 GeoIP*
+store/istore/feed/
+__pycache__/

@@ -1,0 +1,66 @@
+name: smartctl-exporter
+services:
+  smartctl-exporter:
+    image: yunixintel/smartctl-exporter:24.10-la5
+    container_name: smartctl-exporter
+    ports:
+    - target: 9633
+      published: '18184'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+    volumes:
+    - type: bind
+      source: /run/udev
+      target: /run/udev
+      read_only: true
+    cap_add:
+    - SYS_RAWIO
+    - SYS_ADMIN
+    devices:
+    - /dev/nvme0:/dev/nvme0
+    - /dev/nvme0n1:/dev/nvme0n1
+    command:
+    - --smartctl.device=/dev/nvme0
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: smartctl-exporter
+  author: loong64-port
+  category: Monitoring
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：仅暴露 Prometheus 指标，没有 UI 和历史库。
+
+      缺失功能：无内置历史/告警。
+
+      额外依赖：需 SYS_RAWIO/SYS_ADMIN 与设备直通；默认无认证。
+
+      镜像说明：v0.15.0；Go 单二进制 + smartmontools；9633；需 SYS_RAWIO/SYS_ADMIN 与设备直通；替代 Scrutiny（其强制 InfluxDB）'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Exposes Prometheus metrics only; no UI or history database.
+
+      Missing features: No built-in history or alerting.
+
+      Extra dependencies: Requires SYS_RAWIO/SYS_ADMIN and device passthrough; no auth by default.
+
+      Image notes: v0.15.0；Go 单二进制 + smartmontools；9633；需 SYS_RAWIO/SYS_ADMIN 与设备直通；替代 Scrutiny（其强制 InfluxDB）'
+  developer: Prometheus Community
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/docker.png
+  tagline:
+    zh_cn: smartctl_exporter 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: smartctl_exporter LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: smartctl_exporter
+    en_us: smartctl_exporter
+  index: /metrics
+  port_map: '18184'

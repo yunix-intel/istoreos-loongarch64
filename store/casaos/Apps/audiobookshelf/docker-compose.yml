@@ -1,0 +1,67 @@
+name: audiobookshelf
+services:
+  audiobookshelf:
+    image: yunixintel/audiobookshelf:24.10-la5
+    ports:
+    - target: 13378
+      published: '18104'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/audiobooks
+      target: /audiobooks
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    - type: bind
+      source: /DATA/AppData/$AppID/metadata
+      target: /metadata
+    environment:
+      TZ: $TZ
+      PORT: '13378'
+      CONFIG_PATH: /config
+      METADATA_PATH: /metadata
+    restart: unless-stopped
+    container_name: audiobookshelf
+x-casaos:
+  architectures:
+  - loong64
+  main: audiobookshelf
+  author: loong64-port
+  category: Media
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。
+
+      缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。
+
+      额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。
+
+      镜像说明：v2.37.1；Node 22 + sqlite3/nusqlite3 源码编；前端在 x64 构建（Tailwind oxide 无 loong64）；13378 端口'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested
+      item by item. Limitations in the image notes also apply.
+
+      Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.
+
+      Extra dependencies: No extra external dependency unless the image notes say otherwise.
+
+      Image notes: v2.37.1；Node 22 + sqlite3/nusqlite3 源码编；前端在 x64 构建（Tailwind oxide 无 loong64）；13378 端口'
+  developer: Audiobookshelf
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/audiobookshelf.png
+  tagline:
+    zh_cn: Audiobookshelf 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Audiobookshelf LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Audiobookshelf
+    en_us: Audiobookshelf
+  index: /
+  port_map: '18104'

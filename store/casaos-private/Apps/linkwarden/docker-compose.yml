@@ -1,0 +1,98 @@
+name: linkwarden
+services:
+  linkwarden:
+    image: local/linkwarden-private:2.16.3-p1
+    container_name: linkwarden
+    ports:
+    - target: 3000
+      published: '18144'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      DATABASE_URL: postgresql://linkwarden:linkwardenpass@linkwarden-postgres:5432/linkwarden
+      NEXTAUTH_URL: http://localhost:18144/api/v1/auth
+      BASE_URL: http://localhost:18144
+      STORAGE_FOLDER: data
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data/data
+    depends_on:
+      linkwarden-postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    shm_size: 1g
+  linkwarden-postgres:
+    image: yunixintel/postgres:loong64
+    container_name: linkwarden-postgres
+    environment:
+      TZ: $TZ
+      POSTGRES_USER: linkwarden
+      POSTGRES_PASSWORD: linkwardenpass
+      POSTGRES_DB: linkwarden
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/postgres
+      target: /var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - pg_isready -U "$${POSTGRES_USER:-postgres}" -d "$${POSTGRES_DB:-postgres}"
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+x-casaos:
+  architectures:
+  - loong64
+  main: linkwarden
+  author: loong64-port
+  category: Utilities
+  description:
+    zh_cn: '**私人版**：单镜像内置 LBrowser/CDP，不挂载宿主 `/opt/apps/lbrowser`；镜像仅本地/私人仓库，禁止推送公开 registry。
+
+
+      **龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：Next 15 在 x86 构建；Prisma 7 WASM + adapter-pg；自写 99 个 SQL 迁移器；bcryptjs 替代 bcrypt。
+
+      缺失功能：无 Meilisearch 时仅 SQL contains（自建 Meili 已验证）；默认无浏览器；monolith 需挂载；AI 需外部 provider；导入已验证；OAuth 未验证。
+
+      额外依赖：需 PostgreSQL；PLAYWRIGHT_WS_URL 接 LBrowser sidecar；/data/data；3000；UID 1118。
+
+      镜像说明：2.16.3；Next 15 x86 构建；Prisma 7 WASM + adapter-pg + 自写迁移器；bcryptjs；不装 sharp；`/data`；3000；UID 1118；搜索回退 SQL contains；不内置浏览器；OAuth
+      未验证；邮件流需模板+BASE_URL'
+    en_us: '**Private build**: LBrowser/CDP is baked into this single image; no host mount. Keep it in the private registry
+      only.
+
+
+      **LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Next 15 is built on x86; Prisma 7 uses the WASM compiler with adapter-pg; a custom runner applies the
+      99 SQL migrations; bcryptjs replaces bcrypt.
+
+      Missing features: Search falls back to SQL contains without Meilisearch (self-hosted Meili is verified); no browser
+      by default; monolith needs a mount; AI needs an external provider; import is verified; OAuth is unverified.
+
+      Extra dependencies: Requires PostgreSQL; point PLAYWRIGHT_WS_URL at an LBrowser sidecar; /data/data; port 3000; UID
+      1118.
+
+      Image notes: 2.16.3；Next 15 x86 构建；Prisma 7 WASM + adapter-pg + 自写迁移器；bcryptjs；不装 sharp；`/data`；3000；UID 1118；搜索回退 SQL
+      contains；不内置浏览器；OAuth 未验证；邮件流需模板+BASE_URL'
+  developer: Linkwarden
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/linkwarden.png
+  tagline:
+    zh_cn: linkwarden 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: linkwarden LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: linkwarden（私人版）
+    en_us: linkwarden (private)
+  index: /
+  port_map: '18144'

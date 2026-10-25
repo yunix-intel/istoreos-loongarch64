@@ -1,0 +1,10 @@
+Package: app-meta-jellystat
+Version: 1.0.0-r20261025
+Depends: libc, luci-app-istore-loong64, docker-deps
+Provides: app-meta-jellystat-any
+SourceName: app-meta-jellystat
+Section: meta
+Architecture: all
+Installed-Size: 8
+Maintainer: yunix-intel
+Description:  Metadata for jellystat (LoongArch64)

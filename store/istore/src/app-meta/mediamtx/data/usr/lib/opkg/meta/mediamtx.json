@@ -1,0 +1,135 @@
+{
+  "name": "mediamtx",
+  "title": "MediaMTX",
+  "title_en": "MediaMTX",
+  "entry": "/cgi-bin/luci/admin/services/istore-loong64/app?app=mediamtx",
+  "author": "yunix-intel",
+  "website": "https://github.com/yunix-intel/istoreos-loongarch64",
+  "version": "24.10-la5",
+  "release": 20261025,
+  "arch": [
+    "all"
+  ],
+  "description": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：Go 单二进制，配置内嵌。</p><p>缺失功能：无 Web 管理界面/持久化；API 默认仅本机白名单。</p><p>额外依赖：8554/1935/8888/8889/8890/9997；NAT 后 WebRTC 需配 additional hosts；与 go2rtc 二选一。</p><p>镜像说明：1.9.3；Go 单二进制；8554/1935/8888/8889/8890/9997；`api: yes`（上游默认 no）；UID 1115；API 默认仅本机白名单；无持久化</p>",
+  "description_en": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: Single Go binary with embedded configuration.</p><p>Missing features: No web admin UI or persistence; API is localhost-only by default.</p><p>Extra dependencies: Ports 8554/1935/8888/8889/8890/9997; configure additional hosts for WebRTC behind NAT; use instead of go2rtc.</p><p>Image notes: 1.9.3；Go 单二进制；8554/1935/8888/8889/8890/9997；`api: yes`（上游默认 no）；UID 1115；API 默认仅本机白名单；无持久化</p>",
+  "tags": [
+    "media",
+    "tool"
+  ],
+  "depends": [
+    "luci-app-istore-loong64",
+    "docker-deps"
+  ],
+  "loong64": {
+    "schema": 1,
+    "source": "dockerfile+runbook+override",
+    "image": "yunixintel/mediamtx:24.10-la5",
+    "default_variant": "public",
+    "variants": [
+      {
+        "name": "public",
+        "image": "yunixintel/mediamtx:24.10-la5",
+        "store_url": "https://github.com/yunix-intel/istoreos-loongarch64"
+      }
+    ],
+    "compose": "",
+    "ports": [
+      {
+        "name": "rtsp",
+        "container": 8554,
+        "host": 8556,
+        "proto": "tcp",
+        "primary": false
+      },
+      {
+        "name": "rtmp",
+        "container": 1935,
+        "host": 1935,
+        "proto": "tcp",
+        "primary": false
+      },
+      {
+        "name": "hls",
+        "container": 8888,
+        "host": 18148,
+        "proto": "tcp",
+        "primary": true
+      },
+      {
+        "name": "webrtc",
+        "container": 8889,
+        "host": 8889,
+        "proto": "tcp",
+        "primary": false
+      },
+      {
+        "name": "port-8890-udp",
+        "container": 8890,
+        "host": 8890,
+        "proto": "udp",
+        "primary": false
+      },
+      {
+        "name": "port-8189-udp",
+        "container": 8189,
+        "host": 8189,
+        "proto": "udp",
+        "primary": false
+      },
+      {
+        "name": "port-9997",
+        "container": 9997,
+        "host": 9997,
+        "proto": "tcp",
+        "primary": false
+      },
+      {
+        "name": "http-udp",
+        "container": 8000,
+        "host": 8000,
+        "proto": "udp",
+        "primary": false
+      },
+      {
+        "name": "port-8001-udp",
+        "container": 8001,
+        "host": 8001,
+        "proto": "udp",
+        "primary": false
+      }
+    ],
+    "volumes": [],
+    "env": [],
+    "sidecars": [],
+    "needs_host_network": false,
+    "needs_docker_sock": false,
+    "docker_sock_ro": true,
+    "devices": [],
+    "cap_add": [],
+    "group_add": [],
+    "sysctls": [],
+    "shm_size": "",
+    "user": "",
+    "command": [],
+    "restart": "unless-stopped",
+    "network_group": "",
+    "requires_app": "",
+    "health": {},
+    "review": {
+      "automation": "manual",
+      "manual": [
+        "在 mediamtx.yml 中配置摄像头/发布源"
+      ],
+      "notes": [
+        "固定 RTP/RTSP/WebRTC 端口；无持久化。",
+        "固定端口 8554 已被前面的应用占用，本应用自动改用 8556；两个应用不应同时启动在同一台机器上。",
+        "未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。"
+      ]
+    },
+    "category": "Media",
+    "image_size": "",
+    "title": "MediaMTX",
+    "name": "mediamtx",
+    "runtime": "APP_ID='mediamtx'\nAPP_TITLE='MediaMTX'\nAPP_IMAGE='yunixintel/mediamtx:24.10-la5'\nAPP_DEFAULT_VARIANT='public'\nAPP_VARIANTS='public|yunixintel/mediamtx:24.10-la5|https://github.com/yunix-intel/istoreos-loongarch64'\nAPP_PORTS='rtsp|8554|8556|tcp|0\nrtmp|1935|1935|tcp|0\nhls|8888|18148|tcp|1\nwebrtc|8889|8889|tcp|0\nport-8890-udp|8890|8890|udp|0\nport-8189-udp|8189|8189|udp|0\nport-9997|9997|9997|tcp|0\nhttp-udp|8000|8000|udp|0\nport-8001-udp|8001|8001|udp|0'\nAPP_VOLUMES=''\nAPP_ENV=''\nAPP_SIDECARS=''\nAPP_SIDECAR_COMMAND=''\nAPP_SIDECAR_ENV=''\nAPP_SIDECAR_VOLUMES=''\nAPP_SIDECAR_PORTS=''\nAPP_DEVICES=''\nAPP_CAPS=''\nAPP_GROUPS=''\nAPP_SYSCTLS=''\nAPP_HOST_NETWORK='0'\nAPP_DOCKER_SOCK='0'\nAPP_DOCKER_SOCK_RO='1'\nAPP_SHM=''\nAPP_USER=''\nAPP_COMMAND=''\nAPP_RESTART='unless-stopped'\nAPP_NETWORK_GROUP=''\nAPP_REQUIRES_APP=''\nAPP_HEALTH_PATH=''\nAPP_HEALTH_PORT=''\nAPP_MANUAL='在 mediamtx.yml 中配置摄像头/发布源'\nAPP_REVIEW='固定 RTP/RTSP/WebRTC 端口；无持久化。; 固定端口 8554 已被前面的应用占用，本应用自动改用 8556；两个应用不应同时启动在同一台机器上。; 未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。'\n"
+  }
+}

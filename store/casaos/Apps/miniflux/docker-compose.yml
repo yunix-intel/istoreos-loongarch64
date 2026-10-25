@@ -1,0 +1,83 @@
+name: miniflux
+services:
+  miniflux:
+    image: yunixintel/miniflux:24.10-la5
+    container_name: miniflux
+    ports:
+    - target: 8080
+      published: '18152'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      DATABASE_URL: postgres://miniflux:minifluxpass@miniflux-postgres:5432/miniflux?sslmode=disable
+      RUN_MIGRATIONS: '1'
+      CREATE_ADMIN: '1'
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: change-me
+      BASE_URL: http://localhost:18152
+    depends_on:
+      miniflux-postgres:
+        condition: service_healthy
+    restart: unless-stopped
+  miniflux-postgres:
+    image: yunixintel/postgres:loong64
+    container_name: miniflux-postgres
+    environment:
+      TZ: $TZ
+      POSTGRES_USER: miniflux
+      POSTGRES_PASSWORD: minifluxpass
+      POSTGRES_DB: miniflux
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/postgres
+      target: /var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - pg_isready -U "$${POSTGRES_USER:-postgres}" -d "$${POSTGRES_DB:-postgres}"
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+x-casaos:
+  architectures:
+  - loong64
+  main: miniflux
+  author: loong64-port
+  category: Utilities
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：上游已删除 SQLite 支持，必须提供 PostgreSQL DSN。
+
+      缺失功能：不支持 SQLite。
+
+      额外依赖：需 PostgreSQL；8080。
+
+      镜像说明：v2.3.3；上游已删 SQLite 支持，必须提供 PostgreSQL DSN；8080'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Upstream removed SQLite support; a PostgreSQL DSN is required.
+
+      Missing features: SQLite is not supported.
+
+      Extra dependencies: Requires PostgreSQL; port 8080.
+
+      Image notes: v2.3.3；上游已删 SQLite 支持，必须提供 PostgreSQL DSN；8080'
+  developer: Miniflux
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/miniflux.png
+  tagline:
+    zh_cn: Miniflux 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Miniflux LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Miniflux
+    en_us: Miniflux
+  index: /
+  port_map: '18152'

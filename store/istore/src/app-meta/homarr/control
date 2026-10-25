@@ -1,0 +1,10 @@
+Package: app-meta-homarr
+Version: 1.0.0-r20261025
+Depends: libc, luci-app-istore-loong64, docker-deps
+Provides: app-meta-homarr-any
+SourceName: app-meta-homarr
+Section: meta
+Architecture: all
+Installed-Size: 5
+Maintainer: yunix-intel
+Description:  Metadata for homarr (LoongArch64)

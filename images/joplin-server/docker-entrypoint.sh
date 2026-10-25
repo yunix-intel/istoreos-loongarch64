@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-# Only the top level of /data is chowned: the data volume may be large and a
-# recursive chown would delay every start. Subdirectories (logs/temp/resource/
-# storage) are created with UID 1119 in the image; bind mounts should be
-# prepared with: chown -R 1119:1119 <dir>
+# A bind mount hides the image's /data subdirectories, so recreate them with
+# the runtime UID before dropping privileges. install -d is idempotent.
+install -d -o 1119 -g 1119 /data/logs /data/temp /data/resource /data/storage
 chown 1119:1119 /data
 
 if [ "$#" -gt 0 ]; then

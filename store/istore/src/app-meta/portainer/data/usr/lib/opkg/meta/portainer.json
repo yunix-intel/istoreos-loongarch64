@@ -1,0 +1,102 @@
+{
+  "name": "portainer",
+  "title": "Portainer",
+  "title_en": "Portainer",
+  "entry": "/cgi-bin/luci/admin/services/istore-loong64/app?app=portainer",
+  "author": "yunix-intel",
+  "website": "https://github.com/yunix-intel/istoreos-loongarch64",
+  "version": "24.10-la5",
+  "release": 20261025,
+  "arch": [
+    "all"
+  ],
+  "description": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：需挂载 docker.sock。</p><p>镜像说明：2.45.2 LTS；Go 自编 + 前端本机 pnpm/webpack；需挂 docker.sock；9000</p>",
+  "description_en": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: Requires docker.sock.</p><p>Image notes: 2.45.2 LTS；Go 自编 + 前端本机 pnpm/webpack；需挂 docker.sock；9000</p>",
+  "tags": [
+    "dev",
+    "tool"
+  ],
+  "depends": [
+    "luci-app-istore-loong64",
+    "docker-deps"
+  ],
+  "loong64": {
+    "schema": 1,
+    "source": "dockerfile+runbook+override",
+    "image": "yunixintel/portainer:24.10-la5",
+    "default_variant": "public",
+    "variants": [
+      {
+        "name": "public",
+        "image": "yunixintel/portainer:24.10-la5",
+        "store_url": "https://github.com/yunix-intel/istoreos-loongarch64"
+      }
+    ],
+    "compose": "",
+    "ports": [
+      {
+        "name": "s3",
+        "container": 9000,
+        "host": 18171,
+        "proto": "tcp",
+        "primary": true
+      },
+      {
+        "name": "port-9443",
+        "container": 9443,
+        "host": 20672,
+        "proto": "tcp",
+        "primary": false
+      },
+      {
+        "name": "http",
+        "container": 8000,
+        "host": 20673,
+        "proto": "tcp",
+        "primary": false
+      }
+    ],
+    "volumes": [
+      {
+        "name": "data",
+        "host": "/srv/portainer/data",
+        "container": "/data",
+        "mode": "rw",
+        "owner": "",
+        "primary": true,
+        "type": "dir",
+        "seed": ""
+      }
+    ],
+    "env": [],
+    "sidecars": [],
+    "needs_host_network": false,
+    "needs_docker_sock": true,
+    "docker_sock_ro": true,
+    "devices": [],
+    "cap_add": [],
+    "group_add": [],
+    "sysctls": [],
+    "shm_size": "",
+    "user": "",
+    "command": [],
+    "restart": "unless-stopped",
+    "network_group": "",
+    "requires_app": "",
+    "health": {},
+    "review": {
+      "automation": "auto",
+      "manual": [],
+      "notes": [
+        "需要 Docker socket；/data 持久化；首次进入创建管理员。",
+        "挂载宿主 Docker socket；容器可控制宿主 Docker，只应安装可信应用。",
+        "未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。"
+      ]
+    },
+    "category": "Developer",
+    "image_size": "",
+    "title": "Portainer",
+    "name": "portainer",
+    "runtime": "APP_ID='portainer'\nAPP_TITLE='Portainer'\nAPP_IMAGE='yunixintel/portainer:24.10-la5'\nAPP_DEFAULT_VARIANT='public'\nAPP_VARIANTS='public|yunixintel/portainer:24.10-la5|https://github.com/yunix-intel/istoreos-loongarch64'\nAPP_PORTS='s3|9000|18171|tcp|1\nport-9443|9443|20672|tcp|0\nhttp|8000|20673|tcp|0'\nAPP_VOLUMES='data|/srv/portainer/data|/data|rw||1|dir|'\nAPP_ENV=''\nAPP_SIDECARS=''\nAPP_SIDECAR_COMMAND=''\nAPP_SIDECAR_ENV=''\nAPP_SIDECAR_VOLUMES=''\nAPP_SIDECAR_PORTS=''\nAPP_DEVICES=''\nAPP_CAPS=''\nAPP_GROUPS=''\nAPP_SYSCTLS=''\nAPP_HOST_NETWORK='0'\nAPP_DOCKER_SOCK='1'\nAPP_DOCKER_SOCK_RO='1'\nAPP_SHM=''\nAPP_USER=''\nAPP_COMMAND=''\nAPP_RESTART='unless-stopped'\nAPP_NETWORK_GROUP=''\nAPP_REQUIRES_APP=''\nAPP_HEALTH_PATH=''\nAPP_HEALTH_PORT=''\nAPP_MANUAL=''\nAPP_REVIEW='需要 Docker socket；/data 持久化；首次进入创建管理员。; 挂载宿主 Docker socket；容器可控制宿主 Docker，只应安装可信应用。; 未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。'\n"
+  }
+}

@@ -1,0 +1,73 @@
+name: mosquitto
+services:
+  mosquitto:
+    image: yunixintel/mosquitto:24.10-la5
+    container_name: mosquitto
+    ports:
+    - target: 1883
+      published: '18154'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /mosquitto/data
+    restart: unless-stopped
+    configs:
+    - source: mosquitto.conf
+      target: /mosquitto/config/mosquitto.conf
+x-casaos:
+  architectures:
+  - loong64
+  main: mosquitto
+  author: loong64-port
+  category: Utilities
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：openEuler 2.0.20 包。
+
+      缺失功能：默认 allow_anonymous true，公网必须配 passwd。
+
+      额外依赖：1883；持久化 /mosquitto/data。
+
+      镜像说明：2.0.20（openEuler EPOL）；持久化 `/mosquitto/data`；1883；默认 allow_anonymous true，公网必须关匿名并配 passwd；含 mosquitto_pub/sub/passwd；UID/GID
+      998:996'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: openEuler 2.0.20 package.
+
+      Missing features: allow_anonymous is true by default; configure passwd before exposing it.
+
+      Extra dependencies: Port 1883; persist /mosquitto/data.
+
+      Image notes: 2.0.20（openEuler EPOL）；持久化 `/mosquitto/data`；1883；默认 allow_anonymous true，公网必须关匿名并配 passwd；含 mosquitto_pub/sub/passwd；UID/GID
+      998:996'
+  developer: Eclipse Foundation
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/mosquitto.png
+  tagline:
+    zh_cn: Eclipse Mosquitto 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Eclipse Mosquitto LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Eclipse Mosquitto
+    en_us: Eclipse Mosquitto
+  index: /
+  port_map: '18154'
+configs:
+  mosquitto.conf:
+    content: 'listener 1883 0.0.0.0
+
+      allow_anonymous true
+
+      persistence true
+
+      persistence_location /mosquitto/data/
+
+      '

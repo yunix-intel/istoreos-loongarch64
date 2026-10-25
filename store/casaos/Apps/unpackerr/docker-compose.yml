@@ -1,0 +1,61 @@
+name: unpackerr
+services:
+  unpackerr:
+    image: yunixintel/unpackerr:24.10-la5
+    container_name: unpackerr
+    environment:
+      TZ: $TZ
+      UN_SONARR_0_URL: http://sonarr:8989
+      UN_SONARR_0_API_KEY: change-me
+      UN_SONARR_0_PATHS_0: /downloads
+      UN_RADARR_0_URL: http://radarr:7878
+      UN_RADARR_0_API_KEY: change-me
+      UN_RADARR_0_PATHS_0: /downloads
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    - type: bind
+      source: /DATA/AppData/$AppID/downloads
+      target: /downloads
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: unpackerr
+  author: loong64-port
+  category: Downloaders
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：Go 单二进制；需要升级 x/sys 才能支持 loongarch64。
+
+      缺失功能：无 Web UI/端口；健康检查仅进程存活；未接真实 *arr。
+
+      额外依赖：持久化 /config 与 /downloads，路径必须与 *arr 一致；unrar 为闭源 freeware。
+
+      镜像说明：0.9.9；Go 单二进制；无 UI/端口；`/config`、`/downloads`；UID 1123；需把 x/sys 升到 v0.35.0；unrar 7.13 + 7za；健康检查仅进程存活'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Single Go binary; requires an x/sys upgrade for loongarch64.
+
+      Missing features: No web UI/port; health check is process-only; not tested against a real *arr.
+
+      Extra dependencies: Persist /config and /downloads with paths identical to *arr; unrar is closed-source freeware.
+
+      Image notes: 0.9.9；Go 单二进制；无 UI/端口；`/config`、`/downloads`；UID 1123；需把 x/sys 升到 v0.35.0；unrar 7.13 + 7za；健康检查仅进程存活'
+  developer: Unpackerr
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/unpackerr.png
+  tagline:
+    zh_cn: Unpackerr 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Unpackerr LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Unpackerr
+    en_us: Unpackerr
+  index: /

@@ -1,0 +1,7 @@
+config main 'main'
+	option enabled '1'
+	option variant 'public'
+	option image ''
+	option host_port '18188'
+	option data_path '/srv/typecho/html'
+	option env_file '/etc/istore-loong64/env/typecho.env'

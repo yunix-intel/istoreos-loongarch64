@@ -1,0 +1,57 @@
+name: stirling-pdf
+services:
+  stirling-pdf:
+    image: yunixintel/stirling-pdf:24.10-la5
+    container_name: stirling-pdf
+    ports:
+    - target: 8080
+      published: '18186'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/configs
+      target: /configs
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: stirling-pdf
+  author: loong64-port
+  category: Media
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：官方 jar + Java 25。
+
+      缺失功能：未装 LibreOffice/OCR，相关转换不可用。
+
+      额外依赖：8080；首次可按需在 UI 配置。
+
+      镜像说明：v3.2.0；官方 jar + Java 25；精简版未装 LibreOffice/OCR，相关端点自动禁用；8080'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Official jar on Java 25.
+
+      Missing features: LibreOffice/OCR are not installed, so those conversions are unavailable.
+
+      Extra dependencies: Port 8080; configure optional features in the UI.
+
+      Image notes: v3.2.0；官方 jar + Java 25；精简版未装 LibreOffice/OCR，相关端点自动禁用；8080'
+  developer: Stirling-Tools
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/stirling-pdf.png
+  tagline:
+    zh_cn: Stirling PDF 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Stirling PDF LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Stirling PDF
+    en_us: Stirling PDF
+  index: /
+  port_map: '18186'

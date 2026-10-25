@@ -21,7 +21,7 @@
 | KVM | KVM-PLAN | ❌封存 | A 四组合全败；B（自编 qemu 9.2）同症状复现，按判据落 D；C 未投 |
 | OpenMediaVault | NEXT-PLAN/ROADMAP | 🟡 | 已排期 Gate 0（O-01..O-09）：先判定 OMV 7/8，再审计依赖；QEMU TCG 隔离，不用 NBD 做管理根盘；未做安装，不预设移植 |
 | P1–P4 应用候选 | NEXT-PLAN | 🟡 | P1 已完成 5 个（Scrutiny 由 smartctl_exporter 替代）；P2–P4 待做；Scrutiny SQLite 补丁在独立验证中 |
-| CasaOS/iStore 商店全量可装 | NEXT-PLAN §9.5 | ⬜ | **最后阶段**：所有应用完成后再生成 CasaOS 定义与 iStore app-meta/feed；当前 CasaOS 仅 26 镜像/18 定义，公开 iStore 仍指上游镜像 |
+| CasaOS/iStore 商店全量可装 | NEXT-PLAN §9.5 | 🟡 | CasaOS 115 定义全量 dry-run 通过，6 类应用真实安装通过；iStore public/private 各 115 app-meta + 通用安装器，Joplin/Gatus 真机安装通过。待 24h soak 后重启 app-management 让 UI 看到 115，以及 iStoreOS 真机 opkg/LuCI 回归 |
 | jellyfin 缩略图 | ROADMAP/BUILDLOG | ✅ | ImageSharp 全接口 + 真照片库验证，镜像已替换 |
 | navidrome DSD | IMAGES/BUILDLOG | ✅/❓ | 系统 taglib 2.0.2，DSD 已编译验证；真实媒体播放无记录 |
 | podman bridge | BUILDLOG | 🟡 | 需宿主 nft_conntrack，Loongnix 6.6 缺；host/none 可用，未修也未写入 IMAGES 限制 |

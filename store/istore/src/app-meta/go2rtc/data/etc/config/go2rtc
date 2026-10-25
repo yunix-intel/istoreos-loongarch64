@@ -1,0 +1,7 @@
+config main 'main'
+	option enabled '1'
+	option variant 'public'
+	option image ''
+	option host_port '18126'
+	option data_path '/srv/go2rtc/config'
+	option env_file '/etc/istore-loong64/env/go2rtc.env'

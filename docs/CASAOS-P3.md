@@ -35,7 +35,7 @@ CasaOS 是 Debian/systemd 侧的应用面板，**不能与 iStoreOS/OpenWrt 同�
 casaos-p3-0.1.0/
   bin/         7 个 LoongArch ELF
   www/         CasaOS UI v0.4.25
-  appstore/    loong64-only 商店 + 26 镜像覆盖
+  appstore/    loong64-only 商店 + 115 应用定义
   conf/        gateway.ini / 各服务 conf
   share/shell/ 磁盘/USB 脚本（含 local-storage-helper.sh）
   scripts/     start.sh / stop.sh / healthcheck.sh

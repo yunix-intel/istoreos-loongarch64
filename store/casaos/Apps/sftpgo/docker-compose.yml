@@ -1,0 +1,66 @@
+name: sftpgo
+services:
+  sftpgo:
+    image: yunixintel/sftpgo:24.10-la5
+    container_name: sftpgo
+    ports:
+    - target: 8080
+      published: '18182'
+      protocol: tcp
+    - target: 2022
+      published: '18282'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /srv/sftpgo/data
+    - type: bind
+      source: /DATA/AppData/$AppID/db
+      target: /var/lib/sftpgo
+    - type: bind
+      source: /DATA/AppData/$AppID/backups
+      target: /srv/sftpgo/backups
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: sftpgo
+  author: loong64-port
+  category: Cloud
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：Go + CGO SQLite；首次进入安装页创建管理员。
+
+      缺失功能：默认不创建管理员；FTP/WebDAV 默认关闭。
+
+      额外依赖：持久化 /srv/sftpgo/data 与 /var/lib/sftpgo；公网需 TLS。
+
+      镜像说明：v2.7.6；Go + CGO SQLite；Web 8080、SFTP 2022；`/srv/sftpgo/data`、`/var/lib/sftpgo`；UID 1103；首次安装页创建管理员'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Go with CGO SQLite; the first visit opens the setup page.
+
+      Missing features: No default admin; FTP/WebDAV are disabled by default.
+
+      Extra dependencies: Persist /srv/sftpgo/data and /var/lib/sftpgo; use TLS on the public network.
+
+      Image notes: v2.7.6；Go + CGO SQLite；Web 8080、SFTP 2022；`/srv/sftpgo/data`、`/var/lib/sftpgo`；UID 1103；首次安装页创建管理员'
+  developer: SFTPGo
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/sftpgo.png
+  tagline:
+    zh_cn: SFTPGo 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: SFTPGo LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: SFTPGo
+    en_us: SFTPGo
+  index: /
+  port_map: '18182'

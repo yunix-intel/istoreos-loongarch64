@@ -1,0 +1,2192 @@
+{
+  "schema": 1,
+  "note": "Curated runtime facts for the 115 LoongArch64 app-meta packages. Values not listed here are derived from images/<id>/Dockerfile* and store/casaos/port-plan.json. Placeholders: ${PUBLIC_URL}, ${HOST_IP}, ${PRIMARY_PORT}, ${APP_ID}, ${SECRET:name[:len]}. Never put real credentials in this file.",
+  "sidecar_templates": {
+    "postgres": {
+      "image": "yunixintel/postgres:24.10-la5",
+      "shm_size": "",
+      "env": [
+        {
+          "key": "POSTGRES_USER",
+          "value": "${DB_USER}",
+          "required": true
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "${SECRET:pg_password}",
+          "required": true
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "${DB_NAME}",
+          "required": true
+        }
+      ],
+      "volumes": [
+        {
+          "name": "pgdata",
+          "host": "/srv/${BASE}/pgdata",
+          "container": "/var/lib/postgresql/data",
+          "mode": "rw",
+          "owner": "26:26"
+        }
+      ],
+      "health": {
+        "cmd": "pg_isready -U ${DB_USER} -d ${DB_NAME}",
+        "interval": "5s",
+        "timeout": "3s",
+        "retries": 30
+      }
+    },
+    "mariadb": {
+      "image": "yunixintel/mariadb:24.10-la5",
+      "shm_size": "",
+      "env": [
+        {
+          "key": "MYSQL_ROOT_PASSWORD",
+          "value": "${SECRET:mysql_root_password}",
+          "required": true
+        },
+        {
+          "key": "MYSQL_DATABASE",
+          "value": "${DB_NAME}",
+          "required": true
+        },
+        {
+          "key": "MYSQL_USER",
+          "value": "${DB_USER}",
+          "required": true
+        },
+        {
+          "key": "MYSQL_PASSWORD",
+          "value": "${SECRET:mysql_password}",
+          "required": true
+        }
+      ],
+      "volumes": [
+        {
+          "name": "mysqldata",
+          "host": "/srv/${BASE}/mysqldata",
+          "container": "/var/lib/mysql",
+          "mode": "rw",
+          "owner": "27:27"
+        }
+      ],
+      "health": {
+        "cmd": "mysqladmin ping -h 127.0.0.1 --silent",
+        "interval": "5s",
+        "timeout": "3s",
+        "retries": 40
+      }
+    },
+    "redis": {
+      "image": "yunixintel/redis:24.10-la5",
+      "shm_size": "",
+      "env": [
+        {
+          "key": "REDIS_PASSWORD",
+          "value": "${SECRET:redis_password}",
+          "required": true
+        }
+      ],
+      "volumes": [
+        {
+          "name": "redisdata",
+          "host": "/srv/${BASE}/redisdata",
+          "container": "/data",
+          "mode": "rw",
+          "owner": "998:996"
+        }
+      ],
+      "health": {
+        "cmd": "redis-cli -a \"$REDIS_PASSWORD\" ping",
+        "interval": "5s",
+        "timeout": "3s",
+        "retries": 20
+      }
+    },
+    "minio": {
+      "image": "yunixintel/minio:24.10-la5",
+      "shm_size": "",
+      "env": [
+        {
+          "key": "MINIO_ROOT_USER",
+          "value": "istoreadmin",
+          "required": true
+        },
+        {
+          "key": "MINIO_ROOT_PASSWORD",
+          "value": "${SECRET:minio_password}",
+          "required": true
+        }
+      ],
+      "volumes": [
+        {
+          "name": "miniodata",
+          "host": "/srv/${BASE}/miniodata",
+          "container": "/data",
+          "mode": "rw",
+          "owner": "1000:1000"
+        }
+      ],
+      "health": {
+        "cmd": "",
+        "interval": "",
+        "timeout": "",
+        "retries": 15
+      }
+    },
+    "lbrowser": {
+      "image": "yunixintel/lbrowser-runtime:3.4.2293.2",
+      "shm_size": "1g",
+      "command": [
+        "serve"
+      ],
+      "env": [],
+      "volumes": [
+        {
+          "name": "lbrowser",
+          "host": "/opt/apps/lbrowser",
+          "container": "/opt/apps/lbrowser",
+          "mode": "ro",
+          "owner": ""
+        }
+      ],
+      "health": {
+        "cmd": "",
+        "interval": "",
+        "timeout": "",
+        "retries": 5
+      },
+      "preload": true
+    }
+  },
+  "apps": {
+    "jellyfin": {
+      "env": [
+        {
+          "key": "JELLYFIN_PublishedServerUrl",
+          "value": "${PUBLIC_URL}",
+          "required": false
+        }
+      ],
+      "review": {
+        "notes": [
+          "媒体目录 /media 默认映射到 /mnt/media；硬件转码未验证。"
+        ]
+      }
+    },
+    "navidrome": {
+      "primary_port": 4533,
+      "env": [
+        {
+          "key": "ND_MUSICFOLDER",
+          "value": "/music",
+          "required": false
+        },
+        {
+          "key": "ND_DATAFOLDER",
+          "value": "/data",
+          "required": false
+        }
+      ],
+      "review": {
+        "notes": [
+          "音乐目录 /music 默认映射到 /mnt/music。"
+        ]
+      }
+    },
+    "vaultwarden": {
+      "ports": [
+        {
+          "name": "http",
+          "container": 8443,
+          "proto": "tcp",
+          "primary": true
+        }
+      ],
+      "volumes": [
+        {
+          "container": "/data",
+          "name": "data",
+          "primary": true
+        }
+      ],
+      "env": [
+        {
+          "key": "DOMAIN",
+          "value": "${PUBLIC_URL}",
+          "required": false
+        }
+      ],
+      "review": {
+        "notes": [
+          "未设置 ADMIN_TOKEN；Web 注册默认开启，公网部署前应关闭注册并加 TLS 反代。"
+        ]
+      }
+    },
+    "mihomo": {
+      "host_network": true,
+      "ports": [
+        {
+          "name": "api",
+          "container": 9090,
+          "proto": "tcp",
+          "primary": true
+        }
+      ],
+      "volumes": [
+        {
+          "container": "/etc/mihomo",
+          "name": "config",
+          "primary": true,
+          "type": "dir"
+        }
+      ],
+      "review": {
+        "manual": [
+          "把可用的 config.yaml 放入 /srv/mihomo/config 后重启"
+        ],
+        "notes": [
+          "host 网络；配置含订阅/节点密钥，未随包提供。无 Web UI，9090 为外部控制器默认端口。"
+        ]
+      }
+    },
+    "easytier": {
+      "host_network": true,
+      "ports": [],
+      "volumes": [
+        {
+          "container": "/etc/easytier",
+          "name": "config",
+          "primary": true,
+          "type": "dir"
+        }
+      ],
+      "review": {
+        "manual": [
+          "把 network.toml 放入 /srv/easytier/config 后重启"
+        ],
+        "notes": [
+          "host 网络；无 Web UI；network.toml 含网络密钥，未随包提供。"
+        ]
+      }
+    },
+    "adguardhome": {
+      "host_network": true,
+      "ports": [
+        {
+          "name": "http",
+          "container": 3000,
+          "proto": "tcp",
+          "primary": true
+        },
+        {
+          "name": "dns",
+          "container": 53,
+          "proto": "tcp",
+          "primary": false
+        },
+        {
+          "name": "dns-udp",
+          "container": 53,
+          "proto": "udp",
+          "primary": false
+        }
+      ],
+      "volumes": [
+        {
+          "container": "/opt/adguardhome/work",
+          "name": "work",
+          "primary": true
+        },
+        {
+          "container": "/opt/adguardhome/conf",
+          "name": "conf",
+          "primary": false
+        }
+      ],
+      "review": {
+        "manual": [
+          "确认宿主 53 端口未被 dnsmasq 占用（或先停用 dnsmasq）"
+        ],
+        "notes": [
+          "host 网络；53 端口需避让宿主 DNS。"
+        ]
+      },
+      "needs_config": true
+    },
+    "syncthing": {
+      "primary_port": 8384,
+      "fixed_ports": [
+        22000,
+        21027
+      ],
+      "review": {
+        "notes": [
+          "22000/tcp 与 21027/udp 使用固定宿主端口；21027/udp 用于本地发现。"
+        ]
+      }
+    },
+    "memos": {
+      "ports": [
+        {
+          "name": "http",
+          "container": 5230,
+          "proto": "tcp",
+          "primary": true
+        }
+      ],
+      "volumes": [
+        {
+          "container": "/opt/memos/data",
+          "name": "data",
+          "primary": true
+        }
+      ]
+    },
+    "gogs": {
+      "primary_port": 3000,
+      "review": {
+        "notes": [
+          "SSH 22 映射到自动分配的高位宿主端口；可在 /etc/config/gogs 中改 host_port，SSH 端口需手工调整。"
+        ]
+      }
+    },
+    "filebrowser": {
+      "volumes": [
+        {
+          "container": "/srv",
+          "name": "files",
+          "host": "/mnt/files",
+          "primary": true
+        },
+        {
+          "container": "/database",
+          "name": "database",
+          "primary": false
+        }
+      ],
+      "review": {
+        "notes": [
+          "/srv 映射到 /mnt/files；/database 保存 filebrowser.db。"
+        ]
+      }
+    },
+    "qbittorrent-ee": {
+      "primary_port": 8080,
+      "review": {
+        "notes": [
+          "Web UI 的 Host header 必须匹配访问地址；下载目录 /downloads 映射到 /mnt/downloads。"
+        ]
+      }
+    },
+    "it-tools": {
+      "review": {
+        "notes": [
+          "纯静态工具集，无持久化。"
+        ]
+      }
+    },
+    "excalidraw": {
+      "review": {
+        "notes": [
+          "静态前端，无持久化；画布数据保存在浏览器。"
+        ]
+      }
+    },
+    "kopia": {
+      "volumes": [
+        {
+          "container": "/app/config",
+          "name": "config",
+          "primary": true
+        },
+        {
+          "container": "/repository",
+          "name": "repository",
+          "primary": false
+        }
+      ],
+      "review": {
+        "manual": [
+          "在 Web UI 中创建仓库并设置 Basic 认证"
+        ],
+        "notes": [
+          "仓库目录 /repository 映射到 /srv/kopia/repository。"
+        ]
+      }
+    },
+    "linkding": {
+      "env": [
+        {
+          "key": "UWSGI_MAX_FD",
+          "value": "4096",
+          "required": false
+        }
+      ],
+      "review": {
+        "notes": [
+          "SQLite；首次启动后在 Web 创建管理员。"
+        ]
+      }
+    },
+    "heimdall": {
+      "primary_port": 8080
+    },
+    "nextcloud": {
+      "ports": [
+        {
+          "name": "http",
+          "container": 8080,
+          "proto": "tcp",
+          "primary": true
+        }
+      ],
+      "review": {
+        "notes": [
+          "默认 SQLite（测试/家用）；生产建议外接 MariaDB。首次启动进入安装向导。"
+        ]
+      }
+    },
+    "typecho": {
+      "volumes": [
+        {
+          "container": "/var/www/html",
+          "name": "html",
+          "primary": true
+        },
+        {
+          "container": "/data",
+          "name": "data",
+          "primary": false
+        }
+      ],
+      "review": {
+        "manual": [
+          "在 Web 安装向导中填写数据库；默认 SQLite 可用"
+        ],
+        "notes": [
+          "站点根目录与数据库都在持久卷内。"
+        ]
+      }
+    },
+    "wallabag": {
+      "ports": [
+        {
+          "name": "http",
+          "container": 8080,
+          "proto": "tcp",
+          "primary": true
+        }
+      ],
+      "env": [
+        {
+          "key": "SYMFONY__ENV__DOMAIN_NAME",
+          "value": "${PUBLIC_URL}",
+          "required": false
+        }
+      ],
+      "review": {
+        "manual": [
+          "首次安装需执行镜像内 CLI 或按镜像文档创建管理员"
+        ],
+        "notes": [
+          "SQLite；首次启动后按 wallabag 文档完成安装。"
+        ]
+      }
+    },
+    "drawio": {
+      "review": {
+        "notes": [
+          "静态前端，无持久化。"
+        ]
+      }
+    },
+    "jackett": {
+      "review": {
+        "notes": [
+          "/config 与 /downloads 持久化；首次在 Web 配置索引器。"
+        ]
+      }
+    },
+    "xteve": {
+      "review": {
+        "notes": [
+          "/config 与 /data 持久化；首次在 Web 配置 M3U/XMLTV。"
+        ]
+      }
+    },
+    "one-api": {
+      "review": {
+        "notes": [
+          "SQLite；首次登录 root/123456，应立即改密。"
+        ]
+      }
+    },
+    "code-server": {
+      "ports": [
+        {
+          "name": "http",
+          "container": 8443,
+          "proto": "tcp",
+          "primary": true
+        }
+      ],
+      "volumes": [
+        {
+          "container": "/home/coder",
+          "name": "home",
+          "primary": true
+        }
+      ],
+      "env": [
+        {
+          "key": "PASSWORD",
+          "value": "${SECRET:code_password}",
+          "required": true
+        }
+      ],
+      "review": {
+        "notes": [
+          "密码由安装器生成并保存在 secrets 文件；也可改 /etc/config/code-server 的 env_file。"
+        ]
+      }
+    },
+    "dpanel": {
+      "docker_sock": true,
+      "review": {
+        "notes": [
+          "需要 Docker socket；/dpanel 持久化。"
+        ]
+      }
+    },
+    "shiori": {
+      "env": [
+        {
+          "key": "SHIORI_HTTP_SECRET_KEY",
+          "value": "${SECRET:http_secret}",
+          "required": false
+        }
+      ],
+      "review": {
+        "notes": [
+          "SQLite；建议保留自动生成的 HTTP secret。"
+        ]
+      }
+    },
+    "jellyseerr": {
+      "review": {
+        "notes": [
+          "/app/config 持久化；首次进入设置向导连接 Jellyfin/Plex。"
+        ]
+      }
+    },
+    "audiobookshelf": {
+      "review": {
+        "notes": [
+          "/audiobooks、/config、/metadata 持久化；有声书目录映射到 /mnt/audiobooks。"
+        ]
+      }
+    },
+    "calibre-web": {
+      "review": {
+        "notes": [
+          "书库 /books 映射到 /mnt/books；/config 持久化。"
+        ]
+      }
+    },
+    "homarr": {
+      "review": {
+        "notes": [
+          "内置 Redis 与 SQLite；/appdata 持久化。"
+        ]
+      }
+    },
+    "openwebui": {
+      "env": [
+        {
+          "key": "WEBUI_URL",
+          "value": "${PUBLIC_URL}",
+          "required": false
+        }
+      ],
+      "review": {
+        "notes": [
+          "轻量版，无 torch/RAG；/app/backend/data 持久化。"
+        ]
+      }
+    },
+    "kodexplorer": {
+      "ports": [
+        {
+          "name": "http",
+          "container": 8080,
+          "proto": "tcp",
+          "primary": true
+        }
+      ],
+      "review": {
+        "notes": [
+          "PHP 应用；/var/www/html/data 持久化。"
+        ]
+      }
+    },
+    "homeassistant": {
+      "host_network": true,
+      "review": {
+        "notes": [
+          "host 网络以支持 mDNS/发现；/config 持久化。"
+        ]
+      }
+    },
+    "sonarr": {
+      "review": {
+        "notes": [
+          "/config、/tv 持久化；/tv 映射到 /mnt/tv。"
+        ]
+      }
+    },
+    "radarr": {
+      "review": {
+        "notes": [
+          "/config、/movies 持久化；/movies 映射到 /mnt/movies。"
+        ]
+      }
+    },
+    "tautulli": {
+      "review": {
+        "notes": [
+          "/config 持久化；首次在 Web 配置 Plex。"
+        ]
+      }
+    },
+    "jellystat": {
+      "sidecars": [
+        {
+          "template": "postgres",
+          "name": "pg",
+          "db_user": "jellystat",
+          "db_name": "jellystat"
+        }
+      ],
+      "review": {
+        "notes": [
+          "Jellystat 需要 PostgreSQL；安装器会启动 sidecar。首次在 Web 配置 Jellyfin。"
+        ]
+      }
+    },
+    "stirling-pdf": {
+      "review": {
+        "notes": [
+          "/configs 持久化；无外部数据库。"
+        ]
+      }
+    },
+    "wizarr": {
+      "review": {
+        "notes": [
+          "SQLite；/data 持久化；首次在 Web 完成设置。"
+        ]
+      }
+    },
+    "gitea": {
+      "ports": [
+        {
+          "name": "http",
+          "container": 3000,
+          "proto": "tcp",
+          "primary": true
+        },
+        {
+          "name": "ssh",
+          "container": 22,
+          "proto": "tcp",
+          "primary": false
+        }
+      ],
+      "volumes": [
+        {
+          "container": "/data",
+          "name": "data",
+          "primary": true
+        },
+        {
+          "container": "/etc/gitea",
+          "name": "config",
+          "primary": false
+        }
+      ],
+      "review": {
+        "notes": [
+          "SQLite；入口脚本生成 app.ini；/data 与 /etc/gitea 持久化。"
+        ]
+      }
+    },
+    "miniflux": {
+      "sidecars": [
+        {
+          "template": "postgres",
+          "name": "pg",
+          "db_user": "miniflux",
+          "db_name": "miniflux"
+        }
+      ],
+      "review": {
+        "notes": [
+          "仅支持 PostgreSQL；安装器启动 sidecar 并执行迁移。管理员 admin，密码在 secrets 文件。"
+        ]
+      }
+    },
+    "portainer": {
+      "docker_sock": true,
+      "review": {
+        "notes": [
+          "需要 Docker socket；/data 持久化；首次进入创建管理员。"
+        ]
+      }
+    },
+    "nginx-proxy-manager": {
+      "ports": [
+        {
+          "name": "http",
+          "container": 80,
+          "proto": "tcp",
+          "primary": false
+        },
+        {
+          "name": "admin",
+          "container": 81,
+          "proto": "tcp",
+          "host": 81,
+          "primary": true
+        },
+        {
+          "name": "https",
+          "container": 443,
+          "proto": "tcp",
+          "primary": false
+        }
+      ],
+      "volumes": [
+        {
+          "container": "/data",
+          "name": "data",
+          "primary": true
+        },
+        {
+          "container": "/etc/letsencrypt",
+          "name": "letsencrypt",
+          "primary": false
+        }
+      ],
+      "review": {
+        "notes": [
+          "管理端口 81 固定；80/443 默认自动分配高位端口（80/443 由 Caddy 持有）。首次登录 admin@example.com / changeme，应立即修改。"
+        ]
+      },
+      "fixed_ports": [
+        81
+      ]
+    },
+    "firefly-iii": {
+      "ports": [
+        {
+          "name": "http",
+          "container": 8080,
+          "proto": "tcp",
+          "primary": true
+        }
+      ],
+      "volumes": [
+        {
+          "container": "/var/www/html/storage",
+          "name": "storage",
+          "primary": true
+        }
+      ],
+      "review": {
+        "notes": [
+          "SQLite 自动迁移/种子；首次进入安装向导。"
+        ]
+      }
+    },
+    "phpmyadmin": {
+      "ports": [
+        {
+          "name": "http",
+          "container": 8080,
+          "proto": "tcp",
+          "primary": true
+        }
+      ],
+      "env": [
+        {
+          "key": "PMA_ARBITRARY",
+          "value": "1",
+          "required": false
+        }
+      ],
+      "review": {
+        "manual": [
+          "在登录页填写外部 MySQL/MariaDB 主机、用户和密码"
+        ],
+        "notes": [
+          "不内置数据库；PMA_ARBITRARY=1 允许连接任意服务器。"
+        ]
+      }
+    },
+    "freshrss": {
+      "review": {
+        "notes": [
+          "SQLite；首次安装 admin/adminadmin，应立即改密。"
+        ]
+      }
+    },
+    "prowlarr": {
+      "review": {
+        "notes": [
+          "/config 持久化；首次在 Web 配置索引器。"
+        ]
+      }
+    },
+    "bazarr": {
+      "review": {
+        "notes": [
+          "/config、/movies、/tv 持久化；媒体目录映射到 /mnt。"
+        ]
+      }
+    },
+    "homer": {
+      "volumes": [
+        {
+          "container": "/usr/share/nginx/html/assets/config.yml",
+          "name": "config",
+          "primary": true,
+          "type": "file",
+          "seed": "config.yml"
+        }
+      ],
+      "review": {
+        "notes": [
+          "默认 config.yml 由安装器生成；编辑 /srv/homer/config.yml 后重启。"
+        ]
+      }
+    },
+    "paperless-ngx": {
+      "env": [
+        {
+          "key": "PAPERLESS_ADMIN_USER",
+          "value": "admin",
+          "required": false
+        },
+        {
+          "key": "PAPERLESS_ADMIN_PASSWORD",
+          "value": "${SECRET:admin_password}",
+          "required": true
+        }
+      ],
+      "review": {
+        "notes": [
+          "单容器内含 redis/celery worker/beat/consumer；SQLite 默认；/data 持久化。"
+        ]
+      }
+    },
+    "dashy": {
+      "volumes": [
+        {
+          "container": "/usr/share/nginx/html/conf.yml",
+          "name": "config",
+          "primary": true,
+          "type": "file",
+          "seed": "conf.yml"
+        }
+      ],
+      "review": {
+        "notes": [
+          "默认 conf.yml 由安装器生成；编辑 /srv/dashy/conf.yml 后重启。"
+        ]
+      }
+    },
+    "watchtower": {
+      "docker_sock": true,
+      "command": [
+        "--label-enable",
+        "--interval",
+        "3600"
+      ],
+      "review": {
+        "notes": [
+          "只更新带 com.centurylinklabs.watchtower.enable=true 的容器；--label-enable 避免误更新。"
+        ]
+      }
+    },
+    "changedetection": {
+      "shm_size": "1g",
+      "review": {
+        "notes": [
+          "--shm-size=1g；/datastore 持久化；默认 Firefox/geckodriver。"
+        ]
+      }
+    },
+    "caddy": {
+      "ports": [
+        {
+          "name": "http",
+          "container": 80,
+          "proto": "tcp",
+          "host": 80,
+          "primary": true
+        },
+        {
+          "name": "https",
+          "container": 443,
+          "proto": "tcp",
+          "host": 443,
+          "primary": false
+        },
+        {
+          "name": "alt",
+          "container": 8080,
+          "proto": "tcp",
+          "host": 8080,
+          "primary": false
+        }
+      ],
+      "volumes": [
+        {
+          "container": "/etc/caddy/Caddyfile",
+          "name": "config",
+          "primary": true,
+          "type": "file",
+          "seed": "Caddyfile"
+        },
+        {
+          "container": "/data",
+          "name": "data",
+          "primary": false
+        },
+        {
+          "container": "/config",
+          "name": "state",
+          "primary": false
+        }
+      ],
+      "review": {
+        "notes": [
+          "固定宿主端口 80/443/8080；默认 Caddyfile 只监听 8080，生产请替换 /srv/caddy/Caddyfile。"
+        ]
+      },
+      "needs_config": true
+    },
+    "dozzle": {
+      "docker_sock": true,
+      "docker_sock_ro": true,
+      "review": {
+        "notes": [
+          "需要 Docker socket（只读）；日志面板。"
+        ]
+      }
+    },
+    "ntfy": {
+      "command": [
+        "serve",
+        "--listen-http",
+        "0.0.0.0:8080"
+      ],
+      "review": {
+        "notes": [
+          "必须用 --listen-http 0.0.0.0:8080；/var/cache/ntfy 与 /etc/ntfy 持久化。"
+        ]
+      },
+      "ports": [
+        {
+          "name": "http",
+          "container": 8080,
+          "proto": "tcp",
+          "primary": true
+        }
+      ]
+    },
+    "gotify": {
+      "env": [
+        {
+          "key": "GOTIFY_SERVER_PORT",
+          "value": "8080",
+          "required": false
+        },
+        {
+          "key": "GOTIFY_DATABASE_DIALECT",
+          "value": "sqlite3",
+          "required": false
+        },
+        {
+          "key": "GOTIFY_DATABASE_CONNECTION",
+          "value": "/data/gotify.db",
+          "required": false
+        }
+      ],
+      "review": {
+        "notes": [
+          "SQLite；首次登录 admin 与初始密码见镜像日志，应立即修改。"
+        ]
+      }
+    },
+    "node-exporter": {
+      "host_network": true,
+      "command": [
+        "--path.procfs=/host/proc",
+        "--path.sysfs=/host/sys",
+        "--path.rootfs=/rootfs"
+      ],
+      "volumes": [
+        {
+          "container": "/host/proc",
+          "name": "proc",
+          "host": "/proc",
+          "primary": true,
+          "mode": "ro"
+        },
+        {
+          "container": "/host/sys",
+          "name": "sys",
+          "host": "/sys",
+          "primary": false,
+          "mode": "ro"
+        },
+        {
+          "container": "/rootfs",
+          "name": "rootfs",
+          "host": "/",
+          "primary": false,
+          "mode": "ro"
+        }
+      ],
+      "review": {
+        "notes": [
+          "host 网络；必须挂载宿主 /proc、/sys、/。"
+        ]
+      }
+    },
+    "prometheus": {
+      "volumes": [
+        {
+          "container": "/etc/prometheus/prometheus.yml",
+          "name": "config",
+          "primary": true,
+          "type": "file",
+          "seed": "prometheus.yml"
+        },
+        {
+          "container": "/prometheus",
+          "name": "data",
+          "primary": false
+        }
+      ],
+      "review": {
+        "notes": [
+          "默认 prometheus.yml 只抓取自己；编辑 /srv/prometheus/prometheus.yml 后重启。"
+        ]
+      },
+      "needs_config": true
+    },
+    "pihole": {
+      "host_network": true,
+      "shm_size": "1g",
+      "ports": [
+        {
+          "name": "dns-udp",
+          "container": 53,
+          "proto": "udp",
+          "primary": false
+        },
+        {
+          "name": "dns",
+          "container": 53,
+          "proto": "tcp",
+          "primary": false
+        },
+        {
+          "name": "http",
+          "container": 80,
+          "proto": "tcp",
+          "primary": true
+        }
+      ],
+      "cap_add": [
+        "NET_ADMIN"
+      ],
+      "review": {
+        "manual": [
+          "确认宿主 53 端口未被 dnsmasq 占用（或先停用 dnsmasq）"
+        ],
+        "notes": [
+          "host 网络；FTL 6.8；/etc/pihole 持久化；首启建 gravity.db。"
+        ]
+      },
+      "needs_config": true
+    },
+    "gatus": {
+      "volumes": [
+        {
+          "container": "/config/config.yaml",
+          "name": "config",
+          "primary": true,
+          "type": "file",
+          "seed": "config.yaml"
+        }
+      ],
+      "review": {
+        "notes": [
+          "默认 config.yaml 只监控自己；编辑 /srv/gatus/config.yaml 后重启。"
+        ]
+      },
+      "needs_config": true
+    },
+    "alertmanager": {
+      "ports": [
+        {
+          "name": "http",
+          "container": 9093,
+          "proto": "tcp",
+          "primary": true
+        },
+        {
+          "name": "gossip",
+          "container": 9094,
+          "proto": "tcp",
+          "primary": false
+        }
+      ],
+      "volumes": [
+        {
+          "container": "/etc/alertmanager/alertmanager.yml",
+          "name": "config",
+          "primary": true,
+          "type": "file",
+          "seed": "alertmanager.yml"
+        },
+        {
+          "container": "/alertmanager",
+          "name": "data",
+          "primary": false,
+          "owner": "65534:65534"
+        }
+      ],
+      "review": {
+        "notes": [
+          "默认配置无接收器；编辑 /srv/alertmanager/alertmanager.yml 后重启。"
+        ]
+      },
+      "needs_config": true
+    },
+    "postgres": {
+      "env": [
+        {
+          "key": "POSTGRES_USER",
+          "value": "app",
+          "required": true
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "${SECRET:pg_password}",
+          "required": true
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "appdb",
+          "required": true
+        }
+      ],
+      "review": {
+        "notes": [
+          "独立数据库服务；数据目录 /srv/postgres/data，UID 26。"
+        ]
+      }
+    },
+    "redis": {
+      "env": [
+        {
+          "key": "REDIS_PASSWORD",
+          "value": "${SECRET:redis_password}",
+          "required": true
+        }
+      ],
+      "review": {
+        "notes": [
+          "AOF+RDB；UID/GID 998:996；默认 protected-mode no。"
+        ]
+      }
+    },
+    "mosquitto": {
+      "volumes": [
+        {
+          "container": "/mosquitto/config/mosquitto.conf",
+          "name": "config",
+          "primary": true,
+          "type": "file",
+          "seed": "mosquitto.conf"
+        },
+        {
+          "container": "/mosquitto/data",
+          "name": "data",
+          "primary": false
+        }
+      ],
+      "review": {
+        "notes": [
+          "默认匿名，仅适合可信内网；公网必须配置 passwd。"
+        ]
+      }
+    },
+    "mariadb": {
+      "env": [
+        {
+          "key": "MYSQL_ROOT_PASSWORD",
+          "value": "${SECRET:mysql_root_password}",
+          "required": true
+        },
+        {
+          "key": "MYSQL_DATABASE",
+          "value": "appdb",
+          "required": true
+        },
+        {
+          "key": "MYSQL_USER",
+          "value": "app",
+          "required": true
+        },
+        {
+          "key": "MYSQL_PASSWORD",
+          "value": "${SECRET:mysql_password}",
+          "required": true
+        }
+      ],
+      "review": {
+        "notes": [
+          "root 仅 localhost；UID/GID 27；/var/lib/mysql 持久化。"
+        ]
+      }
+    },
+    "node-red": {
+      "review": {
+        "notes": [
+          "Node 24；/data 持久化；palette 原生依赖需自行加编译工具。"
+        ]
+      }
+    },
+    "grafana": {
+      "env": [
+        {
+          "key": "GF_SECURITY_ADMIN_PASSWORD",
+          "value": "${SECRET:admin_password}",
+          "required": true
+        }
+      ],
+      "review": {
+        "notes": [
+          "默认 admin；密码由安装器生成，保存在 secrets 文件。"
+        ]
+      }
+    },
+    "memcached": {
+      "env": [
+        {
+          "key": "MEMCACHED_MEMORY",
+          "value": "128",
+          "required": false
+        }
+      ],
+      "review": {
+        "notes": [
+          "无认证、无持久化，仅限可信内网。"
+        ]
+      }
+    },
+    "homebridge": {
+      "host_network": true,
+      "review": {
+        "notes": [
+          "host 网络以支持 mDNS；UI 8581，HomeKit 51826；默认配对码 031-45-154 应修改。"
+        ]
+      }
+    },
+    "rest-server": {
+      "review": {
+        "manual": [
+          "首次启动后执行 create_user 创建备份用户"
+        ],
+        "notes": [
+          "/data 持久化；默认 Basic 认证；无 TLS。"
+        ]
+      }
+    },
+    "actual-budget": {
+      "review": {
+        "notes": [
+          "SQLite；/data 持久化；无内置 TLS。"
+        ]
+      }
+    },
+    "minio": {
+      "env": [
+        {
+          "key": "MINIO_ROOT_USER",
+          "value": "istoreadmin",
+          "required": true
+        },
+        {
+          "key": "MINIO_ROOT_PASSWORD",
+          "value": "${SECRET:minio_password}",
+          "required": true
+        }
+      ],
+      "review": {
+        "notes": [
+          "必须设置根凭据；9000 API，9001 控制台；/data 持久化。"
+        ]
+      }
+    },
+    "homebox": {
+      "review": {
+        "notes": [
+          "SQLite；/data 持久化；默认允许注册。"
+        ]
+      }
+    },
+    "nocodb": {
+      "review": {
+        "notes": [
+          "SQLite；/data 持久化；NC_DB 用 ?d= 指向 SQLite。"
+        ]
+      }
+    },
+    "apprise-api": {
+      "review": {
+        "notes": [
+          "/config、/attach、/plugin 持久化；默认无认证/无 TLS。"
+        ]
+      }
+    },
+    "mealie": {
+      "review": {
+        "notes": [
+          "SQLite；/app/data 持久化；HEIF/HEIC 不支持。"
+        ]
+      }
+    },
+    "chinesesubfinder": {
+      "review": {
+        "notes": [
+          "Lite 模式内置 ffmpeg；/config 与 /media 持久化；/media 映射到 /mnt/media。"
+        ]
+      }
+    },
+    "lanraragi": {
+      "review": {
+        "notes": [
+          "内置 Redis；content/thumb/database 三卷持久化；默认无认证。"
+        ]
+      }
+    },
+    "owntone": {
+      "host_network": true,
+      "review": {
+        "notes": [
+          "host 网络以支持 AirPlay/mDNS；音乐目录 /srv/music 映射到 /mnt/music；UID 998。"
+        ]
+      }
+    },
+    "mymind": {
+      "review": {
+        "notes": [
+          "纯静态；无后端、无持久化，数据在浏览器 LocalStorage。"
+        ]
+      }
+    },
+    "webvirtcloud": {
+      "review": {
+        "notes": [
+          "SQLite + secret_key 在 data 卷；noVNC 需要 WebSocket 反代。"
+        ]
+      }
+    },
+    "penpot-backend": {
+      "network_group": "penpot",
+      "sidecars": [
+        {
+          "template": "postgres",
+          "name": "postgres",
+          "full_name": "penpot-postgres",
+          "db_user": "penpot",
+          "db_name": "penpot"
+        },
+        {
+          "template": "redis",
+          "name": "redis",
+          "full_name": "penpot-redis"
+        }
+      ],
+      "review": {
+        "notes": [
+          "后端只在 istore-penpot 网络内监听 6060，不发布宿主端口；对外入口是 penpot-frontend:9001。",
+          "需要 PostgreSQL + Redis；sidecar 与 penpot-frontend 共用 istore-penpot 网络。"
+        ]
+      },
+      "ports": []
+    },
+    "penpot-frontend": {
+      "network_group": "penpot",
+      "requires_app": "penpot-backend",
+      "ports": [
+        {
+          "name": "http",
+          "container": 8080,
+          "proto": "tcp",
+          "host": 9001,
+          "primary": true
+        }
+      ],
+      "review": {
+        "notes": [
+          "必须与 penpot-backend 一起使用；对外端口 9001（固定）。"
+        ]
+      },
+      "needs_config": true
+    },
+    "hermes": {
+      "env": [
+        {
+          "key": "HERMES_WEBUI_PASSWORD",
+          "value": "${SECRET:admin_password}",
+          "required": false
+        }
+      ],
+      "review": {
+        "notes": [
+          "默认无密码；安装器生成 WebUI 密码；HEIC 不支持，computer_use 不可用。"
+        ]
+      }
+    },
+    "zigbee2mqtt": {
+      "devices": [
+        "/dev/ttyACM0:/dev/ttyACM0"
+      ],
+      "group_add": [
+        "dialout"
+      ],
+      "env": [
+        {
+          "key": "Z2M_ONBOARD_FORCE_RUN",
+          "value": "true",
+          "required": false
+        }
+      ],
+      "review": {
+        "manual": [
+          "把 USB 协调器设备路径改为实际 /dev/serial/by-id/...；无协调器时容器会退出"
+        ],
+        "notes": [
+          "需 --device 与 dialout 组；首次进入 onboarding。"
+        ]
+      }
+    },
+    "smartctl-exporter": {
+      "ports": [
+        {
+          "name": "metrics",
+          "container": 9633,
+          "proto": "tcp",
+          "primary": true
+        }
+      ],
+      "devices": [
+        "/dev/nvme0:/dev/nvme0",
+        "/dev/nvme0n1:/dev/nvme0n1"
+      ],
+      "cap_add": [
+        "SYS_RAWIO",
+        "SYS_ADMIN"
+      ],
+      "volumes": [
+        {
+          "container": "/run/udev",
+          "name": "udev",
+          "host": "/run/udev",
+          "primary": true,
+          "mode": "ro"
+        }
+      ],
+      "command": [
+        "--smartctl.device=/dev/nvme0"
+      ],
+      "review": {
+        "manual": [
+          "按实际磁盘替换 --device 与 --smartctl.device（SATA 为 /dev/sdX）"
+        ],
+        "notes": [
+          "需要 SYS_RAWIO；NVMe 建议 SYS_ADMIN 与 /run/udev 只读。"
+        ]
+      }
+    },
+    "sftpgo": {
+      "ports": [
+        {
+          "name": "http",
+          "container": 8080,
+          "proto": "tcp",
+          "primary": true
+        },
+        {
+          "name": "sftp",
+          "container": 2022,
+          "proto": "tcp",
+          "host": 2022,
+          "primary": false
+        }
+      ],
+      "review": {
+        "notes": [
+          "首次安装页创建管理员；默认无 TLS；2022 为固定 SFTP 端口。"
+        ]
+      }
+    },
+    "bookstack": {
+      "sidecars": [
+        {
+          "template": "mariadb",
+          "name": "db",
+          "db_user": "bookstack",
+          "db_name": "bookstack"
+        }
+      ],
+      "review": {
+        "manual": [
+          "首次用 docker exec 执行 bookstack:create-admin 创建管理员"
+        ],
+        "notes": [
+          "必须 MariaDB；app.key 在 storage 卷；安装器启动 sidecar。"
+        ]
+      }
+    },
+    "vikunja": {
+      "env": [
+        {
+          "key": "VIKUNJA_SERVICE_PUBLICURL",
+          "value": "${PUBLIC_URL}/",
+          "required": true
+        }
+      ],
+      "review": {
+        "notes": [
+          "SQLite；files 与 db 两卷持久化；首次在 Web 注册。"
+        ]
+      }
+    },
+    "piwigo": {
+      "sidecars": [
+        {
+          "template": "mariadb",
+          "name": "db",
+          "db_user": "piwigo",
+          "db_name": "piwigo"
+        }
+      ],
+      "env": [
+        {
+          "key": "PIWIGO_ADMIN_USER",
+          "value": "admin",
+          "required": false
+        },
+        {
+          "key": "PIWIGO_ADMIN_PASSWORD",
+          "value": "${SECRET:admin_password}",
+          "required": true
+        },
+        {
+          "key": "PIWIGO_ADMIN_EMAIL",
+          "value": "admin@example.com",
+          "required": false
+        }
+      ],
+      "review": {
+        "notes": [
+          "必须 MariaDB；首次自动执行 install.php；管理员密码在 secrets 文件。"
+        ]
+      }
+    },
+    "go2rtc": {
+      "ports": [
+        {
+          "name": "http",
+          "container": 1984,
+          "proto": "tcp",
+          "primary": true
+        },
+        {
+          "name": "rtsp",
+          "container": 8554,
+          "proto": "tcp",
+          "host": 8554,
+          "primary": false
+        },
+        {
+          "name": "webrtc",
+          "container": 8555,
+          "proto": "tcp",
+          "host": 8555,
+          "primary": false
+        }
+      ],
+      "review": {
+        "manual": [
+          "在 Web 中添加摄像头流"
+        ],
+        "notes": [
+          "默认无认证；8554/8555 固定端口。"
+        ]
+      }
+    },
+    "scrutiny": {
+      "devices": [
+        "/dev/nvme0:/dev/nvme0",
+        "/dev/nvme0n1:/dev/nvme0n1"
+      ],
+      "cap_add": [
+        "SYS_RAWIO",
+        "SYS_ADMIN"
+      ],
+      "volumes": [
+        {
+          "container": "/run/udev",
+          "name": "udev",
+          "host": "/run/udev",
+          "primary": false,
+          "mode": "ro"
+        },
+        {
+          "container": "/opt/scrutiny/config",
+          "name": "config",
+          "primary": true
+        }
+      ],
+      "review": {
+        "manual": [
+          "按实际磁盘替换 --device；collector 需手动或 cron 触发"
+        ],
+        "notes": [
+          "SQLite 历史；需要 SYS_RAWIO。"
+        ]
+      }
+    },
+    "headscale": {
+      "env": [
+        {
+          "key": "HEADSCALE_SERVER_URL",
+          "value": "${PUBLIC_URL}",
+          "required": true
+        }
+      ],
+      "review": {
+        "manual": [
+          "把 HEADSCALE_SERVER_URL 改成浏览器/客户端可访问的 HTTPS 域名"
+        ],
+        "notes": [
+          "无 Web UI；需 CLI 建用户与 preauth key；公网需 HTTPS 反代。"
+        ]
+      },
+      "needs_config": true
+    },
+    "backrest": {
+      "review": {
+        "manual": [
+          "首次在 Web UI 创建账号与仓库"
+        ],
+        "notes": [
+          "内置 restic；/data、/config、/cache 持久化。"
+        ]
+      }
+    },
+    "authelia": {
+      "env": [
+        {
+          "key": "AUTH_DOMAIN",
+          "value": "${HOST_IP}",
+          "required": true
+        },
+        {
+          "key": "AUTH_URL",
+          "value": "${PUBLIC_URL}",
+          "required": true
+        },
+        {
+          "key": "AUTH_DEFAULT_REDIRECT_URL",
+          "value": "${PUBLIC_URL}",
+          "required": true
+        },
+        {
+          "key": "ADMIN_USER",
+          "value": "admin",
+          "required": false
+        },
+        {
+          "key": "ADMIN_PASSWORD",
+          "value": "${SECRET:admin_password}",
+          "required": true
+        }
+      ],
+      "review": {
+        "manual": [
+          "生产环境必须改成真实域名 + HTTPS 反代；cookie domain 不能是 localhost"
+        ],
+        "notes": [
+          "entrypoint 自动生成配置、用户库和密钥。"
+        ]
+      },
+      "needs_config": true
+    },
+    "ente-server": {
+      "network_group": "ente",
+      "sidecars": [
+        {
+          "template": "postgres",
+          "name": "pg",
+          "full_name": "ente-pg",
+          "db_user": "pguser",
+          "db_name": "ente_db"
+        },
+        {
+          "template": "minio",
+          "name": "minio",
+          "full_name": "ente-minio"
+        }
+      ],
+      "review": {
+        "manual": [
+          "minio 启动后需用 mc 创建 b2-eu-cen 等 bucket"
+        ],
+        "notes": [
+          "PostgreSQL + MinIO sidecar；/data 必须持久化，museum.yaml 丢失后旧数据无法解密。"
+        ]
+      }
+    },
+    "ente-web": {
+      "network_group": "ente",
+      "requires_app": "ente-server",
+      "ports": [
+        {
+          "name": "http",
+          "container": 3000,
+          "proto": "tcp",
+          "primary": true
+        }
+      ],
+      "env": [
+        {
+          "key": "ENTE_API_ORIGIN",
+          "value": "__UNSET__",
+          "required": true
+        }
+      ],
+      "review": {
+        "manual": [
+          "把 ENTE_API_ORIGIN 设为 ente-server 的公网/宿主地址（默认 http://<host>:18120）"
+        ],
+        "notes": [
+          "静态导出；只暴露 3000；必须与 ente-server 一起使用。"
+        ]
+      }
+    },
+    "autobrr": {
+      "review": {
+        "notes": [
+          "默认无认证；需自配 IRC/下载器；/config 持久化。"
+        ]
+      }
+    },
+    "matomo": {
+      "sidecars": [
+        {
+          "template": "mariadb",
+          "name": "db",
+          "full_name": "matomo-db",
+          "db_user": "matomo",
+          "db_name": "matomo"
+        }
+      ],
+      "ports": [
+        {
+          "name": "http",
+          "container": 80,
+          "proto": "tcp",
+          "primary": true
+        }
+      ],
+      "review": {
+        "manual": [
+          "在 Web 安装向导中填写数据库主机 matomo-db、库/用户 matomo 和 secrets 文件中的密码"
+        ],
+        "notes": [
+          "必须 MariaDB；安装器启动 sidecar；归档需 cron。"
+        ]
+      }
+    },
+    "woodpecker-server": {
+      "network_group": "woodpecker",
+      "env": [
+        {
+          "key": "WOODPECKER_HOST",
+          "value": "${PUBLIC_URL}",
+          "required": true
+        },
+        {
+          "key": "WOODPECKER_OPEN",
+          "value": "true",
+          "required": false
+        },
+        {
+          "key": "WOODPECKER_ADMIN",
+          "value": "admin",
+          "required": false
+        },
+        {
+          "key": "WOODPECKER_GITEA",
+          "value": "true",
+          "required": false
+        },
+        {
+          "key": "WOODPECKER_GITEA_URL",
+          "value": "__UNSET__",
+          "required": true
+        },
+        {
+          "key": "WOODPECKER_GITEA_CLIENT",
+          "value": "__UNSET__",
+          "required": true
+        },
+        {
+          "key": "WOODPECKER_GITEA_SECRET",
+          "value": "__UNSET__",
+          "required": true
+        }
+      ],
+      "review": {
+        "manual": [
+          "在 /etc/istore-loong64/env/woodpecker-server.env 填写 Gitea URL/Client/Secret"
+        ],
+        "notes": [
+          "必须配置 forge，否则启动失败；自动生成 agent/grpc secret。"
+        ]
+      }
+    },
+    "woodpecker-agent": {
+      "network_group": "woodpecker",
+      "requires_app": "woodpecker-server",
+      "docker_sock": true,
+      "env": [
+        {
+          "key": "WOODPECKER_SERVER",
+          "value": "woodpecker-server:9000",
+          "required": true
+        },
+        {
+          "key": "WOODPECKER_AGENT_SECRET",
+          "value": "__UNSET__",
+          "required": true
+        },
+        {
+          "key": "WOODPECKER_BACKEND",
+          "value": "docker",
+          "required": false
+        },
+        {
+          "key": "WOODPECKER_MAX_WORKFLOWS",
+          "value": "1",
+          "required": false
+        }
+      ],
+      "review": {
+        "manual": [
+          "从 woodpecker-server 的 /var/lib/woodpecker/agent-secret 读取 secret 并写入 env 文件"
+        ],
+        "notes": [
+          "等同宿主 root；只接可信仓库。"
+        ]
+      }
+    },
+    "metube": {
+      "env": [
+        {
+          "key": "PUID",
+          "value": "1111",
+          "required": false
+        },
+        {
+          "key": "PGID",
+          "value": "1111",
+          "required": false
+        }
+      ],
+      "review": {
+        "notes": [
+          "/downloads 映射到 /mnt/downloads。"
+        ]
+      }
+    },
+    "sabnzbd": {
+      "review": {
+        "notes": [
+          "/config 与 /downloads 持久化；/downloads 映射到 /mnt/downloads。"
+        ]
+      }
+    },
+    "mediamtx": {
+      "primary_port": 8888,
+      "fixed_ports": [
+        8554,
+        1935,
+        8889,
+        8890,
+        9997,
+        8000,
+        8001,
+        8189
+      ],
+      "review": {
+        "manual": [
+          "在 mediamtx.yml 中配置摄像头/发布源"
+        ],
+        "notes": [
+          "固定 RTP/RTSP/WebRTC 端口；无持久化。"
+        ]
+      }
+    },
+    "registry": {
+      "ports": [
+        {
+          "name": "http",
+          "container": 5000,
+          "proto": "tcp",
+          "host": 5000,
+          "primary": true
+        }
+      ],
+      "volumes": [
+        {
+          "container": "/var/lib/registry",
+          "name": "data",
+          "primary": true
+        },
+        {
+          "container": "/auth",
+          "name": "auth",
+          "primary": false
+        }
+      ],
+      "review": {
+        "notes": [
+          "首启生成 htpasswd；无 TLS；5000 固定端口。"
+        ]
+      }
+    },
+    "unpackerr": {
+      "env": [
+        {
+          "key": "UN_SONARR_0_URL",
+          "value": "__UNSET__",
+          "required": true
+        },
+        {
+          "key": "UN_SONARR_0_API_KEY",
+          "value": "__UNSET__",
+          "required": true
+        },
+        {
+          "key": "UN_SONARR_0_PATHS_0",
+          "value": "/downloads",
+          "required": false
+        }
+      ],
+      "review": {
+        "manual": [
+          "填写 Sonarr/Radarr URL 与 API key"
+        ],
+        "notes": [
+          "无 UI；/config 与 /downloads 持久化。"
+        ]
+      }
+    },
+    "pocket-id": {
+      "env": [
+        {
+          "key": "APP_URL",
+          "value": "${PUBLIC_URL}",
+          "required": true
+        }
+      ],
+      "review": {
+        "notes": [
+          "首启生成加密密钥；/data 持久化。"
+        ]
+      }
+    },
+    "readeck": {
+      "review": {
+        "notes": [
+          "CGO SQLite；/data 持久化；首启引导页。"
+        ]
+      }
+    },
+    "wg-easy": {
+      "ports": [
+        {
+          "name": "wireguard",
+          "container": 51820,
+          "proto": "udp",
+          "host": 51820,
+          "primary": false
+        },
+        {
+          "name": "http",
+          "container": 51821,
+          "proto": "tcp",
+          "host": 51821,
+          "primary": true
+        }
+      ],
+      "cap_add": [
+        "NET_ADMIN",
+        "SYS_MODULE"
+      ],
+      "sysctls": [
+        "net.ipv4.ip_forward=1",
+        "net.ipv4.conf.all.src_valid_mark=1"
+      ],
+      "volumes": [
+        {
+          "container": "/etc/wireguard",
+          "name": "wireguard",
+          "primary": true
+        },
+        {
+          "container": "/lib/modules",
+          "name": "modules",
+          "host": "/lib/modules",
+          "primary": false,
+          "mode": "ro"
+        }
+      ],
+      "env": [
+        {
+          "key": "INSECURE",
+          "value": "true",
+          "required": false
+        },
+        {
+          "key": "INIT_ENABLED",
+          "value": "true",
+          "required": false
+        },
+        {
+          "key": "INIT_USERNAME",
+          "value": "admin",
+          "required": false
+        },
+        {
+          "key": "INIT_PASSWORD",
+          "value": "${SECRET:admin_password}",
+          "required": true
+        },
+        {
+          "key": "INIT_HOST",
+          "value": "${HOST_IP}",
+          "required": true
+        },
+        {
+          "key": "INIT_PORT",
+          "value": "51820",
+          "required": false
+        },
+        {
+          "key": "DISABLE_IPV6",
+          "value": "true",
+          "required": false
+        }
+      ],
+      "review": {
+        "manual": [
+          "把 INIT_HOST 改成公网/VPN 可达地址；真实隧道未验"
+        ],
+        "notes": [
+          "需要 NET_ADMIN/SYS_MODULE 与 sysctls；51820/udp + 51821/tcp 固定端口。"
+        ]
+      }
+    },
+    "komga": {
+      "review": {
+        "notes": [
+          "/config 与 /data 持久化；/data 映射到 /mnt/comics；HEIF/JXL 封面不可用。"
+        ]
+      }
+    },
+    "karakeep": {
+      "primary_port": 3000,
+      "shm_size": "1g",
+      "sidecars": [
+        {
+          "template": "lbrowser",
+          "name": "lbrowser",
+          "enabled_variants": [
+            "public"
+          ]
+        }
+      ],
+      "review": {
+        "notes": [
+          "SQLite；/data 持久化；public 变体使用 LBrowser sidecar，private 变体内置浏览器；搜索需 Meilisearch。"
+        ]
+      },
+      "needs_config": true
+    },
+    "linkwarden": {
+      "primary_port": 3000,
+      "shm_size": "1g",
+      "sidecars": [
+        {
+          "template": "postgres",
+          "name": "pg",
+          "db_user": "linkwarden",
+          "db_name": "linkwarden"
+        },
+        {
+          "template": "lbrowser",
+          "name": "lbrowser",
+          "enabled_variants": [
+            "public"
+          ]
+        }
+      ],
+      "review": {
+        "notes": [
+          "PostgreSQL sidecar 必需；public 变体使用 LBrowser sidecar，private 变体内置浏览器；/data/data 持久化。"
+        ]
+      },
+      "needs_config": true
+    },
+    "joplin-server": {
+      "sidecars": [
+        {
+          "template": "postgres",
+          "name": "pg",
+          "db_user": "joplin",
+          "db_name": "joplin"
+        }
+      ],
+      "review": {
+        "notes": [
+          "PostgreSQL sidecar；/data 持久化；管理员 admin@localhost，密码在 secrets 文件；无 sharp/sqlite-vec/PM2。"
+        ]
+      }
+    }
+  }
+}

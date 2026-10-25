@@ -1,0 +1,54 @@
+name: memcached
+services:
+  memcached:
+    image: yunixintel/memcached:24.10-la5
+    container_name: memcached
+    ports:
+    - target: 11211
+      published: '18149'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      MEMCACHED_MEMORY: '128'
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: memcached
+  author: loong64-port
+  category: Networking
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：openEuler 1.6.42 包；默认 64MB/1024 连接。
+
+      缺失功能：无认证、无持久化，禁止公网暴露。
+
+      额外依赖：11211；用 MEMCACHED_* 调整。
+
+      镜像说明：1.6.42（openEuler 包）；默认 64MB/1024 连接/4 线程；`MEMCACHED_*` 可调；11211；无认证、无持久化，禁止公网暴露；UID/GID 998:996'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: openEuler 1.6.42 package; defaults to 64MB and 1024 connections.
+
+      Missing features: No auth and no persistence; never expose it publicly.
+
+      Extra dependencies: Port 11211; tune with MEMCACHED_*.
+
+      Image notes: 1.6.42（openEuler 包）；默认 64MB/1024 连接/4 线程；`MEMCACHED_*` 可调；11211；无认证、无持久化，禁止公网暴露；UID/GID 998:996'
+  developer: Memcached
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/memcached.png
+  tagline:
+    zh_cn: Memcached 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Memcached LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Memcached
+    en_us: Memcached
+  index: /
+  port_map: '18149'

@@ -1,0 +1,85 @@
+name: matomo
+services:
+  matomo:
+    image: yunixintel/matomo:24.10-la5
+    container_name: matomo
+    ports:
+    - target: 80
+      published: '18146'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /var/www/matomo/config
+    - type: bind
+      source: /DATA/AppData/$AppID/tmp
+      target: /var/www/matomo/tmp
+    depends_on:
+      matomo-mariadb:
+        condition: service_healthy
+    restart: unless-stopped
+  matomo-mariadb:
+    image: yunixintel/mariadb:loong64
+    container_name: matomo-mariadb
+    environment:
+      TZ: $TZ
+      MYSQL_ROOT_PASSWORD: change-me-root
+      MYSQL_DATABASE: matomo
+      MYSQL_USER: matomo
+      MYSQL_PASSWORD: matomopass
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/mariadb
+      target: /var/lib/mysql
+    restart: unless-stopped
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - mysqladmin ping -h 127.0.0.1 -uroot -p"$${MYSQL_ROOT_PASSWORD}" --silent
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 15s
+x-casaos:
+  architectures:
+  - loong64
+  main: matomo
+  author: loong64-port
+  category: Productivity
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：官方完整包；PHP 8.3 + nginx/php-fpm。
+
+      缺失功能：首次必须走 Web 安装向导；没有 CLI 安装器。
+
+      额外依赖：必须 MariaDB/MySQL；持久化 config/tmp；归档需 cron。
+
+      镜像说明：5.14.2；PHP 8.3 + nginx/php-fpm；必须 MariaDB/MySQL；`config`/`tmp` 持久化；80；安装向导建管理员'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Official full package; PHP 8.3 with nginx/php-fpm.
+
+      Missing features: First run requires the web installer; there is no CLI installer.
+
+      Extra dependencies: Requires MariaDB/MySQL; persist config/tmp; archiving needs cron.
+
+      Image notes: 5.14.2；PHP 8.3 + nginx/php-fpm；必须 MariaDB/MySQL；`config`/`tmp` 持久化；80；安装向导建管理员'
+  developer: Matomo
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/matomo.png
+  tagline:
+    zh_cn: Matomo 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Matomo LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Matomo
+    en_us: Matomo
+  index: /index.php
+  port_map: '18146'

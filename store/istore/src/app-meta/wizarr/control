@@ -1,0 +1,10 @@
+Package: app-meta-wizarr
+Version: 1.0.0-r20261025
+Depends: libc, luci-app-istore-loong64, docker-deps
+Provides: app-meta-wizarr-any
+SourceName: app-meta-wizarr
+Section: meta
+Architecture: all
+Installed-Size: 6
+Maintainer: yunix-intel
+Description:  Metadata for wizarr (LoongArch64)

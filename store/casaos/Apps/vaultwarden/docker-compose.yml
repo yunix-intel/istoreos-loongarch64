@@ -49,7 +49,7 @@ x-casaos:
 
       Image notes: Rust；镜像内置宿主 glibc 2.41 闭包（显式 loader 启动）'
   developer: Vaultwarden
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/vaultwarden/icon.png
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/vaultwarden.png
   tagline:
     zh_cn: Vaultwarden 的 LoongArch64 镜像，详见龙芯版说明。
     en_us: Vaultwarden LoongArch64 image; see the LoongArch notes.

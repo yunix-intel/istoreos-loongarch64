@@ -1,0 +1,104 @@
+{
+  "name": "woodpecker-agent",
+  "title": "Woodpecker CI (agent)",
+  "title_en": "Woodpecker CI (agent)",
+  "entry": "/cgi-bin/luci/admin/services/istore-loong64/app?app=woodpecker-agent",
+  "author": "yunix-intel",
+  "website": "https://github.com/yunix-intel/istoreos-loongarch64",
+  "version": "24.10-la5",
+  "release": 20261025,
+  "arch": [
+    "all"
+  ],
+  "description": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：Go CGO-free；UID 1114。</p><p>缺失功能：无业务端口，仅 3000 健康检查；必须能访问 Docker daemon。</p><p>额外依赖：挂载 docker.sock 并加匹配的 --group-add；agent secret 与 server 一致；等同宿主 root。</p><p>镜像说明：3.19.0；UID/GID 1114；需 `docker.sock` 与匹配的 `--group-add`；`WOODPECKER_AGENT_SECRET` 与 server 一致；3000 仅健康检查</p>",
+  "description_en": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: CGO-free Go binary; UID 1114.</p><p>Missing features: No service port; 3000 is health only; requires Docker daemon access.</p><p>Extra dependencies: Mount docker.sock and add the matching --group-add; share the agent secret with the server; equivalent to host root.</p><p>Image notes: 3.19.0；UID/GID 1114；需 `docker.sock` 与匹配的 `--group-add`；`WOODPECKER_AGENT_SECRET` 与 server 一致；3000 仅健康检查</p>",
+  "tags": [
+    "dev",
+    "tool"
+  ],
+  "depends": [
+    "luci-app-istore-loong64",
+    "docker-deps"
+  ],
+  "loong64": {
+    "schema": 1,
+    "source": "dockerfile+runbook+override",
+    "image": "yunixintel/woodpecker-agent:24.10-la5",
+    "default_variant": "public",
+    "variants": [
+      {
+        "name": "public",
+        "image": "yunixintel/woodpecker-agent:24.10-la5",
+        "store_url": "https://github.com/yunix-intel/istoreos-loongarch64"
+      }
+    ],
+    "compose": "",
+    "ports": [
+      {
+        "name": "http",
+        "container": 3000,
+        "host": 18196,
+        "proto": "tcp",
+        "primary": true
+      }
+    ],
+    "volumes": [],
+    "env": [
+      {
+        "key": "WOODPECKER_SERVER",
+        "value": "woodpecker-server:9000",
+        "required": true,
+        "variants": ""
+      },
+      {
+        "key": "WOODPECKER_AGENT_SECRET",
+        "value": "",
+        "required": true,
+        "variants": ""
+      },
+      {
+        "key": "WOODPECKER_BACKEND",
+        "value": "docker",
+        "required": false,
+        "variants": ""
+      },
+      {
+        "key": "WOODPECKER_MAX_WORKFLOWS",
+        "value": "1",
+        "required": false,
+        "variants": ""
+      }
+    ],
+    "sidecars": [],
+    "needs_host_network": false,
+    "needs_docker_sock": true,
+    "docker_sock_ro": true,
+    "devices": [],
+    "cap_add": [],
+    "group_add": [],
+    "sysctls": [],
+    "shm_size": "",
+    "user": "",
+    "command": [],
+    "restart": "unless-stopped",
+    "network_group": "woodpecker",
+    "requires_app": "woodpecker-server",
+    "health": {},
+    "review": {
+      "automation": "manual",
+      "manual": [
+        "从 woodpecker-server 的 /var/lib/woodpecker/agent-secret 读取 secret 并写入 env 文件"
+      ],
+      "notes": [
+        "等同宿主 root；只接可信仓库。",
+        "挂载宿主 Docker socket；容器可控制宿主 Docker，只应安装可信应用。",
+        "未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。"
+      ]
+    },
+    "category": "Developer",
+    "image_size": "",
+    "title": "Woodpecker CI (agent)",
+    "name": "woodpecker-agent",
+    "runtime": "APP_ID='woodpecker-agent'\nAPP_TITLE='Woodpecker CI (agent)'\nAPP_IMAGE='yunixintel/woodpecker-agent:24.10-la5'\nAPP_DEFAULT_VARIANT='public'\nAPP_VARIANTS='public|yunixintel/woodpecker-agent:24.10-la5|https://github.com/yunix-intel/istoreos-loongarch64'\nAPP_PORTS='http|3000|18196|tcp|1'\nAPP_VOLUMES=''\nAPP_ENV='WOODPECKER_SERVER|woodpecker-server:9000|1|\nWOODPECKER_AGENT_SECRET||1|\nWOODPECKER_BACKEND|docker|0|\nWOODPECKER_MAX_WORKFLOWS|1|0|'\nAPP_SIDECARS=''\nAPP_SIDECAR_COMMAND=''\nAPP_SIDECAR_ENV=''\nAPP_SIDECAR_VOLUMES=''\nAPP_SIDECAR_PORTS=''\nAPP_DEVICES=''\nAPP_CAPS=''\nAPP_GROUPS=''\nAPP_SYSCTLS=''\nAPP_HOST_NETWORK='0'\nAPP_DOCKER_SOCK='1'\nAPP_DOCKER_SOCK_RO='1'\nAPP_SHM=''\nAPP_USER=''\nAPP_COMMAND=''\nAPP_RESTART='unless-stopped'\nAPP_NETWORK_GROUP='woodpecker'\nAPP_REQUIRES_APP='woodpecker-server'\nAPP_HEALTH_PATH=''\nAPP_HEALTH_PORT=''\nAPP_MANUAL='从 woodpecker-server 的 /var/lib/woodpecker/agent-secret 读取 secret 并写入 env 文件'\nAPP_REVIEW='等同宿主 root；只接可信仓库。; 挂载宿主 Docker socket；容器可控制宿主 Docker，只应安装可信应用。; 未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。'\n"
+  }
+}

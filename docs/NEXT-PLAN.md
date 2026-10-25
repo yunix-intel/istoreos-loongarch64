@@ -263,8 +263,8 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 
 **启动条件：P1–P4 所有在研应用完成构建、测试、推送后，才启动本阶段。**
 范围包括 **CasaOS 私人商店、iStore 私人版（p1）、iStore 公开版（la5）**。
-在此之前不把“商店可直接安装”算作已完成；当前 CasaOS 私有商店只有 26 个镜像/18 个定义，
-公开 iStore 的 app-meta 仍指向上游镜像。
+在此之前不把“商店可直接安装”算作已完成；当前 CasaOS 私有商店已有 115 个定义，
+全部通过 CasaOS dry-run；公开 iStore 的 app-meta 生成器正在落盘。
 
 ### CasaOS
 
@@ -395,15 +395,16 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 
 ### 商店同步（最后阶段）
 
-- [ ] S-C1 CasaOS 全量应用定义（已导入 18 个并注入说明，其余 96 个待生成）
-- [ ] S-C2 CasaOS 端口与 overrides
-- [ ] S-C3 CasaOS 分类/图标/描述
-- [ ] S-C4 CasaOS 干净安装
-- [ ] S-C5 CasaOS 升级/卸载
-- [ ] S-C6 CasaOS 龙芯差异披露（114 个应用的文案已生成，待全部定义应用）
-- [ ] S-I1 iStore app-meta 镜像覆盖
-- [ ] S-I2 iStore 自定义 feed
-- [ ] S-I3 iStore 依赖/sidecar
-- [ ] S-I4 la5 公开版干净安装
-- [ ] S-I5 p1 私人版干净安装
-- [ ] S-I6 商店文档（114 个应用的 iStore 描述已生成，待接入 app-meta）
+- [x] S-C1 CasaOS 全量应用定义（115/115）
+- [x] S-C2 CasaOS 端口与 overrides（115 个端口；wg-easy 固定 51820/51821，多端口已覆盖）
+- [x] S-C3 CasaOS 分类/图标/描述（图标改用 selfh.st；115 个“龙芯版说明”）
+- [ ] S-C4 CasaOS 干净安装（115 个 dry-run 通过；joplin-server 单 compose + PG sidecar 已实测；其余按类别抽样）
+  - 2026-10-25：115 个定义已复制到 Host A `/opt/casaos-p3/appstore/loong64/Apps`（旧 18 个已备份）。AppManagement 内存缓存仍返回 18，需在 24h soak 结束后重启 `casaos-app-management` 才能在 UI 看到 115 个。
+- [ ] S-C5 CasaOS 升级/卸载/数据保留
+- [x] S-C6 CasaOS 龙芯差异披露（115 个应用，过期结论已回写）
+- [x] S-I1 iStore app-meta 镜像覆盖（public/private 各 115 个）
+- [x] S-I2 iStore 自定义 feed（`store/istore/feed/{public,private}`，含 Packages 与部署占位 isfeeds.conf）
+- [x] S-I3 iStore 依赖/sidecar（PostgreSQL/MariaDB/Redis/MinIO/LBrowser；安装器真实安装 joplin-server 通过）
+- [ ] S-I4 la5 公开版干净安装（需 iStoreOS 真机）
+- [ ] S-I5 p1 私人版干净安装（需 iStoreOS 真机；private 镜像只预载）
+- [x] S-I6 商店文档（115 个应用的 iStore 描述已接入 app-meta；详见 research/verify-istore.md）

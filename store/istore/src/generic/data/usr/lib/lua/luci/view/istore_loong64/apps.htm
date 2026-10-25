@@ -1,0 +1,84 @@
+<%+header%>
+<%
+local sys = require "luci.sys"
+local jsonc = require "luci.jsonc"
+local util = require "luci.util"
+local fs = require "nixio.fs"
+
+local function read_file(path)
+	local f = io.open(path, "r")
+	if not f then return nil end
+	local s = f:read("*a")
+	f:close()
+	return s
+end
+
+local apps = {}
+local p = io.popen("ls /usr/lib/opkg/meta/*.json 2>/dev/null")
+if p then
+	for path in p:lines() do
+		local raw = read_file(path)
+		if raw then
+			local ok, meta = pcall(jsonc.parse, raw)
+			if ok and type(meta) == "table" and type(meta.loong64) == "table" then
+				apps[#apps + 1] = meta
+			end
+		end
+	end
+	p:close()
+end
+
+table.sort(apps, function(a, b)
+	return tostring(a.title or a.name) < tostring(b.title or b.name)
+end)
+-%>
+
+<h2 name="content">LoongArch64 应用 / LoongArch64 Apps</h2>
+
+<div class="cbi-section">
+	<p>这些 app-meta 包只包含 <code>linux/loong64</code> 镜像的安装定义。安装、升级、
+	删除、状态和端口查询由通用安装器
+	<code>/usr/libexec/istorec/loong64.sh</code> 完成；每个应用也可以单独覆盖配置。</p>
+	<p>共 <strong><%=#apps%></strong> 个应用。状态每行实时查询一次 Docker。</p>
+</div>
+
+<div class="cbi-section">
+	<table class="cbi-section-table">
+		<thead>
+			<tr class="cbi-section-table-titles">
+				<th class="cbi-section-table-cell">应用 / App</th>
+				<th class="cbi-section-table-cell">镜像 / Image</th>
+				<th class="cbi-section-table-cell">状态 / State</th>
+				<th class="cbi-section-table-cell">端口 / Port</th>
+				<th class="cbi-section-table-cell">说明 / Notes</th>
+			</tr>
+		</thead>
+		<tbody>
+		<% for _, meta in ipairs(apps) do
+			local id = meta.name or ""
+			local state = util.trim(sys.exec("/usr/libexec/istorec/loong64.sh " .. id .. " status 2>/dev/null") or "")
+			if state == "" then state = "not-installed" end
+			local port = util.trim(sys.exec("/usr/libexec/istorec/loong64.sh " .. id .. " port 2>/dev/null") or "")
+			local img = (meta.loong64 and meta.loong64.image) or ""
+			local review = (meta.loong64 and meta.loong64.review) or {}
+			local manual = review.manual or {}
+			local note = ""
+			if #manual > 0 then note = "需手工准备: " .. table.concat(manual, "; ") end
+			local url = luci.dispatcher.build_url("admin/services/istore-loong64/app") .. "?app=" .. id
+		%>
+			<tr class="cbi-section-table-row">
+				<td class="cbi-section-table-cell">
+					<a href="<%=url%>"><strong><%=util.pcdata(meta.title or id)%></strong></a>
+					<br /><small><%=util.pcdata(id)%></small>
+				</td>
+				<td class="cbi-section-table-cell"><code><%=util.pcdata(img)%></code></td>
+				<td class="cbi-section-table-cell"><%=util.pcdata(state)%></td>
+				<td class="cbi-section-table-cell"><%=util.pcdata(port)%></td>
+				<td class="cbi-section-table-cell"><%=util.pcdata(note)%></td>
+			</tr>
+		<% end %>
+		</tbody>
+	</table>
+</div>
+
+<%+footer%>

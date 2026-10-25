@@ -1,0 +1,62 @@
+name: chinesesubfinder
+services:
+  chinesesubfinder:
+    image: yunixintel/chinesesubfinder:24.10-la5
+    ports:
+    - target: 19035
+      published: '18113'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    - type: bind
+      source: /DATA/AppData/$AppID/media
+      target: /media
+    environment:
+      TZ: $TZ
+      LITE_MODE: 'true'
+    restart: unless-stopped
+    container_name: chinesesubfinder
+x-casaos:
+  architectures:
+  - loong64
+  main: chinesesubfinder
+  author: loong64-port
+  category: Media
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。
+
+      缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。
+
+      额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。
+
+      镜像说明：v0.55.2 Lite；Go + Quasar 前端（x86 构建）；go-webrtcvad 补 LoongArch 分支；`/config`、`/media`；19035；UID 1026；内置 ffmpeg'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested
+      item by item. Limitations in the image notes also apply.
+
+      Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.
+
+      Extra dependencies: No extra external dependency unless the image notes say otherwise.
+
+      Image notes: v0.55.2 Lite；Go + Quasar 前端（x86 构建）；go-webrtcvad 补 LoongArch 分支；`/config`、`/media`；19035；UID 1026；内置 ffmpeg'
+  developer: ChineseSubFinder
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/bazarr.png
+  tagline:
+    zh_cn: ChineseSubFinder 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: ChineseSubFinder LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: ChineseSubFinder
+    en_us: ChineseSubFinder
+  index: /
+  port_map: '18113'

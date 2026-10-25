@@ -49,7 +49,7 @@ x-casaos:
 
       Image notes: 2.8.3；PHP 8.4.26 自编（源里只有 8.3）+ nginx/php-fpm；数据在 /config（.env/sqlite/storage）'
   developer: Heimdall
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/heimdall/icon.png
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/heimdall.png
   tagline:
     zh_cn: Heimdall 的 LoongArch64 镜像，详见龙芯版说明。
     en_us: Heimdall LoongArch64 image; see the LoongArch notes.

@@ -1,0 +1,62 @@
+name: zigbee2mqtt
+services:
+  zigbee2mqtt:
+    image: yunixintel/zigbee2mqtt:24.10-la5
+    container_name: zigbee2mqtt
+    ports:
+    - target: 8080
+      published: '18199'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      MQTT_SERVER: mqtt://mosquitto:1883
+      MQTT_USER: zigbee2mqtt
+      MQTT_PASSWORD: change-me
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /app/data
+    group_add:
+    - '20'
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: zigbee2mqtt
+  author: loong64-port
+  category: Home Automation
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：Node 24 + pnpm；serialport 针对 loongarch64 源码编译。
+
+      缺失功能：没有 USB 协调器时容器会退出。
+
+      额外依赖：需 /dev/ttyACM0 或 /dev/serial/by-id/*，以及 dialout 组。
+
+      镜像说明：2.14.2；Node 24 + pnpm；serialport 源码编 loong64；运行阶段含 systemd-udev；`/app/data`；8080；UID 1101；需 USB 协调器'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Node 24 with pnpm; serialport is compiled from source for loongarch64.
+
+      Missing features: The container exits when no USB coordinator is present.
+
+      Extra dependencies: Requires /dev/ttyACM0 or /dev/serial/by-id/* and the dialout group.
+
+      Image notes: 2.14.2；Node 24 + pnpm；serialport 源码编 loong64；运行阶段含 systemd-udev；`/app/data`；8080；UID 1101；需 USB 协调器'
+  developer: Koenkk
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/zigbee2mqtt.png
+  tagline:
+    zh_cn: Zigbee2MQTT 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Zigbee2MQTT LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Zigbee2MQTT
+    en_us: Zigbee2MQTT
+  index: /
+  port_map: '18199'

@@ -1,0 +1,64 @@
+name: komga
+services:
+  komga:
+    image: yunixintel/komga:24.10-la5
+    container_name: komga
+    ports:
+    - target: 25600
+      published: '18142'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    - type: bind
+      source: /DATA/Media/Comics
+      target: /data
+      read_only: true
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: komga
+  author: loong64-port
+  category: Utilities
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：官方 jar 不重编；自编 loongarch64 sqlite-jdbc JNI，经 org.sqlite.lib.path 外挂。
+
+      缺失功能：HEIF/JXL 封面不可用；Kobo 同步可用但 KEPUB 转换需 kepubify；RAR4 已验证，RAR5 未测。
+
+      额外依赖：JDK 21；/config 与 /data（可只读）；25600；UID 1110。
+
+      镜像说明：1.29.1；官方 jar + 自编 loongarch64 libsqlitejdbc；JDK 21；`/config`、`/data`（可只读）；25600；UID 1110；HEIF/JXL 不可用；Kobo KEPUB
+      需 kepubify'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Uses the official jar unchanged with a locally built loongarch64 sqlite-jdbc JNI loaded via org.sqlite.lib.path.
+
+      Missing features: HEIF/JXL covers are unavailable; Kobo sync works but KEPUB conversion needs kepubify; RAR4 is verified,
+      RAR5 is not.
+
+      Extra dependencies: JDK 21; /config and /data (read-only is fine); port 25600; UID 1110.
+
+      Image notes: 1.29.1；官方 jar + 自编 loongarch64 libsqlitejdbc；JDK 21；`/config`、`/data`（可只读）；25600；UID 1110；HEIF/JXL 不可用；Kobo
+      KEPUB 需 kepubify'
+  developer: Komga
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/komga.png
+  tagline:
+    zh_cn: komga 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: komga LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: komga
+    en_us: komga
+  index: /
+  port_map: '18142'

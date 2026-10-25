@@ -654,8 +654,8 @@ QUIRKS.update({
 QUIRKS["wg-easy"] = {
     "zh": "v15.4.0 在龙芯原生构建；libsql 使用龙芯 0.5.13 绑定，argon2 换成 hash-wasm。",
     "en": "v15.4.0 is built natively on LoongArch; libsql uses the LoongArch 0.5.13 binding and argon2 is replaced by hash-wasm.",
-    "missing_zh": "AmneziaWG 未启用；IPv6 关闭；真实客户端握手/隧道尚未验证。",
-    "missing_en": "AmneziaWG is disabled; IPv6 is off; real client handshakes/tunnels are not verified yet.",
+    "missing_zh": "AmneziaWG 未打包（用户态 PoC 已验证）；默认 IPv4-only；外网 IPv6 受 Docker 限制。",
+    "missing_en": "AmneziaWG is not packaged (a userspace PoC passed); IPv4-only by default; external IPv6 is limited by Docker.",
     "deps_zh": "需 NET_ADMIN，建议 SYS_MODULE + /lib/modules；sysctls；51820/udp、51821；/etc/wireguard 持久化。",
     "deps_en": "Requires NET_ADMIN, ideally SYS_MODULE + /lib/modules, sysctls, ports 51820/udp and 51821, and persistent /etc/wireguard.",
 }
@@ -663,8 +663,8 @@ QUIRKS["wg-easy"] = {
 QUIRKS["komga"] = {
     "zh": "官方 jar 不重编；自编 loongarch64 sqlite-jdbc JNI，经 org.sqlite.lib.path 外挂。",
     "en": "Uses the official jar unchanged with a locally built loongarch64 sqlite-jdbc JNI loaded via org.sqlite.lib.path.",
-    "missing_zh": "HEIF/JXL 封面不可用；Kobo 转换未支持；PDF/EPUB/RAR 扫描未验证。",
-    "missing_en": "HEIF/JXL covers are unavailable; Kobo conversion is unsupported; PDF/EPUB/RAR scanning is unverified.",
+    "missing_zh": "HEIF/JXL 封面不可用；Kobo 同步可用但 KEPUB 转换需 kepubify；RAR4 已验证，RAR5 未测。",
+    "missing_en": "HEIF/JXL covers are unavailable; Kobo sync works but KEPUB conversion needs kepubify; RAR4 is verified, RAR5 is not.",
     "deps_zh": "JDK 21；/config 与 /data（可只读）；25600；UID 1110。",
     "deps_en": "JDK 21; /config and /data (read-only is fine); port 25600; UID 1110.",
 }
@@ -672,8 +672,8 @@ QUIRKS["komga"] = {
 QUIRKS["karakeep"] = {
     "zh": "复用 node-sharp；Next 在 x86 构建；默认不内置 Chromium。",
     "en": "Reuses node-sharp; the Next app is built on x86; no Chromium is bundled by default.",
-    "missing_zh": "搜索需外部 Meilisearch；截图/PDF/JS 页面需 LBrowser sidecar；monolith/视频/OCR/AI 尚未验证。",
-    "missing_en": "Search needs external Meilisearch; screenshots/PDF/JS pages need an LBrowser sidecar; monolith, video, OCR and AI are unverified.",
+    "missing_zh": "搜索需外部 Meilisearch（未配置时 API 500，无回退）；截图/PDF 需 LBrowser sidecar；PDF 默认关闭；monolith 需额外挂载；不提供视频；OCR/AI/多用户已验证。",
+    "missing_en": "Search needs external Meilisearch (API 500 without it, no fallback); screenshots/PDF need an LBrowser sidecar; PDF is off by default; monolith needs an extra mount; video is not provided; OCR, AI and multi-user are verified.",
     "deps_zh": "BROWSER_WEB_URL 接 LBrowser（挂载宿主 /opt/apps/lbrowser:ro）；/data；3000；UID 1116。",
     "deps_en": "Point BROWSER_WEB_URL at an LBrowser sidecar (mount /opt/apps/lbrowser:ro); /data; port 3000; UID 1116.",
 }
@@ -681,8 +681,8 @@ QUIRKS["karakeep"] = {
 QUIRKS["linkwarden"] = {
     "zh": "Next 15 在 x86 构建；Prisma 7 WASM + adapter-pg；自写 99 个 SQL 迁移器；bcryptjs 替代 bcrypt。",
     "en": "Next 15 is built on x86; Prisma 7 uses the WASM compiler with adapter-pg; a custom runner applies the 99 SQL migrations; bcryptjs replaces bcrypt.",
-    "missing_zh": "无 Meilisearch 时仅 SQL contains 搜索；默认无浏览器；monolith/AI/导入/OAuth 尚未验证。",
-    "missing_en": "Search falls back to SQL contains without Meilisearch; no browser by default; monolith, AI, import and OAuth are unverified.",
+    "missing_zh": "无 Meilisearch 时仅 SQL contains（自建 Meili 已验证）；默认无浏览器；monolith 需挂载；AI 需外部 provider；导入已验证；OAuth 未验证。",
+    "missing_en": "Search falls back to SQL contains without Meilisearch (self-hosted Meili is verified); no browser by default; monolith needs a mount; AI needs an external provider; import is verified; OAuth is unverified.",
     "deps_zh": "需 PostgreSQL；PLAYWRIGHT_WS_URL 接 LBrowser sidecar；/data/data；3000；UID 1118。",
     "deps_en": "Requires PostgreSQL; point PLAYWRIGHT_WS_URL at an LBrowser sidecar; /data/data; port 3000; UID 1118.",
 }
@@ -727,6 +727,13 @@ EXTRA_DEPS = {
     "minio": ("必须设置 MINIO_ROOT_USER/PASSWORD。", "MINIO_ROOT_USER/PASSWORD are required."),
     "registry": ("无 TLS；公网需反代。", "No TLS; put it behind a reverse proxy on the public network."),
     "unpackerr": ("需与 *arr 使用相同的 /downloads 路径。", "Use the same /downloads path as *arr."),
+    "caddy": ("Caddyfile 以 compose configs 内嵌；自定义需修改 configs.content。", "The Caddyfile is embedded via compose configs; edit configs.content to customize."),
+    "alertmanager": ("alertmanager.yml 以 compose configs 内嵌；自定义需修改 configs.content。", "alertmanager.yml is embedded via compose configs; edit configs.content to customize."),
+    "gatus": ("config.yaml 以 compose configs 内嵌；自定义需修改 configs.content。", "config.yaml is embedded via compose configs; edit configs.content to customize."),
+    "homer": ("config.yml 以 compose configs 内嵌；自定义需修改 configs.content。", "config.yml is embedded via compose configs; edit configs.content to customize."),
+    "dashy": ("conf.yml 以 compose configs 内嵌；自定义需修改 configs.content。", "conf.yml is embedded via compose configs; edit configs.content to customize."),
+    "mosquitto": ("mosquitto.conf 以 compose configs 内嵌；自定义需修改 configs.content。", "mosquitto.conf is embedded via compose configs; edit configs.content to customize."),
+    "prometheus": ("prometheus.yml 以 compose configs 内嵌；自定义需修改 configs.content。", "prometheus.yml is embedded via compose configs; edit configs.content to customize."),
 }
 
 

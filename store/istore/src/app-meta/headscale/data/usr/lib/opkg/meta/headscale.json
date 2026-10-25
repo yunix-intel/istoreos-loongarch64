@@ -1,0 +1,113 @@
+{
+  "name": "headscale",
+  "title": "Headscale",
+  "title_en": "Headscale",
+  "entry": "/cgi-bin/luci/admin/services/istore-loong64/app?app=headscale",
+  "author": "yunix-intel",
+  "website": "https://github.com/yunix-intel/istoreos-loongarch64",
+  "version": "24.10-la5",
+  "release": 20261025,
+  "arch": [
+    "all"
+  ],
+  "description": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：单二进制，无 Web UI；通过 CLI/API 管理。</p><p>缺失功能：无图形界面；gRPC 默认仅本机。</p><p>额外依赖：HEADSCALE_SERVER_URL 必填；持久化 /etc/headscale 与 /var/lib/headscale。</p><p>镜像说明：v0.29.5；Go 单二进制；无 Web UI；`/etc/headscale`、`/var/lib/headscale`；8080/9090；UID 1106；gRPC 默认仅本机</p>",
+  "description_en": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: Single binary without a web UI; managed via CLI/API.</p><p>Missing features: No GUI; gRPC listens on localhost by default.</p><p>Extra dependencies: HEADSCALE_SERVER_URL is required; persist /etc/headscale and /var/lib/headscale.</p><p>Image notes: v0.29.5；Go 单二进制；无 Web UI；`/etc/headscale`、`/var/lib/headscale`；8080/9090；UID 1106；gRPC 默认仅本机</p>",
+  "tags": [
+    "net",
+    "tool"
+  ],
+  "depends": [
+    "luci-app-istore-loong64",
+    "docker-deps"
+  ],
+  "loong64": {
+    "schema": 1,
+    "source": "dockerfile+runbook+override",
+    "image": "yunixintel/headscale:24.10-la5",
+    "default_variant": "public",
+    "variants": [
+      {
+        "name": "public",
+        "image": "yunixintel/headscale:24.10-la5",
+        "store_url": "https://github.com/yunix-intel/istoreos-loongarch64"
+      }
+    ],
+    "compose": "",
+    "ports": [
+      {
+        "name": "http",
+        "container": 8080,
+        "host": 18129,
+        "proto": "tcp",
+        "primary": true
+      },
+      {
+        "name": "api",
+        "container": 9090,
+        "host": 21504,
+        "proto": "tcp",
+        "primary": false
+      }
+    ],
+    "volumes": [
+      {
+        "name": "config",
+        "host": "/srv/headscale/config",
+        "container": "/etc/headscale",
+        "mode": "rw",
+        "owner": "",
+        "primary": true,
+        "type": "dir",
+        "seed": ""
+      },
+      {
+        "name": "data",
+        "host": "/srv/headscale/data",
+        "container": "/var/lib/headscale",
+        "mode": "rw",
+        "owner": "",
+        "primary": false,
+        "type": "dir",
+        "seed": ""
+      }
+    ],
+    "env": [
+      {
+        "key": "HEADSCALE_SERVER_URL",
+        "value": "${PUBLIC_URL}",
+        "required": true,
+        "variants": ""
+      }
+    ],
+    "sidecars": [],
+    "needs_host_network": false,
+    "needs_docker_sock": false,
+    "docker_sock_ro": true,
+    "devices": [],
+    "cap_add": [],
+    "group_add": [],
+    "sysctls": [],
+    "shm_size": "",
+    "user": "",
+    "command": [],
+    "restart": "unless-stopped",
+    "network_group": "",
+    "requires_app": "",
+    "health": {},
+    "review": {
+      "automation": "manual",
+      "manual": [
+        "把 HEADSCALE_SERVER_URL 改成浏览器/客户端可访问的 HTTPS 域名"
+      ],
+      "notes": [
+        "无 Web UI；需 CLI 建用户与 preauth key；公网需 HTTPS 反代。",
+        "未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。"
+      ]
+    },
+    "category": "Networking",
+    "image_size": "",
+    "title": "Headscale",
+    "name": "headscale",
+    "runtime": "APP_ID='headscale'\nAPP_TITLE='Headscale'\nAPP_IMAGE='yunixintel/headscale:24.10-la5'\nAPP_DEFAULT_VARIANT='public'\nAPP_VARIANTS='public|yunixintel/headscale:24.10-la5|https://github.com/yunix-intel/istoreos-loongarch64'\nAPP_PORTS='http|8080|18129|tcp|1\napi|9090|21504|tcp|0'\nAPP_VOLUMES='config|/srv/headscale/config|/etc/headscale|rw||1|dir|\ndata|/srv/headscale/data|/var/lib/headscale|rw||0|dir|'\nAPP_ENV='HEADSCALE_SERVER_URL|${PUBLIC_URL}|1|'\nAPP_SIDECARS=''\nAPP_SIDECAR_COMMAND=''\nAPP_SIDECAR_ENV=''\nAPP_SIDECAR_VOLUMES=''\nAPP_SIDECAR_PORTS=''\nAPP_DEVICES=''\nAPP_CAPS=''\nAPP_GROUPS=''\nAPP_SYSCTLS=''\nAPP_HOST_NETWORK='0'\nAPP_DOCKER_SOCK='0'\nAPP_DOCKER_SOCK_RO='1'\nAPP_SHM=''\nAPP_USER=''\nAPP_COMMAND=''\nAPP_RESTART='unless-stopped'\nAPP_NETWORK_GROUP=''\nAPP_REQUIRES_APP=''\nAPP_HEALTH_PATH=''\nAPP_HEALTH_PORT=''\nAPP_MANUAL='把 HEADSCALE_SERVER_URL 改成浏览器/客户端可访问的 HTTPS 域名'\nAPP_REVIEW='无 Web UI；需 CLI 建用户与 preauth key；公网需 HTTPS 反代。; 未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。'\n"
+  }
+}

@@ -1,0 +1,10 @@
+Package: app-meta-woodpecker-agent
+Version: 1.0.0-r20261025
+Depends: libc, luci-app-istore-loong64, docker-deps
+Provides: app-meta-woodpecker-agent-any
+SourceName: app-meta-woodpecker-agent
+Section: meta
+Architecture: all
+Installed-Size: 7
+Maintainer: yunix-intel
+Description:  Metadata for woodpecker-agent (LoongArch64)

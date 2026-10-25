@@ -1,0 +1,62 @@
+name: sabnzbd
+services:
+  sabnzbd:
+    image: yunixintel/sabnzbd:24.10-la5
+    container_name: sabnzbd
+    ports:
+    - target: 8080
+      published: '18180'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    - type: bind
+      source: /DATA/AppData/$AppID/downloads
+      target: /downloads
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: sabnzbd
+  author: loong64-port
+  category: Downloaders
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：Python 3.11 + venv；par2/unrar 源码编译。
+
+      缺失功能：无 orjson（ujson 回退，性能略低）；unrar 为闭源 freeware。
+
+      额外依赖：持久化 /config 与 /downloads；UI 根路径是 / 而不是 /sabnzbd/。
+
+      镜像说明：5.1.3；Python 3.11 + openEuler cryptography；par2cmdline 0.8.1 + unrar 7.13；`/config`、`/downloads`；8080；UID 1112；orjson
+      用 ujson 回退；未接真实 Usenet'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Python 3.11 venv; par2 and unrar built from source.
+
+      Missing features: No orjson (ujson fallback, slightly slower); unrar is closed-source freeware.
+
+      Extra dependencies: Persist /config and /downloads; the UI root is /, not /sabnzbd/.
+
+      Image notes: 5.1.3；Python 3.11 + openEuler cryptography；par2cmdline 0.8.1 + unrar 7.13；`/config`、`/downloads`；8080；UID
+      1112；orjson 用 ujson 回退；未接真实 Usenet'
+  developer: SABnzbd
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/sabnzbd.png
+  tagline:
+    zh_cn: SABnzbd 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: SABnzbd LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: SABnzbd
+    en_us: SABnzbd
+  index: /
+  port_map: '18180'

@@ -1,0 +1,62 @@
+name: penpot-frontend
+services:
+  penpot-frontend:
+    image: yunixintel/penpot-frontend:24.10-la5
+    container_name: penpot-frontend
+    ports:
+    - target: 8080
+      published: '18166'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      PENPOT_PUBLIC_URI: http://localhost:18166
+      PENPOT_BACKEND_URI: http://penpot-backend:6060
+      PENPOT_FLAGS: disable-email-verification disable-secure-session-cookies
+    networks:
+    - penpot
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: penpot-frontend
+  author: loong64-port
+  category: Developer
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：Penpot 前端单独成镜像，通过 nginx 反代后端。
+
+      缺失功能：同上；导出功能未移植。
+
+      额外依赖：需同时部署 penpot-backend、PostgreSQL、Redis。
+
+      镜像说明：2.18.3 静态前端；nginx + envsubst；`/api`/`/assets`/`/ws/notifications` 反代 backend；8080；需与 backend 同网络'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Separate Penpot frontend image, reverse-proxying the backend with nginx.
+
+      Missing features: Same as backend; exporter is not ported.
+
+      Extra dependencies: Requires penpot-backend, PostgreSQL and Redis.
+
+      Image notes: 2.18.3 静态前端；nginx + envsubst；`/api`/`/assets`/`/ws/notifications` 反代 backend；8080；需与 backend 同网络'
+  developer: Penpot
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/penpot.png
+  tagline:
+    zh_cn: Penpot (frontend) 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Penpot (frontend) LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Penpot (frontend)
+    en_us: Penpot (frontend)
+  index: /
+  port_map: '18166'
+networks:
+  penpot:
+    external: true
+    name: penpot

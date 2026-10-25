@@ -53,20 +53,20 @@
 | FreshRSS (`freshrss`) | Productivity | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Prowlarr (`prowlarr`) | Downloaders | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Bazarr (`bazarr`) | Downloaders | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
-| homer (`homer`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| homer (`homer`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | config.yml 以 compose configs 内嵌；自定义需修改 configs.content。 |
 | Paperless-ngx (`paperless-ngx`) | Productivity | qpdf 12.4.2 自编以支持 pikepdf；AI 功能关闭；未装 unpaper。 | 无 AI 分类/实体识别；无 unpaper 后处理。 | 需 Redis + celery worker/beat/consumer；8000。 |
-| Dashy (`dashy`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Dashy (`dashy`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | conf.yml 以 compose configs 内嵌；自定义需修改 configs.content。 |
 | Watchtower (`watchtower`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 需挂载 docker.sock。 |
 | ChangeDetection.io (`changedetection`) | Monitoring | 使用 Firefox 140.11 ESR + geckodriver/Selenium，不是 Playwright；OpenCV SSIM 使用 numpy 1.26.4。 | 无本地 Chrome；可配置远程 Chrome WebDriver。 | 需 --shm-size=1g；5000；持久化 /datastore。 |
-| Caddy (`caddy`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Caddy (`caddy`) | Networking | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | Caddyfile 以 compose configs 内嵌；自定义需修改 configs.content。 |
 | Dozzle (`dozzle`) | Developer | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 需挂载 docker.sock。 |
 | ntfy (`ntfy`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Gotify (`gotify`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Node Exporter (`node-exporter`) | Monitoring | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
-| Prometheus (`prometheus`) | Monitoring | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Prometheus (`prometheus`) | Monitoring | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | prometheus.yml 以 compose configs 内嵌；自定义需修改 configs.content。 |
 | Pi-hole (`pihole`) | Networking | FTL 6.8 源码编，版本自报 UNKNOWN；内置 pihole CLI 与 pihole-adlist。 | 需 host 网络；宿主 dnsmasq 占用 53 时不可用。 | 53/tcp+udp、80；持久化 /etc/pihole。 |
-| Gatus (`gatus`) | Monitoring | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
-| Alertmanager (`alertmanager`) | Monitoring | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
+| Gatus (`gatus`) | Monitoring | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | config.yaml 以 compose configs 内嵌；自定义需修改 configs.content。 |
+| Alertmanager (`alertmanager`) | Monitoring | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | alertmanager.yml 以 compose configs 内嵌；自定义需修改 configs.content。 |
 | PostgreSQL (`postgres`) | Utilities | 此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。 | 未逐项验证上游全部功能；请以镜像说明中的限制为准。 | 无额外外部依赖（镜像说明中另有注明的除外）。 |
 | Redis (`redis`) | Utilities | openEuler 7.2.14 包；AOF+RDB。 | 默认 protected-mode no，必须配密码或限制网络。 | 6379；持久化 /data。 |
 | Eclipse Mosquitto (`mosquitto`) | Utilities | openEuler 2.0.20 包。 | 默认 allow_anonymous true，公网必须配 passwd。 | 1883；持久化 /mosquitto/data。 |
@@ -114,8 +114,8 @@
 | Unpackerr (`unpackerr`) | Downloaders | Go 单二进制；需要升级 x/sys 才能支持 loongarch64。 | 无 Web UI/端口；健康检查仅进程存活；未接真实 *arr。 | 持久化 /config 与 /downloads，路径必须与 *arr 一致；unrar 为闭源 freeware。 |
 | Pocket ID (`pocket-id`) | Security | SvelteKit 前端在 x86 构建后内嵌；Go 单二进制。 | 未做邮件 SMTP/SCIM/Passkey 全链路；与 Authelia 二选一。 | 持久化 /data（含加密密钥）；APP_URL 必填为外部地址；1411。 |
 | Readeck (`readeck`) | Productivity | gulp 前端在 x86 构建；Go 使用 CGO/mattn sqlite。 | CGO-free 的 modernc 旧版缺 loongarch64 定义；未做完整抓取联调。 | 持久化 /data；8000；与 Wallabag/Shiori 重叠。 |
-| wg-easy (`wg-easy`) | Utilities | v15.4.0 在龙芯原生构建；libsql 使用龙芯 0.5.13 绑定，argon2 换成 hash-wasm。 | AmneziaWG 未启用；IPv6 关闭；真实客户端握手/隧道尚未验证。 | 需 NET_ADMIN，建议 SYS_MODULE + /lib/modules；sysctls；51820/udp、51821；/etc/wireguard 持久化。 |
-| komga (`komga`) | Utilities | 官方 jar 不重编；自编 loongarch64 sqlite-jdbc JNI，经 org.sqlite.lib.path 外挂。 | HEIF/JXL 封面不可用；Kobo 转换未支持；PDF/EPUB/RAR 扫描未验证。 | JDK 21；/config 与 /data（可只读）；25600；UID 1110。 |
-| karakeep (`karakeep`) | Utilities | 复用 node-sharp；Next 在 x86 构建；默认不内置 Chromium。 | 搜索需外部 Meilisearch；截图/PDF/JS 页面需 LBrowser sidecar；monolith/视频/OCR/AI 尚未验证。 | BROWSER_WEB_URL 接 LBrowser（挂载宿主 /opt/apps/lbrowser:ro）；/data；3000；UID 1116。 |
-| linkwarden (`linkwarden`) | Utilities | Next 15 在 x86 构建；Prisma 7 WASM + adapter-pg；自写 99 个 SQL 迁移器；bcryptjs 替代 bcrypt。 | 无 Meilisearch 时仅 SQL contains 搜索；默认无浏览器；monolith/AI/导入/OAuth 尚未验证。 | 需 PostgreSQL；PLAYWRIGHT_WS_URL 接 LBrowser sidecar；/data/data；3000；UID 1118。 |
+| wg-easy (`wg-easy`) | Utilities | v15.4.0 在龙芯原生构建；libsql 使用龙芯 0.5.13 绑定，argon2 换成 hash-wasm。 | AmneziaWG 未打包（用户态 PoC 已验证）；默认 IPv4-only；外网 IPv6 受 Docker 限制。 | 需 NET_ADMIN，建议 SYS_MODULE + /lib/modules；sysctls；51820/udp、51821；/etc/wireguard 持久化。 |
+| komga (`komga`) | Utilities | 官方 jar 不重编；自编 loongarch64 sqlite-jdbc JNI，经 org.sqlite.lib.path 外挂。 | HEIF/JXL 封面不可用；Kobo 同步可用但 KEPUB 转换需 kepubify；RAR4 已验证，RAR5 未测。 | JDK 21；/config 与 /data（可只读）；25600；UID 1110。 |
+| karakeep (`karakeep`) | Utilities | 复用 node-sharp；Next 在 x86 构建；默认不内置 Chromium。 | 搜索需外部 Meilisearch（未配置时 API 500，无回退）；截图/PDF 需 LBrowser sidecar；PDF 默认关闭；monolith 需额外挂载；不提供视频；OCR/AI/多用户已验证。 | BROWSER_WEB_URL 接 LBrowser（挂载宿主 /opt/apps/lbrowser:ro）；/data；3000；UID 1116。 |
+| linkwarden (`linkwarden`) | Utilities | Next 15 在 x86 构建；Prisma 7 WASM + adapter-pg；自写 99 个 SQL 迁移器；bcryptjs 替代 bcrypt。 | 无 Meilisearch 时仅 SQL contains（自建 Meili 已验证）；默认无浏览器；monolith 需挂载；AI 需外部 provider；导入已验证；OAuth 未验证。 | 需 PostgreSQL；PLAYWRIGHT_WS_URL 接 LBrowser sidecar；/data/data；3000；UID 1118。 |
 | joplin-server (`joplin-server`) | Utilities | 全程 loongarch64 构建；sqlite3 5.1.6 源码编译；Rollup 使用 wasm 别名。 | 无 sharp/sqlite-vec/PM2；向量搜索禁用；未验证桌面客户端双端同步、LDAP/SAML/Stripe/邮件。 | 需 PostgreSQL；/data 持久化（含临时 SQLite）；22300；UID 1119；APP_BASE_URL 必填。 |

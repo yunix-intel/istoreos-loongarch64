@@ -1,0 +1,57 @@
+name: autobrr
+services:
+  autobrr:
+    image: yunixintel/autobrr:24.10-la5
+    ports:
+    - target: 7474
+      published: '18106'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    environment:
+      TZ: $TZ
+    restart: unless-stopped
+    container_name: autobrr
+x-casaos:
+  architectures:
+  - loong64
+  main: autobrr
+  author: loong64-port
+  category: Downloaders
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：前端在 x86 构建后内嵌；使用 SQLite。
+
+      缺失功能：默认无认证；需自行配置 IRC 和下载器。
+
+      额外依赖：持久化 /config；公网需反代认证。
+
+      镜像说明：master 2026-10；Go 单二进制 + 内嵌 Vue；`/config`；7474；UID 1113；默认无认证；需自配 IRC/下载器'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Frontend is built on x86 and embedded; uses SQLite.
+
+      Missing features: No auth by default; configure IRC and download clients yourself.
+
+      Extra dependencies: Persist /config; add reverse-proxy auth on the public network.
+
+      Image notes: master 2026-10；Go 单二进制 + 内嵌 Vue；`/config`；7474；UID 1113；默认无认证；需自配 IRC/下载器'
+  developer: autobrr
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/autobrr.png
+  tagline:
+    zh_cn: Autobrr 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Autobrr LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Autobrr
+    en_us: Autobrr
+  index: /
+  port_map: '18106'

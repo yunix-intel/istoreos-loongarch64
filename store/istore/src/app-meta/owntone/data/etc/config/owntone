@@ -1,0 +1,7 @@
+config main 'main'
+	option enabled '1'
+	option variant 'public'
+	option image ''
+	option host_port '3689'
+	option data_path '/mnt/music'
+	option env_file '/etc/istore-loong64/env/owntone.env'

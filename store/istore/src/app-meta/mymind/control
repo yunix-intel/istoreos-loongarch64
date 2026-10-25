@@ -1,0 +1,10 @@
+Package: app-meta-mymind
+Version: 1.0.0-r20261025
+Depends: libc, luci-app-istore-loong64, docker-deps
+Provides: app-meta-mymind-any
+SourceName: app-meta-mymind
+Section: meta
+Architecture: all
+Installed-Size: 5
+Maintainer: yunix-intel
+Description:  Metadata for mymind (LoongArch64)

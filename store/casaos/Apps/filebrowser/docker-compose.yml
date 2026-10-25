@@ -52,7 +52,7 @@ x-casaos:
 
       Image notes: v2.63.23 源码编；**上游 2026-09-01 已归档**，无后续安全修复；默认监听改 0.0.0.0（v2.63 默认 127.0.0.1）'
   developer: FileBrowser
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FileBrowser/icon.png
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/file-browser.png
   tagline:
     zh_cn: File Browser 的 LoongArch64 镜像，详见龙芯版说明。
     en_us: File Browser LoongArch64 image; see the LoongArch notes.

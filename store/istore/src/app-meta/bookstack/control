@@ -1,0 +1,10 @@
+Package: app-meta-bookstack
+Version: 1.0.0-r20261025
+Depends: libc, luci-app-istore-loong64, docker-deps
+Provides: app-meta-bookstack-any
+SourceName: app-meta-bookstack
+Section: meta
+Architecture: all
+Installed-Size: 9
+Maintainer: yunix-intel
+Description:  Metadata for bookstack (LoongArch64)

@@ -1,0 +1,59 @@
+name: rest-server
+services:
+  rest-server:
+    image: yunixintel/rest-server:24.10-la5
+    container_name: rest-server
+    ports:
+    - target: 8000
+      published: '18179'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: rest-server
+  author: loong64-port
+  category: Backup
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：Go 静态编译，镜像约 12MB。
+
+      缺失功能：默认开启认证；无 TLS。
+
+      额外依赖：8000；用 httpd-tools 的 htpasswd 建用户。
+
+      镜像说明：0.14.0；Go 静态二进制 12MB；openEuler + httpd-tools（htpasswd）；`/data`；8000；默认开认证，先 create_user 再重启；可 DISABLE_AUTHENTICATION=1；无
+      TLS'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Static Go build; image is about 12MB.
+
+      Missing features: Authentication is enabled by default; no TLS.
+
+      Extra dependencies: Port 8000; create users with htpasswd from httpd-tools.
+
+      Image notes: 0.14.0；Go 静态二进制 12MB；openEuler + httpd-tools（htpasswd）；`/data`；8000；默认开认证，先 create_user 再重启；可 DISABLE_AUTHENTICATION=1；无
+      TLS'
+  developer: restic
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/restic.png
+  tagline:
+    zh_cn: REST Server 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: REST Server LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: REST Server
+    en_us: REST Server
+  index: /
+  port_map: '18179'

@@ -1,0 +1,84 @@
+{
+  "name": "easytier",
+  "title": "EasyTier",
+  "title_en": "EasyTier",
+  "entry": "/cgi-bin/luci/admin/services/istore-loong64/app?app=easytier",
+  "author": "yunix-intel",
+  "website": "https://github.com/yunix-intel/istoreos-loongarch64",
+  "version": "24.10-la5",
+  "release": 20261025,
+  "arch": [
+    "all"
+  ],
+  "description": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：scratch 单二进制，配置需挂载</p>",
+  "description_en": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: scratch 单二进制，配置需挂载</p>",
+  "tags": [
+    "net",
+    "tool"
+  ],
+  "depends": [
+    "luci-app-istore-loong64",
+    "docker-deps"
+  ],
+  "loong64": {
+    "schema": 1,
+    "source": "runbook+override",
+    "image": "yunixintel/easytier:24.10-la5",
+    "default_variant": "public",
+    "variants": [
+      {
+        "name": "public",
+        "image": "yunixintel/easytier:24.10-la5",
+        "store_url": "https://github.com/yunix-intel/istoreos-loongarch64"
+      }
+    ],
+    "compose": "",
+    "ports": [],
+    "volumes": [
+      {
+        "name": "config",
+        "host": "/srv/easytier/config",
+        "container": "/etc/easytier",
+        "mode": "rw",
+        "owner": "",
+        "primary": true,
+        "type": "dir",
+        "seed": ""
+      }
+    ],
+    "env": [],
+    "sidecars": [],
+    "needs_host_network": true,
+    "needs_docker_sock": false,
+    "docker_sock_ro": true,
+    "devices": [],
+    "cap_add": [],
+    "group_add": [],
+    "sysctls": [],
+    "shm_size": "",
+    "user": "",
+    "command": [],
+    "restart": "unless-stopped",
+    "network_group": "",
+    "requires_app": "",
+    "health": {},
+    "review": {
+      "automation": "manual",
+      "manual": [
+        "把 network.toml 放入 /srv/easytier/config 后重启"
+      ],
+      "notes": [
+        "host 网络；无 Web UI；network.toml 含网络密钥，未随包提供。",
+        "使用 host 网络：端口直接占用宿主端口，不能与其它应用重复监听 53/80 等端口。",
+        "该应用没有对外 Web/服务端口（后台任务或需外部连接）。",
+        "无 Dockerfile，端口/卷来自 docs/RUNBOOK.md 端口索引与人工核对。",
+        "未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。"
+      ]
+    },
+    "category": "Networking",
+    "image_size": "",
+    "title": "EasyTier",
+    "name": "easytier",
+    "runtime": "APP_ID='easytier'\nAPP_TITLE='EasyTier'\nAPP_IMAGE='yunixintel/easytier:24.10-la5'\nAPP_DEFAULT_VARIANT='public'\nAPP_VARIANTS='public|yunixintel/easytier:24.10-la5|https://github.com/yunix-intel/istoreos-loongarch64'\nAPP_PORTS=''\nAPP_VOLUMES='config|/srv/easytier/config|/etc/easytier|rw||1|dir|'\nAPP_ENV=''\nAPP_SIDECARS=''\nAPP_SIDECAR_COMMAND=''\nAPP_SIDECAR_ENV=''\nAPP_SIDECAR_VOLUMES=''\nAPP_SIDECAR_PORTS=''\nAPP_DEVICES=''\nAPP_CAPS=''\nAPP_GROUPS=''\nAPP_SYSCTLS=''\nAPP_HOST_NETWORK='1'\nAPP_DOCKER_SOCK='0'\nAPP_DOCKER_SOCK_RO='1'\nAPP_SHM=''\nAPP_USER=''\nAPP_COMMAND=''\nAPP_RESTART='unless-stopped'\nAPP_NETWORK_GROUP=''\nAPP_REQUIRES_APP=''\nAPP_HEALTH_PATH=''\nAPP_HEALTH_PORT=''\nAPP_MANUAL='把 network.toml 放入 /srv/easytier/config 后重启'\nAPP_REVIEW='host 网络；无 Web UI；network.toml 含网络密钥，未随包提供。; 使用 host 网络：端口直接占用宿主端口，不能与其它应用重复监听 53/80 等端口。; 该应用没有对外 Web/服务端口（后台任务或需外部连接）。; 无 Dockerfile，端口/卷来自 docs/RUNBOOK.md 端口索引与人工核对。; 未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。'\n"
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "name": "qbittorrent-ee",
+  "title": "qBittorrent (Enhanced Edition)",
+  "title_en": "qBittorrent (Enhanced Edition)",
+  "entry": "/cgi-bin/luci/admin/services/istore-loong64/app?app=qbittorrent-ee",
+  "author": "yunix-intel",
+  "website": "https://github.com/yunix-intel/istoreos-loongarch64",
+  "version": "24.10-la5",
+  "release": 20261025,
+  "arch": [
+    "all"
+  ],
+  "description": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：官方 loong64 静态包；WebUI 校验 Host header。</p><p>缺失功能：端口映射与 WebUI 端口不一致时会拒绝访问。</p><p>额外依赖：建议让 WebUI 端口与宿主映射端口一致。</p><p>镜像说明：v5.2.4.10 官方 loong64 静态包；Host header 校验会拒绝端口映射不一致的访问，建议 `--webui-port` 与映射端口一致</p>",
+  "description_en": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: Official loong64 static package; the WebUI validates the Host header.</p><p>Missing features: Requests are rejected when the mapped port differs from the WebUI port.</p><p>Extra dependencies: Keep the WebUI port equal to the published host port.</p><p>Image notes: v5.2.4.10 官方 loong64 静态包；Host header 校验会拒绝端口映射不一致的访问，建议 `--webui-port` 与映射端口一致</p>",
+  "tags": [
+    "download",
+    "tool"
+  ],
+  "depends": [
+    "luci-app-istore-loong64",
+    "docker-deps"
+  ],
+  "loong64": {
+    "schema": 1,
+    "source": "dockerfile+runbook+override",
+    "image": "yunixintel/qbittorrent-ee:24.10-la5",
+    "default_variant": "public",
+    "variants": [
+      {
+        "name": "public",
+        "image": "yunixintel/qbittorrent-ee:24.10-la5",
+        "store_url": "https://github.com/yunix-intel/istoreos-loongarch64"
+      }
+    ],
+    "compose": "",
+    "ports": [
+      {
+        "name": "http",
+        "container": 8080,
+        "host": 18014,
+        "proto": "tcp",
+        "primary": true
+      },
+      {
+        "name": "bittorrent",
+        "container": 6881,
+        "host": 20176,
+        "proto": "tcp",
+        "primary": false
+      },
+      {
+        "name": "bittorrent-udp",
+        "container": 6881,
+        "host": 20177,
+        "proto": "udp",
+        "primary": false
+      }
+    ],
+    "volumes": [
+      {
+        "name": "config",
+        "host": "/srv/qbittorrent-ee/config",
+        "container": "/config",
+        "mode": "rw",
+        "owner": "",
+        "primary": true,
+        "type": "dir",
+        "seed": ""
+      },
+      {
+        "name": "downloads",
+        "host": "/mnt/downloads",
+        "container": "/downloads",
+        "mode": "rw",
+        "owner": "",
+        "primary": false,
+        "type": "dir",
+        "seed": ""
+      }
+    ],
+    "env": [],
+    "sidecars": [],
+    "needs_host_network": false,
+    "needs_docker_sock": false,
+    "docker_sock_ro": true,
+    "devices": [],
+    "cap_add": [],
+    "group_add": [],
+    "sysctls": [],
+    "shm_size": "",
+    "user": "",
+    "command": [],
+    "restart": "unless-stopped",
+    "network_group": "",
+    "requires_app": "",
+    "health": {},
+    "review": {
+      "automation": "auto",
+      "manual": [],
+      "notes": [
+        "Web UI 的 Host header 必须匹配访问地址；下载目录 /downloads 映射到 /mnt/downloads。",
+        "未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。"
+      ]
+    },
+    "category": "Downloaders",
+    "image_size": "",
+    "title": "qBittorrent (Enhanced Edition)",
+    "name": "qbittorrent-ee",
+    "runtime": "APP_ID='qbittorrent-ee'\nAPP_TITLE='qBittorrent (Enhanced Edition)'\nAPP_IMAGE='yunixintel/qbittorrent-ee:24.10-la5'\nAPP_DEFAULT_VARIANT='public'\nAPP_VARIANTS='public|yunixintel/qbittorrent-ee:24.10-la5|https://github.com/yunix-intel/istoreos-loongarch64'\nAPP_PORTS='http|8080|18014|tcp|1\nbittorrent|6881|20176|tcp|0\nbittorrent-udp|6881|20177|udp|0'\nAPP_VOLUMES='config|/srv/qbittorrent-ee/config|/config|rw||1|dir|\ndownloads|/mnt/downloads|/downloads|rw||0|dir|'\nAPP_ENV=''\nAPP_SIDECARS=''\nAPP_SIDECAR_COMMAND=''\nAPP_SIDECAR_ENV=''\nAPP_SIDECAR_VOLUMES=''\nAPP_SIDECAR_PORTS=''\nAPP_DEVICES=''\nAPP_CAPS=''\nAPP_GROUPS=''\nAPP_SYSCTLS=''\nAPP_HOST_NETWORK='0'\nAPP_DOCKER_SOCK='0'\nAPP_DOCKER_SOCK_RO='1'\nAPP_SHM=''\nAPP_USER=''\nAPP_COMMAND=''\nAPP_RESTART='unless-stopped'\nAPP_NETWORK_GROUP=''\nAPP_REQUIRES_APP=''\nAPP_HEALTH_PATH=''\nAPP_HEALTH_PORT=''\nAPP_MANUAL=''\nAPP_REVIEW='Web UI 的 Host header 必须匹配访问地址；下载目录 /downloads 映射到 /mnt/downloads。; 未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。'\n"
+  }
+}

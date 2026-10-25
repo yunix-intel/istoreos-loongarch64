@@ -1,0 +1,167 @@
+<%+header%>
+<%
+local sys = require "luci.sys"
+local jsonc = require "luci.jsonc"
+local util = require "luci.util"
+local fs = require "nixio.fs"
+local http = require "luci.http"
+
+local function read_file(path)
+	local f = io.open(path, "r")
+	if not f then return nil end
+	local s = f:read("*a")
+	f:close()
+	return s
+end
+
+local id = http.formvalue("app") or ""
+if not id:match("^[a-z0-9_%-]+$") then
+	http.redirect(luci.dispatcher.build_url("admin/services/istore-loong64"))
+	return
+end
+
+local raw = read_file("/usr/lib/opkg/meta/" .. id .. ".json")
+local ok, meta = false, nil
+if raw then ok, meta = pcall(jsonc.parse, raw) end
+if not ok or type(meta) ~= "table" or type(meta.loong64) ~= "table" then
+	%><div class="cbi-section"><p>找不到应用元数据：<%=util.pcdata(id)%></p></div><%+footer%><% return %>
+<% end %>
+
+local l = meta.loong64
+local status = util.trim(sys.exec("/usr/libexec/istorec/loong64.sh " .. id .. " status 2>/dev/null") or "")
+if status == "" then status = "not-installed" end
+local port = util.trim(sys.exec("/usr/libexec/istorec/loong64.sh " .. id .. " port 2>/dev/null") or "")
+local url = util.trim(sys.exec("/usr/libexec/istorec/loong64.sh " .. id .. " url 2>/dev/null") or "")
+local msg = http.formvalue("msg") or ""
+local last = read_file("/tmp/istore-" .. id .. ".last") or ""
+local log = sys.exec("tail -n 60 /tmp/istore-" .. id .. ".log 2>/dev/null") or ""
+local action_url = luci.dispatcher.build_url("admin/services/istore-loong64/action")
+local back_url = luci.dispatcher.build_url("admin/services/istore-loong64")
+-%>
+
+<h2 name="content"><%=util.pcdata(meta.title or id)%> <small>(<%=util.pcdata(id)%>)</small></h2>
+
+<div class="cbi-section">
+	<p><a href="<%=back_url%>">&larr; 返回应用列表 / Back to list</a></p>
+	<% if msg ~= "" then %><p><em>action: <%=util.pcdata(msg)%></em></p><% end %>
+	<table class="cbi-section-table">
+		<tr><th class="cbi-section-table-cell">状态 / State</th><td class="cbi-section-table-cell"><strong><%=util.pcdata(status)%></strong></td></tr>
+		<tr><th class="cbi-section-table-cell">镜像 / Image</th><td class="cbi-section-table-cell"><code><%=util.pcdata(l.image or "")%></code></td></tr>
+		<tr><th class="cbi-section-table-cell">端口 / Port</th><td class="cbi-section-table-cell"><%=util.pcdata(port)%></td></tr>
+		<tr><th class="cbi-section-table-cell">地址 / URL</th><td class="cbi-section-table-cell"><% if url ~= "" then %><a href="<%=util.pcdata(url)%>" target="_blank"><%=util.pcdata(url)%></a><% end %></td></tr>
+		<tr><th class="cbi-section-table-cell">安装器 / Installer</th><td class="cbi-section-table-cell"><code>/usr/libexec/istorec/<%=util.pcdata(id)%>.sh</code></td></tr>
+	</table>
+</div>
+
+<% if l.review and (l.review.manual and #l.review.manual > 0 or l.review.notes and #l.review.notes > 0) then %>
+<div class="cbi-section">
+	<h3>已知限制 / Known limitations</h3>
+	<ul>
+	<% for _, v in ipairs(l.review.manual or {}) do %><li><strong>需手工准备：</strong><%=util.pcdata(v)%></li><% end %>
+	<% for _, v in ipairs(l.review.notes or {}) do %><li><%=util.pcdata(v)%></li><% end %>
+	</ul>
+</div>
+<% end %>
+
+<div class="cbi-section">
+	<h3>操作 / Actions</h3>
+	<form method="post" action="<%=action_url%>">
+		<input type="hidden" name="app" value="<%=util.pcdata(id)%>" />
+		<input type="submit" class="cbi-button cbi-button-apply" name="action" value="install" />
+		<input type="submit" class="cbi-button cbi-button-apply" name="action" value="upgrade" />
+		<input type="submit" class="cbi-button cbi-button-action" name="action" value="start" />
+		<input type="submit" class="cbi-button cbi-button-action" name="action" value="stop" />
+		<input type="submit" class="cbi-button cbi-button-action" name="action" value="restart" />
+		<input type="submit" class="cbi-button cbi-button-reset" name="action" value="rm" />
+		<input type="submit" class="cbi-button" name="action" value="status" />
+		<input type="submit" class="cbi-button" name="action" value="ports" />
+		<input type="submit" class="cbi-button" name="action" value="logs" />
+	</form>
+	<p><small>install/upgrade 在后台执行，输出写入 <code>/tmp/istore-<%=util.pcdata(id)%>.log</code>。
+	rm 只删除容器和网络，不删除 <code>/srv/<%=util.pcdata(id)%></code> 数据。</small></p>
+</div>
+
+<div class="cbi-section">
+	<h3>配置覆盖 / Overrides</h3>
+	<form method="post" action="<%=action_url%>">
+		<input type="hidden" name="app" value="<%=util.pcdata(id)%>" />
+		<input type="hidden" name="action" value="save" />
+		<table class="cbi-section-table">
+			<tr>
+				<th class="cbi-section-table-cell">镜像变体 / Variant</th>
+				<td class="cbi-section-table-cell">
+					<select name="variant">
+					<% for _, v in ipairs(l.variants or {}) do %>
+						<option value="<%=util.pcdata(v.name)%>"<% if v.name == (l.default_variant or "public") then %> selected="selected"<% end %>><%=util.pcdata(v.name)%></option>
+					<% end %>
+					</select>
+					<small>public / private 的镜像与 compose 引用不同，见 README。</small>
+				</td>
+			</tr>
+			<tr><th class="cbi-section-table-cell">镜像覆盖 / Image</th><td class="cbi-section-table-cell"><input type="text" name="image" value="" placeholder="留空使用变体镜像" style="width:60%" /></td></tr>
+			<tr><th class="cbi-section-table-cell">主端口 / Host port</th><td class="cbi-section-table-cell"><input type="text" name="host_port" value="" placeholder="<%=util.pcdata(port)%>" /></td></tr>
+			<tr><th class="cbi-section-table-cell">主数据目录 / Data path</th><td class="cbi-section-table-cell"><input type="text" name="data_path" value="" placeholder="/srv/<%=util.pcdata(id)%>" style="width:60%" /></td></tr>
+			<tr><th class="cbi-section-table-cell">环境文件 / Env file</th><td class="cbi-section-table-cell"><input type="text" name="env_file" value="" placeholder="/etc/istore-loong64/env/<%=util.pcdata(id)%>.env" style="width:60%" /></td></tr>
+		</table>
+		<input type="submit" class="cbi-button cbi-button-save" value="保存 / Save" />
+	</form>
+</div>
+
+<div class="cbi-section">
+	<h3>端口 / Ports</h3>
+	<table class="cbi-section-table">
+		<tr><th>名称</th><th>宿主</th><th>容器</th><th>协议</th><th>主端口</th></tr>
+		<% for _, p in ipairs(l.ports or {}) do %>
+		<tr><td><%=util.pcdata(p.name or "")%></td><td><%=util.pcdata(tostring(p.host or ""))%></td><td><%=util.pcdata(tostring(p.container or ""))%></td><td><%=util.pcdata(p.proto or "tcp")%></td><td><%=p.primary and "yes" or ""%></td></tr>
+		<% end %>
+	</table>
+</div>
+
+<div class="cbi-section">
+	<h3>卷 / Volumes</h3>
+	<table class="cbi-section-table">
+		<tr><th>名称</th><th>宿主目录</th><th>容器路径</th><th>模式</th><th>Owner</th></tr>
+		<% for _, v in ipairs(l.volumes or {}) do %>
+		<tr><td><%=util.pcdata(v.name or "")%></td><td><code><%=util.pcdata(v.host or "")%></code></td><td><code><%=util.pcdata(v.container or "")%></code></td><td><%=util.pcdata(v.mode or "rw")%></td><td><%=util.pcdata(v.owner or "")%></td></tr>
+		<% end %>
+	</table>
+</div>
+
+<% if l.sidecars and #l.sidecars > 0 then %>
+<div class="cbi-section">
+	<h3>Sidecar（数据库/浏览器）</h3>
+	<table class="cbi-section-table">
+		<tr><th>名称</th><th>镜像</th><th>容器名</th><th>启用变体</th></tr>
+		<% for _, s in ipairs(l.sidecars) do %>
+		<tr><td><%=util.pcdata(s.name or "")%></td><td><code><%=util.pcdata(s.image or "")%></code></td><td><code><%=util.pcdata(id .. "-" .. (s.name or ""))%></code></td><td><%=util.pcdata(table.concat(s.enabled_variants or {"public","private"}, ","))%></td></tr>
+		<% end %>
+	</table>
+</div>
+<% end %>
+
+<div class="cbi-section">
+	<h3>环境变量 / Environment</h3>
+	<table class="cbi-section-table">
+		<tr><th>变量</th><th>默认值</th><th>必填</th></tr>
+		<% for _, e in ipairs(l.env or {}) do %>
+		<tr><td><code><%=util.pcdata(e.key or "")%></code></td><td><code><%=util.pcdata(e.value or "")%></code></td><td><%=e.required and "yes" or ""%></td></tr>
+		<% end %>
+	</table>
+	<p><small>覆盖值写入 <code>/etc/istore-loong64/env/<%=util.pcdata(id)%>.env</code>，每行 <code>KEY=VALUE</code>；
+	Secret 由安装器生成并保存在 <code>/etc/istore-loong64/secrets/<%=util.pcdata(id)%>.env</code>（0600）。</small></p>
+</div>
+
+<div class="cbi-section">
+	<h3>说明 / Description</h3>
+	<div><%=meta.description or ""%></div>
+</div>
+
+<% if last ~= "" or log ~= "" then %>
+<div class="cbi-section">
+	<h3>最近输出 / Last output</h3>
+	<% if last ~= "" then %><pre style="white-space:pre-wrap"><%=util.pcdata(last)%></pre><% end %>
+	<% if log ~= "" then %><h4>安装日志（末 60 行）</h4><pre style="white-space:pre-wrap"><%=util.pcdata(log)%></pre><% end %>
+</div>
+<% end %>
+
+<%+footer%>

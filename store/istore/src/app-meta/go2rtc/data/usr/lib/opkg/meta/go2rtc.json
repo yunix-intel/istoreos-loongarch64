@@ -1,0 +1,103 @@
+{
+  "name": "go2rtc",
+  "title": "go2rtc",
+  "title_en": "go2rtc",
+  "entry": "/cgi-bin/luci/admin/services/istore-loong64/app?app=go2rtc",
+  "author": "yunix-intel",
+  "website": "https://github.com/yunix-intel/istoreos-loongarch64",
+  "version": "24.10-la5",
+  "release": 20261025,
+  "arch": [
+    "all"
+  ],
+  "description": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：单二进制，无 ffmpeg 依赖。</p><p>缺失功能：默认无摄像头流配置、无认证。</p><p>额外依赖：1984 API、8554 RTSP、8555 WebRTC；跨 NAT 需配置 candidates。</p><p>镜像说明：1.9.14；Go 单二进制；1984 API、8554 RTSP、8555 WebRTC；`/config`；UID 1109；默认无认证、无摄像头配置</p>",
+  "description_en": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: Single binary; no ffmpeg dependency.</p><p>Missing features: No default camera streams and no authentication.</p><p>Extra dependencies: Ports 1984 API, 8554 RTSP, 8555 WebRTC; configure candidates behind NAT.</p><p>Image notes: 1.9.14；Go 单二进制；1984 API、8554 RTSP、8555 WebRTC；`/config`；UID 1109；默认无认证、无摄像头配置</p>",
+  "tags": [
+    "media",
+    "tool"
+  ],
+  "depends": [
+    "luci-app-istore-loong64",
+    "docker-deps"
+  ],
+  "loong64": {
+    "schema": 1,
+    "source": "dockerfile+runbook+override",
+    "image": "yunixintel/go2rtc:24.10-la5",
+    "default_variant": "public",
+    "variants": [
+      {
+        "name": "public",
+        "image": "yunixintel/go2rtc:24.10-la5",
+        "store_url": "https://github.com/yunix-intel/istoreos-loongarch64"
+      }
+    ],
+    "compose": "",
+    "ports": [
+      {
+        "name": "http",
+        "container": 1984,
+        "host": 18126,
+        "proto": "tcp",
+        "primary": true
+      },
+      {
+        "name": "rtsp",
+        "container": 8554,
+        "host": 8554,
+        "proto": "tcp",
+        "primary": false
+      },
+      {
+        "name": "webrtc",
+        "container": 8555,
+        "host": 8555,
+        "proto": "tcp",
+        "primary": false
+      }
+    ],
+    "volumes": [
+      {
+        "name": "config",
+        "host": "/srv/go2rtc/config",
+        "container": "/config",
+        "mode": "rw",
+        "owner": "",
+        "primary": true,
+        "type": "dir",
+        "seed": ""
+      }
+    ],
+    "env": [],
+    "sidecars": [],
+    "needs_host_network": false,
+    "needs_docker_sock": false,
+    "docker_sock_ro": true,
+    "devices": [],
+    "cap_add": [],
+    "group_add": [],
+    "sysctls": [],
+    "shm_size": "",
+    "user": "",
+    "command": [],
+    "restart": "unless-stopped",
+    "network_group": "",
+    "requires_app": "",
+    "health": {},
+    "review": {
+      "automation": "manual",
+      "manual": [
+        "在 Web 中添加摄像头流"
+      ],
+      "notes": [
+        "默认无认证；8554/8555 固定端口。",
+        "未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。"
+      ]
+    },
+    "category": "Media",
+    "image_size": "",
+    "title": "go2rtc",
+    "name": "go2rtc",
+    "runtime": "APP_ID='go2rtc'\nAPP_TITLE='go2rtc'\nAPP_IMAGE='yunixintel/go2rtc:24.10-la5'\nAPP_DEFAULT_VARIANT='public'\nAPP_VARIANTS='public|yunixintel/go2rtc:24.10-la5|https://github.com/yunix-intel/istoreos-loongarch64'\nAPP_PORTS='http|1984|18126|tcp|1\nrtsp|8554|8554|tcp|0\nwebrtc|8555|8555|tcp|0'\nAPP_VOLUMES='config|/srv/go2rtc/config|/config|rw||1|dir|'\nAPP_ENV=''\nAPP_SIDECARS=''\nAPP_SIDECAR_COMMAND=''\nAPP_SIDECAR_ENV=''\nAPP_SIDECAR_VOLUMES=''\nAPP_SIDECAR_PORTS=''\nAPP_DEVICES=''\nAPP_CAPS=''\nAPP_GROUPS=''\nAPP_SYSCTLS=''\nAPP_HOST_NETWORK='0'\nAPP_DOCKER_SOCK='0'\nAPP_DOCKER_SOCK_RO='1'\nAPP_SHM=''\nAPP_USER=''\nAPP_COMMAND=''\nAPP_RESTART='unless-stopped'\nAPP_NETWORK_GROUP=''\nAPP_REQUIRES_APP=''\nAPP_HEALTH_PATH=''\nAPP_HEALTH_PORT=''\nAPP_MANUAL='在 Web 中添加摄像头流'\nAPP_REVIEW='默认无认证；8554/8555 固定端口。; 未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。'\n"
+  }
+}

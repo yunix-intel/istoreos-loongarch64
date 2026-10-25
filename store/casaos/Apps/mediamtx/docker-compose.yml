@@ -1,0 +1,59 @@
+name: mediamtx
+services:
+  mediamtx:
+    image: yunixintel/mediamtx:24.10-la5
+    container_name: mediamtx
+    ports:
+    - 18148:8554
+    - 1935:1935
+    - 8888:8888
+    - 8889:8889
+    - 9997:9997
+    - 8189:8189/udp
+    - 8890:8890/udp
+    - 8000-8001:8000-8001/udp
+    environment:
+      TZ: $TZ
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: mediamtx
+  author: loong64-port
+  category: Media
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：Go 单二进制，配置内嵌。
+
+      缺失功能：无 Web 管理界面/持久化；API 默认仅本机白名单。
+
+      额外依赖：8554/1935/8888/8889/8890/9997；NAT 后 WebRTC 需配 additional hosts；与 go2rtc 二选一。
+
+      镜像说明：1.9.3；Go 单二进制；8554/1935/8888/8889/8890/9997；`api: yes`（上游默认 no）；UID 1115；API 默认仅本机白名单；无持久化'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Single Go binary with embedded configuration.
+
+      Missing features: No web admin UI or persistence; API is localhost-only by default.
+
+      Extra dependencies: Ports 8554/1935/8888/8889/8890/9997; configure additional hosts for WebRTC behind NAT; use instead
+      of go2rtc.
+
+      Image notes: 1.9.3；Go 单二进制；8554/1935/8888/8889/8890/9997；`api: yes`（上游默认 no）；UID 1115；API 默认仅本机白名单；无持久化'
+  developer: MediaMTX
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/mediamtx.png
+  tagline:
+    zh_cn: MediaMTX 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: MediaMTX LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: MediaMTX
+    en_us: MediaMTX
+  index: /
+  port_map: '18148'

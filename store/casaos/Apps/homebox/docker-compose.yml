@@ -1,0 +1,61 @@
+name: homebox
+services:
+  homebox:
+    image: yunixintel/homebox:24.10-la5
+    ports:
+    - target: 7745
+      published: '18133'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    environment:
+      TZ: $TZ
+      HBOX_MODE: production
+      HBOX_STORAGE_DATA: /data
+      HBOX_STORAGE_SQLITE_URL: /data/homebox.db?_pragma=busy_timeout=2000&_pragma=journal_mode=WAL&_fk=1
+    restart: unless-stopped
+    container_name: homebox
+x-casaos:
+  architectures:
+  - loong64
+  main: homebox
+  author: loong64-port
+  category: Productivity
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。
+
+      缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。
+
+      额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。
+
+      镜像说明：v0.10.3；Nuxt 静态前端 embed；Go 1.27；modernc sqlite 需升到 1.61 支持 loong64；`/data`；7745；UID 1000；默认允许注册'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested
+      item by item. Limitations in the image notes also apply.
+
+      Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.
+
+      Extra dependencies: No extra external dependency unless the image notes say otherwise.
+
+      Image notes: v0.10.3；Nuxt 静态前端 embed；Go 1.27；modernc sqlite 需升到 1.61 支持 loong64；`/data`；7745；UID 1000；默认允许注册'
+  developer: Homebox
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/homebox.png
+  tagline:
+    zh_cn: HomeBox 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: HomeBox LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: HomeBox
+    en_us: HomeBox
+  index: /
+  port_map: '18133'

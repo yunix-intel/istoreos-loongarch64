@@ -1,0 +1,66 @@
+name: nginx-proxy-manager
+services:
+  nginx-proxy-manager:
+    image: yunixintel/nginx-proxy-manager:24.10-la5
+    container_name: nginx-proxy-manager
+    ports:
+    - target: 81
+      published: '18156'
+      protocol: tcp
+    - target: 80
+      published: '18080'
+      protocol: tcp
+    - target: 443
+      published: '18443'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    - type: bind
+      source: /DATA/AppData/$AppID/letsencrypt
+      target: /etc/letsencrypt
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: nginx-proxy-manager
+  author: loong64-port
+  category: Networking
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：前端在 x64 构建；自定义 entrypoint 替代 s6-overlay。
+
+      缺失功能：s6-overlay 的进程管理行为未完全复刻。
+
+      额外依赖：81/443；持久化 data 与 letsencrypt。
+
+      镜像说明：v2.16.0；Node 22 + nginx；前端在 x64 编 dist；自写 entrypoint 替代 s6-overlay；81/443'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Frontend built on x64; a custom entrypoint replaces s6-overlay.
+
+      Missing features: s6-overlay process management is not fully replicated.
+
+      Extra dependencies: Ports 81/443; persist data and letsencrypt.
+
+      Image notes: v2.16.0；Node 22 + nginx；前端在 x64 编 dist；自写 entrypoint 替代 s6-overlay；81/443'
+  developer: Nginx Proxy Manager
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/nginx-proxy-manager.png
+  tagline:
+    zh_cn: Nginx Proxy Manager 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Nginx Proxy Manager LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Nginx Proxy Manager
+    en_us: Nginx Proxy Manager
+  index: /
+  port_map: '18156'

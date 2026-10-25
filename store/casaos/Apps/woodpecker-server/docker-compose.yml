@@ -1,0 +1,74 @@
+name: woodpecker-server
+services:
+  woodpecker-server:
+    image: yunixintel/woodpecker-server:24.10-la5
+    container_name: woodpecker-server
+    ports:
+    - target: 8000
+      published: '18197'
+      protocol: tcp
+    - target: 9000
+      published: '18297'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      WOODPECKER_HOST: http://localhost:18197
+      WOODPECKER_OPEN: 'true'
+      WOODPECKER_ADMIN: admin
+      WOODPECKER_GITEA: 'true'
+      WOODPECKER_GITEA_URL: https://git.example.com
+      WOODPECKER_GITEA_CLIENT: change-me
+      WOODPECKER_GITEA_SECRET: change-me
+      WOODPECKER_AGENT_SECRET: change-me-agent-secret
+      WOODPECKER_IN_CONTAINER: 'true'
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /var/lib/woodpecker
+    networks:
+    - woodpecker
+    restart: unless-stopped
+networks:
+  woodpecker:
+    name: woodpecker
+x-casaos:
+  architectures:
+  - loong64
+  main: woodpecker-server
+  author: loong64-port
+  category: Developer
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：前端 x86 构建后内嵌；CGO SQLite。
+
+      缺失功能：不配置 forge（Gitea/GitHub 等）无法启动；无内置账号体系。
+
+      额外依赖：持久化 /var/lib/woodpecker；WOODPECKER_HOST 必须是外部可访问 URL。
+
+      镜像说明：3.19.0；必须配置一个 forge（Gitea/GitHub 等）才能启动；`/var/lib/woodpecker` 持久化；8000 HTTP/9000 gRPC；自动生成 agent/grpc secret'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Frontend is built on x86 and embedded; CGO SQLite.
+
+      Missing features: Cannot start without a forge (Gitea/GitHub/etc.); no built-in account system.
+
+      Extra dependencies: Persist /var/lib/woodpecker; WOODPECKER_HOST must be an externally reachable URL.
+
+      Image notes: 3.19.0；必须配置一个 forge（Gitea/GitHub 等）才能启动；`/var/lib/woodpecker` 持久化；8000 HTTP/9000 gRPC；自动生成 agent/grpc secret'
+  developer: Woodpecker CI
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/woodpecker-ci.png
+  tagline:
+    zh_cn: Woodpecker CI (server) 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Woodpecker CI (server) LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Woodpecker CI (server)
+    en_us: Woodpecker CI (server)
+  index: /
+  port_map: '18197'

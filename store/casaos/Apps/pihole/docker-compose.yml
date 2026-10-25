@@ -1,0 +1,57 @@
+name: pihole
+services:
+  pihole:
+    image: yunixintel/pihole:24.10-la5
+    container_name: pihole
+    network_mode: host
+    environment:
+      TZ: $TZ
+      FTLCONF_dns_upstreams: 1.1.1.1
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/etc
+      target: /etc/pihole
+    shm_size: 1gb
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: pihole
+  author: loong64-port
+  category: Networking
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：FTL 6.8 源码编，版本自报 UNKNOWN；内置 pihole CLI 与 pihole-adlist。
+
+      缺失功能：需 host 网络；宿主 dnsmasq 占用 53 时不可用。
+
+      额外依赖：53/tcp+udp、80；持久化 /etc/pihole。
+
+      镜像说明：FTL 6.8 + web 6.6.1；C/C++，静态 nettle 3.10；上游 `pihole` CLI + `gravity.sh` + `pihole-adlist`（add/list/remove）；DNS
+      53 / Web 80；`/etc/pihole`'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: FTL 6.8 is built from source and reports UNKNOWN; includes the pihole CLI and pihole-adlist.
+
+      Missing features: Requires host networking; unusable while the host dnsmasq holds port 53.
+
+      Extra dependencies: Ports 53/tcp+udp and 80; persist /etc/pihole.
+
+      Image notes: FTL 6.8 + web 6.6.1；C/C++，静态 nettle 3.10；上游 `pihole` CLI + `gravity.sh` + `pihole-adlist`（add/list/remove）；DNS
+      53 / Web 80；`/etc/pihole`'
+  developer: Pi-hole
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/pi-hole.png
+  tagline:
+    zh_cn: Pi-hole 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Pi-hole LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Pi-hole
+    en_us: Pi-hole
+  index: /admin/

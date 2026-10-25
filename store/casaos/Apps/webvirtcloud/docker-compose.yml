@@ -1,0 +1,62 @@
+name: webvirtcloud
+services:
+  webvirtcloud:
+    image: yunixintel/webvirtcloud:24.10-la5
+    container_name: webvirtcloud
+    ports:
+    - target: 80
+      published: '18193'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /srv/webvirtcloud/data
+    - type: bind
+      source: /DATA/AppData/$AppID/ssh
+      target: /var/www/.ssh
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: webvirtcloud
+  author: loong64-port
+  category: Developer
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：Django 4.2 + Python 3.11 + libvirt + noVNC。
+
+      缺失功能：需真实 libvirt/KVM 与 SSH 凭据；noVNC WebSocket 需反代。
+
+      额外依赖：80；持久化 data 与 .ssh。
+
+      镜像说明：Django 4.2 + Python 3.11 + libvirt + noVNC；gunicorn/novncd/nginx 三进程；`/srv/webvirtcloud/data`、`/var/www/.ssh`；80；UID
+      33'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Django 4.2 with Python 3.11, libvirt and noVNC.
+
+      Missing features: Requires real libvirt/KVM and SSH credentials; proxy noVNC WebSocket.
+
+      Extra dependencies: Port 80; persist data and .ssh.
+
+      Image notes: Django 4.2 + Python 3.11 + libvirt + noVNC；gunicorn/novncd/nginx 三进程；`/srv/webvirtcloud/data`、`/var/www/.ssh`；80；UID
+      33'
+  developer: WebVirtCloud
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/proxmox.png
+  tagline:
+    zh_cn: WebVirtCloud 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: WebVirtCloud LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: WebVirtCloud
+    en_us: WebVirtCloud
+  index: /
+  port_map: '18193'

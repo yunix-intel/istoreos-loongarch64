@@ -1,0 +1,65 @@
+name: apprise-api
+services:
+  apprise-api:
+    image: yunixintel/apprise-api:24.10-la5
+    ports:
+    - target: 8000
+      published: '18103'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    - type: bind
+      source: /DATA/AppData/$AppID/attach
+      target: /attach
+    - type: bind
+      source: /DATA/AppData/$AppID/plugin
+      target: /plugin
+    environment:
+      TZ: $TZ
+      PUID: '1000'
+      PGID: '1000'
+    restart: unless-stopped
+    container_name: apprise-api
+x-casaos:
+  architectures:
+  - loong64
+  main: apprise-api
+  author: loong64-port
+  category: Utilities
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：Python 3.11 + 系统 cryptography/gevent；nginx+supervisor+gunicorn。
+
+      缺失功能：默认无认证/无 TLS。
+
+      额外依赖：8000；持久化 /config、/attach、/plugin。
+
+      镜像说明：2.0.1 + Python 3.11；系统 cryptography 42/gevent 22.10.2；pycares 需 cmake；nginx+supervisor+gunicorn；`/config`、`/attach`、`/plugin`；8000'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Python 3.11 with system cryptography/gevent; nginx, supervisor and gunicorn.
+
+      Missing features: No auth or TLS by default.
+
+      Extra dependencies: Port 8000; persist /config, /attach and /plugin.
+
+      Image notes: 2.0.1 + Python 3.11；系统 cryptography 42/gevent 22.10.2；pycares 需 cmake；nginx+supervisor+gunicorn；`/config`、`/attach`、`/plugin`；8000'
+  developer: Chris Caron
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/apprise.png
+  tagline:
+    zh_cn: Apprise API 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Apprise API LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Apprise API
+    en_us: Apprise API
+  index: /
+  port_map: '18103'

@@ -1,0 +1,10 @@
+Package: app-meta-penpot-backend
+Version: 1.0.0-r20261025
+Depends: libc, luci-app-istore-loong64, docker-deps
+Provides: app-meta-penpot-backend-any
+SourceName: app-meta-penpot-backend
+Section: meta
+Architecture: all
+Installed-Size: 11
+Maintainer: yunix-intel
+Description:  Metadata for penpot-backend (LoongArch64)

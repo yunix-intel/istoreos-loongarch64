@@ -1,0 +1,20 @@
+{
+	"luci-app-istore-loong64": {
+		"description": "LoongArch64 app-meta installer",
+		"read": {
+			"uci": ["istore_loong64", "*"],
+			"file": {
+				"/usr/lib/opkg/meta/*": ["read"],
+				"/etc/istore-loong64/*": ["read"],
+				"/tmp/istore-*": ["read"]
+			}
+		},
+		"write": {
+			"uci": ["*"],
+			"file": {
+				"/etc/istore-loong64/*": ["write"],
+				"/tmp/istore-*": ["write"]
+			}
+		}
+	}
+}

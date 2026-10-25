@@ -1,0 +1,10 @@
+Package: app-meta-firefly-iii
+Version: 1.0.0-r20261025
+Depends: libc, luci-app-istore-loong64, docker-deps
+Provides: app-meta-firefly-iii-any
+SourceName: app-meta-firefly-iii
+Section: meta
+Architecture: all
+Installed-Size: 6
+Maintainer: yunix-intel
+Description:  Metadata for firefly-iii (LoongArch64)

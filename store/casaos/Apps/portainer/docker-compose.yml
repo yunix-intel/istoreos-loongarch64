@@ -1,0 +1,67 @@
+name: portainer
+services:
+  portainer:
+    image: yunixintel/portainer:24.10-la5
+    container_name: portainer
+    ports:
+    - target: 9000
+      published: '18171'
+      protocol: tcp
+    - target: 9443
+      published: '18271'
+      protocol: tcp
+    - target: 8000
+      published: '18371'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    - type: bind
+      source: /var/run/docker.sock
+      target: /var/run/docker.sock
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: portainer
+  author: loong64-port
+  category: Developer
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。
+
+      缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。
+
+      额外依赖：需挂载 docker.sock。
+
+      镜像说明：2.45.2 LTS；Go 自编 + 前端本机 pnpm/webpack；需挂 docker.sock；9000'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested
+      item by item. Limitations in the image notes also apply.
+
+      Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.
+
+      Extra dependencies: Requires docker.sock.
+
+      Image notes: 2.45.2 LTS；Go 自编 + 前端本机 pnpm/webpack；需挂 docker.sock；9000'
+  developer: Portainer
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/portainer.png
+  tagline:
+    zh_cn: Portainer 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Portainer LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Portainer
+    en_us: Portainer
+  index: /
+  port_map: '18171'

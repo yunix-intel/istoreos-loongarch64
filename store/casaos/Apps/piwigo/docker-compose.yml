@@ -1,0 +1,98 @@
+name: piwigo
+services:
+  piwigo:
+    image: yunixintel/piwigo:24.10-la5
+    container_name: piwigo
+    ports:
+    - target: 80
+      published: '18169'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      PIWIGO_DB_HOST: piwigo-db
+      PIWIGO_DB_NAME: piwigo
+      PIWIGO_DB_USER: piwigo
+      PIWIGO_DB_PASSWORD: piwigo-pass
+      PIWIGO_ADMIN_USER: admin
+      PIWIGO_ADMIN_PASSWORD: change-me
+      PIWIGO_ADMIN_EMAIL: admin@example.com
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/local
+      target: /var/www/piwigo/local
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /var/www/piwigo/_data
+    - type: bind
+      source: /DATA/AppData/$AppID/galleries
+      target: /var/www/piwigo/galleries
+    - type: bind
+      source: /DATA/AppData/$AppID/upload
+      target: /var/www/piwigo/upload
+    depends_on:
+      piwigo-db:
+        condition: service_healthy
+    restart: unless-stopped
+  piwigo-db:
+    image: yunixintel/mariadb:loong64
+    container_name: piwigo-db
+    environment:
+      TZ: $TZ
+      MYSQL_ROOT_PASSWORD: change-me-root
+      MYSQL_DATABASE: piwigo
+      MYSQL_USER: piwigo
+      MYSQL_PASSWORD: piwigo-pass
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/db
+      target: /var/lib/mysql
+    restart: unless-stopped
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - mysqladmin ping -h 127.0.0.1 -uroot -p"$${MYSQL_ROOT_PASSWORD}" --silent
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 15s
+x-casaos:
+  architectures:
+  - loong64
+  main: piwigo
+  author: loong64-port
+  category: Cloud
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：首次启动自动 POST install.php 完成安装。
+
+      缺失功能：必须使用 MariaDB/MySQL。
+
+      额外依赖：需 MariaDB/MySQL；持久化 local、_data、galleries、upload。
+
+      镜像说明：16.4.0；PHP 8.3 + nginx/php-fpm；必须 MariaDB/MySQL；`local`/`_data`/`galleries`/`upload` 持久化；80'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Runs install.php automatically on first start.
+
+      Missing features: Requires MariaDB/MySQL.
+
+      Extra dependencies: Requires MariaDB/MySQL; persist local, _data, galleries and upload.
+
+      Image notes: 16.4.0；PHP 8.3 + nginx/php-fpm；必须 MariaDB/MySQL；`local`/`_data`/`galleries`/`upload` 持久化；80'
+  developer: Piwigo
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/piwigo.png
+  tagline:
+    zh_cn: Piwigo 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Piwigo LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Piwigo
+    en_us: Piwigo
+  index: /
+  port_map: '18169'

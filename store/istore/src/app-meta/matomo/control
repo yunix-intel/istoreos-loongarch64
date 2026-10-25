@@ -1,0 +1,10 @@
+Package: app-meta-matomo
+Version: 1.0.0-r20261025
+Depends: libc, luci-app-istore-loong64, docker-deps
+Provides: app-meta-matomo-any
+SourceName: app-meta-matomo
+Section: meta
+Architecture: all
+Installed-Size: 8
+Maintainer: yunix-intel
+Description:  Metadata for matomo (LoongArch64)

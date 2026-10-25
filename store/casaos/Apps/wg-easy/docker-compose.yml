@@ -1,0 +1,77 @@
+name: wg-easy
+services:
+  wg-easy:
+    image: yunixintel/wg-easy:24.10-la5
+    container_name: wg-easy
+    ports:
+    - target: 51820
+      published: '51820'
+      protocol: udp
+    - target: 51821
+      published: '51821'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      INSECURE: 'true'
+      DISABLE_IPV6: 'true'
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/wireguard
+      target: /etc/wireguard
+    - type: bind
+      source: /lib/modules
+      target: /lib/modules
+      read_only: true
+    cap_add:
+    - NET_ADMIN
+    - SYS_MODULE
+    sysctls:
+      net.ipv4.ip_forward: '1'
+      net.ipv4.conf.all.src_valid_mark: '1'
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: wg-easy
+  author: loong64-port
+  category: Utilities
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：v15.4.0 在龙芯原生构建；libsql 使用龙芯 0.5.13 绑定，argon2 换成 hash-wasm。
+
+      缺失功能：AmneziaWG 未打包（用户态 PoC 已验证）；默认 IPv4-only；外网 IPv6 受 Docker 限制。
+
+      额外依赖：需 NET_ADMIN，建议 SYS_MODULE + /lib/modules；sysctls；51820/udp、51821；/etc/wireguard 持久化。
+
+      镜像说明：15.4.0；Node 24 + Nuxt/Nitro + Drizzle/libsql（龙芯 0.5.13 绑定）；argon2 换 hash-wasm；51820/udp、51821/tcp；需 NET_ADMIN/SYS_MODULE
+      与 sysctls；默认 IPv4-only；握手/转发/NAT 已验证；外网 IPv6 受 Docker 限制'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: v15.4.0 is built natively on LoongArch; libsql uses the LoongArch 0.5.13 binding and argon2 is replaced
+      by hash-wasm.
+
+      Missing features: AmneziaWG is not packaged (a userspace PoC passed); IPv4-only by default; external IPv6 is limited
+      by Docker.
+
+      Extra dependencies: Requires NET_ADMIN, ideally SYS_MODULE + /lib/modules, sysctls, ports 51820/udp and 51821, and persistent
+      /etc/wireguard.
+
+      Image notes: 15.4.0；Node 24 + Nuxt/Nitro + Drizzle/libsql（龙芯 0.5.13 绑定）；argon2 换 hash-wasm；51820/udp、51821/tcp；需 NET_ADMIN/SYS_MODULE
+      与 sysctls；默认 IPv4-only；握手/转发/NAT 已验证；外网 IPv6 受 Docker 限制'
+  developer: wg-easy
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/wireguard.png
+  tagline:
+    zh_cn: wg-easy 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: wg-easy LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: wg-easy
+    en_us: wg-easy
+  index: /
+  port_map: '51821'

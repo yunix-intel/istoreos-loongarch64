@@ -1,0 +1,97 @@
+{
+  "name": "registry",
+  "title": "Docker Registry",
+  "title_en": "Docker Registry",
+  "entry": "/cgi-bin/luci/admin/services/istore-loong64/app?app=registry",
+  "author": "yunix-intel",
+  "website": "https://github.com/yunix-intel/istoreos-loongarch64",
+  "version": "24.10-la5",
+  "release": 20261025,
+  "arch": [
+    "all"
+  ],
+  "description": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：Go 单二进制；首次启动生成 htpasswd。</p><p>缺失功能：无 Web UI、无 TLS、无多实例共享存储；删除后需手动 GC。</p><p>额外依赖：持久化 /var/lib/registry 与 /auth；/auth/password 是唯一密码来源；Docker CLI 需 insecure-registries。</p><p>镜像说明：3.1.2；Go 单二进制；`/var/lib/registry`、`/auth`；5000；UID 1121；首启生成 admin 随机密码与 htpasswd；HTTP secret 持久化；无 TLS</p>",
+  "description_en": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: Single Go binary; htpasswd is generated on first start.</p><p>Missing features: No web UI, no TLS, no shared storage across instances; run GC manually after deletes.</p><p>Extra dependencies: Persist /var/lib/registry and /auth; /auth/password is the only password source; Docker CLI needs insecure-registries.</p><p>Image notes: 3.1.2；Go 单二进制；`/var/lib/registry`、`/auth`；5000；UID 1121；首启生成 admin 随机密码与 htpasswd；HTTP secret 持久化；无 TLS</p>",
+  "tags": [
+    "dev",
+    "tool"
+  ],
+  "depends": [
+    "luci-app-istore-loong64",
+    "docker-deps"
+  ],
+  "loong64": {
+    "schema": 1,
+    "source": "dockerfile+runbook+override",
+    "image": "yunixintel/registry:24.10-la5",
+    "default_variant": "public",
+    "variants": [
+      {
+        "name": "public",
+        "image": "yunixintel/registry:24.10-la5",
+        "store_url": "https://github.com/yunix-intel/istoreos-loongarch64"
+      }
+    ],
+    "compose": "",
+    "ports": [
+      {
+        "name": "http",
+        "container": 5000,
+        "host": 5000,
+        "proto": "tcp",
+        "primary": true
+      }
+    ],
+    "volumes": [
+      {
+        "name": "data",
+        "host": "/srv/registry/data",
+        "container": "/var/lib/registry",
+        "mode": "rw",
+        "owner": "",
+        "primary": true,
+        "type": "dir",
+        "seed": ""
+      },
+      {
+        "name": "auth",
+        "host": "/srv/registry/auth",
+        "container": "/auth",
+        "mode": "rw",
+        "owner": "",
+        "primary": false,
+        "type": "dir",
+        "seed": ""
+      }
+    ],
+    "env": [],
+    "sidecars": [],
+    "needs_host_network": false,
+    "needs_docker_sock": false,
+    "docker_sock_ro": true,
+    "devices": [],
+    "cap_add": [],
+    "group_add": [],
+    "sysctls": [],
+    "shm_size": "",
+    "user": "",
+    "command": [],
+    "restart": "unless-stopped",
+    "network_group": "",
+    "requires_app": "",
+    "health": {},
+    "review": {
+      "automation": "auto",
+      "manual": [],
+      "notes": [
+        "首启生成 htpasswd；无 TLS；5000 固定端口。",
+        "未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。"
+      ]
+    },
+    "category": "Developer",
+    "image_size": "",
+    "title": "Docker Registry",
+    "name": "registry",
+    "runtime": "APP_ID='registry'\nAPP_TITLE='Docker Registry'\nAPP_IMAGE='yunixintel/registry:24.10-la5'\nAPP_DEFAULT_VARIANT='public'\nAPP_VARIANTS='public|yunixintel/registry:24.10-la5|https://github.com/yunix-intel/istoreos-loongarch64'\nAPP_PORTS='http|5000|5000|tcp|1'\nAPP_VOLUMES='data|/srv/registry/data|/var/lib/registry|rw||1|dir|\nauth|/srv/registry/auth|/auth|rw||0|dir|'\nAPP_ENV=''\nAPP_SIDECARS=''\nAPP_SIDECAR_COMMAND=''\nAPP_SIDECAR_ENV=''\nAPP_SIDECAR_VOLUMES=''\nAPP_SIDECAR_PORTS=''\nAPP_DEVICES=''\nAPP_CAPS=''\nAPP_GROUPS=''\nAPP_SYSCTLS=''\nAPP_HOST_NETWORK='0'\nAPP_DOCKER_SOCK='0'\nAPP_DOCKER_SOCK_RO='1'\nAPP_SHM=''\nAPP_USER=''\nAPP_COMMAND=''\nAPP_RESTART='unless-stopped'\nAPP_NETWORK_GROUP=''\nAPP_REQUIRES_APP=''\nAPP_HEALTH_PATH=''\nAPP_HEALTH_PORT=''\nAPP_MANUAL=''\nAPP_REVIEW='首启生成 htpasswd；无 TLS；5000 固定端口。; 未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。'\n"
+  }
+}

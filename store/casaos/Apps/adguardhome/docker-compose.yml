@@ -48,7 +48,7 @@ x-casaos:
 
       Image notes: 官方无 loong64 资产，源码自编 + 官方前端；53 端口需映射避让宿主 dnsmasq'
   developer: Home
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/adguardhome/icon.png
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/adguard-home.png
   tagline:
     zh_cn: AdGuard Home 的 LoongArch64 镜像，详见龙芯版说明。
     en_us: AdGuard Home LoongArch64 image; see the LoongArch notes.

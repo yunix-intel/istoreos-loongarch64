@@ -1,0 +1,76 @@
+{
+  "name": "jellyseerr",
+  "title": "Jellyseerr",
+  "title_en": "Jellyseerr",
+  "entry": "/cgi-bin/luci/admin/services/istore-loong64/app?app=jellyseerr",
+  "author": "yunix-intel",
+  "website": "https://github.com/yunix-intel/istoreos-loongarch64",
+  "version": "24.10-la5",
+  "release": 20261025,
+  "arch": [
+    "all"
+  ],
+  "description": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：Next 16 使用 WASM SWC 在 x86 构建；sharp 不可用，图片优化关闭。</p><p>缺失功能：无 Next 图片优化器；依赖上游请求服务。</p><p>额外依赖：需 Sonarr/Radarr 等上游服务；5055。</p><p>镜像说明：v3.5.0；Next 16 用 WASM SWC（无 loong64 binding）；sharp 不可用 → `images.unoptimized`；5055 端口</p>",
+  "description_en": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: Next 16 is built on x86 with WASM SWC; sharp is unavailable, so image optimization is disabled.</p><p>Missing features: No Next image optimizer; relies on upstream request services.</p><p>Extra dependencies: Requires Sonarr/Radarr and other upstream services; port 5055.</p><p>Image notes: v3.5.0；Next 16 用 WASM SWC（无 loong64 binding）；sharp 不可用 → `images.unoptimized`；5055 端口</p>",
+  "tags": [
+    "media",
+    "tool"
+  ],
+  "depends": [
+    "luci-app-istore-loong64",
+    "docker-deps"
+  ],
+  "loong64": {
+    "schema": 1,
+    "source": "dockerfile+runbook+override",
+    "image": "yunixintel/jellyseerr:24.10-la5",
+    "default_variant": "public",
+    "variants": [
+      {
+        "name": "public",
+        "image": "yunixintel/jellyseerr:24.10-la5",
+        "store_url": "https://github.com/yunix-intel/istoreos-loongarch64"
+      }
+    ],
+    "compose": "",
+    "ports": [
+      {
+        "name": "http",
+        "container": 5055,
+        "host": 18137,
+        "proto": "tcp",
+        "primary": true
+      }
+    ],
+    "volumes": [],
+    "env": [],
+    "sidecars": [],
+    "needs_host_network": false,
+    "needs_docker_sock": false,
+    "docker_sock_ro": true,
+    "devices": [],
+    "cap_add": [],
+    "group_add": [],
+    "sysctls": [],
+    "shm_size": "",
+    "user": "",
+    "command": [],
+    "restart": "unless-stopped",
+    "network_group": "",
+    "requires_app": "",
+    "health": {},
+    "review": {
+      "automation": "auto",
+      "manual": [],
+      "notes": [
+        "/app/config 持久化；首次进入设置向导连接 Jellyfin/Plex。",
+        "未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。"
+      ]
+    },
+    "category": "Media",
+    "image_size": "",
+    "title": "Jellyseerr",
+    "name": "jellyseerr",
+    "runtime": "APP_ID='jellyseerr'\nAPP_TITLE='Jellyseerr'\nAPP_IMAGE='yunixintel/jellyseerr:24.10-la5'\nAPP_DEFAULT_VARIANT='public'\nAPP_VARIANTS='public|yunixintel/jellyseerr:24.10-la5|https://github.com/yunix-intel/istoreos-loongarch64'\nAPP_PORTS='http|5055|18137|tcp|1'\nAPP_VOLUMES=''\nAPP_ENV=''\nAPP_SIDECARS=''\nAPP_SIDECAR_COMMAND=''\nAPP_SIDECAR_ENV=''\nAPP_SIDECAR_VOLUMES=''\nAPP_SIDECAR_PORTS=''\nAPP_DEVICES=''\nAPP_CAPS=''\nAPP_GROUPS=''\nAPP_SYSCTLS=''\nAPP_HOST_NETWORK='0'\nAPP_DOCKER_SOCK='0'\nAPP_DOCKER_SOCK_RO='1'\nAPP_SHM=''\nAPP_USER=''\nAPP_COMMAND=''\nAPP_RESTART='unless-stopped'\nAPP_NETWORK_GROUP=''\nAPP_REQUIRES_APP=''\nAPP_HEALTH_PATH=''\nAPP_HEALTH_PORT=''\nAPP_MANUAL=''\nAPP_REVIEW='/app/config 持久化；首次进入设置向导连接 Jellyfin/Plex。; 未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。'\n"
+  }
+}

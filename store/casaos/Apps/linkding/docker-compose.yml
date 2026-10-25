@@ -49,7 +49,7 @@ x-casaos:
 
       Image notes: v1.47.0；Python 3.13 源码编 + uwsgi；cryptography 需 Rust 源码编；`UWSGI_MAX_FD=4096` 必设（否则 uwsgi 路由进程吃 8GB）'
   developer: Linkding
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/linkding/icon.png
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/linkding.png
   tagline:
     zh_cn: Linkding 的 LoongArch64 镜像，详见龙芯版说明。
     en_us: Linkding LoongArch64 image; see the LoongArch notes.

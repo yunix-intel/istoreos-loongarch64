@@ -50,7 +50,7 @@ x-casaos:
       Image notes: .NET 9 自编；**自 2026-10-19 起内置 ImageSharp 编码器**（缩略图/Trickplay/拼图/BlurHash 全可用，含 Noto CJK 字体）；代价：纯托管性能较 Skia
       慢、无 ICC 色彩管理'
   developer: Jellyfin
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/jellyfin/icon.png
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/jellyfin.png
   tagline:
     zh_cn: Jellyfin 的 LoongArch64 镜像，详见龙芯版说明。
     en_us: Jellyfin LoongArch64 image; see the LoongArch notes.

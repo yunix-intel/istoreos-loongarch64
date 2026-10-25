@@ -1,0 +1,111 @@
+{
+  "name": "unpackerr",
+  "title": "Unpackerr",
+  "title_en": "Unpackerr",
+  "entry": "/cgi-bin/luci/admin/services/istore-loong64/app?app=unpackerr",
+  "author": "yunix-intel",
+  "website": "https://github.com/yunix-intel/istoreos-loongarch64",
+  "version": "24.10-la5",
+  "release": 20261025,
+  "arch": [
+    "all"
+  ],
+  "description": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：Go 单二进制；需要升级 x/sys 才能支持 loongarch64。</p><p>缺失功能：无 Web UI/端口；健康检查仅进程存活；未接真实 *arr。</p><p>额外依赖：持久化 /config 与 /downloads，路径必须与 *arr 一致；unrar 为闭源 freeware。</p><p>镜像说明：0.9.9；Go 单二进制；无 UI/端口；`/config`、`/downloads`；UID 1123；需把 x/sys 升到 v0.35.0；unrar 7.13 + 7za；健康检查仅进程存活</p>",
+  "description_en": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: Single Go binary; requires an x/sys upgrade for loongarch64.</p><p>Missing features: No web UI/port; health check is process-only; not tested against a real *arr.</p><p>Extra dependencies: Persist /config and /downloads with paths identical to *arr; unrar is closed-source freeware.</p><p>Image notes: 0.9.9；Go 单二进制；无 UI/端口；`/config`、`/downloads`；UID 1123；需把 x/sys 升到 v0.35.0；unrar 7.13 + 7za；健康检查仅进程存活</p>",
+  "tags": [
+    "download",
+    "tool"
+  ],
+  "depends": [
+    "luci-app-istore-loong64",
+    "docker-deps"
+  ],
+  "loong64": {
+    "schema": 1,
+    "source": "dockerfile+runbook+override",
+    "image": "yunixintel/unpackerr:24.10-la5",
+    "default_variant": "public",
+    "variants": [
+      {
+        "name": "public",
+        "image": "yunixintel/unpackerr:24.10-la5",
+        "store_url": "https://github.com/yunix-intel/istoreos-loongarch64"
+      }
+    ],
+    "compose": "",
+    "ports": [],
+    "volumes": [
+      {
+        "name": "config",
+        "host": "/srv/unpackerr/config",
+        "container": "/config",
+        "mode": "rw",
+        "owner": "",
+        "primary": true,
+        "type": "dir",
+        "seed": ""
+      },
+      {
+        "name": "downloads",
+        "host": "/mnt/downloads",
+        "container": "/downloads",
+        "mode": "rw",
+        "owner": "",
+        "primary": false,
+        "type": "dir",
+        "seed": ""
+      }
+    ],
+    "env": [
+      {
+        "key": "UN_SONARR_0_URL",
+        "value": "",
+        "required": true,
+        "variants": ""
+      },
+      {
+        "key": "UN_SONARR_0_API_KEY",
+        "value": "",
+        "required": true,
+        "variants": ""
+      },
+      {
+        "key": "UN_SONARR_0_PATHS_0",
+        "value": "/downloads",
+        "required": false,
+        "variants": ""
+      }
+    ],
+    "sidecars": [],
+    "needs_host_network": false,
+    "needs_docker_sock": false,
+    "docker_sock_ro": true,
+    "devices": [],
+    "cap_add": [],
+    "group_add": [],
+    "sysctls": [],
+    "shm_size": "",
+    "user": "",
+    "command": [],
+    "restart": "unless-stopped",
+    "network_group": "",
+    "requires_app": "",
+    "health": {},
+    "review": {
+      "automation": "manual",
+      "manual": [
+        "填写 Sonarr/Radarr URL 与 API key"
+      ],
+      "notes": [
+        "无 UI；/config 与 /downloads 持久化。",
+        "该应用没有对外 Web/服务端口（后台任务或需外部连接）。",
+        "未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。"
+      ]
+    },
+    "category": "Downloaders",
+    "image_size": "",
+    "title": "Unpackerr",
+    "name": "unpackerr",
+    "runtime": "APP_ID='unpackerr'\nAPP_TITLE='Unpackerr'\nAPP_IMAGE='yunixintel/unpackerr:24.10-la5'\nAPP_DEFAULT_VARIANT='public'\nAPP_VARIANTS='public|yunixintel/unpackerr:24.10-la5|https://github.com/yunix-intel/istoreos-loongarch64'\nAPP_PORTS=''\nAPP_VOLUMES='config|/srv/unpackerr/config|/config|rw||1|dir|\ndownloads|/mnt/downloads|/downloads|rw||0|dir|'\nAPP_ENV='UN_SONARR_0_URL||1|\nUN_SONARR_0_API_KEY||1|\nUN_SONARR_0_PATHS_0|/downloads|0|'\nAPP_SIDECARS=''\nAPP_SIDECAR_COMMAND=''\nAPP_SIDECAR_ENV=''\nAPP_SIDECAR_VOLUMES=''\nAPP_SIDECAR_PORTS=''\nAPP_DEVICES=''\nAPP_CAPS=''\nAPP_GROUPS=''\nAPP_SYSCTLS=''\nAPP_HOST_NETWORK='0'\nAPP_DOCKER_SOCK='0'\nAPP_DOCKER_SOCK_RO='1'\nAPP_SHM=''\nAPP_USER=''\nAPP_COMMAND=''\nAPP_RESTART='unless-stopped'\nAPP_NETWORK_GROUP=''\nAPP_REQUIRES_APP=''\nAPP_HEALTH_PATH=''\nAPP_HEALTH_PORT=''\nAPP_MANUAL='填写 Sonarr/Radarr URL 与 API key'\nAPP_REVIEW='无 UI；/config 与 /downloads 持久化。; 该应用没有对外 Web/服务端口（后台任务或需外部连接）。; 未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。'\n"
+  }
+}

@@ -1,0 +1,82 @@
+name: homarr
+services:
+  homarr:
+    image: yunixintel/homarr:24.10-la5
+    ports:
+    - target: 7575
+      published: '18131'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/appdata
+      target: /appdata
+    environment:
+      TZ: $TZ
+      DB_URL: /appdata/db/db.sqlite
+      REDIS_IS_EXTERNAL: 'true'
+      REDIS_HOST: homarr-redis
+      REDIS_PORT: '6379'
+    depends_on:
+      homarr-redis:
+        condition: service_healthy
+    restart: unless-stopped
+    container_name: homarr
+  homarr-redis:
+    image: yunixintel/redis:loong64
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/redis
+      target: /data
+    environment:
+      TZ: $TZ
+    restart: unless-stopped
+    container_name: homarr-redis
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - if [ -n "$$REDIS_PASSWORD" ]; then redis-cli -a "$$REDIS_PASSWORD" ping; else redis-cli ping; fi
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 5s
+x-casaos:
+  architectures:
+  - loong64
+  main: homarr
+  author: loong64-port
+  category: Networking
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：Next 16 WASM SWC + Node 24；未使用 Bun/Turbo。
+
+      缺失功能：Bun/Turbo 构建链未移植；依赖 Redis。
+
+      额外依赖：需 Redis；7575。
+
+      镜像说明：v2.6.0；Next 16 WASM SWC + Node 24 + redis；Bun/Turbo 无 loong64 改用 pnpm；7575 端口'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Next 16 with WASM SWC and Node 24; Bun/Turbo are not used.
+
+      Missing features: The Bun/Turbo build chain is not ported; Redis is required.
+
+      Extra dependencies: Requires Redis; port 7575.
+
+      Image notes: v2.6.0；Next 16 WASM SWC + Node 24 + redis；Bun/Turbo 无 loong64 改用 pnpm；7575 端口'
+  developer: Homarr
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/homarr.png
+  tagline:
+    zh_cn: Homarr 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Homarr LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Homarr
+    en_us: Homarr
+  index: /
+  port_map: '18131'

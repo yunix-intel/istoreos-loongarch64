@@ -1,0 +1,10 @@
+Package: app-meta-backrest
+Version: 1.0.0-r20261025
+Depends: libc, luci-app-istore-loong64, docker-deps
+Provides: app-meta-backrest-any
+SourceName: app-meta-backrest
+Section: meta
+Architecture: all
+Installed-Size: 6
+Maintainer: yunix-intel
+Description:  Metadata for backrest (LoongArch64)

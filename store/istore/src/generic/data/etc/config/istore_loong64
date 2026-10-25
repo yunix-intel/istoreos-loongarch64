@@ -1,0 +1,4 @@
+config settings 'settings'
+	option default_variant 'public'
+	option public_store_url 'https://github.com/yunix-intel/istoreos-loongarch64'
+	option private_store_url 'https://github.com/yunix-intel/istore-la-private'

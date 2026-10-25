@@ -1,0 +1,62 @@
+name: gatus
+services:
+  gatus:
+    image: yunixintel/gatus:24.10-la5
+    ports:
+    - target: 8080
+      published: '18124'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      GATUS_CONFIG_PATH: /config/config.yaml
+    restart: unless-stopped
+    container_name: gatus
+    configs:
+    - source: gatus-config.yaml
+      target: /config/config.yaml
+x-casaos:
+  architectures:
+  - loong64
+  main: gatus
+  author: loong64-port
+  category: Monitoring
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。
+
+      缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。
+
+      额外依赖：config.yaml 以 compose configs 内嵌；自定义需修改 configs.content。
+
+      镜像说明：5.37.0；Go 静态编；自带 `web/static`；scratch；默认配置监控 Prometheus；8080'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested
+      item by item. Limitations in the image notes also apply.
+
+      Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.
+
+      Extra dependencies: config.yaml is embedded via compose configs; edit configs.content to customize.
+
+      Image notes: 5.37.0；Go 静态编；自带 `web/static`；scratch；默认配置监控 Prometheus；8080'
+  developer: Gatus
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/gatus.png
+  tagline:
+    zh_cn: Gatus 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Gatus LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Gatus
+    en_us: Gatus
+  index: /
+  port_map: '18124'
+configs:
+  gatus-config.yaml:
+    content: "endpoints:\n  - name: gatus\n    group: core\n    url: http://localhost:8080/health\n    interval: 60s\n   \
+      \ conditions:\n      - \"[STATUS] == 200\"\n"

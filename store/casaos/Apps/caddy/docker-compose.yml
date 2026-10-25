@@ -1,0 +1,73 @@
+name: caddy
+services:
+  caddy:
+    image: yunixintel/caddy:24.10-la5
+    ports:
+    - target: 80
+      published: '80'
+      protocol: tcp
+    - target: 443
+      published: '443'
+      protocol: tcp
+    - target: 8080
+      published: '18110'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    environment:
+      TZ: $TZ
+    restart: unless-stopped
+    container_name: caddy
+    configs:
+    - source: Caddyfile
+      target: /etc/caddy/Caddyfile
+x-casaos:
+  architectures:
+  - loong64
+  main: caddy
+  author: loong64-port
+  category: Networking
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。
+
+      缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。
+
+      额外依赖：Caddyfile 以 compose configs 内嵌；自定义需修改 configs.content。
+
+      镜像说明：纯 Go 静态编；scratch + CA；默认 Caddyfile 监听 8080；挂载自己的 Caddyfile 覆盖，80/443/8080'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested
+      item by item. Limitations in the image notes also apply.
+
+      Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.
+
+      Extra dependencies: The Caddyfile is embedded via compose configs; edit configs.content to customize.
+
+      Image notes: 纯 Go 静态编；scratch + CA；默认 Caddyfile 监听 8080；挂载自己的 Caddyfile 覆盖，80/443/8080'
+  developer: Caddy
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/caddy.png
+  tagline:
+    zh_cn: Caddy 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Caddy LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Caddy
+    en_us: Caddy
+  index: /
+  port_map: '18110'
+configs:
+  Caddyfile:
+    content: "{\n\tadmin off\n\tauto_https off\n}\n:80 {\n\trespond \"Caddy is running\" 200\n}\n"

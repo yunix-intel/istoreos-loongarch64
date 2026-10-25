@@ -1,0 +1,7 @@
+config main 'main'
+	option enabled '1'
+	option variant 'public'
+	option image ''
+	option host_port '18117'
+	option data_path '/srv/dpanel/dpanel'
+	option env_file '/etc/istore-loong64/env/dpanel.env'

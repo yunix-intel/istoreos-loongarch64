@@ -1,0 +1,10 @@
+Package: app-meta-linkwarden
+Version: 1.0.0-r20261025
+Depends: libc, luci-app-istore-loong64, docker-deps
+Provides: app-meta-linkwarden-any
+SourceName: app-meta-linkwarden
+Section: meta
+Architecture: all
+Installed-Size: 11
+Maintainer: yunix-intel
+Description:  Metadata for linkwarden (LoongArch64)

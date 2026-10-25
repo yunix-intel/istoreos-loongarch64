@@ -1,0 +1,69 @@
+name: woodpecker-agent
+services:
+  woodpecker-agent:
+    image: yunixintel/woodpecker-agent:24.10-la5
+    container_name: woodpecker-agent
+    ports:
+    - target: 3000
+      published: '18196'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      WOODPECKER_SERVER: woodpecker-server:9000
+      WOODPECKER_AGENT_SECRET: change-me-agent-secret
+      WOODPECKER_BACKEND: docker
+      WOODPECKER_MAX_WORKFLOWS: '1'
+    volumes:
+    - type: bind
+      source: /var/run/docker.sock
+      target: /var/run/docker.sock
+    group_add:
+    - ${DOCKER_GID:-999}
+    networks:
+    - woodpecker
+    restart: unless-stopped
+networks:
+  woodpecker:
+    name: woodpecker
+x-casaos:
+  architectures:
+  - loong64
+  main: woodpecker-agent
+  author: loong64-port
+  category: Developer
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：Go CGO-free；UID 1114。
+
+      缺失功能：无业务端口，仅 3000 健康检查；必须能访问 Docker daemon。
+
+      额外依赖：挂载 docker.sock 并加匹配的 --group-add；agent secret 与 server 一致；等同宿主 root。
+
+      镜像说明：3.19.0；UID/GID 1114；需 `docker.sock` 与匹配的 `--group-add`；`WOODPECKER_AGENT_SECRET` 与 server 一致；3000 仅健康检查'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: CGO-free Go binary; UID 1114.
+
+      Missing features: No service port; 3000 is health only; requires Docker daemon access.
+
+      Extra dependencies: Mount docker.sock and add the matching --group-add; share the agent secret with the server; equivalent
+      to host root.
+
+      Image notes: 3.19.0；UID/GID 1114；需 `docker.sock` 与匹配的 `--group-add`；`WOODPECKER_AGENT_SECRET` 与 server 一致；3000 仅健康检查'
+  developer: Woodpecker CI
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/woodpecker-ci.png
+  tagline:
+    zh_cn: Woodpecker CI (agent) 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Woodpecker CI (agent) LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Woodpecker CI (agent)
+    en_us: Woodpecker CI (agent)
+  index: /healthz
+  port_map: '18196'

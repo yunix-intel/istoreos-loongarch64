@@ -1,0 +1,7 @@
+config main 'main'
+	option enabled '1'
+	option variant 'public'
+	option image ''
+	option host_port '18144'
+	option data_path '/srv/linkwarden/data'
+	option env_file '/etc/istore-loong64/env/linkwarden.env'

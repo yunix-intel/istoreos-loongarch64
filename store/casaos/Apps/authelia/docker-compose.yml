@@ -1,0 +1,63 @@
+name: authelia
+services:
+  authelia:
+    image: yunixintel/authelia:24.10-la5
+    ports:
+    - target: 9091
+      published: '18105'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    environment:
+      TZ: $TZ
+      AUTH_DOMAIN: example.com
+      AUTH_URL: https://auth.example.com
+      AUTH_DEFAULT_REDIRECT_URL: https://app.example.com
+      ADMIN_USER: admin
+      ADMIN_PASSWORD: change-me
+      ADMIN_EMAIL: admin@example.com
+    restart: unless-stopped
+    container_name: authelia
+x-casaos:
+  architectures:
+  - loong64
+  main: authelia
+  author: loong64-port
+  category: Security
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：自动生成配置/用户库/密钥；单机 SQLite。
+
+      缺失功能：无内置 TLS；默认 one_factor，forward-auth 需反代配置。
+
+      额外依赖：AUTH_DOMAIN/AUTH_URL 必须是 HTTPS 正式域名；持久化 /config。
+
+      镜像说明：v4.39.28；CGO SQLite；自动生成配置/用户/密钥；`/config`；9091；UID 1107；需 HTTPS 反代；默认 one_factor'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Generates config, user database and secrets automatically; single-node SQLite.
+
+      Missing features: No built-in TLS; one_factor by default; forward-auth needs reverse-proxy config.
+
+      Extra dependencies: AUTH_DOMAIN/AUTH_URL must be real HTTPS domains; persist /config.
+
+      Image notes: v4.39.28；CGO SQLite；自动生成配置/用户/密钥；`/config`；9091；UID 1107；需 HTTPS 反代；默认 one_factor'
+  developer: Authelia
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/authelia.png
+  tagline:
+    zh_cn: Authelia 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Authelia LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Authelia
+    en_us: Authelia
+  index: /
+  port_map: '18105'

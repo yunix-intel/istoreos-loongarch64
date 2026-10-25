@@ -1,0 +1,101 @@
+{
+  "name": "syncthing",
+  "title": "Syncthing",
+  "title_en": "Syncthing",
+  "entry": "/cgi-bin/luci/admin/services/istore-loong64/app?app=syncthing",
+  "author": "yunix-intel",
+  "website": "https://github.com/yunix-intel/istoreos-loongarch64",
+  "version": "24.10-la5",
+  "release": 20261025,
+  "arch": [
+    "all"
+  ],
+  "description": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：此镜像为 LoongArch 适配构建；上游主要功能保留，但尚未逐项做行为回归，镜像说明中列出的限制同样适用。</p><p>缺失功能：未逐项验证上游全部功能；请以镜像说明中的限制为准。</p><p>额外依赖：无额外外部依赖（镜像说明中另有注明的除外）。</p><p>镜像说明：v2.1.6 官方 loong64 包；注意 v2 CLI 用双横线 `--home=`</p>",
+  "description_en": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: LoongArch build; upstream functionality is largely retained, but behavior was not regression-tested item by item. Limitations in the image notes also apply.</p><p>Missing features: Upstream features were not verified item by item; treat the image notes as the limitation list.</p><p>Extra dependencies: No extra external dependency unless the image notes say otherwise.</p><p>Image notes: v2.1.6 官方 loong64 包；注意 v2 CLI 用双横线 `--home=`</p>",
+  "tags": [
+    "cloud",
+    "storage"
+  ],
+  "depends": [
+    "luci-app-istore-loong64",
+    "docker-deps"
+  ],
+  "loong64": {
+    "schema": 1,
+    "source": "dockerfile+runbook+override",
+    "image": "yunixintel/syncthing:24.10-la5",
+    "default_variant": "public",
+    "variants": [
+      {
+        "name": "public",
+        "image": "yunixintel/syncthing:24.10-la5",
+        "store_url": "https://github.com/yunix-intel/istoreos-loongarch64"
+      }
+    ],
+    "compose": "",
+    "ports": [
+      {
+        "name": "http",
+        "container": 8384,
+        "host": 18005,
+        "proto": "tcp",
+        "primary": true
+      },
+      {
+        "name": "sync",
+        "container": 22000,
+        "host": 22000,
+        "proto": "tcp",
+        "primary": false
+      },
+      {
+        "name": "discovery-udp",
+        "container": 21027,
+        "host": 21027,
+        "proto": "udp",
+        "primary": false
+      }
+    ],
+    "volumes": [
+      {
+        "name": "syncthing",
+        "host": "/srv/syncthing/syncthing",
+        "container": "/var/syncthing",
+        "mode": "rw",
+        "owner": "",
+        "primary": true,
+        "type": "dir",
+        "seed": ""
+      }
+    ],
+    "env": [],
+    "sidecars": [],
+    "needs_host_network": false,
+    "needs_docker_sock": false,
+    "docker_sock_ro": true,
+    "devices": [],
+    "cap_add": [],
+    "group_add": [],
+    "sysctls": [],
+    "shm_size": "",
+    "user": "",
+    "command": [],
+    "restart": "unless-stopped",
+    "network_group": "",
+    "requires_app": "",
+    "health": {},
+    "review": {
+      "automation": "auto",
+      "manual": [],
+      "notes": [
+        "22000/tcp 与 21027/udp 使用固定宿主端口；21027/udp 用于本地发现。",
+        "未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。"
+      ]
+    },
+    "category": "Cloud",
+    "image_size": "",
+    "title": "Syncthing",
+    "name": "syncthing",
+    "runtime": "APP_ID='syncthing'\nAPP_TITLE='Syncthing'\nAPP_IMAGE='yunixintel/syncthing:24.10-la5'\nAPP_DEFAULT_VARIANT='public'\nAPP_VARIANTS='public|yunixintel/syncthing:24.10-la5|https://github.com/yunix-intel/istoreos-loongarch64'\nAPP_PORTS='http|8384|18005|tcp|1\nsync|22000|22000|tcp|0\ndiscovery-udp|21027|21027|udp|0'\nAPP_VOLUMES='syncthing|/srv/syncthing/syncthing|/var/syncthing|rw||1|dir|'\nAPP_ENV=''\nAPP_SIDECARS=''\nAPP_SIDECAR_COMMAND=''\nAPP_SIDECAR_ENV=''\nAPP_SIDECAR_VOLUMES=''\nAPP_SIDECAR_PORTS=''\nAPP_DEVICES=''\nAPP_CAPS=''\nAPP_GROUPS=''\nAPP_SYSCTLS=''\nAPP_HOST_NETWORK='0'\nAPP_DOCKER_SOCK='0'\nAPP_DOCKER_SOCK_RO='1'\nAPP_SHM=''\nAPP_USER=''\nAPP_COMMAND=''\nAPP_RESTART='unless-stopped'\nAPP_NETWORK_GROUP=''\nAPP_REQUIRES_APP=''\nAPP_HEALTH_PATH=''\nAPP_HEALTH_PORT=''\nAPP_MANUAL=''\nAPP_REVIEW='22000/tcp 与 21027/udp 使用固定宿主端口；21027/udp 用于本地发现。; 未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。'\n"
+  }
+}

@@ -1,0 +1,10 @@
+Package: app-meta-ente-server
+Version: 1.0.0-r20261025
+Depends: libc, luci-app-istore-loong64, docker-deps
+Provides: app-meta-ente-server-any
+SourceName: app-meta-ente-server
+Section: meta
+Architecture: all
+Installed-Size: 10
+Maintainer: yunix-intel
+Description:  Metadata for ente-server (LoongArch64)

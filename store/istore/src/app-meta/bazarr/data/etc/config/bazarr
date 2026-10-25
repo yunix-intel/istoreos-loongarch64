@@ -1,0 +1,7 @@
+config main 'main'
+	option enabled '1'
+	option variant 'public'
+	option image ''
+	option host_port '18108'
+	option data_path '/srv/bazarr/config'
+	option env_file '/etc/istore-loong64/env/bazarr.env'

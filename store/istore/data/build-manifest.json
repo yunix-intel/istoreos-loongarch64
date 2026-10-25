@@ -1,0 +1,1347 @@
+{
+  "schema": 1,
+  "generated": "2026-10-25",
+  "release": 20261025,
+  "package_version": "1.0.0-r20261025",
+  "app_count": 115,
+  "apps": {
+    "jellyfin": {
+      "title": "Jellyfin",
+      "image": "yunixintel/jellyfin:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "navidrome": {
+      "title": "Navidrome",
+      "image": "yunixintel/navidrome:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "vaultwarden": {
+      "title": "Vaultwarden",
+      "image": "yunixintel/vaultwarden:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "uptimekuma": {
+      "title": "Uptime Kuma",
+      "image": "yunixintel/uptimekuma:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "mihomo": {
+      "title": "Mihomo",
+      "image": "yunixintel/mihomo:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "把可用的 config.yaml 放入 /srv/mihomo/config 后重启"
+      ],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": true,
+      "docker_sock": false
+    },
+    "easytier": {
+      "title": "EasyTier",
+      "image": "yunixintel/easytier:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "把 network.toml 放入 /srv/easytier/config 后重启"
+      ],
+      "ports": 0,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": true,
+      "docker_sock": false
+    },
+    "syncthing": {
+      "title": "Syncthing",
+      "image": "yunixintel/syncthing:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 3,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "adguardhome": {
+      "title": "AdGuard Home",
+      "image": "yunixintel/adguardhome:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "确认宿主 53 端口未被 dnsmasq 占用（或先停用 dnsmasq）"
+      ],
+      "ports": 3,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": true,
+      "docker_sock": false
+    },
+    "memos": {
+      "title": "Memos",
+      "image": "yunixintel/memos:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "gogs": {
+      "title": "Gogs",
+      "image": "yunixintel/gogs:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 2,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "filebrowser": {
+      "title": "File Browser",
+      "image": "yunixintel/filebrowser:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "qbittorrent-ee": {
+      "title": "qBittorrent (Enhanced Edition)",
+      "image": "yunixintel/qbittorrent-ee:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 3,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "it-tools": {
+      "title": "IT-Tools",
+      "image": "yunixintel/it-tools:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 0,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "excalidraw": {
+      "title": "Excalidraw",
+      "image": "yunixintel/excalidraw:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 0,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "kopia": {
+      "title": "Kopia",
+      "image": "yunixintel/kopia:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "在 Web UI 中创建仓库并设置 Basic 认证"
+      ],
+      "ports": 1,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "linkding": {
+      "title": "Linkding",
+      "image": "yunixintel/linkding:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "heimdall": {
+      "title": "Heimdall",
+      "image": "yunixintel/heimdall:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "nextcloud": {
+      "title": "Nextcloud",
+      "image": "yunixintel/nextcloud:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "typecho": {
+      "title": "Typecho",
+      "image": "yunixintel/typecho:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "在 Web 安装向导中填写数据库；默认 SQLite 可用"
+      ],
+      "ports": 1,
+      "volumes": 3,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "wallabag": {
+      "title": "Wallabag",
+      "image": "yunixintel/wallabag:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "首次安装需执行镜像内 CLI 或按镜像文档创建管理员"
+      ],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "drawio": {
+      "title": "draw.io",
+      "image": "yunixintel/drawio:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 0,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "jackett": {
+      "title": "Jackett",
+      "image": "yunixintel/jackett:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "xteve": {
+      "title": "xTeVe",
+      "image": "yunixintel/xteve:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "one-api": {
+      "title": "One API",
+      "image": "yunixintel/one-api:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "code-server": {
+      "title": "code-server",
+      "image": "yunixintel/code-server:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "dpanel": {
+      "title": "DPanel",
+      "image": "yunixintel/dpanel:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": true
+    },
+    "shiori": {
+      "title": "Shiori",
+      "image": "yunixintel/shiori:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 0,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "jellyseerr": {
+      "title": "Jellyseerr",
+      "image": "yunixintel/jellyseerr:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 0,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "audiobookshelf": {
+      "title": "Audiobookshelf",
+      "image": "yunixintel/audiobookshelf:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 0,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "calibre-web": {
+      "title": "Calibre-Web",
+      "image": "yunixintel/calibre-web:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "homarr": {
+      "title": "Homarr",
+      "image": "yunixintel/homarr:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "openwebui": {
+      "title": "Open WebUI",
+      "image": "yunixintel/openwebui:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "kodexplorer": {
+      "title": "KodExplorer",
+      "image": "yunixintel/kodexplorer:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "homeassistant": {
+      "title": "Home Assistant",
+      "image": "yunixintel/homeassistant:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": true,
+      "docker_sock": false
+    },
+    "sonarr": {
+      "title": "Sonarr",
+      "image": "yunixintel/sonarr:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "radarr": {
+      "title": "Radarr",
+      "image": "yunixintel/radarr:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "tautulli": {
+      "title": "Tautulli",
+      "image": "yunixintel/tautulli:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "jellystat": {
+      "title": "Jellystat",
+      "image": "yunixintel/jellystat:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [
+        "jellystat-pg"
+      ],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "stirling-pdf": {
+      "title": "Stirling PDF",
+      "image": "yunixintel/stirling-pdf:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "wizarr": {
+      "title": "Wizarr",
+      "image": "yunixintel/wizarr:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "gitea": {
+      "title": "Gitea",
+      "image": "yunixintel/gitea:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 2,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "miniflux": {
+      "title": "Miniflux",
+      "image": "yunixintel/miniflux:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 0,
+      "volumes": 0,
+      "sidecars": [
+        "miniflux-pg"
+      ],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "portainer": {
+      "title": "Portainer",
+      "image": "yunixintel/portainer:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 3,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": true
+    },
+    "nginx-proxy-manager": {
+      "title": "Nginx Proxy Manager",
+      "image": "yunixintel/nginx-proxy-manager:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 3,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "firefly-iii": {
+      "title": "Firefly III",
+      "image": "yunixintel/firefly-iii:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "phpmyadmin": {
+      "title": "phpMyAdmin",
+      "image": "yunixintel/phpmyadmin:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "在登录页填写外部 MySQL/MariaDB 主机、用户和密码"
+      ],
+      "ports": 1,
+      "volumes": 0,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "freshrss": {
+      "title": "FreshRSS",
+      "image": "yunixintel/freshrss:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "prowlarr": {
+      "title": "Prowlarr",
+      "image": "yunixintel/prowlarr:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "bazarr": {
+      "title": "Bazarr",
+      "image": "yunixintel/bazarr:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "homer": {
+      "title": "homer",
+      "image": "yunixintel/homer:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "paperless-ngx": {
+      "title": "Paperless-ngx",
+      "image": "yunixintel/paperless-ngx:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "dashy": {
+      "title": "Dashy",
+      "image": "yunixintel/dashy:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "watchtower": {
+      "title": "Watchtower",
+      "image": "yunixintel/watchtower:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 0,
+      "volumes": 0,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": true
+    },
+    "changedetection": {
+      "title": "ChangeDetection.io",
+      "image": "yunixintel/changedetection:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "caddy": {
+      "title": "Caddy",
+      "image": "yunixintel/caddy:24.10-la5",
+      "automation": "needs_config",
+      "manual": [],
+      "ports": 3,
+      "volumes": 3,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "dozzle": {
+      "title": "Dozzle",
+      "image": "yunixintel/dozzle:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 0,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": true
+    },
+    "ntfy": {
+      "title": "ntfy",
+      "image": "yunixintel/ntfy:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "gotify": {
+      "title": "Gotify",
+      "image": "yunixintel/gotify:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "node-exporter": {
+      "title": "Node Exporter",
+      "image": "yunixintel/node-exporter:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 3,
+      "sidecars": [],
+      "host_network": true,
+      "docker_sock": false
+    },
+    "prometheus": {
+      "title": "Prometheus",
+      "image": "yunixintel/prometheus:24.10-la5",
+      "automation": "needs_config",
+      "manual": [],
+      "ports": 1,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "pihole": {
+      "title": "Pi-hole",
+      "image": "yunixintel/pihole:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "确认宿主 53 端口未被 dnsmasq 占用（或先停用 dnsmasq）"
+      ],
+      "ports": 3,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": true,
+      "docker_sock": false
+    },
+    "gatus": {
+      "title": "Gatus",
+      "image": "yunixintel/gatus:24.10-la5",
+      "automation": "needs_config",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "alertmanager": {
+      "title": "Alertmanager",
+      "image": "yunixintel/alertmanager:24.10-la5",
+      "automation": "needs_config",
+      "manual": [],
+      "ports": 2,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "postgres": {
+      "title": "PostgreSQL",
+      "image": "yunixintel/postgres:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "redis": {
+      "title": "Redis",
+      "image": "yunixintel/redis:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "mosquitto": {
+      "title": "Eclipse Mosquitto",
+      "image": "yunixintel/mosquitto:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 3,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "mariadb": {
+      "title": "MariaDB",
+      "image": "yunixintel/mariadb:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "node-red": {
+      "title": "Node-RED",
+      "image": "yunixintel/node-red:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "grafana": {
+      "title": "Grafana",
+      "image": "yunixintel/grafana:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "memcached": {
+      "title": "Memcached",
+      "image": "yunixintel/memcached:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 0,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "homebridge": {
+      "title": "Homebridge",
+      "image": "yunixintel/homebridge:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 2,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": true,
+      "docker_sock": false
+    },
+    "rest-server": {
+      "title": "REST Server",
+      "image": "yunixintel/rest-server:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "首次启动后执行 create_user 创建备份用户"
+      ],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "actual-budget": {
+      "title": "Actual Budget",
+      "image": "yunixintel/actual-budget:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "minio": {
+      "title": "MinIO",
+      "image": "yunixintel/minio:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 2,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "homebox": {
+      "title": "HomeBox",
+      "image": "yunixintel/homebox:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "nocodb": {
+      "title": "NocoDB",
+      "image": "yunixintel/nocodb:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "apprise-api": {
+      "title": "Apprise API",
+      "image": "yunixintel/apprise-api:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 3,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "mealie": {
+      "title": "Mealie",
+      "image": "yunixintel/mealie:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "chinesesubfinder": {
+      "title": "ChineseSubFinder",
+      "image": "yunixintel/chinesesubfinder:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "lanraragi": {
+      "title": "LANraragi",
+      "image": "yunixintel/lanraragi:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 3,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "owntone": {
+      "title": "OwnTone",
+      "image": "yunixintel/owntone:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": true,
+      "docker_sock": false
+    },
+    "mymind": {
+      "title": "MyMind",
+      "image": "yunixintel/mymind:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 0,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "webvirtcloud": {
+      "title": "WebVirtCloud",
+      "image": "yunixintel/webvirtcloud:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "penpot-backend": {
+      "title": "Penpot (backend)",
+      "image": "yunixintel/penpot-backend:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 0,
+      "volumes": 1,
+      "sidecars": [
+        "penpot-postgres",
+        "penpot-redis"
+      ],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "penpot-frontend": {
+      "title": "Penpot (frontend)",
+      "image": "yunixintel/penpot-frontend:24.10-la5",
+      "automation": "needs_config",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "hermes": {
+      "title": "Hermes",
+      "image": "yunixintel/hermes:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "zigbee2mqtt": {
+      "title": "Zigbee2MQTT",
+      "image": "yunixintel/zigbee2mqtt:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "把 USB 协调器设备路径改为实际 /dev/serial/by-id/...；无协调器时容器会退出"
+      ],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "smartctl-exporter": {
+      "title": "smartctl_exporter",
+      "image": "yunixintel/smartctl-exporter:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "按实际磁盘替换 --device 与 --smartctl.device（SATA 为 /dev/sdX）"
+      ],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "sftpgo": {
+      "title": "SFTPGo",
+      "image": "yunixintel/sftpgo:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 2,
+      "volumes": 3,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "bookstack": {
+      "title": "BookStack",
+      "image": "yunixintel/bookstack:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "首次用 docker exec 执行 bookstack:create-admin 创建管理员"
+      ],
+      "ports": 1,
+      "volumes": 2,
+      "sidecars": [
+        "bookstack-db"
+      ],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "vikunja": {
+      "title": "Vikunja",
+      "image": "yunixintel/vikunja:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "piwigo": {
+      "title": "Piwigo",
+      "image": "yunixintel/piwigo:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 4,
+      "sidecars": [
+        "piwigo-db"
+      ],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "go2rtc": {
+      "title": "go2rtc",
+      "image": "yunixintel/go2rtc:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "在 Web 中添加摄像头流"
+      ],
+      "ports": 3,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "scrutiny": {
+      "title": "Scrutiny",
+      "image": "yunixintel/scrutiny:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "按实际磁盘替换 --device；collector 需手动或 cron 触发"
+      ],
+      "ports": 1,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "headscale": {
+      "title": "Headscale",
+      "image": "yunixintel/headscale:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "把 HEADSCALE_SERVER_URL 改成浏览器/客户端可访问的 HTTPS 域名"
+      ],
+      "ports": 2,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "backrest": {
+      "title": "Backrest",
+      "image": "yunixintel/backrest:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "首次在 Web UI 创建账号与仓库"
+      ],
+      "ports": 1,
+      "volumes": 3,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "authelia": {
+      "title": "Authelia",
+      "image": "yunixintel/authelia:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "生产环境必须改成真实域名 + HTTPS 反代；cookie domain 不能是 localhost"
+      ],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "ente-server": {
+      "title": "Ente Server",
+      "image": "yunixintel/ente-server:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "minio 启动后需用 mc 创建 b2-eu-cen 等 bucket"
+      ],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [
+        "ente-pg",
+        "ente-minio"
+      ],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "autobrr": {
+      "title": "Autobrr",
+      "image": "yunixintel/autobrr:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "matomo": {
+      "title": "Matomo",
+      "image": "yunixintel/matomo:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "在 Web 安装向导中填写数据库主机 matomo-db、库/用户 matomo 和 secrets 文件中的密码"
+      ],
+      "ports": 1,
+      "volumes": 2,
+      "sidecars": [
+        "matomo-db"
+      ],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "woodpecker-server": {
+      "title": "Woodpecker CI (server)",
+      "image": "yunixintel/woodpecker-server:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "在 /etc/istore-loong64/env/woodpecker-server.env 填写 Gitea URL/Client/Secret"
+      ],
+      "ports": 2,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "woodpecker-agent": {
+      "title": "Woodpecker CI (agent)",
+      "image": "yunixintel/woodpecker-agent:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "从 woodpecker-server 的 /var/lib/woodpecker/agent-secret 读取 secret 并写入 env 文件"
+      ],
+      "ports": 1,
+      "volumes": 0,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": true
+    },
+    "ente-web": {
+      "title": "Ente Web",
+      "image": "yunixintel/ente-web:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "把 ENTE_API_ORIGIN 设为 ente-server 的公网/宿主地址（默认 http://<host>:18120）"
+      ],
+      "ports": 1,
+      "volumes": 0,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "metube": {
+      "title": "MeTube",
+      "image": "yunixintel/metube:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "sabnzbd": {
+      "title": "SABnzbd",
+      "image": "yunixintel/sabnzbd:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "mediamtx": {
+      "title": "MediaMTX",
+      "image": "yunixintel/mediamtx:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "在 mediamtx.yml 中配置摄像头/发布源"
+      ],
+      "ports": 9,
+      "volumes": 0,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "registry": {
+      "title": "Docker Registry",
+      "image": "yunixintel/registry:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "unpackerr": {
+      "title": "Unpackerr",
+      "image": "yunixintel/unpackerr:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "填写 Sonarr/Radarr URL 与 API key"
+      ],
+      "ports": 0,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "pocket-id": {
+      "title": "Pocket ID",
+      "image": "yunixintel/pocket-id:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "readeck": {
+      "title": "Readeck",
+      "image": "yunixintel/readeck:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "wg-easy": {
+      "title": "wg-easy",
+      "image": "yunixintel/wg-easy:24.10-la5",
+      "automation": "manual",
+      "manual": [
+        "把 INIT_HOST 改成公网/VPN 可达地址；真实隧道未验"
+      ],
+      "ports": 2,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "komga": {
+      "title": "komga",
+      "image": "yunixintel/komga:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 2,
+      "sidecars": [],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "karakeep": {
+      "title": "karakeep",
+      "image": "yunixintel/karakeep:24.10-la5",
+      "automation": "needs_config",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [
+        "karakeep-lbrowser"
+      ],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "linkwarden": {
+      "title": "linkwarden",
+      "image": "yunixintel/linkwarden:24.10-la5",
+      "automation": "needs_config",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [
+        "linkwarden-pg",
+        "linkwarden-lbrowser"
+      ],
+      "host_network": false,
+      "docker_sock": false
+    },
+    "joplin-server": {
+      "title": "joplin-server",
+      "image": "yunixintel/joplin-server:24.10-la5",
+      "automation": "auto",
+      "manual": [],
+      "ports": 1,
+      "volumes": 1,
+      "sidecars": [
+        "joplin-server-pg"
+      ],
+      "host_network": false,
+      "docker_sock": false
+    }
+  }
+}

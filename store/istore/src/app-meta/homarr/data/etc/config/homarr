@@ -1,0 +1,7 @@
+config main 'main'
+	option enabled '1'
+	option variant 'public'
+	option image ''
+	option host_port '18131'
+	option data_path '/srv/homarr/appdata'
+	option env_file '/etc/istore-loong64/env/homarr.env'

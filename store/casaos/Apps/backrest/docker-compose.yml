@@ -1,0 +1,63 @@
+name: backrest
+services:
+  backrest:
+    image: yunixintel/backrest:24.10-la5
+    ports:
+    - target: 9898
+      published: '18107'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    - type: bind
+      source: /DATA/AppData/$AppID/cache
+      target: /cache
+    environment:
+      TZ: $TZ
+    restart: unless-stopped
+    container_name: backrest
+x-casaos:
+  architectures:
+  - loong64
+  main: backrest
+  author: loong64-port
+  category: Backup
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：前端在 x86 构建后内嵌；自带 restic 0.19.1。
+
+      缺失功能：首次需在 UI 建账号/仓库；默认无认证。
+
+      额外依赖：持久化 /data、/config、/cache；备份源目录需额外挂载。
+
+      镜像说明：v1.14.1 + restic 0.19.1；`/data`、`/config`、`/cache`；9898；UID 1108；首次 UI 建账号/仓库；默认无认证'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Frontend is built on x86 and embedded; bundles restic 0.19.1.
+
+      Missing features: Create the account/repository in the UI first; no auth by default.
+
+      Extra dependencies: Persist /data, /config and /cache; mount the backup source directories separately.
+
+      Image notes: v1.14.1 + restic 0.19.1；`/data`、`/config`、`/cache`；9898；UID 1108；首次 UI 建账号/仓库；默认无认证'
+  developer: garethgeorge
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/backrest.png
+  tagline:
+    zh_cn: Backrest 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Backrest LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Backrest
+    en_us: Backrest
+  index: /
+  port_map: '18107'

@@ -1,0 +1,153 @@
+{
+  "name": "matomo",
+  "title": "Matomo",
+  "title_en": "Matomo",
+  "entry": "/cgi-bin/luci/admin/services/istore-loong64/app?app=matomo",
+  "author": "yunix-intel",
+  "website": "https://github.com/yunix-intel/istoreos-loongarch64",
+  "version": "24.10-la5",
+  "release": 20261025,
+  "arch": [
+    "all"
+  ],
+  "description": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：官方完整包；PHP 8.3 + nginx/php-fpm。</p><p>缺失功能：首次必须走 Web 安装向导；没有 CLI 安装器。</p><p>额外依赖：必须 MariaDB/MySQL；持久化 config/tmp；归档需 cron。</p><p>镜像说明：5.14.2；PHP 8.3 + nginx/php-fpm；必须 MariaDB/MySQL；`config`/`tmp` 持久化；80；安装向导建管理员</p>",
+  "description_en": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: Official full package; PHP 8.3 with nginx/php-fpm.</p><p>Missing features: First run requires the web installer; there is no CLI installer.</p><p>Extra dependencies: Requires MariaDB/MySQL; persist config/tmp; archiving needs cron.</p><p>Image notes: 5.14.2；PHP 8.3 + nginx/php-fpm；必须 MariaDB/MySQL；`config`/`tmp` 持久化；80；安装向导建管理员</p>",
+  "tags": [
+    "productivity",
+    "tool"
+  ],
+  "depends": [
+    "luci-app-istore-loong64",
+    "docker-deps"
+  ],
+  "loong64": {
+    "schema": 1,
+    "source": "dockerfile+runbook+override",
+    "image": "yunixintel/matomo:24.10-la5",
+    "default_variant": "public",
+    "variants": [
+      {
+        "name": "public",
+        "image": "yunixintel/matomo:24.10-la5",
+        "store_url": "https://github.com/yunix-intel/istoreos-loongarch64"
+      }
+    ],
+    "compose": "",
+    "ports": [
+      {
+        "name": "http",
+        "container": 80,
+        "host": 18146,
+        "proto": "tcp",
+        "primary": true
+      }
+    ],
+    "volumes": [
+      {
+        "name": "config",
+        "host": "/srv/matomo/config",
+        "container": "/var/www/matomo/config",
+        "mode": "rw",
+        "owner": "",
+        "primary": true,
+        "type": "dir",
+        "seed": ""
+      },
+      {
+        "name": "tmp",
+        "host": "/srv/matomo/tmp",
+        "container": "/var/www/matomo/tmp",
+        "mode": "rw",
+        "owner": "",
+        "primary": false,
+        "type": "dir",
+        "seed": ""
+      }
+    ],
+    "env": [],
+    "sidecars": [
+      {
+        "name": "db",
+        "full_name": "matomo-db",
+        "template": "mariadb",
+        "image": "yunixintel/mariadb:24.10-la5",
+        "command": [],
+        "shm_size": "",
+        "network": "",
+        "enabled_variants": [
+          "public",
+          "private"
+        ],
+        "preload": false,
+        "env": [
+          {
+            "key": "MYSQL_ROOT_PASSWORD",
+            "value": "${SECRET:mysql_root_password}",
+            "required": true
+          },
+          {
+            "key": "MYSQL_DATABASE",
+            "value": "matomo",
+            "required": true
+          },
+          {
+            "key": "MYSQL_USER",
+            "value": "matomo",
+            "required": true
+          },
+          {
+            "key": "MYSQL_PASSWORD",
+            "value": "${SECRET:mysql_password}",
+            "required": true
+          }
+        ],
+        "volumes": [
+          {
+            "name": "mysqldata",
+            "host": "/srv/matomo/mysqldata",
+            "container": "/var/lib/mysql",
+            "mode": "rw",
+            "owner": "27:27"
+          }
+        ],
+        "ports": [],
+        "health": {
+          "cmd": "mysqladmin ping -h 127.0.0.1 --silent",
+          "interval": "5s",
+          "timeout": "3s",
+          "retries": 40
+        }
+      }
+    ],
+    "needs_host_network": false,
+    "needs_docker_sock": false,
+    "docker_sock_ro": true,
+    "devices": [],
+    "cap_add": [],
+    "group_add": [],
+    "sysctls": [],
+    "shm_size": "",
+    "user": "",
+    "command": [],
+    "restart": "unless-stopped",
+    "network_group": "",
+    "requires_app": "",
+    "health": {},
+    "review": {
+      "automation": "manual",
+      "manual": [
+        "在 Web 安装向导中填写数据库主机 matomo-db、库/用户 matomo 和 secrets 文件中的密码"
+      ],
+      "notes": [
+        "必须 MariaDB；安装器启动 sidecar；归档需 cron。",
+        "安装器会先启动 sidecar：matomo-db。",
+        "未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。"
+      ]
+    },
+    "category": "Productivity",
+    "image_size": "",
+    "title": "Matomo",
+    "name": "matomo",
+    "runtime": "APP_ID='matomo'\nAPP_TITLE='Matomo'\nAPP_IMAGE='yunixintel/matomo:24.10-la5'\nAPP_DEFAULT_VARIANT='public'\nAPP_VARIANTS='public|yunixintel/matomo:24.10-la5|https://github.com/yunix-intel/istoreos-loongarch64'\nAPP_PORTS='http|80|18146|tcp|1'\nAPP_VOLUMES='config|/srv/matomo/config|/var/www/matomo/config|rw||1|dir|\ntmp|/srv/matomo/tmp|/var/www/matomo/tmp|rw||0|dir|'\nAPP_ENV=''\nAPP_SIDECARS='matomo-db|yunixintel/mariadb:24.10-la5|||public,private|mysqladmin ping -h 127.0.0.1 --silent|5s|3s|40|0'\nAPP_SIDECAR_COMMAND=''\nAPP_SIDECAR_ENV='matomo-db|MYSQL_ROOT_PASSWORD|${SECRET:mysql_root_password}|1\nmatomo-db|MYSQL_DATABASE|matomo|1\nmatomo-db|MYSQL_USER|matomo|1\nmatomo-db|MYSQL_PASSWORD|${SECRET:mysql_password}|1'\nAPP_SIDECAR_VOLUMES='matomo-db|mysqldata|/srv/matomo/mysqldata|/var/lib/mysql|rw|27:27'\nAPP_SIDECAR_PORTS=''\nAPP_DEVICES=''\nAPP_CAPS=''\nAPP_GROUPS=''\nAPP_SYSCTLS=''\nAPP_HOST_NETWORK='0'\nAPP_DOCKER_SOCK='0'\nAPP_DOCKER_SOCK_RO='1'\nAPP_SHM=''\nAPP_USER=''\nAPP_COMMAND=''\nAPP_RESTART='unless-stopped'\nAPP_NETWORK_GROUP=''\nAPP_REQUIRES_APP=''\nAPP_HEALTH_PATH=''\nAPP_HEALTH_PORT=''\nAPP_MANUAL='在 Web 安装向导中填写数据库主机 matomo-db、库/用户 matomo 和 secrets 文件中的密码'\nAPP_REVIEW='必须 MariaDB；安装器启动 sidecar；归档需 cron。; 安装器会先启动 sidecar：matomo-db。; 未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。'\n"
+  }
+}

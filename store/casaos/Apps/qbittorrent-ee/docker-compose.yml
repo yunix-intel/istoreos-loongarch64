@@ -48,7 +48,7 @@ x-casaos:
 
       Image notes: v5.2.4.10 官方 loong64 静态包；Host header 校验会拒绝端口映射不一致的访问，建议 `--webui-port` 与映射端口一致'
   developer: qBittorrent
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/qbittorrent-ee/icon.png
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/qbittorrent.png
   tagline:
     zh_cn: qBittorrent (Enhanced Edition) 的 LoongArch64 镜像，详见龙芯版说明。
     en_us: qBittorrent (Enhanced Edition) LoongArch64 image; see the LoongArch notes.

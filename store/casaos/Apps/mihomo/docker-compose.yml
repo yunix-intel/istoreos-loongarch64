@@ -46,7 +46,7 @@ x-casaos:
 
       Image notes: scratch 单二进制，配置需挂载'
   developer: Mihomo
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Mihomo/icon.png
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/v2raya.png
   tagline:
     zh_cn: Mihomo 的 LoongArch64 镜像，详见龙芯版说明。
     en_us: Mihomo LoongArch64 image; see the LoongArch notes.

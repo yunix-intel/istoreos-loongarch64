@@ -1,0 +1,57 @@
+name: code-server
+services:
+  code-server:
+    image: yunixintel/code-server:24.10-la5
+    ports:
+    - target: 8443
+      published: '18114'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/coder
+      target: /home/coder
+    environment:
+      TZ: $TZ
+    restart: unless-stopped
+    container_name: code-server
+x-casaos:
+  architectures:
+  - loong64
+  main: code-server
+  author: loong64-port
+  category: Developer
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：4.141.0 + VS Code 1.141，必须 Node 24；自编静态 ripgrep。
+
+      缺失功能：Node 20 缺少 module.registerHooks，不能替换运行时。
+
+      额外依赖：8443；持久化 /home/coder。
+
+      镜像说明：4.141.0 + VS Code 1.141；**必须 Node 24**（Node 20 缺 `module.registerHooks`）；自编静态 ripgrep 15.2'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: 4.141.0 with VS Code 1.141; requires Node 24; static ripgrep is built in.
+
+      Missing features: Node 20 lacks module.registerHooks and cannot be used as the runtime.
+
+      Extra dependencies: Port 8443; persist /home/coder.
+
+      Image notes: 4.141.0 + VS Code 1.141；**必须 Node 24**（Node 20 缺 `module.registerHooks`）；自编静态 ripgrep 15.2'
+  developer: Coder
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/visual-studio-code.png
+  tagline:
+    zh_cn: code-server 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: code-server LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: code-server
+    en_us: code-server
+  index: /
+  port_map: '18114'

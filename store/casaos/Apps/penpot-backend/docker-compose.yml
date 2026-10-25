@@ -1,0 +1,118 @@
+name: penpot-backend
+services:
+  penpot-backend:
+    image: yunixintel/penpot-backend:24.10-la5
+    container_name: penpot-backend
+    ports:
+    - target: 6060
+      published: '18165'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      PENPOT_PUBLIC_URI: http://localhost:18166
+      PENPOT_SECRET_KEY: change-me-penpot-secret-key-0123456789abcdef
+      PENPOT_DATABASE_URI: postgresql://penpot-postgres/penpot
+      PENPOT_DATABASE_USERNAME: penpot
+      PENPOT_DATABASE_PASSWORD: penpotpass
+      PENPOT_REDIS_URI: redis://penpot-redis/0
+      PENPOT_FLAGS: disable-email-verification disable-secure-session-cookies
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/assets
+      target: /opt/data/assets
+    depends_on:
+      penpot-postgres:
+        condition: service_healthy
+      penpot-redis:
+        condition: service_healthy
+    networks:
+    - penpot
+    restart: unless-stopped
+  penpot-postgres:
+    image: yunixintel/postgres:loong64
+    container_name: penpot-postgres
+    environment:
+      TZ: $TZ
+      POSTGRES_USER: penpot
+      POSTGRES_PASSWORD: penpotpass
+      POSTGRES_DB: penpot
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/postgres
+      target: /var/lib/postgresql/data
+    networks:
+    - penpot
+    restart: unless-stopped
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - pg_isready -U "$${POSTGRES_USER:-postgres}" -d "$${POSTGRES_DB:-postgres}"
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+  penpot-redis:
+    image: yunixintel/redis:loong64
+    container_name: penpot-redis
+    environment:
+      TZ: $TZ
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/redis
+      target: /data
+    networks:
+    - penpot
+    restart: unless-stopped
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - if [ -n "$$REDIS_PASSWORD" ]; then redis-cli -a "$$REDIS_PASSWORD" ping; else redis-cli ping; fi
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 5s
+x-casaos:
+  architectures:
+  - loong64
+  main: penpot-backend
+  author: loong64-port
+  category: Developer
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：Penpot 前后端拆成两个镜像；后端用 JDK 21 运行官方 jar。
+
+      缺失功能：无 exporter（PDF/PNG 导出会 502）；无 admin-console/MCP。
+
+      额外依赖：需 PostgreSQL + Redis；PENPOT_SECRET_KEY 必填。
+
+      镜像说明：2.18.3；复用官方 uberjar（Java 21 字节码）+ openEuler JDK 21；需外部 PostgreSQL/Redis；`PENPOT_SECRET_KEY` 必填；exporter 未移植'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Penpot is split into frontend and backend images; the backend runs the official jar on JDK 21.
+
+      Missing features: No exporter (PDF/PNG export returns 502); no admin console/MCP.
+
+      Extra dependencies: Requires PostgreSQL and Redis; PENPOT_SECRET_KEY is mandatory.
+
+      Image notes: 2.18.3；复用官方 uberjar（Java 21 字节码）+ openEuler JDK 21；需外部 PostgreSQL/Redis；`PENPOT_SECRET_KEY` 必填；exporter
+      未移植'
+  developer: Penpot
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/penpot.png
+  tagline:
+    zh_cn: Penpot (backend) 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Penpot (backend) LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Penpot (backend)
+    en_us: Penpot (backend)
+  index: /
+  port_map: '18165'
+networks:
+  penpot:
+    name: penpot

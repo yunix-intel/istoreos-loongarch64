@@ -1,0 +1,66 @@
+name: redis
+services:
+  redis:
+    image: yunixintel/redis:24.10-la5
+    container_name: redis
+    ports:
+    - target: 6379
+      published: '18177'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      REDIS_PASSWORD: change-me
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - redis-cli -a "$$REDIS_PASSWORD" ping | grep -q PONG
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: redis
+  author: loong64-port
+  category: Utilities
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：openEuler 7.2.14 包；AOF+RDB。
+
+      缺失功能：默认 protected-mode no，必须配密码或限制网络。
+
+      额外依赖：6379；持久化 /data。
+
+      镜像说明：7.2.14（openEuler 包）；AOF+RDB；`/data`；6379；默认 protected-mode no，公网必须设 `REDIS_PASSWORD`；UID/GID 998:996'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: openEuler 7.2.14 package; AOF+RDB.
+
+      Missing features: protected-mode is off by default; set a password or restrict the network.
+
+      Extra dependencies: Port 6379; persist /data.
+
+      Image notes: 7.2.14（openEuler 包）；AOF+RDB；`/data`；6379；默认 protected-mode no，公网必须设 `REDIS_PASSWORD`；UID/GID 998:996'
+  developer: Redis
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/redis.png
+  tagline:
+    zh_cn: Redis 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Redis LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Redis
+    en_us: Redis
+  index: /
+  port_map: '18177'

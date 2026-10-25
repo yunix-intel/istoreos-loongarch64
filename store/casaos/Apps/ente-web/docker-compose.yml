@@ -1,0 +1,81 @@
+name: ente-web
+services:
+  ente-web:
+    image: yunixintel/ente-web:24.10-la5
+    ports:
+    - target: 3000
+      published: '18121'
+      protocol: tcp
+    - target: 3001
+      published: '19101'
+      protocol: tcp
+    - target: 3002
+      published: '19102'
+      protocol: tcp
+    - target: 3003
+      published: '19103'
+      protocol: tcp
+    - target: 3004
+      published: '19104'
+      protocol: tcp
+    - target: 3005
+      published: '19105'
+      protocol: tcp
+    - target: 3006
+      published: '19106'
+      protocol: tcp
+    - target: 3008
+      published: '19107'
+      protocol: tcp
+    - target: 3009
+      published: '19108'
+      protocol: tcp
+    - target: 3010
+      published: '19109'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      ENTE_API_ORIGIN: http://localhost:18120
+    restart: unless-stopped
+    container_name: ente-web
+x-casaos:
+  architectures:
+  - loong64
+  main: ente-web
+  author: loong64-port
+  category: Cloud
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：10 个 Next 应用纯静态导出，由 nginx 托管。
+
+      缺失功能：无 Next 服务端/API/图片优化器；未知路径回退到 index.html；不保证逐字节可复现。
+
+      额外依赖：必须设置 ENTE_API_ORIGIN；端口 3000–3006、3008–3010。
+
+      镜像说明：ente commit 1353a65；10 个 Next.js 16.4.2 静态导出；nginx 1.30；必须设 `ENTE_API_ORIGIN`；无 Next 服务端/API/图片优化器；需配 ente-server'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Ten Next.js apps exported statically and served by nginx.
+
+      Missing features: No Next server/API/image optimizer; unknown paths fall back to index.html; not byte-for-byte reproducible.
+
+      Extra dependencies: ENTE_API_ORIGIN is required; ports 3000–3006 and 3008–3010.
+
+      Image notes: ente commit 1353a65；10 个 Next.js 16.4.2 静态导出；nginx 1.30；必须设 `ENTE_API_ORIGIN`；无 Next 服务端/API/图片优化器；需配 ente-server'
+  developer: Ente
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/ente-auth.png
+  tagline:
+    zh_cn: Ente Web 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Ente Web LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Ente Web
+    en_us: Ente Web
+  index: /
+  port_map: '18121'

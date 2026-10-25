@@ -1,0 +1,61 @@
+name: openwebui
+services:
+  openwebui:
+    image: yunixintel/openwebui:24.10-la5
+    container_name: openwebui
+    ports:
+    - target: 8080
+      published: '18162'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+      ENABLE_OLLAMA_API: 'true'
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /app/backend/data
+    extra_hosts:
+    - host.docker.internal:host-gateway
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: openwebui
+  author: loong64-port
+  category: Developer
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：仅推理模式：不含 torch/onnxruntime/whisper/OCR 与内置模型。
+
+      缺失功能：本地推理、语音、OCR 不可用；RAG 需外部 pgvector。
+
+      额外依赖：需外部 Ollama/OpenAI 兼容服务；RAG 需 PostgreSQL + pgvector。
+
+      镜像说明：v0.12.3 **轻量模式**：无 torch/onnxruntime/whisper/OCR，聊天对接 Ollama/OpenAI 正常；本地 RAG 需外部 pgvector'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Inference-only mode: no torch/onnxruntime/whisper/OCR and no bundled models.
+
+      Missing features: Local inference, speech and OCR are unavailable; RAG needs external pgvector.
+
+      Extra dependencies: Requires an external Ollama/OpenAI-compatible service; RAG needs PostgreSQL + pgvector.
+
+      Image notes: v0.12.3 **轻量模式**：无 torch/onnxruntime/whisper/OCR，聊天对接 Ollama/OpenAI 正常；本地 RAG 需外部 pgvector'
+  developer: Open WebUI
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/open-webui.png
+  tagline:
+    zh_cn: Open WebUI 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Open WebUI LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Open WebUI
+    en_us: Open WebUI
+  index: /
+  port_map: '18162'

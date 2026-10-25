@@ -1,0 +1,59 @@
+name: pocket-id
+services:
+  pocket-id:
+    image: yunixintel/pocket-id:24.10-la5
+    container_name: pocket-id
+    ports:
+    - target: 1411
+      published: '18170'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      APP_URL: http://localhost:18170
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: pocket-id
+  author: loong64-port
+  category: Security
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：SvelteKit 前端在 x86 构建后内嵌；Go 单二进制。
+
+      缺失功能：未做邮件 SMTP/SCIM/Passkey 全链路；与 Authelia 二选一。
+
+      额外依赖：持久化 /data（含加密密钥）；APP_URL 必填为外部地址；1411。
+
+      镜像说明：2.9.0；SvelteKit 前端 x86 构建后 embed；Go 单二进制；`/data`；1411；UID 1122；`APP_URL` 与 `ENCRYPTION_KEY` 注意；健康检查用 curl 不用内置子命令'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: SvelteKit frontend built on x86 and embedded; single Go binary.
+
+      Missing features: SMTP/SCIM/Passkey flows are not fully tested; choose instead of Authelia.
+
+      Extra dependencies: Persist /data (including the encryption key); APP_URL must be the external address; port 1411.
+
+      Image notes: 2.9.0；SvelteKit 前端 x86 构建后 embed；Go 单二进制；`/data`；1411；UID 1122；`APP_URL` 与 `ENCRYPTION_KEY` 注意；健康检查用 curl
+      不用内置子命令'
+  developer: Pocket ID
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/pocket-id.png
+  tagline:
+    zh_cn: Pocket ID 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Pocket ID LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Pocket ID
+    en_us: Pocket ID
+  index: /
+  port_map: '18170'

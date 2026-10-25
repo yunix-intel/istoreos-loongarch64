@@ -1,0 +1,107 @@
+{
+  "name": "minio",
+  "title": "MinIO",
+  "title_en": "MinIO",
+  "entry": "/cgi-bin/luci/admin/services/istore-loong64/app?app=minio",
+  "author": "yunix-intel",
+  "website": "https://github.com/yunix-intel/istoreos-loongarch64",
+  "version": "24.10-la5",
+  "release": 20261025,
+  "arch": [
+    "all"
+  ],
+  "description": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：Go 源码编；单目录模式无纠删码。</p><p>缺失功能：无纠删码/多盘冗余；无内置 TLS。</p><p>额外依赖：必须设 MINIO_ROOT_USER/PASSWORD；AGPLv3；9000/9001。</p><p>镜像说明：RELEASE.2025-10-15T17-29-55Z；Go 1.27 源码编；`/data`；9000/9001；UID 1000；必须设 MINIO_ROOT_USER/PASSWORD；AGPLv3；单盘无纠删码</p>",
+  "description_en": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: Built from Go source; single-directory mode has no erasure coding.</p><p>Missing features: No erasure coding or multi-disk redundancy; no built-in TLS.</p><p>Extra dependencies: MINIO_ROOT_USER/PASSWORD are required; AGPLv3; ports 9000/9001.</p><p>Image notes: RELEASE.2025-10-15T17-29-55Z；Go 1.27 源码编；`/data`；9000/9001；UID 1000；必须设 MINIO_ROOT_USER/PASSWORD；AGPLv3；单盘无纠删码</p>",
+  "tags": [
+    "cloud",
+    "storage"
+  ],
+  "depends": [
+    "luci-app-istore-loong64",
+    "docker-deps"
+  ],
+  "loong64": {
+    "schema": 1,
+    "source": "dockerfile+runbook+override",
+    "image": "yunixintel/minio:24.10-la5",
+    "default_variant": "public",
+    "variants": [
+      {
+        "name": "public",
+        "image": "yunixintel/minio:24.10-la5",
+        "store_url": "https://github.com/yunix-intel/istoreos-loongarch64"
+      }
+    ],
+    "compose": "",
+    "ports": [
+      {
+        "name": "s3",
+        "container": 9000,
+        "host": 18153,
+        "proto": "tcp",
+        "primary": true
+      },
+      {
+        "name": "console",
+        "container": 9001,
+        "host": 21168,
+        "proto": "tcp",
+        "primary": false
+      }
+    ],
+    "volumes": [
+      {
+        "name": "data",
+        "host": "/srv/minio/data",
+        "container": "/data",
+        "mode": "rw",
+        "owner": "",
+        "primary": true,
+        "type": "dir",
+        "seed": ""
+      }
+    ],
+    "env": [
+      {
+        "key": "MINIO_ROOT_USER",
+        "value": "istoreadmin",
+        "required": true,
+        "variants": ""
+      },
+      {
+        "key": "MINIO_ROOT_PASSWORD",
+        "value": "${SECRET:minio_password}",
+        "required": true,
+        "variants": ""
+      }
+    ],
+    "sidecars": [],
+    "needs_host_network": false,
+    "needs_docker_sock": false,
+    "docker_sock_ro": true,
+    "devices": [],
+    "cap_add": [],
+    "group_add": [],
+    "sysctls": [],
+    "shm_size": "",
+    "user": "",
+    "command": [],
+    "restart": "unless-stopped",
+    "network_group": "",
+    "requires_app": "",
+    "health": {},
+    "review": {
+      "automation": "auto",
+      "manual": [],
+      "notes": [
+        "必须设置根凭据；9000 API，9001 控制台；/data 持久化。",
+        "未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。"
+      ]
+    },
+    "category": "Cloud",
+    "image_size": "",
+    "title": "MinIO",
+    "name": "minio",
+    "runtime": "APP_ID='minio'\nAPP_TITLE='MinIO'\nAPP_IMAGE='yunixintel/minio:24.10-la5'\nAPP_DEFAULT_VARIANT='public'\nAPP_VARIANTS='public|yunixintel/minio:24.10-la5|https://github.com/yunix-intel/istoreos-loongarch64'\nAPP_PORTS='s3|9000|18153|tcp|1\nconsole|9001|21168|tcp|0'\nAPP_VOLUMES='data|/srv/minio/data|/data|rw||1|dir|'\nAPP_ENV='MINIO_ROOT_USER|istoreadmin|1|\nMINIO_ROOT_PASSWORD|${SECRET:minio_password}|1|'\nAPP_SIDECARS=''\nAPP_SIDECAR_COMMAND=''\nAPP_SIDECAR_ENV=''\nAPP_SIDECAR_VOLUMES=''\nAPP_SIDECAR_PORTS=''\nAPP_DEVICES=''\nAPP_CAPS=''\nAPP_GROUPS=''\nAPP_SYSCTLS=''\nAPP_HOST_NETWORK='0'\nAPP_DOCKER_SOCK='0'\nAPP_DOCKER_SOCK_RO='1'\nAPP_SHM=''\nAPP_USER=''\nAPP_COMMAND=''\nAPP_RESTART='unless-stopped'\nAPP_NETWORK_GROUP=''\nAPP_REQUIRES_APP=''\nAPP_HEALTH_PATH=''\nAPP_HEALTH_PORT=''\nAPP_MANUAL=''\nAPP_REVIEW='必须设置根凭据；9000 API，9001 控制台；/data 持久化。; 未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。'\n"
+  }
+}

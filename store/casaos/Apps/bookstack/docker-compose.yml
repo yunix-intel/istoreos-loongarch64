@@ -1,0 +1,91 @@
+name: bookstack
+services:
+  bookstack:
+    image: yunixintel/bookstack:24.10-la5
+    ports:
+    - target: 80
+      published: '18109'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/storage
+      target: /var/www/bookstack/storage
+    - type: bind
+      source: /DATA/AppData/$AppID/uploads
+      target: /var/www/bookstack/public/uploads
+    environment:
+      TZ: $TZ
+      APP_URL: http://localhost:18109
+      DB_HOST: bookstack-db
+      DB_PORT: '3306'
+      DB_DATABASE: bookstack
+      DB_USERNAME: bookstack
+      DB_PASSWORD: bookstack
+    depends_on:
+      bookstack-db:
+        condition: service_healthy
+    restart: unless-stopped
+    container_name: bookstack
+  bookstack-db:
+    image: yunixintel/mariadb:loong64
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/mariadb
+      target: /var/lib/mysql
+    environment:
+      TZ: $TZ
+      MYSQL_ROOT_PASSWORD: bookstack-root
+      MYSQL_DATABASE: bookstack
+      MYSQL_USER: bookstack
+      MYSQL_PASSWORD: bookstack
+    restart: unless-stopped
+    container_name: bookstack-db
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - mysqladmin ping -h 127.0.0.1 -uroot -p"$${MYSQL_ROOT_PASSWORD}" --silent
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 15s
+x-casaos:
+  architectures:
+  - loong64
+  main: bookstack
+  author: loong64-port
+  category: Productivity
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：PHP 8.3 + nginx/php-fpm；首次启动自动生成 .env。
+
+      缺失功能：必须使用 MariaDB/MySQL，不支持 SQLite。
+
+      额外依赖：需 MariaDB/MySQL；持久化 storage 与 public/uploads；首次用 artisan 建管理员。
+
+      镜像说明：v26.09.2；PHP 8.3 + nginx/php-fpm；必须 MariaDB/MySQL；`storage`/`public/uploads` 持久化；`app.key` 0600；80'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: PHP 8.3 with nginx/php-fpm; .env is generated on first start.
+
+      Missing features: Requires MariaDB/MySQL; SQLite is not supported.
+
+      Extra dependencies: Requires MariaDB/MySQL; persist storage and public/uploads; create the admin with artisan.
+
+      Image notes: v26.09.2；PHP 8.3 + nginx/php-fpm；必须 MariaDB/MySQL；`storage`/`public/uploads` 持久化；`app.key` 0600；80'
+  developer: BookStackApp
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/bookstack.png
+  tagline:
+    zh_cn: BookStack 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: BookStack LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: BookStack
+    en_us: BookStack
+  index: /
+  port_map: '18109'

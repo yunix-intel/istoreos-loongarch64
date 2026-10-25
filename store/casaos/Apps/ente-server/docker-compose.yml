@@ -1,0 +1,112 @@
+name: ente-server
+services:
+  ente-server:
+    image: yunixintel/ente-server:24.10-la5
+    ports:
+    - target: 8080
+      published: '18120'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    environment:
+      TZ: $TZ
+      ENTE_DB_HOST: ente-postgres
+      ENTE_DB_PORT: '5432'
+      ENTE_DB_NAME: ente_db
+      ENTE_DB_USER: pguser
+      ENTE_DB_PASSWORD: pgpass
+      ENTE_S3_ENDPOINT: ente-minio:9000
+      ENTE_S3_KEY: minioadmin
+      ENTE_S3_SECRET: minioadmin
+      ENTE_S3_REGION: eu-central-2
+    depends_on:
+      ente-postgres:
+        condition: service_healthy
+      ente-minio:
+        condition: service_healthy
+    restart: unless-stopped
+    container_name: ente-server
+  ente-postgres:
+    image: yunixintel/postgres:loong64
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/postgres
+      target: /var/lib/postgresql/data
+    environment:
+      TZ: $TZ
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pgpass
+      POSTGRES_DB: ente_db
+    restart: unless-stopped
+    container_name: ente-postgres
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - pg_isready -U "$${POSTGRES_USER:-postgres}" -d "$${POSTGRES_DB:-postgres}"
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+  ente-minio:
+    image: yunixintel/minio:loong64
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/minio
+      target: /data
+    environment:
+      TZ: $TZ
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    restart: unless-stopped
+    container_name: ente-minio
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - curl -fsS http://127.0.0.1:9000/minio/health/live >/dev/null
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+x-casaos:
+  architectures:
+  - loong64
+  main: ente-server
+  author: loong64-port
+  category: Cloud
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：仅 API；museum.yaml 首次启动生成。
+
+      缺失功能：不自带 Web 图库，需要 ente-web。
+
+      额外依赖：需 PostgreSQL + S3/MinIO 三个桶；/data/museum.yaml 含密钥必须备份。
+
+      镜像说明：ente server master；Go 单二进制；需 PostgreSQL + S3/MinIO；`/data/museum.yaml` 含密钥；8080；UID 1105；Web 端暂未包含'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: API only; museum.yaml is generated on first start.
+
+      Missing features: No web gallery; use ente-web.
+
+      Extra dependencies: Requires PostgreSQL and three S3/MinIO buckets; back up /data/museum.yaml (contains keys).
+
+      Image notes: ente server master；Go 单二进制；需 PostgreSQL + S3/MinIO；`/data/museum.yaml` 含密钥；8080；UID 1105；Web 端暂未包含'
+  developer: Ente
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/ente-auth.png
+  tagline:
+    zh_cn: Ente Server 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Ente Server LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Ente Server
+    en_us: Ente Server
+  index: /ping
+  port_map: '18120'

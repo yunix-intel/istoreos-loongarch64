@@ -1,0 +1,10 @@
+Package: app-meta-woodpecker-server
+Version: 1.0.0-r20261025
+Depends: libc, luci-app-istore-loong64, docker-deps
+Provides: app-meta-woodpecker-server-any
+SourceName: app-meta-woodpecker-server
+Section: meta
+Architecture: all
+Installed-Size: 8
+Maintainer: yunix-intel
+Description:  Metadata for woodpecker-server (LoongArch64)

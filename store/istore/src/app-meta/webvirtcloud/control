@@ -1,0 +1,10 @@
+Package: app-meta-webvirtcloud
+Version: 1.0.0-r20261025
+Depends: libc, luci-app-istore-loong64, docker-deps
+Provides: app-meta-webvirtcloud-any
+SourceName: app-meta-webvirtcloud
+Section: meta
+Architecture: all
+Installed-Size: 6
+Maintainer: yunix-intel
+Description:  Metadata for webvirtcloud (LoongArch64)

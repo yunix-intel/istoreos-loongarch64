@@ -1,0 +1,59 @@
+name: mealie
+services:
+  mealie:
+    image: yunixintel/mealie:24.10-la5
+    container_name: mealie
+    ports:
+    - target: 9000
+      published: '18147'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /app/data
+    restart: unless-stopped
+x-casaos:
+  architectures:
+  - loong64
+  main: mealie
+  author: loong64-port
+  category: Productivity
+  description:
+    zh_cn: '**龙芯版说明**
+
+
+      架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）
+
+      龙芯版说明：Python 3.14 源码构建。
+
+      缺失功能：不支持 HEIF/HEIC。
+
+      额外依赖：持久化 /app/data；UID 911。
+
+      镜像说明：3.29.0；Python 3.14.8 自编；Nuxt 前端 x86 构建；Rust 1.99 编 orjson/pydantic-core/curl-cffi；`/app/data`；9000；UID 911；HEIF/HEIC
+      不支持（libheif 缺失，stub）'
+    en_us: '**LoongArch notes**
+
+
+      Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)
+
+      LoongArch notes: Built from source with Python 3.14.
+
+      Missing features: No HEIF/HEIC support.
+
+      Extra dependencies: Persist /app/data; UID 911.
+
+      Image notes: 3.29.0；Python 3.14.8 自编；Nuxt 前端 x86 构建；Rust 1.99 编 orjson/pydantic-core/curl-cffi；`/app/data`；9000；UID
+      911；HEIF/HEIC 不支持（libheif 缺失，stub）'
+  developer: Mealie
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/mealie.png
+  tagline:
+    zh_cn: Mealie 的 LoongArch64 镜像，详见龙芯版说明。
+    en_us: Mealie LoongArch64 image; see the LoongArch notes.
+  title:
+    zh_cn: Mealie
+    en_us: Mealie
+  index: /
+  port_map: '18147'

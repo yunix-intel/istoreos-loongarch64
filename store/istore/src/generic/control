@@ -1,0 +1,7 @@
+Package: luci-app-istore-loong64
+Version: 1.0.0-r20261025
+Depends: libc, luci-base, docker, docker-deps, jsonfilter
+Section: luci
+Architecture: all
+Installed-Size: 48
+Description:  Generic docker installer and LuCI page for LoongArch64 iStore app-meta packages

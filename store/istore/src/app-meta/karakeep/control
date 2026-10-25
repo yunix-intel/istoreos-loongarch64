@@ -1,0 +1,10 @@
+Package: app-meta-karakeep
+Version: 1.0.0-r20261025
+Depends: libc, luci-app-istore-loong64, docker-deps
+Provides: app-meta-karakeep-any
+SourceName: app-meta-karakeep
+Section: meta
+Architecture: all
+Installed-Size: 9
+Maintainer: yunix-intel
+Description:  Metadata for karakeep (LoongArch64)

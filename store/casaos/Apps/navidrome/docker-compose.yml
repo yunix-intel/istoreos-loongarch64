@@ -48,7 +48,7 @@ x-casaos:
 
       Image notes: Go + 系统 taglib 2.0.2，**DSD 完整**'
   developer: Navidrome
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/navidrome/icon.png
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/navidrome.png
   tagline:
     zh_cn: Navidrome 的 LoongArch64 镜像，详见龙芯版说明。
     en_us: Navidrome LoongArch64 image; see the LoongArch notes.
