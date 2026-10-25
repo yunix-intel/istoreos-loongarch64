@@ -261,6 +261,15 @@ services:
 测试使用的 sidecar 为 `local/lbrowser-runtime:3.4.2293.2 serve`（挂载宿主
 `/opt/apps/lbrowser:ro`，`--shm-size=1g`），Chromium 138.0.7204.310。
 
+## 补验（2026-10-25）
+
+- monolith 2.10.1（Rust 1.85，5m27s）挂载后全页归档 PASS，单文件 HTML 自包含。
+- Meilisearch 1.13.3 源码构建（22m21s，`--no-default-features`）PASS；7 条索引，拼写容错命中。
+- AI 打标（mock OpenAI）PASS；并发 `ARCHIVE_TAKE_COUNT=3` 触发上游 P2002 竞态，建议串行。
+- HTML/Pocket/Wallabag 导入 PASS；用户隔离 PASS；OAuth BLOCKED（无 provider）。
+- LBrowser 截图 62,610B、PDF 92,483B、Readability 3,114B、预览 26,300B；带 cookie 可访问，匿名 401。
+- 邮箱流初次 FAIL：镜像缺 `apps/web/templates/`；已让实施代理补模板并重建复测。
+
 ## 未验证
 
 - **Monolith / 单文件 HTML**：未构建 monolith 2.10.1；截图、PDF、Readability、
