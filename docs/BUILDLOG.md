@@ -557,7 +557,7 @@
 
 - 2026-10-25 Komga 1.29.1（P3-01 复活）：官方 fat jar 不动，构建阶段从 sqlite-jdbc 3.53.4.0 + sqlite-amalgamation 3530400 编 loongarch64 `libsqlitejdbc.so`（约 37 秒，1.2MB），运行期用 `-Dorg.sqlite.lib.path` 外挂；JDK 21。必须显式 `OS_NAME=Linux`，否则产物路径丢 OS 名。实测 94+2+1 项迁移、`/` 200、health UP、重启持久化、最小 CBZ 扫描 1 系列/1 书/1 页与单页读取；PDF/EPUB/RAR、HEIF/JXL、Kobo 未验证。镜像 688MB（Hub 318MiB），digest `sha256:0cf05b7e…9e7a`，已推送双 tag。
 
-- 2026-10-24 wg-easy 15.4.0（P4-06 复活）：Nuxt/Nitro 在龙芯本机构建；libsql 用龙芯 `@libsql/linux-loong64-gnu@0.5.13` 绑定（JS 层 0.5.29），argon2 退出崩溃改用 hash-wasm；另外 vendor oxc/rolldown/lightningcss 四个 loong64 绑定。运行阶段基于 `yunixintel/node:24.22.1`，openEuler EPOL 提供 wireguard-tools；bridge 测试下 DB 迁移、wg0.conf、302→`/setup/1`、卷持久化、healthy 均通过。真实客户端握手/隧道未验。镜像 509MB（Hub 169MiB），digest `sha256:52bd56b2…38ea`，已推送双 tag。
+- 2026-10-24 wg-easy 15.4.0（P4-06 复活）：Nuxt/Nitro 在龙芯本机构建；libsql 用龙芯 `@libsql/linux-loong64-gnu@0.5.13` 绑定（JS 层 0.5.29），argon2 退出崩溃改用 hash-wasm；另外 vendor oxc/rolldown/lightningcss 四个 loong64 绑定。运行阶段基于 `yunixintel/node:24.22.1`，openEuler EPOL 提供 wireguard-tools；bridge 测试下 DB 迁移、wg0.conf、302→`/setup/1`、卷持久化、healthy 均通过。真实客户端握手/隧道未验。镜像 509MB（Hub 169MiB），digest `sha256:943cfc36…db84`，已推送双 tag。
 
 - 2026-10-24 Readeck 0.9.2（P4-03）：gulp 前端在 x86 WSL2 用 Node 22 构建到 `assets/www`；后端必须 `CGO_ENABLED=1`，因为 `CGO_ENABLED=0` 会走 modernc/sqlite v1.25.0，该版本没有 loongarch64 定义（`sqlite3_index_orderby` 等）。mattn sqlite + 六个 sqlite 构建 tag 编出 34MB 动态二进制；首启生成 `/data/config.toml` 与 SQLite，引导页 200、healthy。镜像 338MB（Hub 118MB），digest `sha256:14c9426b…4719`，已推送双 tag。
 

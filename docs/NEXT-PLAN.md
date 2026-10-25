@@ -369,7 +369,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [x] P4-03 Readeck（已发布，`14c9426b…4719`）
 - [x] P4-04 Linkwarden（已发布，`23cb706f…466e`；基础版）
 - [ ] P4-05 Joplin Server（GO；2–3 人日，待排期）
-- [x] P4-06 wg-easy（已发布，`52bd56b2…38ea`；真实隧道待验收）
+- [x] P4-06 wg-easy（已发布，`943cfc36…db84`；真实隧道待验收）
 - [x] P4-07 Registry（已发布，`da519e59…0229`）
 - [x] P4-08 Pocket ID（已发布，`7c21de80…0cb4`）
 - [x] P4-09 Unpackerr（已发布，`8cc802bf…bc7e`）

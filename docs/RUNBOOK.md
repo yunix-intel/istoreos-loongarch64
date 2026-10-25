@@ -761,7 +761,7 @@ docker run -d --name wg-easy --restart unless-stopped \
 - `/etc/wireguard` 存 `wg-easy.db` 与 `wg0.conf`，必须持久化。
 - `NET_ADMIN` 必需；`SYS_MODULE` + `/lib/modules` 用于容器内 `modprobe wireguard`。
 - 宿主需放行 51820/udp；公网建议反代 51821 并保持 `INSECURE=false`。
-- 首发 IPv4-only；AmneziaWG 未启用；真实内核握手已验证，外网转发/NAT 未验收。
+- 默认 IPv4-only；AmneziaWG 未打包（用户态 PoC 已通过）；握手/隧道转发/NAT 已验证；外网 IPv6 受 Docker 限制。
 - 完整说明见 [../images/wg-easy/BUILD.md](../images/wg-easy/BUILD.md)。
 
 ### Komga

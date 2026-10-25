@@ -781,7 +781,7 @@
     "size": "约 169MB (Hub)",
     "architecture": "linux/loong64",
     "verification": "DB 迁移、`wg0.conf`、302→`/setup/1`、卷持久化、healthy；真实内核 handshake 双向通过；外网转发/NAT 未验证",
-    "notes": "15.4.0；Node 24 + Nuxt/Nitro + Drizzle/libsql（龙芯 0.5.13 绑定）；argon2 换 hash-wasm；51820/udp、51821/tcp；需 NET_ADMIN/SYS_MODULE 与 sysctls；IPv4-only；真实握手已验证"
+    "notes": "15.4.0；Node 24 + Nuxt/Nitro + Drizzle/libsql（龙芯 0.5.13 绑定）；argon2 换 hash-wasm；51820/udp、51821/tcp；需 NET_ADMIN/SYS_MODULE 与 sysctls；默认 IPv4-only；握手/转发/NAT 已验证；外网 IPv6 受 Docker 限制"
   },
   {
     "image": "yunixintel/komga",

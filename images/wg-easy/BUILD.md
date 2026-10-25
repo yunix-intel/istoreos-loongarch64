@@ -4,10 +4,10 @@
 
 - 镜像：`yunixintel/wg-easy:loong64` / `yunixintel/wg-easy:24.10-la5`
 - 架构：`linux/loong64`；两个 tag 的 manifest digest 相同
-- digest：`sha256:52bd56b2cf5cd8c14183199ec6f65489c3a27837c05421e90849e2b5529c38ea`
+- digest：`sha256:943cfc36482d0723224a98259dad28b6910765a0daf6edf6819fd17faa90db84`
 - 大小：本地 509 MB（`docker images`）；Hub 压缩后 169.1 MiB（177,276,810 B）
 - 状态：构建、启动、DB 迁移、`wg0.conf` 生成、HTTP 302→`/setup/1`、数据卷持久化、healthcheck 均通过
-- **2026-10-25 复验**：真实内核 `wg-quick up wg0` 成功，客户端/服务端双向 handshake 与流量计数均通过；外网转发、宿主 firewalld/NAT 未验证
+- **2026-10-25 复验**：真实内核 `wg-quick up wg0`、双向 handshake、隧道 HTTP、跨容器转发/MASQUERADE、外网访问均通过；内部 IPv6 通过，外网 IPv6 受 Docker 限制；AmneziaWG 用户态 PoC 通过但未打包
 
 ## 版本
 
@@ -122,7 +122,7 @@ docker run -d --name wg-easy --restart unless-stopped \
 | 持久化 | 重启容器后 DB SHA-256 不变（`615c8915…f8c7ec6`），DB/conf 仍在 |
 | healthcheck | `healthy`（重启前后均通过） |
 
-**2026-10-25 复验**：在默认 bridge 上启动 server 与客户端容器（均 `NET_ADMIN`），`wg-quick up` 后双方 `latest handshake` 出现，transfer 双向非零。未验证：经隧道访问外网、宿主 firewalld/NAT、真实客户端平台。
+**2026-10-25 复验**：默认 bridge 上 server + client（均 `NET_ADMIN`）；握手、隧道内 HTTP、跨容器转发（MASQUERADE 计数增长）、外网 `https://example.com` 200 均通过。IPv6 内部通过（需 `ip6table_nat` 与 `net.ipv6.conf.all.forwarding=1`），外网 IPv6 因 Docker 无全局前缀 BLOCKED。AmneziaWG 用户态 `amneziawg-go` + `awg-quick` 端到端通过，但镜像未打包，健康检查需改 `awg show`。
 
 ## 已知限制
 

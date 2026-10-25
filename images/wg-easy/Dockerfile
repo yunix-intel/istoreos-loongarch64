@@ -81,7 +81,7 @@ ENV PATH=/opt/node24/bin:$PATH \
     HOST=0.0.0.0 \
     INSECURE=false \
     INIT_ENABLED=false \
-    DISABLE_IPV6=false \
+    DISABLE_IPV6=true \
     DEBUG=Server,WireGuard,Database,CMD,Firewall
 
 VOLUME ["/etc/wireguard"]
