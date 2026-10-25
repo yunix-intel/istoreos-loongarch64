@@ -358,7 +358,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [x] P2-04 Authelia（已发布，`e05a03ac…d83a`）
 - [x] P2-05 Backrest（已发布，`955cae89…79eb`）
 - [x] P2-06 go2rtc（已发布，`03aa0422…3def`）
-- [x] P3-01 Komga（已发布，`0cf05b7e…9e7a`；PDF/EPUB/RAR 待验收）
+- [x] P3-01 Komga（已发布，`0cf05b7e…9e7a`；CBZ/PDF/EPUB/RAR4/只读/claim 已验证）
 - [x] P3-02 Matomo（已发布，`b1e7baec…1bc2`）
 - [x] P3-03 MeTube（已发布，`7321b0bf…526f`）
 - [x] P3-04 SABnzbd（已发布，`1e20dee8…7d81`）
@@ -369,7 +369,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [x] P4-03 Readeck（已发布，`14c9426b…4719`）
 - [x] P4-04 Linkwarden（已发布，`742abfdd…b852`；基础版）
 - [ ] P4-05 Joplin Server（GO；2–3 人日，待排期）
-- [x] P4-06 wg-easy（已发布，`943cfc36…db84`；真实隧道待验收）
+- [x] P4-06 wg-easy（已发布，`943cfc36…db84`；握手/转发/NAT/外网已验证）
 - [x] P4-07 Registry（已发布，`da519e59…0229`）
 - [x] P4-08 Pocket ID（已发布，`7c21de80…0cb4`）
 - [x] P4-09 Unpackerr（已发布，`8cc802bf…bc7e`）
@@ -379,7 +379,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [ ] C-01 CasaOS SATA 盘验收（挂载/写读/卸载/服务重启自挂、SMART 通过；系统重启待做）
 - [x] C-01b CasaOS USB 只读验收（udevil ro 挂载/卸载通过；USB 不入 local-storage）
 - [x] C-02 CasaOS 真实盘格式化/重建（ext4 格式化+挂载+重挂通过）
-- [ ] C-03 CasaOS 24h 稳定性（36min soak PASS；24h 未做）
+- [ ] C-03 CasaOS 24h 稳定性（24h soak 运行中，2026-10-26 21:06 结束）
 - [ ] C-04 CasaOS 发布闸门评审（3 个 BLOCKER 已修复；24h soak 运行中，重启待验）
 - [ ] C-05 CasaOS 上游 PR/issue
 - [ ] C-06 CasaOS 应用商店同步
@@ -395,15 +395,15 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 
 ### 商店同步（最后阶段）
 
-- [ ] S-C1 CasaOS 全量应用定义（已导入 18 个并注入说明，其余 92 个待生成）
+- [ ] S-C1 CasaOS 全量应用定义（已导入 18 个并注入说明，其余 96 个待生成）
 - [ ] S-C2 CasaOS 端口与 overrides
 - [ ] S-C3 CasaOS 分类/图标/描述
 - [ ] S-C4 CasaOS 干净安装
 - [ ] S-C5 CasaOS 升级/卸载
-- [ ] S-C6 CasaOS 龙芯差异披露（110 个应用的文案已生成，待全部定义应用）
+- [ ] S-C6 CasaOS 龙芯差异披露（114 个应用的文案已生成，待全部定义应用）
 - [ ] S-I1 iStore app-meta 镜像覆盖
 - [ ] S-I2 iStore 自定义 feed
 - [ ] S-I3 iStore 依赖/sidecar
 - [ ] S-I4 la5 公开版干净安装
 - [ ] S-I5 p1 私人版干净安装
-- [ ] S-I6 商店文档（110 个应用的 iStore 描述已生成，待接入 app-meta）
+- [ ] S-I6 商店文档（114 个应用的 iStore 描述已生成，待接入 app-meta）
