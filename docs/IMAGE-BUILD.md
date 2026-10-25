@@ -1,6 +1,6 @@
 # 应用镜像构建手册（loong64）
 
-本文件说明 116 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 106 个镜像的 Dockerfile；
+本文件说明 117 个 `yunixintel/*` 镜像的可复现构建方式。`images/` 保存了 107 个镜像的 Dockerfile；
 其余 10 个早期镜像的 Dockerfile 未保留，但下方给出源码版本、关键步骤和构建日志入口。
 
 ## 0. 共同约定
@@ -165,7 +165,7 @@ Config UI 5 由 `hb-service run` 同时启动 UI 和 Homebridge，单独跑 `hom
 > adguardhome、code-server、easytier、firefly-iii、gitea、memos、mihomo、miniflux、
 > phpmyadmin、vaultwarden 共 10 个。
 
-## 3.5 2026-10 新增的 37 个镜像
+## 3.5 2026-10 新增的 38 个镜像
 
 | 镜像 | 上游 | 关键步骤/坑 |
 |---|---|---|
@@ -206,6 +206,7 @@ Config UI 5 由 `hb-service run` 同时启动 UI 和 Homebridge，单独跑 `hom
 | node-sharp | sharp 0.35.5 | 基础镜像；源码编 libvips 8.18.7 + node-gyp 编 sharp；`/opt/vips` 与 `/opt/node_modules/sharp` 可复用 |
 | karakeep | 0.34.1 | Next standalone（x86 `--webpack`）+ workers + better-sqlite3 重编；复用 node-sharp；默认无浏览器，LBrowser 走 sidecar |
 | linkwarden | 2.16.3 | Next 15 x86 构建；Prisma 7 WASM + adapter-pg + 自写 99 迁移器；bcryptjs；不装 sharp；LBrowser 走 sidecar |
+| lbrowser-runtime | 3.4.2293.2 | 基础运行时；只装 LBrowser 依赖与 CDP 代理，不含浏览器字节；宿主挂载后供 Linkwarden/Karakeep sidecar |
 
 逐应用细节见 `images/<app>/BUILD.md`。无法移植的 8 个商店应用见
 [BLOCKED-APPS.md](BLOCKED-APPS.md)。
@@ -223,4 +224,4 @@ Config UI 5 由 `hb-service run` 同时启动 UI 和 Homebridge，单独跑 `hom
 
 构建完成后记录：镜像大小、`docker inspect` 架构、启动日志、HTTP/健康检查、digest。
 统一推送到 `docker.io/yunixintel/<app>:loong64` 与 `:24.10-la5`。
-`scripts/push-images.sh`（私有库）覆盖全部 116 只。
+`scripts/push-images.sh`（私有库）覆盖全部 117 只。

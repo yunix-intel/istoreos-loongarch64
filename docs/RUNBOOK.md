@@ -1047,6 +1047,7 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | node-sharp | — | `/opt/vips`、`/opt/node_modules/sharp` | 基础镜像；Node 24 + libvips 8.18.7 + sharp 0.35.5；非服务 |
 | karakeep | 3000 | `/data` | UID 1116；SQLite；默认无浏览器；搜索需 Meilisearch；LBrowser sidecar 可选 |
 | linkwarden | 3000 | `/data/data`；`DATABASE_URL` | UID 1118；PostgreSQL；Prisma 7；默认无浏览器；LBrowser sidecar 可选 |
+| lbrowser-runtime | 9222（sidecar） | `/opt/apps/lbrowser:ro` | 基础运行时；不含浏览器字节；`--shm-size=1g`；CDP 代理 |
 | nocodb | 8080 | `/data` | UID 1000；SQLite；`NC_DB` 用 `?d=` |
 | apprise-api | 8000 | `/config`、`/attach`、`/plugin` | 默认无认证/无 TLS |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |

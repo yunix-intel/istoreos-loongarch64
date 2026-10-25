@@ -810,5 +810,12 @@
     "architecture": "linux/loong64",
     "verification": "99 个 Prisma 迁移且重启幂等、`/` 200、注册登录、集合/标签/书签、无浏览器降级、LBrowser 截图/PDF/Readability/preview、重启持久化",
     "notes": "2.16.3；Next 15 x86 构建；Prisma 7 WASM + adapter-pg + 自写迁移器；bcryptjs；不装 sharp；`/data`；3000；UID 1118；搜索回退 SQL contains；不内置浏览器"
+  },
+  {
+    "image": "yunixintel/lbrowser-runtime",
+    "size": "约 597MB (Hub)",
+    "architecture": "linux/loong64",
+    "verification": "Playwright 1.57（含 PDF）、Patchright 1.59、跨 NAT CDP 通过；镜像不含浏览器字节",
+    "notes": "基础运行时：Node 24 + LBrowser 运行库 + CDP 代理；必须挂载宿主 `/opt/apps/lbrowser:ro`；许可证原因不内置浏览器"
   }
 ]
