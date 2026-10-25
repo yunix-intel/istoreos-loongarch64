@@ -815,7 +815,8 @@ docker run -d --name linkwarden -p 3000:3000 \
 - 默认无浏览器：`DISABLE_BROWSER=true` 时书签 CRUD 正常，归档标记 unavailable。
 - 归档：接 LBrowser sidecar，`PLAYWRIGHT_WS_URL=http://lbrowser:9222`；
   sidecar 用 `local/lbrowser-runtime` + `/opt/apps/lbrowser:ro` + `--shm-size=1g`。
-- 搜索无 Meilisearch 时回退 SQL `contains`；未验证 monolith/Meili/AI/导入/OAuth。
+- 搜索无 Meilisearch 时回退 SQL `contains`；自建 loong64 Meili 已验证。
+- monolith 全页归档需挂载 loong64 二进制；AI 打标需外部 OpenAI 兼容服务；HTML/Pocket/Wallabag 导入已验证；OAuth 无 provider 未验证；邮件流依赖 `BASE_URL` 与镜像内模板。
 - 完整说明见 [../images/linkwarden/BUILD.md](../images/linkwarden/BUILD.md)。
 
 ### Woodpecker CI（server + agent）

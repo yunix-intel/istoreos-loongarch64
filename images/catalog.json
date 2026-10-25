@@ -808,8 +808,8 @@
     "image": "yunixintel/linkwarden",
     "size": "约 318MB (Hub)",
     "architecture": "linux/loong64",
-    "verification": "99 个 Prisma 迁移且重启幂等、`/` 200、注册登录、集合/标签/书签、无浏览器降级、LBrowser 截图/PDF/Readability/preview、重启持久化",
-    "notes": "2.16.3；Next 15 x86 构建；Prisma 7 WASM + adapter-pg + 自写迁移器；bcryptjs；不装 sharp；`/data`；3000；UID 1118；搜索回退 SQL contains；不内置浏览器"
+    "verification": "99 迁移幂等、注册登录、集合/标签/书签、LBrowser 截图/PDF/Readability、monolith、Meili、AI、导入、用户隔离 PASS",
+    "notes": "2.16.3；Next 15 x86 构建；Prisma 7 WASM + adapter-pg + 自写迁移器；bcryptjs；不装 sharp；`/data`；3000；UID 1118；搜索回退 SQL contains；不内置浏览器；OAuth 未验证；邮件流需模板+BASE_URL"
   },
   {
     "image": "yunixintel/lbrowser-runtime",

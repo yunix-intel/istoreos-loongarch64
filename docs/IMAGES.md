@@ -106,7 +106,7 @@ docker pull yunixintel/jellyfin:loong64
 | `yunixintel/komga` | 约 318MB（Hub） | 94+2+1 迁移、`/` 200、health UP、CBZ/PDF/EPUB/RAR4 扫描、只读 `/data`、claim 首用户；healthy | 1.29.1；官方 jar + 自编 loongarch64 libsqlitejdbc；JDK 21；`/config`、`/data`（可只读）；25600；UID 1110；HEIF/JXL 不可用 |
 | `yunixintel/node-sharp` | 约 157MB（Hub） | `sharp.versions` vips 8.18.7、JPEG/PNG/WebP 输出非空；ldd 无缺失 | 基础镜像：Node 24.22.1 + libvips 8.18.7 + sharp 0.35.5；复用 `/opt/vips`、`/opt/node_modules/sharp`；HEIF/JXL 未开 |
 | `yunixintel/karakeep` | 约 470MB（Hub） | 健康检查、首用户 admin、静态抓取、banner WebP、图片优化、重启持久化、LBrowser 截图/PDF（需 `CRAWLER_STORE_PDF=true`） | 0.34.1 基础版；SQLite + Next 16 + better-sqlite3；默认无浏览器，用 `BROWSER_WEB_URL` 接 LBrowser sidecar；搜索需 Meilisearch（未配置 500）；`/data`；3000；UID 1116 |
-| `yunixintel/linkwarden` | 约 318MB（Hub） | 99 迁移幂等、`/` 200、注册登录、集合/标签/书签、无浏览器降级、LBrowser 截图/PDF/Readability、重启持久化 | 2.16.3；Next 15 x86 构建；Prisma 7 WASM + adapter-pg + 自写迁移器；bcryptjs；不装 sharp；`/data`；3000；UID 1118 |
+| `yunixintel/linkwarden` | 约 318MB（Hub） | 99 迁移幂等、注册登录、集合/标签/书签、LBrowser 截图/PDF/Readability、monolith、Meili、AI、导入 PASS；用户隔离 PASS | 2.16.3；Next 15 x86 构建；Prisma 7 WASM + adapter-pg + 自写迁移器；bcryptjs；不装 sharp；`/data`；3000；UID 1118 |
 | `yunixintel/lbrowser-runtime` | 约 597MB（Hub） | Playwright 1.57 含 PDF、Patchright 1.59、跨 NAT CDP；镜像不含浏览器字节 | 基础运行时：LBrowser 依赖 + CDP 代理；挂载宿主 `/opt/apps/lbrowser:ro`；许可证原因不内置 |
 | `yunixintel/autobrr` | 约 131MB（Hub） | `/` 200、`/api/healthz/liveness` 200、SQLite 迁移；healthy | master 2026-10；Go 单二进制 + 内嵌 Vue；`/config`；7474；UID 1113；默认无认证 |
 | `yunixintel/matomo` | 约 193MB（Hub） | `/index.php` 200、安装向导可打开、PHP 扩展齐全；healthy | 5.14.2；PHP 8.3 + nginx/php-fpm；必须 MariaDB；`config`/`tmp` 持久化；80 |
