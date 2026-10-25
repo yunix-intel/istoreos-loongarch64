@@ -178,6 +178,8 @@ curl -X POST http://127.0.0.1:8081/v1/storage   -H "Authorization: $TOKEN" -H "C
 
 结论：**发布闸门保持关闭，CasaOS P3 不发布。**
 
+> 2026-10-25 已启动三个 BLOCKER 的源码修复与重编/复验，结果见 `research/casaos-blocker-fix.md`（完成后更新本节）。
+
 | 项 | 结果 | 证据 |
 |---|---|---|
 | 应用安装/卸载 | PASS | memos 经 v2 API 安装，容器 Up、UI 200；卸载后容器/目录/数据/镜像清理 |
