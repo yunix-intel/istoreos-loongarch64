@@ -819,6 +819,25 @@ docker run -d --name linkwarden -p 3000:3000 \
 - monolith 全页归档需挂载 loong64 二进制；AI 打标需外部 OpenAI 兼容服务；HTML/Pocket/Wallabag 导入已验证；OAuth 无 provider 未验证；邮件流依赖 `BASE_URL` 与镜像内模板。
 - 完整说明见 [../images/linkwarden/BUILD.md](../images/linkwarden/BUILD.md)。
 
+### Joplin Server
+
+```bash
+docker run -d --name joplin-server -p 22300:22300 \
+  -v /srv/joplin:/data \
+  -e APP_BASE_URL=http://<host>:22300 \
+  -e DB_CLIENT=pg \
+  -e POSTGRES_HOST=postgres -e POSTGRES_DATABASE=joplin \
+  -e POSTGRES_USER=joplin -e POSTGRES_PASSWORD=change-me \
+  -e DEFAULT_ADMIN_PASSWORD='change-me' \
+  yunixintel/joplin-server:loong64
+```
+
+- API：`/api/ping`；管理员固定 `admin@localhost`，`APP_ADMIN_EMAIL` 不被读取。
+- 需 PostgreSQL；`/data` 存 logs/temp/resource/storage，`/data/temp/joplin.sqlite` 为临时库。
+- 未装 sharp/sqlite-vec/PM2；`sqlite-vec not provided` 日志在新版可能不出现。
+- 无外网 NTP 时设 `MAX_TIME_DRIFT=0`；反代 TLS 时 `COOKIES_SECURE=true`。
+- 完整说明见 [../images/joplin-server/BUILD.md](../images/joplin-server/BUILD.md)。
+
 ### Woodpecker CI（server + agent）
 
 ```bash
@@ -1049,6 +1068,7 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | karakeep | 3000 | `/data` | UID 1116；SQLite；默认无浏览器；搜索需 Meilisearch；LBrowser sidecar 可选 |
 | linkwarden | 3000 | `/data/data`；`DATABASE_URL` | UID 1118；PostgreSQL；Prisma 7；默认无浏览器；LBrowser sidecar 可选 |
 | lbrowser-runtime | 9222（sidecar） | `/opt/apps/lbrowser:ro` | 基础运行时；不含浏览器字节；`--shm-size=1g`；CDP 代理 |
+| joplin-server | 22300 | `/data`；`DATABASE_URL`/`POSTGRES_*` | UID 1119；PostgreSQL；sqlite3 临时库；无 sharp/sqlite-vec/PM2 |
 | nocodb | 8080 | `/data` | UID 1000；SQLite；`NC_DB` 用 `?d=` |
 | apprise-api | 8000 | `/config`、`/attach`、`/plugin` | 默认无认证/无 TLS |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |

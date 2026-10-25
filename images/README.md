@@ -1,13 +1,13 @@
 # 应用镜像 Dockerfile 目录
 
-本目录是 117 个已发布 `yunixintel/*:loong64` 镜像的构建材料索引，另含 1 个不发布的本地浏览器基础层（`lbrowser/`）。
+本目录是 118 个已发布 `yunixintel/*:loong64` 镜像的构建材料索引，另含 1 个不发布的本地浏览器基础层（`lbrowser/`）。
 
 > **仅支持 linux/loong64**。Docker Hub 仓库名统一为 `yunixintel/<app>`（不带架构后缀），架构由 `:loong64` / `:24.10-la5` tag 与 manifest 标识；`catalog.json` 每条记录包含 `"architecture": "linux/loong64"`。x86_64 / ARM 镜像不存在。
 
 - `images/<app>/Dockerfile`：保留了 105 个镜像的 Dockerfile（部分带 `Dockerfile.*` 构建阶段）。
-- `images/<app>/BUILD.md`：117 个应用每个都有独立构建记录；无 Dockerfile 的 10 个镜像也在
+- `images/<app>/BUILD.md`：118 个应用每个都有独立构建记录；无 Dockerfile 的 10 个镜像也在
   对应目录的 BUILD.md 给出归档配方和上游版本。
-- `catalog.json`：117 个镜像的名称、大小、验证结论、端口/限制说明、`architecture`，机读索引。
+- `catalog.json`：118 个镜像的名称、大小、验证结论、端口/限制说明、`architecture`，机读索引。
 - `lbrowser/`：LBrowser/Playwright 基础层源码；因许可证不清晰，**不发布镜像**，
   只提供本地构建与宿主挂载方案（见 [../docs/BASE-IMAGES.md](../docs/BASE-IMAGES.md)）。
 - 未保留 Dockerfile 的 10 个镜像：adguardhome、code-server、easytier、firefly-iii、
@@ -78,4 +78,4 @@
 ## 标签约定
 
 所有镜像同时打 `loong64` 与 `24.10-la5`，推送脚本在私有库
-`scripts/push-images.sh`，覆盖 117 只。
+`scripts/push-images.sh`，覆盖 118 只。

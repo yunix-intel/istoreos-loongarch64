@@ -817,5 +817,12 @@
     "architecture": "linux/loong64",
     "verification": "Playwright 1.57（含 PDF）、Patchright 1.59、跨 NAT CDP 通过；镜像不含浏览器字节",
     "notes": "基础运行时：Node 24 + LBrowser 运行库 + CDP 代理；必须挂载宿主 `/opt/apps/lbrowser:ro`；许可证原因不内置浏览器"
+  },
+  {
+    "image": "yunixintel/joplin-server",
+    "size": "约 273MB (Hub)",
+    "architecture": "linux/loong64",
+    "verification": "51 迁移、`/api/ping` 200、admin 改密、普通用户、含图笔记分享页/附件、重启持久化；healthy",
+    "notes": "3.7.21；Node 24 + PostgreSQL；sqlite3 5.1.6 源码编（临时库）；Rollup 用 wasm 别名；`/data`；22300；UID 1119；无 sharp/sqlite-vec/PM2"
   }
 ]

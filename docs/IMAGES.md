@@ -1,6 +1,6 @@
 # loongarch64 应用镜像
 
-共 117 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
+共 118 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
 `loong64`（浮动）与 `24.10-la5`（与 GitHub Release 对齐）。
 
 拉取：
@@ -108,6 +108,7 @@ docker pull yunixintel/jellyfin:loong64
 | `yunixintel/karakeep` | 约 470MB（Hub） | 健康检查、首用户 admin、静态抓取、banner WebP、图片优化、重启持久化、LBrowser 截图/PDF（需 `CRAWLER_STORE_PDF=true`） | 0.34.1 基础版；SQLite + Next 16 + better-sqlite3；默认无浏览器，用 `BROWSER_WEB_URL` 接 LBrowser sidecar；搜索需 Meilisearch（未配置 500）；`/data`；3000；UID 1116 |
 | `yunixintel/linkwarden` | 约 318MB（Hub） | 99 迁移幂等、注册登录、集合/标签/书签、LBrowser 截图/PDF/Readability、monolith、Meili、AI、导入 PASS；用户隔离 PASS | 2.16.3；Next 15 x86 构建；Prisma 7 WASM + adapter-pg + 自写迁移器；bcryptjs；不装 sharp；`/data`；3000；UID 1118 |
 | `yunixintel/lbrowser-runtime` | 约 597MB（Hub） | Playwright 1.57 含 PDF、Patchright 1.59、跨 NAT CDP；镜像不含浏览器字节 | 基础运行时：LBrowser 依赖 + CDP 代理；挂载宿主 `/opt/apps/lbrowser:ro`；许可证原因不内置 |
+| `yunixintel/joplin-server` | 约 273MB（Hub） | 51 迁移、`/api/ping` 200、admin/普通用户、含图笔记分享页/附件、重启持久化；healthy | 3.7.21；Node 24 + PostgreSQL；sqlite3 5.1.6 源码编；Rollup wasm 别名；`/data`；22300；UID 1119 |
 | `yunixintel/autobrr` | 约 131MB（Hub） | `/` 200、`/api/healthz/liveness` 200、SQLite 迁移；healthy | master 2026-10；Go 单二进制 + 内嵌 Vue；`/config`；7474；UID 1113；默认无认证 |
 | `yunixintel/matomo` | 约 193MB（Hub） | `/index.php` 200、安装向导可打开、PHP 扩展齐全；healthy | 5.14.2；PHP 8.3 + nginx/php-fpm；必须 MariaDB；`config`/`tmp` 持久化；80 |
 | `yunixintel/woodpecker-server` | 约 133MB（Hub） | `/` 200、内嵌 UI 资源 200、`/api/healthz` 204；SQLite 迁移；healthy | 3.19.0；**必须配置 forge**（Gitea/GitHub）才能启动；`/var/lib/woodpecker`；8000/9000；自动生成 agent/grpc secret；UID 1114 |

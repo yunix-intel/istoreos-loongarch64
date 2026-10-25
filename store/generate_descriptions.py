@@ -687,6 +687,15 @@ QUIRKS["linkwarden"] = {
     "deps_en": "Requires PostgreSQL; point PLAYWRIGHT_WS_URL at an LBrowser sidecar; /data/data; port 3000; UID 1118.",
 }
 
+QUIRKS["joplin-server"] = {
+    "zh": "全程 loongarch64 构建；sqlite3 5.1.6 源码编译；Rollup 使用 wasm 别名。",
+    "en": "Built natively on loongarch64; sqlite3 5.1.6 is compiled from source; Rollup uses the wasm alias.",
+    "missing_zh": "无 sharp/sqlite-vec/PM2；向量搜索禁用；未验证桌面客户端双端同步、LDAP/SAML/Stripe/邮件。",
+    "missing_en": "No sharp/sqlite-vec/PM2; vector search is disabled; desktop sync, LDAP/SAML/Stripe and email are unverified.",
+    "deps_zh": "需 PostgreSQL；/data 持久化（含临时 SQLite）；22300；UID 1119；APP_BASE_URL 必填。",
+    "deps_en": "Requires PostgreSQL; persist /data (including the temporary SQLite); port 22300; UID 1119; APP_BASE_URL is required.",
+}
+
 EXTRA_DEPS = {
     "homarr": ("需 Redis。", "Requires Redis."),
     "jellystat": ("需外部 PostgreSQL。", "Requires external PostgreSQL."),

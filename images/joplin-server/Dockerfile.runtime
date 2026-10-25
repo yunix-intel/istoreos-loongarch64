@@ -1,0 +1,41 @@
+FROM openeuler/openeuler:24.03
+
+RUN dnf install -y --setopt=install_weak_deps=False \
+      shadow util-linux ca-certificates tzdata curl libstdc++ && \
+    dnf clean all && rm -rf /var/cache/dnf && \
+    groupadd -g 1119 joplin && \
+    useradd -u 1119 -g 1119 -M -d /data -s /sbin/nologin joplin && \
+    mkdir -p /data/logs /data/temp /data/resource /data/storage /opt/joplin && \
+    chown 1119:1119 /data /data/logs /data/temp /data/resource /data/storage
+
+COPY --from=yunixintel/node:24.22.1 /opt/node24 /opt/node24
+COPY packages /opt/joplin/packages
+
+RUN ln -s /data/logs /opt/joplin/packages/server/logs && \
+    ln -s /data/temp /opt/joplin/packages/server/temp && \
+    ln -s /data/resource /opt/joplin/packages/server/resource
+
+COPY --chmod=0755 docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+
+ENV PATH=/opt/node24/bin:$PATH \
+    NODE_ENV=production \
+    RUNNING_IN_DOCKER=1 \
+    APP_PORT=22300 \
+    APP_NAME="Joplin Server"
+
+WORKDIR /opt/joplin/packages/server
+
+VOLUME ["/data"]
+EXPOSE 22300
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=90s --retries=5 \
+    CMD curl -fsS http://127.0.0.1:${APP_PORT:-22300}/api/ping >/dev/null || exit 1
+
+LABEL org.opencontainers.image.title="Joplin Server" \
+      org.opencontainers.image.description="Joplin sync server for linux/loong64" \
+      org.opencontainers.image.url="https://joplinapp.org/" \
+      org.opencontainers.image.source="https://github.com/laurent22/joplin" \
+      org.opencontainers.image.revision="e41516e669efb693b009bedb21f3eb1fcbea4fc9" \
+      org.opencontainers.image.version="3.7.21"
+
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]

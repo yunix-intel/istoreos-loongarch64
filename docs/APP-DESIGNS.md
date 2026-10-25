@@ -622,7 +622,7 @@ Prisma 7.10.1 的 WASM query compiler + `@prisma/adapter-pg` 可去掉 Rust 引�
   Playwright 1.57 的复杂页面回归；自写迁移器需保持 `_prisma_migrations` 兼容。
 - 工作量 5–7 天（无浏览器 4–5 天）。
 
-### P4-05 Joplin Server（2026-10-24 研究：GO）
+### P4-05 Joplin Server ✅ 已实现（2026-10-25）
 
 **状态：GO（2–3 人日）。** 研究结论见 [research/joplin-unblock.md](research/joplin-unblock.md)：
 sharp/sqlite-vec 不是服务端运行时依赖；唯一硬阻塞 sqlite3 5.1.6 已在 3A6000/16K 页

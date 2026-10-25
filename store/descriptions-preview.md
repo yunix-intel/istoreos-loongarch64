@@ -1,6 +1,6 @@
 # 商店卡片“龙芯版说明”预览
 
-共 114 个可安装应用（不含运行时基础镜像 node）。
+共 115 个可安装应用（不含运行时基础镜像 node）。
 
 | 应用 | 分类 | 龙芯版说明 | 缺失功能 | 额外依赖 |
 |---|---|---|---|---|
@@ -118,3 +118,4 @@
 | komga (`komga`) | Utilities | 官方 jar 不重编；自编 loongarch64 sqlite-jdbc JNI，经 org.sqlite.lib.path 外挂。 | HEIF/JXL 封面不可用；Kobo 转换未支持；PDF/EPUB/RAR 扫描未验证。 | JDK 21；/config 与 /data（可只读）；25600；UID 1110。 |
 | karakeep (`karakeep`) | Utilities | 复用 node-sharp；Next 在 x86 构建；默认不内置 Chromium。 | 搜索需外部 Meilisearch；截图/PDF/JS 页面需 LBrowser sidecar；monolith/视频/OCR/AI 尚未验证。 | BROWSER_WEB_URL 接 LBrowser（挂载宿主 /opt/apps/lbrowser:ro）；/data；3000；UID 1116。 |
 | linkwarden (`linkwarden`) | Utilities | Next 15 在 x86 构建；Prisma 7 WASM + adapter-pg；自写 99 个 SQL 迁移器；bcryptjs 替代 bcrypt。 | 无 Meilisearch 时仅 SQL contains 搜索；默认无浏览器；monolith/AI/导入/OAuth 尚未验证。 | 需 PostgreSQL；PLAYWRIGHT_WS_URL 接 LBrowser sidecar；/data/data；3000；UID 1118。 |
+| joplin-server (`joplin-server`) | Utilities | 全程 loongarch64 构建；sqlite3 5.1.6 源码编译；Rollup 使用 wasm 别名。 | 无 sharp/sqlite-vec/PM2；向量搜索禁用；未验证桌面客户端双端同步、LDAP/SAML/Stripe/邮件。 | 需 PostgreSQL；/data 持久化（含临时 SQLite）；22300；UID 1119；APP_BASE_URL 必填。 |

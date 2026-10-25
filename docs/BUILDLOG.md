@@ -549,6 +549,8 @@
 
 - 2026-10-24 Matomo 5.14.2（P3-02）：官方 `matomo.zip` 完整包（含 vendor）；PHP 8.3 + nginx/php-fpm，`php-pecl-zip` 单独安装。`/index.php` 安装向导 200、PHP 扩展齐全、healthy；Matomo 无 CLI 安装器，保留 Web 向导。镜像 193MB，digest `sha256:b1e7baec…1bc2`，已推送双 tag。
 
+- 2026-10-25 Joplin Server 3.7.21（P4-05）：Joplin v3.7.21 全程 loong64 Yarn 4 构建；sqlite3 5.1.6 三个 workspace 副本源码编出 napi-v6-linux-glibc-loong64；turndown 的 rollup 4.2.0 无 loong64 binding，改用 `@rollup/wasm-node@4.2.0` 别名通过。51 个迁移、`/api/ping`、admin 改密、普通用户、含图笔记分享页/附件、重启持久化、health 均通过。未验证桌面客户端双端同步、SQLite 主库、LDAP/SAML/Stripe/邮件、多实例/TLS。镜像 859MB（Hub 273MiB），digest `sha256:204c8b9a…39ef`，三 tag 同 digest。
+
 - 2026-10-25 Linkwarden 2.16.3（P4-04）：Next 15 在 x86 构建；Prisma 升级 7.10.1 + adapter-pg，自写 SQL 迁移器跑完 99 个迁移并验证幂等；bcrypt 换 bcryptjs、删除 sharp；不内置浏览器，`PLAYWRIGHT_WS_URL` 接 LBrowser sidecar。实测 `/` 200、注册登录、集合/标签/书签、无浏览器降级、LBrowser 截图/PDF/Readability/preview、重启持久化；补验 monolith、Meili 源码、AI、导入 PASS；邮箱流首次缺 `apps/web/templates`，已补入并用 mock SMTP 复测通过。镜像 1.03GB（Hub 318MiB），digest `sha256:742abfdd…b852`，三 tag 同 digest。
 
 - 2026-10-25 Karakeep 0.34.1 基础版（P4-02）：前端 Next standalone 在 x86 用 `--webpack` 构建，workers/db 迁移器一起打包；运行镜像复用 `yunixintel/node-sharp`，所有 better-sqlite3 副本在 loong64 重编。默认不内置 Chromium；实测健康检查、首用户 admin、example.com/Wikipedia 静态抓取、banner WebP、Next 图片优化、重启持久化，并用 LBrowser sidecar 验证截图/PDF。未验证 Meilisearch、monolith、视频、OCR、AI、OAuth。镜像 1.45GB（Hub 470MiB），digest `sha256:261827ea…f445`，已补齐 `loong64`/`0.34.1`/`24.10-la5` 三 tag。
