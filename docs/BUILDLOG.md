@@ -549,6 +549,8 @@
 
 - 2026-10-24 Matomo 5.14.2（P3-02）：官方 `matomo.zip` 完整包（含 vendor）；PHP 8.3 + nginx/php-fpm，`php-pecl-zip` 单独安装。`/index.php` 安装向导 200、PHP 扩展齐全、healthy；Matomo 无 CLI 安装器，保留 Web 向导。镜像 193MB，digest `sha256:b1e7baec…1bc2`，已推送双 tag。
 
+- 2026-10-25 Karakeep 0.34.1 基础版（P4-02）：前端 Next standalone 在 x86 用 `--webpack` 构建，workers/db 迁移器一起打包；运行镜像复用 `yunixintel/node-sharp`，所有 better-sqlite3 副本在 loong64 重编。默认不内置 Chromium；实测健康检查、首用户 admin、example.com/Wikipedia 静态抓取、banner WebP、Next 图片优化、重启持久化，并用 LBrowser sidecar 验证截图/PDF。未验证 Meilisearch、monolith、视频、OCR、AI、OAuth。镜像 1.45GB（Hub 470MiB），digest `sha256:261827ea…f445`，已补齐 `loong64`/`0.34.1`/`24.10-la5` 三 tag。
+
 - 2026-10-25 基础层：`node-sharp` 发布（libvips 8.18.7 + sharp 0.35.5，Node 24.22.1，digest `b7dd366c…9f49`，Hub 149.5MiB）；源码编 libvips，sharp 用 `SHARP_FORCE_GLOBAL_LIBVIPS=1` + node-gyp，验证 resize/WebP/JPEG/PNG。LBrowser 3.4.2293.2 本地验证：Playwright 1.57 含 PDF 全过、Patchright 1.59 四项过、跨 NAT CDP 通过；deb 无明确 LICENSE/copyright，**不推送镜像**，改为宿主 `/opt/apps/lbrowser:ro` 挂载或 sidecar。
 
 - 2026-10-25 Komga 1.29.1（P3-01 复活）：官方 fat jar 不动，构建阶段从 sqlite-jdbc 3.53.4.0 + sqlite-amalgamation 3530400 编 loongarch64 `libsqlitejdbc.so`（约 37 秒，1.2MB），运行期用 `-Dorg.sqlite.lib.path` 外挂；JDK 21。必须显式 `OS_NAME=Linux`，否则产物路径丢 OS 名。实测 94+2+1 项迁移、`/` 200、health UP、重启持久化、最小 CBZ 扫描 1 系列/1 书/1 页与单页读取；PDF/EPUB/RAR、HEIF/JXL、Kobo 未验证。镜像 688MB（Hub 318MiB），digest `sha256:0cf05b7e…9e7a`，已推送双 tag。

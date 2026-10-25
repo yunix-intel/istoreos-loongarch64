@@ -669,6 +669,15 @@ QUIRKS["komga"] = {
     "deps_en": "JDK 21; /config and /data (read-only is fine); port 25600; UID 1110.",
 }
 
+QUIRKS["karakeep"] = {
+    "zh": "复用 node-sharp；Next 在 x86 构建；默认不内置 Chromium。",
+    "en": "Reuses node-sharp; the Next app is built on x86; no Chromium is bundled by default.",
+    "missing_zh": "搜索需外部 Meilisearch；截图/PDF/JS 页面需 LBrowser sidecar；monolith/视频/OCR/AI 尚未验证。",
+    "missing_en": "Search needs external Meilisearch; screenshots/PDF/JS pages need an LBrowser sidecar; monolith, video, OCR and AI are unverified.",
+    "deps_zh": "BROWSER_WEB_URL 接 LBrowser（挂载宿主 /opt/apps/lbrowser:ro）；/data；3000；UID 1116。",
+    "deps_en": "Point BROWSER_WEB_URL at an LBrowser sidecar (mount /opt/apps/lbrowser:ro); /data; port 3000; UID 1116.",
+}
+
 EXTRA_DEPS = {
     "homarr": ("需 Redis。", "Requires Redis."),
     "jellystat": ("需外部 PostgreSQL。", "Requires external PostgreSQL."),

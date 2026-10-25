@@ -2,7 +2,7 @@
 
 制定日期：2026-10-23  
 状态：**计划，未开工**。本文件只排期，不代表已构建或已承诺发布日期。  
-依据：现有 114 个镜像、[STORE-COVERAGE.md](STORE-COVERAGE.md) 的 8 个阻塞结论、
+依据：现有 115 个镜像、[STORE-COVERAGE.md](STORE-COVERAGE.md) 的 8 个阻塞结论、
 以及两份独立子代理调研（存储/媒体方向、生产力/自动化方向）。
 
 对应详细设计：[APP-DESIGNS.md](APP-DESIGNS.md)。本文件只排期；具体构建路径与运行时契约在设计稿中。
@@ -124,7 +124,7 @@ P4 不进入当前排期；每项启动前先做 1 天以内的依赖 spike，�
 
 **审查后调整（2026-10-23）：**
 
-- **P4-02 Karakeep 有条件 Go**：基础版（SQLite + 静态抓取）可做；搜索/截图需外部 Meilisearch/browserless，原生 Chromium/Meilisearch No-Go。见 `docs/research/karakeep-unblock.md`。
+- **P4-02 Karakeep 已发布（基础版）**：复用 node-sharp，默认无浏览器；搜索/截图需外部 Meilisearch/LBrowser sidecar。见 `docs/research/karakeep-unblock.md`。
 - **P4-04 Linkwarden 有条件 Go**：Prisma 7 WASM+adapter-pg、自写 99 个迁移、LBrowser/外部 browserless；sharp 可删。见 `docs/research/linkwarden-unblock.md`。
 - **P4-05 Joplin Server GO**：sharp/sqlite-vec 非服务端依赖；sqlite3 5.1.6 已源码编过 16K 页门禁；PostgreSQL 路径仍建临时 SQLite。见 `docs/research/joplin-unblock.md`。
 - **P4-06 wg-easy GO（已发布）**：v15.4.0 已用龙芯 libsql 绑定 + hash-wasm 构建并推送双 tag；真实隧道待验收。见 `docs/research/wg-easy-unblock.md`。
@@ -365,7 +365,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [x] P3-05 Autobrr（已发布，`32f91a31…dcf7`）
 - [x] P3-06 Woodpecker CI
 - [x] P4-01 MediaMTX（已发布，`20d0edcb…26bb`）
-- [ ] P4-02 Karakeep（基础版实施中；node-sharp + LBrowser sidecar）
+- [x] P4-02 Karakeep（已发布，`261827ea…f445`；基础版）
 - [x] P4-03 Readeck（已发布，`14c9426b…4719`）
 - [ ] P4-04 Linkwarden（有条件 Go；5–7 天，待排期）
 - [ ] P4-05 Joplin Server（GO；2–3 人日，待排期）

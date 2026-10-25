@@ -779,6 +779,25 @@ docker run -d --name komga -p 25600:25600 \
 - HEIF/JXL 封面不可用；Kobo 转换未支持；PDF/EPUB/RAR 未验证。
 - 完整说明见 [../images/komga/BUILD.md](../images/komga/BUILD.md)。
 
+### Karakeep（基础版）
+
+```bash
+docker run -d --name karakeep -p 3000:3000 \
+  -v /srv/karakeep:/data \
+  -e NEXTAUTH_URL=http://<host>:3000 \
+  -e NEXTAUTH_SECRET='<openssl rand -base64 32>' \
+  yunixintel/karakeep:loong64
+```
+
+- Web：`http://<host>:3000/`；健康 `/api/health`。
+- `/data` 存 SQLite 与 assets；UID 1116。
+- 默认无浏览器：静态抓取、正文归档、标签/笔记可用；截图/PDF/JS 页面需 LBrowser sidecar：
+  `BROWSER_WEB_URL=http://chrome:9222`，sidecar 用 `local/lbrowser-runtime` 并挂载
+  `/opt/apps/lbrowser:ro`，`--shm-size=1g`。
+- 搜索需要外部 Meilisearch；未配置时搜索关闭。
+- 未验证：monolith 全页归档、视频下载、OCR/PDF 上传、AI 打标、OAuth。
+- 完整说明见 [../images/karakeep/BUILD.md](../images/karakeep/BUILD.md)。
+
 ### Woodpecker CI（server + agent）
 
 ```bash
@@ -1006,6 +1025,7 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | wg-easy | 51820/udp, 51821 | `/etc/wireguard`；`/lib/modules:ro` | 需 NET_ADMIN/SYS_MODULE 与 sysctls；IPv4-only；真实隧道未验 |
 | komga | 25600 | `/config`、`/data`（可只读） | UID 1110；JDK 21；自编 sqlite JNI；HEIF/JXL/Kobo 未支持 |
 | node-sharp | — | `/opt/vips`、`/opt/node_modules/sharp` | 基础镜像；Node 24 + libvips 8.18.7 + sharp 0.35.5；非服务 |
+| karakeep | 3000 | `/data` | UID 1116；SQLite；默认无浏览器；搜索需 Meilisearch；LBrowser sidecar 可选 |
 | nocodb | 8080 | `/data` | UID 1000；SQLite；`NC_DB` 用 `?d=` |
 | apprise-api | 8000 | `/config`、`/attach`、`/plugin` | 默认无认证/无 TLS |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |

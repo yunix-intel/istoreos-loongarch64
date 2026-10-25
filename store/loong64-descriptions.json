@@ -2,7 +2,7 @@
   "schema": 1,
   "generated": "2026-10-24",
   "architecture": "linux/loong64",
-  "app_count": 112,
+  "app_count": 113,
   "sources": [
     "images/catalog.json",
     "docs/LOONG64-QUIRKS.md"
@@ -4375,6 +4375,45 @@
       "istore_description_html": {
         "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：官方 jar 不重编；自编 loongarch64 sqlite-jdbc JNI，经 org.sqlite.lib.path 外挂。</p><p>缺失功能：HEIF/JXL 封面不可用；Kobo 转换未支持；PDF/EPUB/RAR 扫描未验证。</p><p>额外依赖：JDK 21；/config 与 /data（可只读）；25600；UID 1110。</p><p>镜像说明：1.29.1；官方 jar + 自编 loongarch64 libsqlitejdbc；JDK 21；`/config`、`/data`（可只读）；25600；UID 1110；HEIF/JXL/Kobo 未支持</p>",
         "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: Uses the official jar unchanged with a locally built loongarch64 sqlite-jdbc JNI loaded via org.sqlite.lib.path.</p><p>Missing features: HEIF/JXL covers are unavailable; Kobo conversion is unsupported; PDF/EPUB/RAR scanning is unverified.</p><p>Extra dependencies: JDK 21; /config and /data (read-only is fine); port 25600; UID 1110.</p><p>Image notes: 1.29.1；官方 jar + 自编 loongarch64 libsqlitejdbc；JDK 21；`/config`、`/data`（可只读）；25600；UID 1110；HEIF/JXL/Kobo 未支持</p>"
+      }
+    },
+    "karakeep": {
+      "image": "yunixintel/karakeep",
+      "title": {
+        "zh_cn": "karakeep",
+        "en_us": "karakeep"
+      },
+      "category": "Utilities",
+      "architecture": "linux/loong64",
+      "tagline": {
+        "zh_cn": "karakeep 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "karakeep LoongArch64 image; see the LoongArch notes."
+      },
+      "quirk": {
+        "zh_cn": "复用 node-sharp；Next 在 x86 构建；默认不内置 Chromium。",
+        "en_us": "Reuses node-sharp; the Next app is built on x86; no Chromium is bundled by default."
+      },
+      "missing": {
+        "zh_cn": "搜索需外部 Meilisearch；截图/PDF/JS 页面需 LBrowser sidecar；monolith/视频/OCR/AI 尚未验证。",
+        "en_us": "Search needs external Meilisearch; screenshots/PDF/JS pages need an LBrowser sidecar; monolith, video, OCR and AI are unverified."
+      },
+      "dependencies": {
+        "zh_cn": "BROWSER_WEB_URL 接 LBrowser（挂载宿主 /opt/apps/lbrowser:ro）；/data；3000；UID 1116。",
+        "en_us": "Point BROWSER_WEB_URL at an LBrowser sidecar (mount /opt/apps/lbrowser:ro); /data; port 3000; UID 1116."
+      },
+      "notes": "0.34.1 基础版；SQLite + Node 24 + Next 16 + better-sqlite3；默认不内置 Chromium，浏览器用 `BROWSER_WEB_URL` 接 LBrowser sidecar；搜索需 Meilisearch；`/data`；3000；UID 1116",
+      "verification": "健康检查、首用户 admin、example.com/Wikipedia 静态抓取、banner WebP、Next 图片优化、重启持久化、LBrowser sidecar 截图/PDF 均通过",
+      "disclosure": {
+        "zh_cn": "架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：复用 node-sharp；Next 在 x86 构建；默认不内置 Chromium。\n缺失功能：搜索需外部 Meilisearch；截图/PDF/JS 页面需 LBrowser sidecar；monolith/视频/OCR/AI 尚未验证。\n额外依赖：BROWSER_WEB_URL 接 LBrowser（挂载宿主 /opt/apps/lbrowser:ro）；/data；3000；UID 1116。\n镜像说明：0.34.1 基础版；SQLite + Node 24 + Next 16 + better-sqlite3；默认不内置 Chromium，浏览器用 `BROWSER_WEB_URL` 接 LBrowser sidecar；搜索需 Meilisearch；`/data`；3000；UID 1116",
+        "en_us": "Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Reuses node-sharp; the Next app is built on x86; no Chromium is bundled by default.\nMissing features: Search needs external Meilisearch; screenshots/PDF/JS pages need an LBrowser sidecar; monolith, video, OCR and AI are unverified.\nExtra dependencies: Point BROWSER_WEB_URL at an LBrowser sidecar (mount /opt/apps/lbrowser:ro); /data; port 3000; UID 1116.\nImage notes: 0.34.1 基础版；SQLite + Node 24 + Next 16 + better-sqlite3；默认不内置 Chromium，浏览器用 `BROWSER_WEB_URL` 接 LBrowser sidecar；搜索需 Meilisearch；`/data`；3000；UID 1116"
+      },
+      "casaos_description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：复用 node-sharp；Next 在 x86 构建；默认不内置 Chromium。\n缺失功能：搜索需外部 Meilisearch；截图/PDF/JS 页面需 LBrowser sidecar；monolith/视频/OCR/AI 尚未验证。\n额外依赖：BROWSER_WEB_URL 接 LBrowser（挂载宿主 /opt/apps/lbrowser:ro）；/data；3000；UID 1116。\n镜像说明：0.34.1 基础版；SQLite + Node 24 + Next 16 + better-sqlite3；默认不内置 Chromium，浏览器用 `BROWSER_WEB_URL` 接 LBrowser sidecar；搜索需 Meilisearch；`/data`；3000；UID 1116",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Reuses node-sharp; the Next app is built on x86; no Chromium is bundled by default.\nMissing features: Search needs external Meilisearch; screenshots/PDF/JS pages need an LBrowser sidecar; monolith, video, OCR and AI are unverified.\nExtra dependencies: Point BROWSER_WEB_URL at an LBrowser sidecar (mount /opt/apps/lbrowser:ro); /data; port 3000; UID 1116.\nImage notes: 0.34.1 基础版；SQLite + Node 24 + Next 16 + better-sqlite3；默认不内置 Chromium，浏览器用 `BROWSER_WEB_URL` 接 LBrowser sidecar；搜索需 Meilisearch；`/data`；3000；UID 1116"
+      },
+      "istore_description_html": {
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：复用 node-sharp；Next 在 x86 构建；默认不内置 Chromium。</p><p>缺失功能：搜索需外部 Meilisearch；截图/PDF/JS 页面需 LBrowser sidecar；monolith/视频/OCR/AI 尚未验证。</p><p>额外依赖：BROWSER_WEB_URL 接 LBrowser（挂载宿主 /opt/apps/lbrowser:ro）；/data；3000；UID 1116。</p><p>镜像说明：0.34.1 基础版；SQLite + Node 24 + Next 16 + better-sqlite3；默认不内置 Chromium，浏览器用 `BROWSER_WEB_URL` 接 LBrowser sidecar；搜索需 Meilisearch；`/data`；3000；UID 1116</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: Reuses node-sharp; the Next app is built on x86; no Chromium is bundled by default.</p><p>Missing features: Search needs external Meilisearch; screenshots/PDF/JS pages need an LBrowser sidecar; monolith, video, OCR and AI are unverified.</p><p>Extra dependencies: Point BROWSER_WEB_URL at an LBrowser sidecar (mount /opt/apps/lbrowser:ro); /data; port 3000; UID 1116.</p><p>Image notes: 0.34.1 基础版；SQLite + Node 24 + Next 16 + better-sqlite3；默认不内置 Chromium，浏览器用 `BROWSER_WEB_URL` 接 LBrowser sidecar；搜索需 Meilisearch；`/data`；3000；UID 1116</p>"
       }
     }
   }

@@ -1681,6 +1681,21 @@
         "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：官方 jar 不重编；自编 loongarch64 sqlite-jdbc JNI，经 org.sqlite.lib.path 外挂。\n缺失功能：HEIF/JXL 封面不可用；Kobo 转换未支持；PDF/EPUB/RAR 扫描未验证。\n额外依赖：JDK 21；/config 与 /data（可只读）；25600；UID 1110。\n镜像说明：1.29.1；官方 jar + 自编 loongarch64 libsqlitejdbc；JDK 21；`/config`、`/data`（可只读）；25600；UID 1110；HEIF/JXL/Kobo 未支持",
         "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Uses the official jar unchanged with a locally built loongarch64 sqlite-jdbc JNI loaded via org.sqlite.lib.path.\nMissing features: HEIF/JXL covers are unavailable; Kobo conversion is unsupported; PDF/EPUB/RAR scanning is unverified.\nExtra dependencies: JDK 21; /config and /data (read-only is fine); port 25600; UID 1110.\nImage notes: 1.29.1；官方 jar + 自编 loongarch64 libsqlitejdbc；JDK 21；`/config`、`/data`（可只读）；25600；UID 1110；HEIF/JXL/Kobo 未支持"
       }
+    },
+    "karakeep": {
+      "title": {
+        "zh_cn": "karakeep",
+        "en_us": "karakeep"
+      },
+      "category": "Utilities",
+      "tagline": {
+        "zh_cn": "karakeep 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "karakeep LoongArch64 image; see the LoongArch notes."
+      },
+      "description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：复用 node-sharp；Next 在 x86 构建；默认不内置 Chromium。\n缺失功能：搜索需外部 Meilisearch；截图/PDF/JS 页面需 LBrowser sidecar；monolith/视频/OCR/AI 尚未验证。\n额外依赖：BROWSER_WEB_URL 接 LBrowser（挂载宿主 /opt/apps/lbrowser:ro）；/data；3000；UID 1116。\n镜像说明：0.34.1 基础版；SQLite + Node 24 + Next 16 + better-sqlite3；默认不内置 Chromium，浏览器用 `BROWSER_WEB_URL` 接 LBrowser sidecar；搜索需 Meilisearch；`/data`；3000；UID 1116",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Reuses node-sharp; the Next app is built on x86; no Chromium is bundled by default.\nMissing features: Search needs external Meilisearch; screenshots/PDF/JS pages need an LBrowser sidecar; monolith, video, OCR and AI are unverified.\nExtra dependencies: Point BROWSER_WEB_URL at an LBrowser sidecar (mount /opt/apps/lbrowser:ro); /data; port 3000; UID 1116.\nImage notes: 0.34.1 基础版；SQLite + Node 24 + Next 16 + better-sqlite3；默认不内置 Chromium，浏览器用 `BROWSER_WEB_URL` 接 LBrowser sidecar；搜索需 Meilisearch；`/data`；3000；UID 1116"
+      }
     }
   }
 }

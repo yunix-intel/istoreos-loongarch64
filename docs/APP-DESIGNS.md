@@ -587,7 +587,7 @@ digest `sha256:be3f0b58…fbda`，构建记录见
 - 健康检查首页/API；`runOnInit` 等于命令执行，文档必须警示；与 go2rtc 二选一。
 - 风险：WebRTC 公布地址；与 go2rtc 功能重叠。估算 1–2 天。
 
-### P4-02 Karakeep（基础版实施中，2026-10-25）
+### P4-02 Karakeep ✅ 基础版已实现（2026-10-25）
 
 **状态：可做基础版。** 研究结论见 [research/karakeep-unblock.md](research/karakeep-unblock.md)：
 Karakeep 0.34.1 的正文归档不依赖 Chromium，Chromium 只影响 JS 渲染/截图/PDF/反爬；

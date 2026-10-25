@@ -796,5 +796,12 @@
     "architecture": "linux/loong64",
     "verification": "sharp.versions vips 8.18.7 / sharp 0.35.5；resize+WebP/JPEG/PNG 实测通过；ldd 无缺失",
     "notes": "基础镜像：Node 24.22.1 + libvips 8.18.7 + sharp 0.35.5；`/opt/vips` 与 `/opt/node_modules/sharp` 可复用；仅 JPEG/PNG/WebP/TIFF；HEIF/JXL 未开"
+  },
+  {
+    "image": "yunixintel/karakeep",
+    "size": "约 470MB (Hub)",
+    "architecture": "linux/loong64",
+    "verification": "健康检查、首用户 admin、example.com/Wikipedia 静态抓取、banner WebP、Next 图片优化、重启持久化、LBrowser sidecar 截图/PDF 均通过",
+    "notes": "0.34.1 基础版；SQLite + Node 24 + Next 16 + better-sqlite3；默认不内置 Chromium，浏览器用 `BROWSER_WEB_URL` 接 LBrowser sidecar；搜索需 Meilisearch；`/data`；3000；UID 1116"
   }
 ]

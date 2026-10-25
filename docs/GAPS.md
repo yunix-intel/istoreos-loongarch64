@@ -5,10 +5,10 @@
 | 计划项 | 出处 | 状态 | 证据与说明 |
 |---|---|---|---|
 | la1–la5 连续发版，la5 内置 docker+podman | ROADMAP/NAMING | ✅ | 6 个 tag 全公开；la5 Release 10-19 发布，5 附件、316MB；最近的 CI 全绿（la2/la3 历史 Release 仅 2 附件） |
-| 114 只应用镜像上 Docker Hub | ROADMAP | ✅ | Hub 114 仓库（含 freshrss、homer、paperless-ngx、dashy、watchtower、changedetection、caddy、dozzle、ntfy、gotify、node-exporter、prometheus、pihole、gatus、alertmanager、postgres、redis、mosquitto、mariadb、node-red、grafana、memcached、homebridge、rest-server、node、actual-budget、minio、homebox、nocodb、apprise-api、mealie、chinesesubfinder、lanraragi、owntone、mymind、webvirtcloud、penpot-backend、penpot-frontend、hermes、zigbee2mqtt、smartctl-exporter、sftpgo、bookstack、vikunja、piwigo、go2rtc、scrutiny、headscale、backrest、authelia、ente-server、autobrr、matomo、woodpecker-server、woodpecker-agent、ente-web、metube、sabnzbd、mediamtx、registry、unpackerr、pocket-id、readeck、wg-easy、komga、node-sharp）；逐个核验均含 `loong64`+`24.10-la5` 双 tag，均 loong64 单架构 |
+| 115 只应用镜像上 Docker Hub | ROADMAP | ✅ | Hub 115 仓库（含 freshrss、homer、paperless-ngx、dashy、watchtower、changedetection、caddy、dozzle、ntfy、gotify、node-exporter、prometheus、pihole、gatus、alertmanager、postgres、redis、mosquitto、mariadb、node-red、grafana、memcached、homebridge、rest-server、node、actual-budget、minio、homebox、nocodb、apprise-api、mealie、chinesesubfinder、lanraragi、owntone、mymind、webvirtcloud、penpot-backend、penpot-frontend、hermes、zigbee2mqtt、smartctl-exporter、sftpgo、bookstack、vikunja、piwigo、go2rtc、scrutiny、headscale、backrest、authelia、ente-server、autobrr、matomo、woodpecker-server、woodpecker-agent、ente-web、metube、sabnzbd、mediamtx、registry、unpackerr、pocket-id、readeck、wg-easy、komga、node-sharp、karakeep）；逐个核验均含 `loong64`+`24.10-la5` 双 tag，均 loong64 单架构 |
 | 原始 iStore 133 商店覆盖 | STORE-APP-LIST | ✅ | 113 可用中 29 个已有镜像（22 + 本轮 7）；76 个原生/LuCI；8 个有明确阻塞证据（见 BLOCKED-APPS.md）；待补可做 0；见 STORE-COVERAGE.md |
-| 文档与实物一致 | IMAGES/README/STORE-APP-LIST | ✅ | README/IMAGES 均为 114 只；CasaOS 已标注“磁盘验证前不发布”；GAPS 本次同步 |
-| 镜像推送可复现 | 私有库 | ✅ | push-images.sh 已覆盖 114 只；本地 tag 名与 Hub 仓库名不一致时按脚本注释先 `docker tag` |
+| 文档与实物一致 | IMAGES/README/STORE-APP-LIST | ✅ | README/IMAGES 均为 115 只；CasaOS 已标注“磁盘验证前不发布”；GAPS 本次同步 |
+| 镜像推送可复现 | 私有库 | ✅ | push-images.sh 已覆盖 115 只；本地 tag 名与 Hub 仓库名不一致时按脚本注释先 `docker tag` |
 | 可复用 sharp 基础层 | BASE-IMAGES | ✅ | `yunixintel/node-sharp` 已发布（libvips 8.18.7 + sharp 0.35.5），应用可复用 `/opt/vips` 与预编译 sharp |
 | 浏览器基础层 | BASE-IMAGES | 🟡 | LBrowser 3.4.2293.2 本地验证通过（Playwright 1.57 含 PDF、Patchright 1.59、跨 NAT CDP）；deb 无明确许可证，不发布镜像，应用改为宿主挂载 |
 | CasaOS P1+P2 | CASAOS §7 | ✅ | 7 个 ELF、网关/UI、18 应用商店、memos 安装实测 |
