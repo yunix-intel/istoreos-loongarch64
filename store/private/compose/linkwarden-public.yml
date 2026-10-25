@@ -9,7 +9,7 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   lbrowser:
-    image: local/lbrowser-runtime:3.4.2293.2
+    image: yunixintel/lbrowser-runtime:3.4.2293.2
     command: ["serve"]
     shm_size: "1g"
     volumes:
@@ -17,7 +17,7 @@ services:
     restart: unless-stopped
 
   linkwarden:
-    image: yunixintel/linkwarden:loong64
+    image: yunixintel/linkwarden:24.10-la5
     depends_on: [postgres, lbrowser]
     ports: ["3000:3000"]
     environment:

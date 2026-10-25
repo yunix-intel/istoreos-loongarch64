@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "generated": "2026-10-25",
+  "note": "私人版与公开版必须引用不同的镜像/商店源。private 镜像只允许私人仓库或本地预载，禁止推送公共 Docker Hub。",
+  "public": {
+    "store_url": "https://github.com/yunix-intel/istoreos-loongarch64",
+    "browser_image": "yunixintel/lbrowser-runtime:3.4.2293.2",
+    "browser_mode": "host-mount",
+    "apps": {
+      "linkwarden": {
+        "image": "yunixintel/linkwarden:24.10-la5",
+        "version": "2.16.3",
+        "compose": "compose/linkwarden-public.yml"
+      },
+      "karakeep": {
+        "image": "yunixintel/karakeep:24.10-la5",
+        "version": "0.34.1",
+        "compose": "compose/karakeep-public.yml"
+      }
+    }
+  },
+  "private": {
+    "store_url": "https://github.com/yunix-intel/istore-la-private",
+    "browser_image": null,
+    "browser_mode": "embedded",
+    "apps": {
+      "linkwarden": {
+        "image": "local/linkwarden-private:2.16.3-p1",
+        "version": "2.16.3",
+        "compose": "compose/linkwarden-private.yml"
+      },
+      "karakeep": {
+        "image": "local/karakeep-private:0.34.1-p1",
+        "version": "0.34.1",
+        "compose": "compose/karakeep-private.yml"
+      }
+    }
+  }
+}

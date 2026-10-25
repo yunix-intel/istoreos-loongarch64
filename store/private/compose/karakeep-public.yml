@@ -1,6 +1,6 @@
 services:
   lbrowser:
-    image: local/lbrowser-runtime:3.4.2293.2
+    image: yunixintel/lbrowser-runtime:3.4.2293.2
     command: ["serve"]
     shm_size: "1g"
     volumes:
@@ -8,7 +8,7 @@ services:
     restart: unless-stopped
 
   karakeep:
-    image: yunixintel/karakeep:loong64
+    image: yunixintel/karakeep:24.10-la5
     depends_on: [lbrowser]
     ports: ["3000:3000"]
     environment:
