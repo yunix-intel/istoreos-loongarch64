@@ -44,13 +44,13 @@ casaos-p3-0.1.0/
   install.sh   uninstall.sh
 ```
 
-当前包：`casaos-p3-loong64-0.1.2-appmgr410.tar.gz`，sha256 `688fed00…a9b14`。旧 0.1.0 / 0.1.1 已移入 `deprecated/`，**不得再分发**。
+当前验证基线：`casaos-p3-loong64-0.1.2-appmgr410.tar.gz`，sha256 `688fed00…a9b14`（24h soak 正在使用该基线，不改动）。商店全量包：`casaos-p3-loong64-0.1.3-store115.tar.gz`，sha256 `1826e708…c095d`，只把 `appstore/loong64/Apps` 换成 115 个定义并把 `VERSION` 改为 `0.1.3-store115-p3`。旧 0.1.0 / 0.1.1 已移入 `deprecated/`，**不得再分发**。
 
 ## 4. 安装与运行
 
 ```bash
-tar -xzf casaos-p3-loong64-0.1.2-appmgr410.tar.gz
-cd casaos-p3-0.1.2-appmgr410
+tar -xzf casaos-p3-loong64-0.1.3-store115.tar.gz
+cd casaos-p3-0.1.3-store115
 
 # 前缀安装（不启用 systemd）
 sudo ./install.sh --prefix /opt/casaos-p3 --store loong64
@@ -204,7 +204,7 @@ AppManagement 版本口径与 `format` 省略兼容行为需注意。详见
   `/etc/docker/daemon.json.bak-20261025`。
 - **systemd 自启**：7 个 unit 复制到 `/etc/systemd/system` 并 `enable casaos.target`；
   当前仍运行前缀实例，未切换、未重启验证。target 会拉起 6 个服务。
-- **旧包隔离**：0.1.0、0.1.1 移入 `/build/archive/casaos-p3/deprecated/`；当前包 0.1.2。
+- **旧包隔离**：0.1.0、0.1.1 移入 `/build/archive/casaos-p3/deprecated/`；0.1.2 保留为 soak 基线，商店全量包为 0.1.3-store115。
 - **历史脏数据**：删除 `o_disk` 中 `/mnt/testdisk_nbd0p1` 行，仅保留 `/mnt/Data`。
 - **空间**：清理 `~/.cache/{yarn,pnpm,pip,node-gyp}` 约 4.5G；`/home` 非 root 可用
   约 4.3G。
