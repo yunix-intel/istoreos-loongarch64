@@ -17,6 +17,7 @@
 | `casaos/apply_descriptions.py` | 将导出的 title/category/tagline/description 写回 CasaOS 定义 |
 | `casaos/port-plan.json` | 114 个应用的宿主端口分配；18 个已有定义保留 18001–18018，其余从 18101 起预留 |
 | `casaos/build_port_plan.py` | 重新生成端口分配（多端口/固定端口应用需手工覆盖） |
+| `private/` | 私人版/公开版浏览器接入：私人版 embedded sidecar，公开版宿主挂载；含 Linkwarden/Karakeep compose |
 | `descriptions-preview.md` | 人工复核用的表格预览 |
 
 ## 必备字段
