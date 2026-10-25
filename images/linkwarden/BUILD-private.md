@@ -8,10 +8,11 @@
 ## 结论
 
 - 镜像：`local/linkwarden-private:2.16.3-p1`（唯一 tag）
-- 镜像 ID：`sha256:1ced9d7f90c2435e20021e574b55ea5d06f5d44240bf99bf81fed458bb06696a`
-- 架构：`linux/loong64`；本地大小 2,070,789,049 B（1.93 GiB，`docker images`
+- 镜像 ID：`sha256:44ac2849982bc73d16e51a27dc6817703150d2071a05e9b69595713a224b5f5c`
+- 架构：`linux/loong64`；本地大小 2,070,824,576 B（`docker images`
   显示 2.07 GB）
-- 基线：`yunixintel/linkwarden:2.16.3`（1,027,388,852 B）
+- 基线：`yunixintel/linkwarden:2.16.3`（1,027,424,379 B，
+  ID `sha256:4825ae5e8f23…`）
 - 浏览器：`local/lbrowser-embedded:3.4.2293.2-local` 中的
   `/opt/apps/lbrowser`（386,909,552 B，LBrowser 3.4.2293.2 / Chromium
   138.0.7204.310）
@@ -21,6 +22,8 @@
 - 实测：PostgreSQL + 单镜像，99 迁移、`/` 200、注册/登录、集合、书签
   `https://example.com`、截图/PDF/Readability/OG preview 全部在容器内生成、
   重启幂等且归档保留、进程 UID 1118、`--shm-size=1g`
+- 邮件：`apps/web/templates/` 4 个模板在 private 镜像内；mock SMTP 实测
+  注册→验证邮件→`callback/email` 302+session→`emailVerified` 非空
 
 ## 与公共版的差异
 
@@ -106,6 +109,24 @@ docker run -d --name linkwarden-private \
 - 其余参数（`NEXTAUTH_URL` 必带 `/api/v1/auth`、自动 `NEXTAUTH_SECRET`、
   持久化 `/data/data`）与公共版一致。
 
+## 邮件与 `BASE_URL`
+
+private 镜像继承公共镜像的 `/data/apps/web/templates/`，包含
+`acceptInvitation.html`、`passwordReset.html`、`verifyEmail.html`、
+`verifyEmailChange.html`。启用邮件需同时设置：
+
+```bash
+-e BASE_URL=http://<host>:3000 \
+-e EMAIL_FROM=linkwarden@example.com \
+-e EMAIL_SERVER=smtp://user:pass@smtp.example.com:587
+```
+
+- `BASE_URL` 是站点根（不带 `/api/v1/auth`），邮件正文链接为
+  `${BASE_URL}/auth/verify?token=…`；未设置时会生成
+  `undefined/auth/verify?...`，流程不可用。
+- `NEXTAUTH_URL` 仍须是 `http://<host>:3000/api/v1/auth`。
+- `EMAIL_FROM`/`EMAIL_SERVER` 任一缺失时 `emailEnabled=false`，不发验证邮件。
+
 ## 测试证据（2026-10-25，Host A / loong64，实际执行）
 
 环境：user-defined network `lwp-net`；`lwp-pg`
@@ -134,6 +155,11 @@ docker run -d --name linkwarden-private \
 | 运行时挂载 | 仅 `lwp-data:/data/data`；`ShmSize=1073741824` |
 | 重启 | 迁移 `applied_now=0 already=99`；`/` 200；截图/PDF/Readability/preview 与书签均在 |
 | 镜像内版本 | `LBrowser 3.4.2293.2`；`rpm -q perl dpkg` 均未安装 |
+| 邮件模板 | `/data/apps/web/templates/` 4 个文件，9006/8761/8301/9459 B |
+| 邮件验证（private） | 新库 99 迁移；注册 `priv@example.com` 201；`request-verification-email` 200；mock SMTP 收到 9,403 B，链接 `http://127.0.0.1:13011/auth/verify?token=…` |
+| 邮件回调（private） | `/api/v1/auth/callback/email` 302 → `http://127.0.0.1:13011`，Set-Cookie `next-auth.session-token` |
+| 验证结果（private） | `/users/me` 200，`emailVerified:"2026-10-25T11:01:59.212Z"`；DB `emailVerified` 非空 |
+| 未验证登录 | 公共镜像实测 `callback/credentials` 401（`Email not verified.`）；private 代码相同 |
 
 关键日志（`docker logs -t lwp-app`）：
 
@@ -163,8 +189,8 @@ cd images/linkwarden
 ## 体积与启动开销
 
 ```text
-local/linkwarden-private  2.16.3-p1  1ced9d7f90c2  2.07 GB   (2,070,789,049 B)
-yunixintel/linkwarden     2.16.3      2a00fb1b6fa3  1.03 GB   (1,027,388,852 B)
+local/linkwarden-private  2.16.3-p1  44ac2849982b  2.07 GB   (2,070,824,576 B)
+yunixintel/linkwarden     2.16.3      4825ae5e8f23  1.03 GB   (1,027,424,379 B)
 delta: 1,043,400,197 B = 995.1 MiB (2.015x)
 ```
 
@@ -213,7 +239,9 @@ Next.js 重启日志 `✓ Ready in 684ms`。浏览器不在启动时拉起，只
 - **`--shm-size` < 1g**：未测；按共享镜像结论至少 512 MB，推荐 1g。
 - **Meilisearch**、**AI 打标/摘要**、**RSS 外部源**、**导入 HTML/Pocket/
   Wallabag**：未部署/未逐项跑。
-- **Wayback Machine、SMTP/邮件验证、OAuth/SSO、Stripe**：未配置。
+- **Wayback Machine、OAuth/SSO、Stripe**：未配置。
+- **改邮箱（verifyEmailChange.html）/ 邀请（acceptInvitation.html）完整链路**：
+  模板已随镜像提供，未逐项跑通；邮箱验证与找回密码已在公共镜像实测。
 - **上传 PDF/图片类型的书签**、**多用户/邀请/权限**：未测试。
 - **非 root、只读根文件系统、SELinux/AppArmor、rootless Docker**：未验证。
 - **反向代理后的 `NEXT_PUBLIC_USER_CONTENT_DOMAIN` 归档查看页**：未配置。

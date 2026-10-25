@@ -22,6 +22,12 @@ if [ ! -x artifacts/node_modules/@esbuild/linux-loong64/bin/esbuild ]; then
     echo "artifacts/ is missing the loong64 esbuild binary; see BUILD.md" >&2
     exit 1
 fi
+for tpl in verifyEmail.html passwordReset.html verifyEmailChange.html acceptInvitation.html; do
+    if [ ! -f "artifacts/apps/web/templates/$tpl" ]; then
+        echo "artifacts/apps/web/templates/$tpl missing; see BUILD.md" >&2
+        exit 1
+    fi
+done
 
 DOCKER_BUILDKIT="${DOCKER_BUILDKIT:-0}" \
 docker build --network=host \

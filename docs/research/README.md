@@ -18,6 +18,17 @@
   四项通过、跨 NAT CDP 通过），但 deb 许可证不清晰，**不发布镜像**，应用改为宿主
   `/opt/apps/lbrowser:ro` 挂载。见 [../BASE-IMAGES.md](../BASE-IMAGES.md)。
 
+## 2026-10-25 深度验证
+
+| 报告 | 结果 |
+|---|---|
+| [verify-karakeep.md](verify-karakeep.md) | monolith/PDF-OCR/AI/多用户 PASS；Meili/OAuth/browserless WS BLOCKED；未配 Meili 搜索 500 |
+| [verify-linkwarden.md](verify-linkwarden.md) | monolith/Meili 源码/AI/导入/归档/用户隔离 PASS；OAuth BLOCKED；邮箱模板已修复并复测 PASS |
+| [verify-wg-easy.md](verify-wg-easy.md) | 隧道转发/NAT/外网 PASS；内部 IPv6 PASS，外网 IPv6 BLOCKED；AmneziaWG PoC PASS（未打包） |
+| [verify-komga.md](verify-komga.md) | CBZ/PDF/EPUB/RAR4/只读/claim PASS；HEIF/JXL FAIL；Kobo KEPUB BLOCKED |
+| [verify-casaos.md](verify-casaos.md) | 应用装/卸、36min soak、数据保留 PASS；3 个 BLOCKER FAIL；24h/重启未验；禁止发布 |
+| [verify-lbrowser.md](verify-lbrowser.md) | WebGL/视频/非 root/20 标签/只读根 PASS；Widevine 不可用 |
+
 ## 结论使用规则
 
 - “Go”表示有可执行的构建路径；“有条件 Go”表示需要外部服务或功能降级，商店卡片必须写清。

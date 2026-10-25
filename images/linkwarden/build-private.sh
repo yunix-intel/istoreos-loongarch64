@@ -23,6 +23,13 @@ for ref in "$BASE" "$LBROWSER_IMAGE"; do
     fi
 done
 
+# The base image must carry the email templates; a missing copy only shows up
+# at runtime as ENOENT /data/apps/web/templates/verifyEmail.html.
+if ! docker run --rm --entrypoint test "$BASE" -f /data/apps/web/templates/verifyEmail.html; then
+    echo "$BASE is missing /data/apps/web/templates/verifyEmail.html; rebuild the public image" >&2
+    exit 1
+fi
+
 DOCKER_BUILDKIT="${DOCKER_BUILDKIT:-0}" \
 docker build --network=host \
     -f Dockerfile.private \

@@ -4,11 +4,11 @@
 
 - 镜像：`yunixintel/linkwarden:loong64` / `:24.10-la5` / `:2.16.3`
 - Registry digest（三个 tag 相同）：
-  `sha256:23cb706fe275f5e51af27a525f09f9f423435653823d8e8cc5cfeb7fac53466e`
+  `sha256:742abfdd51f656f5b8b5e3c06c584155a7bcb5b678170781d37804a56950b852`
 - 架构：`linux/loong64`
-- 本地大小：1,027,388,852 B（1.03 GB），10 层
-- Hub 压缩后：333,395,988 B（317.9 MiB）
-- 镜像 ID：`sha256:2a00fb1b6fa33d32986746c5d86ad1adeafb9f6cf5cbffee7cbfa41416d23340`
+- 本地大小：1,027,424,379 B（1.03 GB），10 层
+- Hub 压缩后：333,396,847 B（317.9 MiB）
+- 镜像 ID：`sha256:4825ae5e8f23e38ec98ee79fe8581a6f21f08a207d7503b0b0703d3b66675534`
 - 版本：Linkwarden `v2.16.3`（commit `952ac4540657cae3a67c3ca59433899d2fda8374`）、
   Node.js 24.22.1、Next.js 15.5.21、Prisma 7.10.1、`@prisma/adapter-pg` 7.10.1、
   `pg` 8.23.1、bcryptjs 3.0.3、Playwright 1.57.0、tsx 4.19.3 / esbuild 0.25.2
@@ -18,7 +18,7 @@
   正常，归档字段为 `unavailable`。
 - 实测：全新库 99 个迁移、重启幂等、`/` 200、注册/登录、集合/标签/书签、
   无浏览器降级、LBrowser 截图/PDF/Readability/preview、重启后数据与归档保留、
-  搜索回退、UID 1118、三 tag 同 digest。
+  搜索回退、邮件验证与找回密码（mock SMTP）、UID 1118、三 tag 同 digest。
 
 ### 上游 commit 说明
 
@@ -125,7 +125,7 @@ tar xzf /tmp/esb/esbuild-linux-loong64-0.25.2.tgz \
 chmod +x artifacts/node_modules/@esbuild/linux-loong64/bin/esbuild
 
 mkdir -p artifacts/apps/web artifacts/apps/worker
-cp -a apps/web/.next apps/web/public apps/web/next.config.js \
+cp -a apps/web/.next apps/web/public apps/web/templates apps/web/next.config.js \
       apps/web/next-i18next.config.js apps/web/package.json artifacts/apps/web/
 rm -rf artifacts/apps/web/.next/cache
 cp -a apps/worker/{package.json,tsconfig.json,worker.ts,index.ts,lib,workers,templates} \
@@ -181,6 +181,38 @@ docker run -d --name linkwarden -p 3000:3000 \
   Monolith、Readability、OG 预览、归档期 AI 打标不执行，字段为 `unavailable`。
 - 未配 Meilisearch 时搜索回退到 Prisma `contains`（name/url/description/tag）。
 - 无 sharp：`/_next/image` 优化关闭，图片原图直出。
+
+### 邮件 / `BASE_URL`
+
+邮件验证、改邮箱、找回密码、邀请四类邮件都读取
+`/data/apps/web/templates/*.html`。公共镜像和 private 镜像均已包含
+`acceptInvitation.html`、`passwordReset.html`、`verifyEmail.html`、
+`verifyEmailChange.html`；缺失时接口会抛
+`ENOENT /data/apps/web/templates/verifyEmail.html`。
+
+启用邮件需要同时设置：
+
+| 变量 | 示例 | 说明 |
+|---|---|---|
+| `EMAIL_FROM` | `linkwarden@example.com` | 发件人；同时决定 `emailEnabled`（与 `EMAIL_SERVER` 一起） |
+| `EMAIL_SERVER` | `smtp://user:pass@smtp.example.com:587` | Nodemailer 连接串；无认证可写 `smtp://host:port` |
+| `BASE_URL` | `http://<host>:3000` | **站点根**，不要带 `/api/v1/auth`；邮件正文链接用 `BASE_URL` |
+| `NEXTAUTH_URL` | `http://<host>:3000/api/v1/auth` | NextAuth 回调；验证邮件实际跳到 `/auth/verify`，再由前端转 `/api/v1/auth/callback/email` |
+
+- `BASE_URL` 未设置时，邮件正文中的链接会变成
+  `undefined/auth/verify?token=…`，用户无法完成验证。
+- `EMAIL_FROM`/`EMAIL_SERVER` 任一未设置时 `emailEnabled=false`：注册不再要求
+  邮箱，也不会发送验证邮件，`emailVerified` 一直为空。
+- 邮件模板随 `apps/web/templates` 进入镜像；x86 构建上下文的
+  `artifacts/apps/web/` 必须包含该目录（见上一节）。
+
+启用邮件的完整示例（在基础 `docker run` 上追加）：
+
+```bash
+-e BASE_URL=http://<host>:3000 \
+-e EMAIL_FROM=linkwarden@example.com \
+-e EMAIL_SERVER=smtp://user:pass@smtp.example.com:587
+```
 
 ## LBrowser sidecar（不内置、不推送）
 
@@ -253,10 +285,18 @@ services:
 | 进程用户 | `docker top`：`next-server` 与 `tsx worker.ts` 均为 UID 1118；entrypoint 为 root |
 | 必填参数 | 缺 `NEXTAUTH_URL` / `DATABASE_URL` 时 entrypoint 报错退出 1 |
 | 自动 secret | 未传 `NEXTAUTH_SECRET` 时生成 64 字符文件（0600）；重启输出 `Loaded NEXTAUTH_SECRET` |
+| 邮件模板 | `/data/apps/web/templates/` 内 4 个文件（acceptInvitation/passwordReset/verifyEmail/verifyEmailChange），9006/8761/8301/9459 B |
+| 注册（启用邮件） | `POST /api/v1/users` 201，`emailVerified=null` |
+| 未验证凭据登录 | `callback/credentials` 401，`error=Email not verified.` |
+| 验证邮件 | mock SMTP 收到 9,403 B；正文链接 `http://127.0.0.1:13010/auth/verify?token=…&email=…`（`BASE_URL` 生效） |
+| 邮件回调 | `/auth/verify` 200；`/api/v1/auth/callback/email?token&email` 302 → `http://127.0.0.1:13010`，Set-Cookie `next-auth.session-token` |
+| 验证结果 | `/api/v1/users/me` 200，`emailVerified:"2026-10-25T11:01:14.491Z"`；DB `emailVerified` 非空 |
+| 已验证登录 | `callback/credentials` 200，`/users/me` 200 |
+| 找回密码邮件 | `POST /api/v1/auth/forgot-password` 200；mock SMTP 收到 9,354 B（`passwordReset.html`） |
 | 依赖版本 | `@prisma/client` 7.10.1、`@prisma/adapter-pg` 7.10.1、`pg` 8.23.1、`bcryptjs` 3.0.3 |
 | 无 sharp / no x64 SWC | 容器内 `node_modules/sharp`、`@img`、`@next/swc-*` 均不存在 |
 | loong64 esbuild | `/data/node_modules/@esbuild/linux-loong64/bin/esbuild --version` = 0.25.2，ELF LoongArch |
-| 架构 / digest | `linux/loong64`；`:loong64`、`:24.10-la5`、`:2.16.3` 均为 `sha256:23cb706…` |
+| 架构 / digest | `linux/loong64`；`:loong64`、`:24.10-la5`、`:2.16.3` 均为 `sha256:742abfdd…` |
 
 测试使用的 sidecar 为 `local/lbrowser-runtime:3.4.2293.2 serve`（挂载宿主
 `/opt/apps/lbrowser:ro`，`--shm-size=1g`），Chromium 138.0.7204.310。
@@ -268,17 +308,22 @@ services:
 - AI 打标（mock OpenAI）PASS；并发 `ARCHIVE_TAKE_COUNT=3` 触发上游 P2002 竞态，建议串行。
 - HTML/Pocket/Wallabag 导入 PASS；用户隔离 PASS；OAuth BLOCKED（无 provider）。
 - LBrowser 截图 62,610B、PDF 92,483B、Readability 3,114B、预览 26,300B；带 cookie 可访问，匿名 401。
-- 邮箱流初次 FAIL：镜像缺 `apps/web/templates/`；已让实施代理补模板并重建复测。
+- 邮箱流（2026-10-25 修复后复测）PASS：补入 `apps/web/templates/` 并重建，
+  注册→mock SMTP 验证邮件→`/auth/verify`→`/api/v1/auth/callback/email`
+  302 + session→`emailVerified` 非空；未验证凭据登录 401；找回密码邮件
+  `passwordReset.html` 也已发出。
 
 ## 未验证
 
-- **Monolith / 单文件 HTML**：未构建 monolith 2.10.1；截图、PDF、Readability、
-  preview 已完整验证，HTML 格式保持 `unavailable`。
-- **Meilisearch**：未部署，仅验证 SQL `contains` 回退。
-- **AI 打标/摘要**、**RSS 轮询的外部源**、**导入 HTML/Pocket/Wallabag**：
-  未逐项跑完整链路。
-- **Wayback Machine 提交**、**SMTP/邮件验证**、**OAuth/SSO**、**Stripe**：
-  未配置。
+- **Monolith / 单文件 HTML**：发布镜像不内置 monolith（默认 `unavailable`）；
+  补验时以额外挂载的 monolith 2.10.1 验证 PASS。
+- **Meilisearch**：发布镜像不内置；补验用外部源码构建实例验证 PASS，
+  未配时仍回退 SQL `contains`。
+- **AI 打标/摘要**、**RSS 外部源**、**导入 HTML/Pocket/Wallabag**：补验已 PASS
+  （mock OpenAI / 外部实例），未在发布镜像内重复。
+- **Wayback Machine 提交**、**OAuth/SSO**、**Stripe**：未配置。
+- **改邮箱（verifyEmailChange.html）/ 邀请（acceptInvitation.html）完整链路**：
+  模板已随镜像提供，未逐项跑通；邮箱验证与找回密码已实测。
 - **上传 PDF/图片类型的书签**（`type=pdf/image`）：未测试。
 - **多用户/邀请/权限**：未逐项测试。
 - **非 root、只读根文件系统、SELinux/AppArmor、rootless Docker**：未验证。
@@ -291,14 +336,14 @@ services:
 
 ```text
 docker images yunixintel/linkwarden
-yunixintel/linkwarden  loong64     2a00fb1b6fa3  1.03GB
-yunixintel/linkwarden  24.10-la5   2a00fb1b6fa3  1.03GB
-yunixintel/linkwarden  2.16.3      2a00fb1b6fa3  1.03GB
+yunixintel/linkwarden  loong64     4825ae5e8f23  1.03GB
+yunixintel/linkwarden  24.10-la5   4825ae5e8f23  1.03GB
+yunixintel/linkwarden  2.16.3      4825ae5e8f23  1.03GB
 ```
 
-本地 1,027,388,852 B；Hub manifest 10 层，压缩后合计 333,395,988 B
+本地 1,027,424,379 B；Hub manifest 10 层，压缩后合计 333,396,847 B
 （317.9 MiB）。主要组成：openEuler + Node 基础层约 426 MB，
-`node_modules` 约 700 MB（未压缩），Next `.next` 约 27 MB。
+`node_modules` 约 700 MB（未压缩），Next `.next` 约 27 MB，邮件模板 52 KB。
 
 ## 推送
 
@@ -309,7 +354,7 @@ export HTTPS_PROXY=http://127.0.0.1:17890 HTTP_PROXY=http://127.0.0.1:17890
 /build/bin/crane push linkwarden.tar yunixintel/linkwarden:24.10-la5
 /build/bin/crane push linkwarden.tar yunixintel/linkwarden:2.16.3
 /build/bin/crane digest yunixintel/linkwarden:loong64
-# sha256:23cb706fe275f5e51af27a525f09f9f423435653823d8e8cc5cfeb7fac53466e
+# sha256:742abfdd51f656f5b8b5e3c06c584155a7bcb5b678170781d37804a56950b852
 ```
 
 ## 文件
