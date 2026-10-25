@@ -40,6 +40,7 @@
 | [RUNBOOK.md](RUNBOOK.md) | 启动命令、端口、挂载、健康检查、启动注意 |
 | [IMAGE-BUILD.md](IMAGE-BUILD.md) | 每个镜像的构建方式、工具链、特殊补丁 |
 | [BASE-IMAGES.md](BASE-IMAGES.md) | 可复用基础层：node-sharp（已发布）与 LBrowser（本地、不发布） |
+| [../store/private/README.md](../store/private/README.md) | 私人版单镜像（浏览器内置）与公开版宿主挂载的边界 |
 | [VERIFY-2026-10-25.md](VERIFY-2026-10-25.md) | 本轮基础层/应用/CasaOS 磁盘的功能复验记录与未验证清单 |
 | [TROUBLESHOOTING.md](TROUBLESHOOTING.md) | 现象→原因→修复，按前端/CGO/应用/浏览器/容器分类 |
 | [BUILDLOG.md](BUILDLOG.md) | 按日期的完整构建/踩坑时间线 |

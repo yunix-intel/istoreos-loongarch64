@@ -42,6 +42,7 @@ docker run -d --name memos --network=host -v memos:/opt/memos/data yunixintel/me
 - [镜像构建手册](docs/IMAGE-BUILD.md)：工具链、CGO/glibc、Vite 8 x86 构建、特殊补丁
 - [基础层](docs/BASE-IMAGES.md)：node-sharp（已发布）与 LBrowser/Playwright（本地、不发布）
 - [功能复验记录](docs/VERIFY-2026-10-25.md)：基础层、Karakeep、Linkwarden、wg-easy、Komga、CasaOS 磁盘
+- [私人版单镜像](store/private/README.md)：LBrowser 内置的 Linkwarden/Karakeep，仅本地、禁止分发
 - [故障排查](docs/TROUBLESHOOTING.md)：现象→原因→修复
 - [应用同步清单](docs/APP-SYNC-CHECKLIST.md)：新增镜像必须完成的文档/发布步骤
 - [Podman 栈](docs/PODMAN.md)、[CasaOS P3](docs/CASAOS-P3.md)、[EasyTier/mihomo](docs/EASYTIER-MIHOMO.md)
