@@ -197,6 +197,16 @@ services:
 - 未设该变量时日志为 `Skipping storing the PDF as it's empty`，这是默认关闭，不是失败。
 - 真实 LBrowser sidecar 截图验证：example.org 65,594 B；Wikipedia 截图 215,523 B。
 
+## 未验证 / 已补验
+
+已补验（2026-10-25，`docs/research/verify-karakeep.md`）：
+- monolith 2.10.1（Rust 1.85 构建）挂载后全页归档 PASS（assetType=fullPageArchive）；
+- PDF 文本提取/首页截图、图片 OCR PASS；
+- mock OpenAI 打标/摘要 PASS；
+- 多用户隔离 PASS；
+- 视频确认为设计不提供；Meilisearch/OAuth/browserless WS BLOCKED。
+- 未配置 Meilisearch 时搜索 API 返回 500，无 SQL 回退；monolith 二进制未随镜像打包。
+
 ## 未验证
 
 - **全文/语义搜索**：未配 Meilisearch，搜索关闭（上游 0.34.1 只支持 SQLite，

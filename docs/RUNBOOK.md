@@ -794,8 +794,8 @@ docker run -d --name karakeep -p 3000:3000 \
 - 默认无浏览器：静态抓取、正文归档、标签/笔记可用；截图默认开启，PDF 需 `CRAWLER_STORE_PDF=true`；JS 页面需 LBrowser sidecar：
   `BROWSER_WEB_URL=http://chrome:9222`，sidecar 用 `local/lbrowser-runtime` 并挂载
   `/opt/apps/lbrowser:ro`，`--shm-size=1g`。
-- 搜索需要外部 Meilisearch；未配置时搜索关闭。
-- 未验证：monolith 全页归档、视频下载、OCR/PDF 上传、AI 打标、OAuth。
+- 搜索需要外部 Meilisearch；未配置时搜索 API 返回 500（不是空结果，无 SQL 回退）。
+- monolith 全页归档需把 loong64 monolith 挂进容器并设 `CRAWLER_FULL_PAGE_ARCHIVE=true`；PDF/OCR、AI 打标、多用户隔离已验证；视频不提供；OAuth/browserless WS 未验证。
 - 完整说明见 [../images/karakeep/BUILD.md](../images/karakeep/BUILD.md)。
 
 ### Linkwarden
