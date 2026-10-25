@@ -44,13 +44,13 @@ casaos-p3-0.1.0/
   install.sh   uninstall.sh
 ```
 
-当前包：`casaos-p3-loong64-0.1.0.tar.gz`，sha256 `6efcbb60…7bea`（旧包 `54fdd97a…b2b3` 作废）。
+当前包：`casaos-p3-loong64-0.1.1-blockerfix.tar.gz`，sha256 `fdfbe2b8…eaa06a`。旧 0.1.0（`6efcbb60…7bea`）仍含危险 helper，**不得再分发**。
 
 ## 4. 安装与运行
 
 ```bash
-tar -xzf casaos-p3-loong64-0.1.0.tar.gz
-cd casaos-p3-0.1.0
+tar -xzf casaos-p3-loong64-0.1.1-blockerfix.tar.gz
+cd casaos-p3-0.1.1-blockerfix
 
 # 前缀安装（不启用 systemd）
 sudo ./install.sh --prefix /opt/casaos-p3 --store loong64
@@ -107,7 +107,7 @@ sudo systemctl enable --now casaos.target
 
 详见 [CASAOS-PLAN.md](CASAOS-PLAN.md)。
 
-## 8. 2026-10-23 设计审查待修（发布闸门仍关闭）
+## 8. 2026-10-23 设计审查（三个 BLOCKER 已于 2026-10-25 修复）
 
 独立审查发现以下问题，修复前不得发布：
 
@@ -176,21 +176,21 @@ curl -X POST http://127.0.0.1:8081/v1/storage   -H "Authorization: $TOKEN" -H "C
 
 ## 10. 2026-10-25 剩余闸门复核
 
-结论：**发布闸门保持关闭，CasaOS P3 不发布。**
+结论：**三个 BLOCKER 已关闭，C-04 可重开复核；最终发布仍待 C-03 的 24h soak 与真机重启自启。**
 
-> 2026-10-25 已启动三个 BLOCKER 的源码修复与重编/复验，结果见 `research/casaos-blocker-fix.md`（完成后更新本节）。
+> 2026-10-25 已完成源码修复、重编、替换与复验，见 `research/casaos-blocker-fix.md`。
 
 | 项 | 结果 | 证据 |
 |---|---|---|
 | 应用安装/卸载 | PASS | memos 经 v2 API 安装，容器 Up、UI 200；卸载后容器/目录/数据/镜像清理 |
-| 设备白名单下沉 | **FAIL** | `/dev/loop0` 经 `PUT /v1/storage` 被格式化为 ext4 并挂载；`format:"false"` 仍触发；写 API 未返回 4xx |
-| 首管理员 LAN 抢先 | **FAIL** | 空库隔离实例经 `192.168.8.8:14500` 用 `/v1/users/status` 的 key 注册 admin 成功 |
-| 端口/前缀路径 | 端口 PASS；socket/helper **FAIL** | 8081 冲突硬失败符合预期；app-management 仍连 `/tmp/message-bus.sock`（不存在），15 次事件发布失败 |
-| 36 分钟 soak | PASS | 6 服务 36/36 健康，PID 不变，RSS 无泄漏趋势 |
+| 设备白名单下沉 | **PASS（已修复）** | `/dev/loop0`、dm、nbd、mapper 的 POST/PUT 均 403；未格式化/挂载；真实盘 UUID 未变；格式化需 JWT+密码 |
+| 首管理员 LAN 抢先 | **PASS（已修复）** | 空库 LAN status/register 403（含伪造 XFF/X-Real-IP）；loopback 注册成功；初始化后 LAN 行为不变 |
+| 端口/前缀路径 | **PASS（已修复）** | 8081 冲突硬失败；app-management 改用 HTTP message-bus；安装 9/9、卸载 6/6 事件 200；危险 helper 已移出包 |
+| 15 分钟 soak（修复后） | PASS | 6 服务 15/15 存活，PID 不变，RSS 无泄漏；local-storage 401 为未带 JWT 的预期 |
 | 24h 稳定性 | BLOCKED | 未连续运行 24h，C-03 不能判通过 |
 | systemd 静态检查 | PASS | 7 unit verify 0 错；未 enable/start，真机自启未验 |
 | 升级/卸载数据保留 | PASS | 重装保留 conf/data/apps；卸载默认保留 data/apps，`--purge` 全删 |
 
-高危项：任意已登录用户可格式化 loop/nbd；首启窗口 LAN 可抢 admin（等同宿主 root）；
-事件链路失效；随包旧 helper 仍写 `/etc`、`/var/lib`。详见
-[research/verify-casaos.md](research/verify-casaos.md)。
+剩余风险：24h soak/真机重启自启未做；Docker Hub 在宿主优先 IPv6 导致首次拉取失败（需修 DNS/代理）；
+AppManagement 版本口径与 `format` 省略兼容行为需注意。详见
+[research/casaos-blocker-fix.md](research/casaos-blocker-fix.md)。

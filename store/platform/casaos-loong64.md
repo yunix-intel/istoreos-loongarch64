@@ -1,6 +1,6 @@
 # CasaOS 龙芯版说明（商店/详情页文案源）
 
-状态：**内部验证版，未公开发布**。真实 SATA 盘已装机，仍需完成发布闸门验收。
+状态：**内部验证版，未公开发布**。2026-10-25 三个 BLOCKER 已修复；仍待 24h soak 与真机重启自启。
 
 ## 卡片文案（zh-CN）
 
@@ -20,13 +20,13 @@ Loongnix/Debian 类 systemd 宿主上，提供应用商店、容器管理、磁�
 缺失/受限功能：
 - 真实 SATA/USB 热插拔、SMART、格式化/写入、重启自挂仍在验收；USB 盘不进入
   local-storage 的磁盘白名单（仅 SATA/NVMe/SAS/SPI/virtio/mmc）。
-- 前缀安装（非 `/usr`）仍有部分路径未完全重定向，发布前需修复。
-- 首次管理员注册存在局域网抢先注册风险，发布前需限制为本机/一次性 token。
+- 前缀路径与 message-bus HTTP 事件链路已修复；危险 helper 已移出包。
+- 首次管理员已限制为仅 loopback 注册（LAN 返回 403，含伪造 XFF/X-Real-IP）。
 - 应用商店定义仍在补齐，当前不是全部 111 个镜像都已上架。
 
 额外依赖/注意：
 - 需要 systemd、udev、smartmontools、parted、ntfs-3g、mergerfs、udevil。
-- 发布前必须通过 C-01/C-01b/C-02/C-03/C-04 全部门禁；在此之前请勿用于生产。
+- C-01/C-01b/C-02 已过，三个 BLOCKER 已修复；C-03 24h 与真机重启、C-04 评审仍需完成。
 
 ## Card text (en-US)
 

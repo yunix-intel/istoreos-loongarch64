@@ -27,6 +27,7 @@
 | [verify-wg-easy.md](verify-wg-easy.md) | 隧道转发/NAT/外网 PASS；内部 IPv6 PASS，外网 IPv6 BLOCKED；AmneziaWG PoC PASS（未打包） |
 | [verify-komga.md](verify-komga.md) | CBZ/PDF/EPUB/RAR4/只读/claim PASS；HEIF/JXL FAIL；Kobo KEPUB BLOCKED |
 | [verify-casaos.md](verify-casaos.md) | 应用装/卸、36min soak、数据保留 PASS；3 个 BLOCKER FAIL；24h/重启未验；禁止发布 |
+| [casaos-blocker-fix.md](casaos-blocker-fix.md) | 三个 BLOCKER 修复：白名单下沉、首管理员仅 loopback、message-bus HTTP；15min soak PASS；24h 待做 |
 | [verify-lbrowser.md](verify-lbrowser.md) | WebGL/视频/非 root/20 标签/只读根 PASS；Widevine 不可用 |
 
 ## 结论使用规则
