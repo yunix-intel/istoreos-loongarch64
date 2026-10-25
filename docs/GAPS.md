@@ -9,9 +9,11 @@
 | 原始 iStore 133 商店覆盖 | STORE-APP-LIST | ✅ | 113 可用中 29 个已有镜像（22 + 本轮 7）；76 个原生/LuCI；8 个有明确阻塞证据（见 BLOCKED-APPS.md）；待补可做 0；见 STORE-COVERAGE.md |
 | 文档与实物一致 | IMAGES/README/STORE-APP-LIST | ✅ | README/IMAGES 均为 114 只；CasaOS 已标注“磁盘验证前不发布”；GAPS 本次同步 |
 | 镜像推送可复现 | 私有库 | ✅ | push-images.sh 已覆盖 114 只；本地 tag 名与 Hub 仓库名不一致时按脚本注释先 `docker tag` |
+| 可复用 sharp 基础层 | BASE-IMAGES | ✅ | `yunixintel/node-sharp` 已发布（libvips 8.18.7 + sharp 0.35.5），应用可复用 `/opt/vips` 与预编译 sharp |
+| 浏览器基础层 | BASE-IMAGES | 🟡 | LBrowser 3.4.2293.2 本地验证通过（Playwright 1.57 含 PDF、Patchright 1.59、跨 NAT CDP）；deb 无明确许可证，不发布镜像，应用改为宿主挂载 |
 | CasaOS P1+P2 | CASAOS §7 | ✅ | 7 个 ELF、网关/UI、18 应用商店、memos 安装实测 |
 | CasaOS P3 系统集成 | CASAOS §8/§10 | 🟡 | 开发/系统集成完成：7 unit、6 服务、CLI、安装/卸载、NBD 链路已验；**2026-10-23 审查发现 3 个 BLOCKER**（白名单未下沉到写 API、首启管理员可被抢先、端口冲突）及运维缺口；发布闸门仍关闭，见 APP-DESIGNS 5.1/7.5 |
-| CasaOS local-storage 磁盘能力 | CASAOS §9/§10 | 🟡 | 8G NBD 盘验证：挂载、写读、卸载、服务重启按 UUID 自挂、格式化全过；真实 SATA/USB 盘的 SMART、udevil 拔插、真机重启待测；`IsDiskSupported` 白名单会过滤 loop/dm/nbd |
+| CasaOS local-storage 磁盘能力 | CASAOS §9/§10 | 🟡 | 真实 2TB SATA：SMART、ext4 格式化、挂载/写读、CasaOS DELETE 卸载、POST 重挂、local-storage 服务重启自挂全过；系统级重启、24h 稳定性、USB 拔插待测；`IsDiskSupported` 白名单仍会过滤 loop/dm/nbd |
 | CasaOS 对外发布 | NAMING/§9 | ❌ | Hub 无 casaos；GitHub `casaos-0.1.0` 返回 404（Actions 曾构建过） |
 | CasaOS 与固件补丁上游化 | CASAOS §8/BUILD.md | ⬜ | UPSTREAM-PRS.md 自述“未 push 任何仓库”；无公开 PR |
 | 私人 p1 命名 | NAMING | ✅ | `personal-p1-20261019.img.gz`（398.5MB，md5 a4d5…）与 FLASH-USB 一致；archive 命名合规；仅 ROADMAP/BUILDLOG 残留旧名 `v2-personal-full-la5` |
