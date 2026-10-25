@@ -12,7 +12,7 @@
 | 可复用 sharp 基础层 | BASE-IMAGES | ✅ | `yunixintel/node-sharp` 已发布（libvips 8.18.7 + sharp 0.35.5），应用可复用 `/opt/vips` 与预编译 sharp |
 | 浏览器基础层 | BASE-IMAGES | 🟡 | LBrowser 3.4.2293.2 本地验证通过（Playwright 1.57 含 PDF、Patchright 1.59、跨 NAT CDP）；deb 无明确许可证，不发布镜像，应用改为宿主挂载 |
 | CasaOS P1+P2 | CASAOS §7 | ✅ | 7 个 ELF、网关/UI、18 应用商店、memos 安装实测 |
-| CasaOS P3 系统集成 | CASAOS §8/§10 | 🟡 | 开发/系统集成完成：7 unit、6 服务、CLI、安装/卸载、NBD 链路已验；**2026-10-23 审查发现 3 个 BLOCKER**（白名单未下沉到写 API、首启管理员可被抢先、端口冲突）及运维缺口；发布闸门仍关闭，见 APP-DESIGNS 5.1/7.5 |
+| CasaOS P3 系统集成 | CASAOS §8/§10 | 🟡/❌ | 2026-10-25 复核：应用装/卸 PASS、36min soak PASS、数据保留 PASS；**3 个 BLOCKER 仍 FAIL**（loop0 可格式化、LAN 可抢 admin、message-bus socket 未重定向）；24h/真机重启未验；发布闸门关闭 |
 | CasaOS local-storage 磁盘能力 | CASAOS §9/§10 | 🟡 | 真实 2TB SATA：SMART、ext4 格式化、挂载/写读、CasaOS DELETE 卸载、POST 重挂、local-storage 服务重启自挂全过；系统级重启、24h 稳定性、USB 拔插待测；`IsDiskSupported` 白名单仍会过滤 loop/dm/nbd |
 | CasaOS 对外发布 | NAMING/§9 | ❌ | Hub 无 casaos；GitHub `casaos-0.1.0` 返回 404（Actions 曾构建过） |
 | CasaOS 与固件补丁上游化 | CASAOS §8/BUILD.md | ⬜ | UPSTREAM-PRS.md 自述“未 push 任何仓库”；无公开 PR |

@@ -173,3 +173,22 @@ curl -X POST http://127.0.0.1:8081/v1/storage   -H "Authorization: $TOKEN" -H "C
 - 系统级重启后的自挂（当前为前缀安装，CasaOS 不自启，需先 `scripts/start.sh`）。
 - C-03 24h 稳定性、应用安装/卸载回归。
 - C-04 发布闸门评审；审查发现的设备白名单/首管理员/前缀路径问题仍需修复。
+
+## 10. 2026-10-25 剩余闸门复核
+
+结论：**发布闸门保持关闭，CasaOS P3 不发布。**
+
+| 项 | 结果 | 证据 |
+|---|---|---|
+| 应用安装/卸载 | PASS | memos 经 v2 API 安装，容器 Up、UI 200；卸载后容器/目录/数据/镜像清理 |
+| 设备白名单下沉 | **FAIL** | `/dev/loop0` 经 `PUT /v1/storage` 被格式化为 ext4 并挂载；`format:"false"` 仍触发；写 API 未返回 4xx |
+| 首管理员 LAN 抢先 | **FAIL** | 空库隔离实例经 `192.168.8.8:14500` 用 `/v1/users/status` 的 key 注册 admin 成功 |
+| 端口/前缀路径 | 端口 PASS；socket/helper **FAIL** | 8081 冲突硬失败符合预期；app-management 仍连 `/tmp/message-bus.sock`（不存在），15 次事件发布失败 |
+| 36 分钟 soak | PASS | 6 服务 36/36 健康，PID 不变，RSS 无泄漏趋势 |
+| 24h 稳定性 | BLOCKED | 未连续运行 24h，C-03 不能判通过 |
+| systemd 静态检查 | PASS | 7 unit verify 0 错；未 enable/start，真机自启未验 |
+| 升级/卸载数据保留 | PASS | 重装保留 conf/data/apps；卸载默认保留 data/apps，`--purge` 全删 |
+
+高危项：任意已登录用户可格式化 loop/nbd；首启窗口 LAN 可抢 admin（等同宿主 root）；
+事件链路失效；随包旧 helper 仍写 `/etc`、`/var/lib`。详见
+[research/verify-casaos.md](research/verify-casaos.md)。
