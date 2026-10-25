@@ -21,6 +21,15 @@ cd ../karakeep  && ./build-private.sh      # local/karakeep-private:0.34.1-p1
 要求已存在公共基线镜像 `yunixintel/linkwarden:2.16.3` / `yunixintel/karakeep:0.34.1`。
 `build-private.sh` 只允许 `local/*` 镜像名，防止误推公共 Hub。
 
+## 私人单镜像实测
+
+| 应用 | 镜像 | 体积 | 实测 |
+|---|---|---|---|
+| Linkwarden | `local/linkwarden-private:2.16.3-p1` | 2.07GB | 99 迁移、`/` 200、注册登录、example.com 截图/PDF/Readability/preview、重启幂等 |
+| Karakeep | `local/karakeep-private:0.34.1-p1` | 2.34GB | 健康 200、注册登录、Wikipedia 截图+PDF+HTML+banner、重启持久化/再抓取 |
+
+两者均无 sidecar、无宿主挂载，`--shm-size=1g`；均未推送。
+
 ## 私人版 compose
 
 - [compose/linkwarden-private.yml](compose/linkwarden-private.yml)：PostgreSQL + 单镜像
