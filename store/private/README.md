@@ -5,7 +5,7 @@
 - **私人版**：LBrowser 作为本地 embedded sidecar 内置，不依赖宿主安装；
   镜像只在本机构建，**不得推送 Docker Hub**（deb 无明确再分发许可）。
 - **公开版**：应用镜像不含浏览器；运行时挂载宿主 `/opt/apps/lbrowser:ro`，
-  使用 `local/lbrowser-runtime:3.4.2293.2` sidecar。
+  使用 `yunixintel/lbrowser-runtime:3.4.2293.2` sidecar（已发布，不含浏览器字节）。
 - 两种方式的 Playwright/Patchright 能力一致；差异是体积、宿主依赖与更新方式。
 
 ## 私人版构建
@@ -26,6 +26,7 @@ cd images/lbrowser
 
 ## 公开版 compose
 
+- [links.json](links.json)：私人/公开的镜像与商店源对照
 - [compose/linkwarden-public.yml](compose/linkwarden-public.yml)
 - [compose/karakeep-public.yml](compose/karakeep-public.yml)
 
