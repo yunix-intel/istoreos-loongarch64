@@ -10,6 +10,14 @@
 | Komga | **Go（已发布）** | [komga-unblock.md](komga-unblock.md) | 官方 jar + 自编 loongarch64 `libsqlitejdbc.so`；已发布双 tag，最小 CBZ 扫描通过 |
 | Linkwarden | **有条件 Go** | [linkwarden-unblock.md](linkwarden-unblock.md) | Prisma 7 WASM+adapter-pg；自写 99 个迁移；LBrowser/外部 browserless；sharp 可删；5–7 天 |
 
+## 基础层
+
+- `yunixintel/node-sharp` 已发布（libvips 8.18.7 + sharp 0.35.5），见
+  [../BASE-IMAGES.md](../BASE-IMAGES.md)。
+- LBrowser/Playwright 基础层已在龙芯验证（Playwright 1.57 含 PDF、Patchright 1.59
+  四项通过、跨 NAT CDP 通过），但 deb 许可证不清晰，**不发布镜像**，应用改为宿主
+  `/opt/apps/lbrowser:ro` 挂载。见 [../BASE-IMAGES.md](../BASE-IMAGES.md)。
+
 ## 结论使用规则
 
 - “Go”表示有可执行的构建路径；“有条件 Go”表示需要外部服务或功能降级，商店卡片必须写清。

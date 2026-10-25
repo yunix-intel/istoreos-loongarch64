@@ -39,6 +39,7 @@
 | [IMAGES.md](IMAGES.md) | 60 个镜像的清单、大小、验证、限制 |
 | [RUNBOOK.md](RUNBOOK.md) | 启动命令、端口、挂载、健康检查、启动注意 |
 | [IMAGE-BUILD.md](IMAGE-BUILD.md) | 每个镜像的构建方式、工具链、特殊补丁 |
+| [BASE-IMAGES.md](BASE-IMAGES.md) | 可复用基础层：node-sharp（已发布）与 LBrowser（本地、不发布） |
 | [TROUBLESHOOTING.md](TROUBLESHOOTING.md) | 现象→原因→修复，按前端/CGO/应用/浏览器/容器分类 |
 | [BUILDLOG.md](BUILDLOG.md) | 按日期的完整构建/踩坑时间线 |
 | [RELEASES.md](RELEASES.md) | la1–la5/v1 的定位、差异与 Release 资产 |

@@ -40,6 +40,7 @@ docker run -d --name memos --network=host -v memos:/opt/memos/data yunixintel/me
 - [应用详细设计](docs/APP-DESIGNS.md)：26 个应用镜像 + CasaOS/OMV 两个平台工作项（共 28 个）的构建路径、运行时契约与验收
 - [龙芯版差异清单](docs/LOONG64-QUIRKS.md)：商店详情页必须展示的行为/功能差异
 - [镜像构建手册](docs/IMAGE-BUILD.md)：工具链、CGO/glibc、Vite 8 x86 构建、特殊补丁
+- [基础层](docs/BASE-IMAGES.md)：node-sharp（已发布）与 LBrowser/Playwright（本地、不发布）
 - [故障排查](docs/TROUBLESHOOTING.md)：现象→原因→修复
 - [应用同步清单](docs/APP-SYNC-CHECKLIST.md)：新增镜像必须完成的文档/发布步骤
 - [Podman 栈](docs/PODMAN.md)、[CasaOS P3](docs/CASAOS-P3.md)、[EasyTier/mihomo](docs/EASYTIER-MIHOMO.md)

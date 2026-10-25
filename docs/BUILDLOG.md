@@ -549,6 +549,8 @@
 
 - 2026-10-24 Matomo 5.14.2（P3-02）：官方 `matomo.zip` 完整包（含 vendor）；PHP 8.3 + nginx/php-fpm，`php-pecl-zip` 单独安装。`/index.php` 安装向导 200、PHP 扩展齐全、healthy；Matomo 无 CLI 安装器，保留 Web 向导。镜像 193MB，digest `sha256:b1e7baec…1bc2`，已推送双 tag。
 
+- 2026-10-25 基础层：`node-sharp` 发布（libvips 8.18.7 + sharp 0.35.5，Node 24.22.1，digest `b7dd366c…9f49`，Hub 149.5MiB）；源码编 libvips，sharp 用 `SHARP_FORCE_GLOBAL_LIBVIPS=1` + node-gyp，验证 resize/WebP/JPEG/PNG。LBrowser 3.4.2293.2 本地验证：Playwright 1.57 含 PDF 全过、Patchright 1.59 四项过、跨 NAT CDP 通过；deb 无明确 LICENSE/copyright，**不推送镜像**，改为宿主 `/opt/apps/lbrowser:ro` 挂载或 sidecar。
+
 - 2026-10-25 Komga 1.29.1（P3-01 复活）：官方 fat jar 不动，构建阶段从 sqlite-jdbc 3.53.4.0 + sqlite-amalgamation 3530400 编 loongarch64 `libsqlitejdbc.so`（约 37 秒，1.2MB），运行期用 `-Dorg.sqlite.lib.path` 外挂；JDK 21。必须显式 `OS_NAME=Linux`，否则产物路径丢 OS 名。实测 94+2+1 项迁移、`/` 200、health UP、重启持久化、最小 CBZ 扫描 1 系列/1 书/1 页与单页读取；PDF/EPUB/RAR、HEIF/JXL、Kobo 未验证。镜像 688MB（Hub 318MiB），digest `sha256:0cf05b7e…9e7a`，已推送双 tag。
 
 - 2026-10-24 wg-easy 15.4.0（P4-06 复活）：Nuxt/Nitro 在龙芯本机构建；libsql 用龙芯 `@libsql/linux-loong64-gnu@0.5.13` 绑定（JS 层 0.5.29），argon2 退出崩溃改用 hash-wasm；另外 vendor oxc/rolldown/lightningcss 四个 loong64 绑定。运行阶段基于 `yunixintel/node:24.22.1`，openEuler EPOL 提供 wireguard-tools；bridge 测试下 DB 迁移、wg0.conf、302→`/setup/1`、卷持久化、healthy 均通过。真实客户端握手/隧道未验。镜像 509MB（Hub 169MiB），digest `sha256:52bd56b2…38ea`，已推送双 tag。

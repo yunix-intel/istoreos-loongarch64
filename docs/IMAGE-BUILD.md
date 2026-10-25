@@ -208,6 +208,15 @@ Config UI 5 由 `hb-service run` 同时启动 UI 和 Homebridge，单独跑 `hom
 逐应用细节见 `images/<app>/BUILD.md`。无法移植的 8 个商店应用见
 [BLOCKED-APPS.md](BLOCKED-APPS.md)。
 
+## 3.6 可复用基础层
+
+| 层 | 状态 | 说明 |
+|---|---|---|
+| `yunixintel/node-sharp` | 已发布 | Node 24.22.1 + libvips 8.18.7 + sharp 0.35.5；源码编 libvips + node-gyp；复用 `/opt/vips` 与 `/opt/node_modules/sharp` |
+| LBrowser / Playwright | 本地，不发布 | 许可证不清晰；运行时镜像不含浏览器字节，挂载宿主 `/opt/apps/lbrowser:ro`；Playwright 1.57 含 PDF、Patchright 1.59 四项、跨 NAT CDP 通过 |
+
+详见 [BASE-IMAGES.md](BASE-IMAGES.md)。
+
 ## 4. 提交与验证
 
 构建完成后记录：镜像大小、`docker inspect` 架构、启动日志、HTTP/健康检查、digest。
