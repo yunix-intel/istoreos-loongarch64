@@ -376,9 +376,9 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 
 ### 平台
 
-- [ ] C-01 CasaOS SATA 盘验收
-- [ ] C-01b CasaOS USB 只读验收
-- [ ] C-02 CasaOS 真实盘格式化/重建
+- [ ] C-01 CasaOS SATA 盘验收（挂载/写读/卸载/服务重启自挂、SMART 通过；系统重启待做）
+- [x] C-01b CasaOS USB 只读验收（udevil ro 挂载/卸载通过；USB 不入 local-storage）
+- [x] C-02 CasaOS 真实盘格式化/重建（ext4 格式化+挂载+重挂通过）
 - [ ] C-03 CasaOS 24h 稳定性
 - [ ] C-04 CasaOS 发布闸门评审
 - [ ] C-05 CasaOS 上游 PR/issue

@@ -130,13 +130,46 @@ sudo systemctl enable --now casaos.target
 
 完整设计与审查记录见 [APP-DESIGNS.md](APP-DESIGNS.md) 5.1 与 7.5。
 
-## 9. 2026-10-24 新 SATA SSD 状态
+## 9. 2026-10-25 真实 SATA SSD 验收
 
-- 设备：`/dev/sda`，Asgard AS2TS3-S7，2.04TB，SATA，SMART 健康（无待映射/离线不可修正扇区，
-  温度 42°C，通电次数 6）。
-- 分区：GPT，`sda1` 16MB Microsoft reserved，`sda2` 1.9TB NTFS，卷标“新加卷”。
-- **不是空盘**：只读挂载 `sda2` 可见约 525GB 已用数据（`电厂规程文件`、`DCS`、
-  `机械手_手套文档`、`秦山AI`、`.codex` 等）。未做任何写入/格式化。
-- 因此 C-02（真实盘格式化/重建）不能直接在该盘执行；需要先确认数据已备份或有其他空盘。
-  C-01（挂载/SMART/热插拔/重启）可先做只读部分，但写入类验收必须等确认。
-- 新盘 SMART 已可用，之前“SSD 不识别”的阻塞已解除；当前阻塞变为“盘上有数据，需确认是否可清空”。
+设备：`/dev/sda`，Asgard AS2TS3-S7，2.04TB，SATA；系统盘为 `nvme0n1`。
+用户已确认原盘数据完成备份，随后执行 CasaOS 真实格式化路径。
+
+### 9.1 SMART
+
+| 项 | 值 |
+|---|---|
+| overall-health | PASSED |
+| Reallocated_Sector_Ct (5) | 0 |
+| Power_On_Hours (9) | 17 |
+| Temperature_Celsius (194) | 42°C |
+| Current_Pending_Sector (197) | 0 |
+| Offline_Uncorrectable (198) | 0 |
+
+### 9.2 格式化与挂载（CasaOS v1 API）
+
+调用（原始 token 放在 `Authorization`，不加 `Bearer`）：
+
+```bash
+curl -X POST http://127.0.0.1:8081/v1/storage   -H "Authorization: $TOKEN" -H "Content-Type: application/json"   -d '{"path":"/dev/sda","name":"Data","format":true}'
+```
+
+结果：
+- 返回 `{"success":200,"message":"ok"}`。
+- `sda1` 由 NTFS 变为 **ext4**，容量 1.9T，挂载 `/mnt/Data`。
+- 写入并读回 `casaos-test.txt` 成功；`/v1/storage` 显示 `persisted_in: casaos`。
+- `local-storage.db` 新增 `678b4321…` / `/mnt/Data` 记录。
+
+### 9.3 卸载/重挂/服务重启
+
+- `DELETE /v1/storage` body `{"path":"/dev/sda1","volume":"/mnt/Data"}`：卸载成功，DB 当前行删除。
+- `POST /v1/storage` body `{"path":"/dev/sda","name":"Data","format":false}`：重新挂载成功，数据仍在，DB 行重新写入。
+- 手动 `umount /mnt/Data` 后重启 `local-storage`：按 UUID 自动重挂成功。
+- 备注：对分区路径 `/dev/sda1` 调 POST 不会挂载，必须传整盘 `/dev/sda`（当前实现行为）。
+- 旧 NBD 记录 `/mnt/testdisk_nbd0p1` 仍残留在 `o_disk`（历史测试数据，与本次 SATA 盘无关）。
+
+### 9.4 仍未完成
+
+- 系统级重启后的自挂（当前为前缀安装，CasaOS 不自启，需先 `scripts/start.sh`）。
+- C-03 24h 稳定性、应用安装/卸载回归。
+- C-04 发布闸门评审；审查发现的设备白名单/首管理员/前缀路径问题仍需修复。
