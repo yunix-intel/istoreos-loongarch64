@@ -367,7 +367,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [x] P4-01 MediaMTX（已发布，`20d0edcb…26bb`）
 - [x] P4-02 Karakeep（已发布，`261827ea…f445`；基础版）
 - [x] P4-03 Readeck（已发布，`14c9426b…4719`）
-- [ ] P4-04 Linkwarden（有条件 Go；5–7 天，待排期）
+- [ ] P4-04 Linkwarden（实施中；Prisma 7 + LBrowser sidecar）
 - [ ] P4-05 Joplin Server（GO；2–3 人日，待排期）
 - [x] P4-06 wg-easy（已发布，`52bd56b2…38ea`；真实隧道待验收）
 - [x] P4-07 Registry（已发布，`da519e59…0229`）
