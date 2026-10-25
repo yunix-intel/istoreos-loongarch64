@@ -54,6 +54,17 @@ docker run --rm --shm-size=1g \
   /opt/apps/lbrowser/lbrowser --version
 ```
 
+### 嵌入 vs 挂载
+
+| 方式 | 体积 | 依赖 | 分发 | 更新 |
+|---|---|---|---|---|
+| 宿主挂载 `/opt/apps/lbrowser:ro` | 运行时层 1.03GB + 宿主 370MB | 宿主已安装 LBrowser | 不分发浏览器字节 | 宿主包更新 |
+| 嵌入镜像（本地） | 1.49GB | 无宿主依赖 | 许可证不清晰，禁止公开分发 | 重建镜像 |
+| 外部 browserless | 应用镜像小 | 需另一台机器 | 外部服务 | 独立更新 |
+
+嵌入镜像已实测 Playwright 1.57（含 PDF）与 Patchright 1.59 全过；技术上可行，
+但多约 370MB 且浏览器安全更新滞后。正式商店仍用宿主挂载或 sidecar。
+
 ### 实测结果
 
 - Playwright 1.57.0：`goto`、`content()`、`screenshot()`、`pdf()` 全过；

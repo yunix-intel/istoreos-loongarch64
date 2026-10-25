@@ -606,7 +606,7 @@ Karakeep 0.34.1 的正文归档不依赖 Chromium，Chromium 只影响 JS 渲染
 - 端口 8000；`/data`；UID 1117；健康检查 `/`。
 - 风险：前端构建依赖 Node；与 Wallabag/Shiori 重叠。估算 2–4 天。
 
-### P4-04 Linkwarden（实施中，2026-10-25）
+### P4-04 Linkwarden ✅ 已实现（2026-10-25）
 
 **状态：有条件 Go。** 研究结论见 [research/linkwarden-unblock.md](research/linkwarden-unblock.md)：
 Prisma 7.10.1 的 WASM query compiler + `@prisma/adapter-pg` 可去掉 Rust 引擎；

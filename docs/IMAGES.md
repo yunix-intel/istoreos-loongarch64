@@ -1,6 +1,6 @@
 # loongarch64 应用镜像
 
-共 115 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
+共 116 只，全部为 **linux/loong64 单架构**，在 3A6000（Loongnix 25）上构建并验证。镜像同时打两个 tag：
 `loong64`（浮动）与 `24.10-la5`（与 GitHub Release 对齐）。
 
 拉取：
@@ -102,10 +102,11 @@ docker pull yunixintel/jellyfin:loong64
 | `yunixintel/unpackerr` | 约 100MB（Hub） | v0.9.9 启动、配置自动生成、假 Sonarr 轮询、`pgrep` healthy | 0.9.9；Go 单二进制；无 UI/端口；`/config`、`/downloads`；UID 1123；需 x/sys 升级补丁；unrar 7.13 + 7za |
 | `yunixintel/pocket-id` | 约 136MB（Hub） | `/` 200、`/healthz` 204、首启建库/密钥；healthy | 2.9.0；SvelteKit 前端 x86 构建后 embed；Go 单二进制；`/data`；1411；UID 1122；首启生成加密密钥；无邮件/SCIM 联调 |
 | `yunixintel/readeck` | 约 118MB（Hub） | `/` 303→引导页 200、首启生成配置与 SQLite；healthy | 0.9.2；Go CGO（mattn sqlite）+ gulp 前端；`/data`；8000；UID 1117；CGO-free 路径因 modernc 旧版不可用 |
-| `yunixintel/wg-easy` | 约 169MB（Hub） | DB 迁移、wg0.conf、302→`/setup/1`、卷持久化、healthy；真实隧道未验 | 15.4.0；Node 24 + Nuxt + libsql（龙芯绑定）；hash-wasm 替代 argon2；51820/udp、51821/tcp；需 NET_ADMIN/SYS_MODULE；IPv4-only |
+| `yunixintel/wg-easy` | 约 169MB（Hub） | DB 迁移、wg0.conf、302→`/setup/1`、卷持久化、healthy；真实内核 handshake 双向通过 | 15.4.0；Node 24 + Nuxt + libsql（龙芯绑定）；hash-wasm 替代 argon2；51820/udp、51821/tcp；需 NET_ADMIN/SYS_MODULE；IPv4-only；外网转发/NAT 未验 |
 | `yunixintel/komga` | 约 318MB（Hub） | 94+2+1 迁移、`/` 200、health UP、重启持久化、最小 CBZ 扫描/单页读取；healthy | 1.29.1；官方 jar + 自编 loongarch64 libsqlitejdbc；JDK 21；`/config`、`/data`（可只读）；25600；UID 1110 |
 | `yunixintel/node-sharp` | 约 157MB（Hub） | `sharp.versions` vips 8.18.7、JPEG/PNG/WebP 输出非空；ldd 无缺失 | 基础镜像：Node 24.22.1 + libvips 8.18.7 + sharp 0.35.5；复用 `/opt/vips`、`/opt/node_modules/sharp`；HEIF/JXL 未开 |
-| `yunixintel/karakeep` | 约 470MB（Hub） | 健康检查、首用户 admin、静态抓取、banner WebP、Next 图片优化、重启持久化、LBrowser 截图/PDF 通过 | 0.34.1 基础版；SQLite + Next 16 + better-sqlite3；默认无浏览器，用 `BROWSER_WEB_URL` 接 LBrowser sidecar；搜索需 Meilisearch；`/data`；3000；UID 1116 |
+| `yunixintel/karakeep` | 约 470MB（Hub） | 健康检查、首用户 admin、静态抓取、banner WebP、图片优化、重启持久化、LBrowser 截图/PDF（需 `CRAWLER_STORE_PDF=true`） | 0.34.1 基础版；SQLite + Next 16 + better-sqlite3；默认无浏览器，用 `BROWSER_WEB_URL` 接 LBrowser sidecar；搜索需 Meilisearch；`/data`；3000；UID 1116 |
+| `yunixintel/linkwarden` | 约 318MB（Hub） | 99 迁移幂等、`/` 200、注册登录、集合/标签/书签、无浏览器降级、LBrowser 截图/PDF/Readability、重启持久化 | 2.16.3；Next 15 x86 构建；Prisma 7 WASM + adapter-pg + 自写迁移器；bcryptjs；不装 sharp；`/data`；3000；UID 1118 |
 | `yunixintel/autobrr` | 约 131MB（Hub） | `/` 200、`/api/healthz/liveness` 200、SQLite 迁移；healthy | master 2026-10；Go 单二进制 + 内嵌 Vue；`/config`；7474；UID 1113；默认无认证 |
 | `yunixintel/matomo` | 约 193MB（Hub） | `/index.php` 200、安装向导可打开、PHP 扩展齐全；healthy | 5.14.2；PHP 8.3 + nginx/php-fpm；必须 MariaDB；`config`/`tmp` 持久化；80 |
 | `yunixintel/woodpecker-server` | 约 133MB（Hub） | `/` 200、内嵌 UI 资源 200、`/api/healthz` 204；SQLite 迁移；healthy | 3.19.0；**必须配置 forge**（Gitea/GitHub）才能启动；`/var/lib/woodpecker`；8000/9000；自动生成 agent/grpc secret；UID 1114 |

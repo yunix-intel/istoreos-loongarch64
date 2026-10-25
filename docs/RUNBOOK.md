@@ -761,7 +761,7 @@ docker run -d --name wg-easy --restart unless-stopped \
 - `/etc/wireguard` 存 `wg-easy.db` 与 `wg0.conf`，必须持久化。
 - `NET_ADMIN` 必需；`SYS_MODULE` + `/lib/modules` 用于容器内 `modprobe wireguard`。
 - 宿主需放行 51820/udp；公网建议反代 51821 并保持 `INSECURE=false`。
-- 首发 IPv4-only；AmneziaWG 未启用；真实客户端握手/隧道尚未验收。
+- 首发 IPv4-only；AmneziaWG 未启用；真实内核握手已验证，外网转发/NAT 未验收。
 - 完整说明见 [../images/wg-easy/BUILD.md](../images/wg-easy/BUILD.md)。
 
 ### Komga
@@ -791,12 +791,32 @@ docker run -d --name karakeep -p 3000:3000 \
 
 - Web：`http://<host>:3000/`；健康 `/api/health`。
 - `/data` 存 SQLite 与 assets；UID 1116。
-- 默认无浏览器：静态抓取、正文归档、标签/笔记可用；截图/PDF/JS 页面需 LBrowser sidecar：
+- 默认无浏览器：静态抓取、正文归档、标签/笔记可用；截图默认开启，PDF 需 `CRAWLER_STORE_PDF=true`；JS 页面需 LBrowser sidecar：
   `BROWSER_WEB_URL=http://chrome:9222`，sidecar 用 `local/lbrowser-runtime` 并挂载
   `/opt/apps/lbrowser:ro`，`--shm-size=1g`。
 - 搜索需要外部 Meilisearch；未配置时搜索关闭。
 - 未验证：monolith 全页归档、视频下载、OCR/PDF 上传、AI 打标、OAuth。
 - 完整说明见 [../images/karakeep/BUILD.md](../images/karakeep/BUILD.md)。
+
+### Linkwarden
+
+```bash
+docker run -d --name linkwarden -p 3000:3000 \
+  -v /srv/linkwarden:/data/data \
+  -e DATABASE_URL=postgresql://linkwarden:change-me@postgres:5432/linkwarden \
+  -e NEXTAUTH_URL=http://<host>:3000/api/v1/auth \
+  -e NEXTAUTH_SECRET='<openssl rand -base64 32>' \
+  -e STORAGE_FOLDER=data \
+  yunixintel/linkwarden:loong64
+```
+
+- Web：`http://<host>:3000/`；需要 PostgreSQL（`yunixintel/postgres:loong64`）。
+- `/data/data` 存归档资源；首次启动自写 99 个 Prisma 迁移，重启幂等。
+- 默认无浏览器：`DISABLE_BROWSER=true` 时书签 CRUD 正常，归档标记 unavailable。
+- 归档：接 LBrowser sidecar，`PLAYWRIGHT_WS_URL=http://lbrowser:9222`；
+  sidecar 用 `local/lbrowser-runtime` + `/opt/apps/lbrowser:ro` + `--shm-size=1g`。
+- 搜索无 Meilisearch 时回退 SQL `contains`；未验证 monolith/Meili/AI/导入/OAuth。
+- 完整说明见 [../images/linkwarden/BUILD.md](../images/linkwarden/BUILD.md)。
 
 ### Woodpecker CI（server + agent）
 
@@ -1026,6 +1046,7 @@ docker run -d --name dozzle -p 8080:8080   -v /var/run/docker.sock:/var/run/dock
 | komga | 25600 | `/config`、`/data`（可只读） | UID 1110；JDK 21；自编 sqlite JNI；HEIF/JXL/Kobo 未支持 |
 | node-sharp | — | `/opt/vips`、`/opt/node_modules/sharp` | 基础镜像；Node 24 + libvips 8.18.7 + sharp 0.35.5；非服务 |
 | karakeep | 3000 | `/data` | UID 1116；SQLite；默认无浏览器；搜索需 Meilisearch；LBrowser sidecar 可选 |
+| linkwarden | 3000 | `/data/data`；`DATABASE_URL` | UID 1118；PostgreSQL；Prisma 7；默认无浏览器；LBrowser sidecar 可选 |
 | nocodb | 8080 | `/data` | UID 1000；SQLite；`NC_DB` 用 `?d=` |
 | apprise-api | 8000 | `/config`、`/attach`、`/plugin` | 默认无认证/无 TLS |
 | minio | 9000, 9001 | `/data` | UID 1000；必须设根凭据；AGPLv3 |

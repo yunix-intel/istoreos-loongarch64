@@ -191,6 +191,12 @@ services:
 | LBrowser 截图 | sidecar 接入后 `Captured the screenshot`；JPEG 1440×900，65,594 B |
 | LBrowser PDF | 同一次抓取 `Captured the PDF`；PDF 1.4，1 页，92,459 B |
 
+## 补充验证（2026-10-25 独立复验）
+
+- 默认 `CRAWLER_STORE_PDF=false`；设置 `CRAWLER_STORE_PDF=true` 后，Wikipedia 页面 PDF 落盘 **649,933 B**，截图 211,990 B，HTML 277,148 B。
+- 未设该变量时日志为 `Skipping storing the PDF as it's empty`，这是默认关闭，不是失败。
+- 真实 LBrowser sidecar 截图验证：example.org 65,594 B；Wikipedia 截图 215,523 B。
+
 ## 未验证
 
 - **全文/语义搜索**：未配 Meilisearch，搜索关闭（上游 0.34.1 只支持 SQLite，

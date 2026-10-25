@@ -9,7 +9,7 @@
 - [x] WSL 交叉编译（la1–la5 连续发版）
 - [x] **最新公版：[24.10-la5](https://github.com/yunix-intel/istoreos-loongarch64/releases/tag/24.10-la5)**（内置 docker + podman，英文默认，无私人预置）
 - [x] 真机验证（3A6000：LuCI / 商店 / 中文 / EasyTier / Mihomo）
-- [x] **115 个 loong64 应用镜像已上架**：[docs/IMAGES.md](docs/IMAGES.md)（`docker pull yunixintel/<app>:loong64`）；含新增 `homer`、`paperless-ngx`、`dashy`、`watchtower`、`changedetection`、`caddy`、`dozzle`、`ntfy`、`gotify`、`node-exporter`、`prometheus`、`pihole`、`gatus`、`alertmanager`、`postgres`、`redis`、`mosquitto`、`mariadb`、`node-red`、`grafana`、`memcached`、`homebridge`、`rest-server`、`node`、`actual-budget`、`minio`、`homebox`、`nocodb`、`apprise-api`、`mealie`、`chinesesubfinder`、`lanraragi`、`owntone`、`mymind`、`webvirtcloud`、`penpot-backend`、`penpot-frontend`、`hermes`、`zigbee2mqtt`、`smartctl-exporter`、`sftpgo`、`bookstack`、`vikunja`、`piwigo`、`go2rtc`、`scrutiny`、`headscale`、`backrest`、`authelia`、`ente-server`、`autobrr`、`matomo`、`woodpecker-server`、`woodpecker-agent`、`ente-web`、`metube`、`sabnzbd`、`mediamtx`、`registry`、`unpackerr`、`pocket-id`、`readeck`、`wg-easy`、`komga`、`node-sharp`、`karakeep`
+- [x] **116 个 loong64 应用镜像已上架**：[docs/IMAGES.md](docs/IMAGES.md)（`docker pull yunixintel/<app>:loong64`）；含新增 `homer`、`paperless-ngx`、`dashy`、`watchtower`、`changedetection`、`caddy`、`dozzle`、`ntfy`、`gotify`、`node-exporter`、`prometheus`、`pihole`、`gatus`、`alertmanager`、`postgres`、`redis`、`mosquitto`、`mariadb`、`node-red`、`grafana`、`memcached`、`homebridge`、`rest-server`、`node`、`actual-budget`、`minio`、`homebox`、`nocodb`、`apprise-api`、`mealie`、`chinesesubfinder`、`lanraragi`、`owntone`、`mymind`、`webvirtcloud`、`penpot-backend`、`penpot-frontend`、`hermes`、`zigbee2mqtt`、`smartctl-exporter`、`sftpgo`、`bookstack`、`vikunja`、`piwigo`、`go2rtc`、`scrutiny`、`headscale`、`backrest`、`authelia`、`ente-server`、`autobrr`、`matomo`、`woodpecker-server`、`woodpecker-agent`、`ente-web`、`metube`、`sabnzbd`、`mediamtx`、`registry`、`unpackerr`、`pocket-id`、`readeck`、`wg-easy`、`komga`、`node-sharp`、`karakeep`、`linkwarden`
 - [x] podman 全链路（CGO podman + crun，嵌套 `--network=host/none` 跑通）
 - [x] dockermanager 可用（连本机 dockerd）
 - [x] CasaOS loong64 移植（应用管理/UI/systemd 真机验证；磁盘能力待独占盘）
@@ -41,11 +41,12 @@ docker run -d --name memos --network=host -v memos:/opt/memos/data yunixintel/me
 - [龙芯版差异清单](docs/LOONG64-QUIRKS.md)：商店详情页必须展示的行为/功能差异
 - [镜像构建手册](docs/IMAGE-BUILD.md)：工具链、CGO/glibc、Vite 8 x86 构建、特殊补丁
 - [基础层](docs/BASE-IMAGES.md)：node-sharp（已发布）与 LBrowser/Playwright（本地、不发布）
+- [功能复验记录](docs/VERIFY-2026-10-25.md)：基础层、Karakeep、Linkwarden、wg-easy、Komga、CasaOS 磁盘
 - [故障排查](docs/TROUBLESHOOTING.md)：现象→原因→修复
 - [应用同步清单](docs/APP-SYNC-CHECKLIST.md)：新增镜像必须完成的文档/发布步骤
 - [Podman 栈](docs/PODMAN.md)、[CasaOS P3](docs/CASAOS-P3.md)、[EasyTier/mihomo](docs/EASYTIER-MIHOMO.md)
 - [OpenCV/SSIM 配方](docs/OPENCV-SSIM.md)、[生产测试计划](docs/PRODUCTION-TEST.md)
-- [镜像 Dockerfile 目录](images/)：115 个应用目录 / 105 个 Dockerfile / 115 份 BUILD.md + 115 只机读目录
+- [镜像 Dockerfile 目录](images/)：116 个应用目录 / 106 个 Dockerfile / 116 份 BUILD.md + 116 只机读目录
 
 ## 自己编（WSL2 Ubuntu，x86_64 主机交叉编译）
 

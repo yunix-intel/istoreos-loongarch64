@@ -678,6 +678,15 @@ QUIRKS["karakeep"] = {
     "deps_en": "Point BROWSER_WEB_URL at an LBrowser sidecar (mount /opt/apps/lbrowser:ro); /data; port 3000; UID 1116.",
 }
 
+QUIRKS["linkwarden"] = {
+    "zh": "Next 15 在 x86 构建；Prisma 7 WASM + adapter-pg；自写 99 个 SQL 迁移器；bcryptjs 替代 bcrypt。",
+    "en": "Next 15 is built on x86; Prisma 7 uses the WASM compiler with adapter-pg; a custom runner applies the 99 SQL migrations; bcryptjs replaces bcrypt.",
+    "missing_zh": "无 Meilisearch 时仅 SQL contains 搜索；默认无浏览器；monolith/AI/导入/OAuth 尚未验证。",
+    "missing_en": "Search falls back to SQL contains without Meilisearch; no browser by default; monolith, AI, import and OAuth are unverified.",
+    "deps_zh": "需 PostgreSQL；PLAYWRIGHT_WS_URL 接 LBrowser sidecar；/data/data；3000；UID 1118。",
+    "deps_en": "Requires PostgreSQL; point PLAYWRIGHT_WS_URL at an LBrowser sidecar; /data/data; port 3000; UID 1118.",
+}
+
 EXTRA_DEPS = {
     "homarr": ("需 Redis。", "Requires Redis."),
     "jellystat": ("需外部 PostgreSQL。", "Requires external PostgreSQL."),

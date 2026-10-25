@@ -7,7 +7,7 @@
 - digest：`sha256:52bd56b2cf5cd8c14183199ec6f65489c3a27837c05421e90849e2b5529c38ea`
 - 大小：本地 509 MB（`docker images`）；Hub 压缩后 169.1 MiB（177,276,810 B）
 - 状态：构建、启动、DB 迁移、`wg0.conf` 生成、HTTP 302→`/setup/1`、数据卷持久化、healthcheck 均通过
-- **未验证**：真实 WireGuard 客户端握手/隧道、真实 `wg-quick` + 内核模块、宿主防火墙/NAT
+- **2026-10-25 复验**：真实内核 `wg-quick up wg0` 成功，客户端/服务端双向 handshake 与流量计数均通过；外网转发、宿主 firewalld/NAT 未验证
 
 ## 版本
 
@@ -122,7 +122,7 @@ docker run -d --name wg-easy --restart unless-stopped \
 | 持久化 | 重启容器后 DB SHA-256 不变（`615c8915…f8c7ec6`），DB/conf 仍在 |
 | healthcheck | `healthy`（重启前后均通过） |
 
-**未验证**：真实内核 `wg-quick up wg0`、客户端握手、`ping 10.8.0.1`、经隧道访问外网、宿主 firewalld/NAT。发布前需在测试机按上述 `docker run` 加载模块并完成端到端验收。
+**2026-10-25 复验**：在默认 bridge 上启动 server 与客户端容器（均 `NET_ADMIN`），`wg-quick up` 后双方 `latest handshake` 出现，transfer 双向非零。未验证：经隧道访问外网、宿主 firewalld/NAT、真实客户端平台。
 
 ## 已知限制
 

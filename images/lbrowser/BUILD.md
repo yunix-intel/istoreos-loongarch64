@@ -303,6 +303,19 @@ services:
 - 时区/语言：镜像设置 `LANG=C.UTF-8`；页面 locale 由浏览器默认值决定，
   如需固定可在 launch/context 里设置 `locale`、`timezoneId`。
 
+## 嵌入镜像实测（2026-10-25）
+
+`./build.sh embedded` 构建 `local/lbrowser-embedded:3.4.2293.2-local`（1.49GB），
+不挂载宿主浏览器，直接跑同一套测试：
+
+- Playwright 1.57：Chromium 138，`goto/content/screenshot/pdf` 全过，
+  PDF 92,439 B，`%PDF-` 正确。
+- Patchright 1.59：`launch/goto/content/screenshot` 全过。
+
+结论：技术上完全可用。代价是镜像比 runtime 层多约 370MB（1.49GB vs 1.03GB），
+且浏览器安全更新必须重建镜像；许可证不清晰，**不能推送/公开分发**。
+因此正式方案仍是宿主挂载或 sidecar 挂载。
+
 ## 未验证
 
 - Linkwarden / Karakeep 的完整业务链路（创建书签、实际归档、PDF 入库）。

@@ -2,7 +2,7 @@
   "schema": 1,
   "generated": "2026-10-24",
   "architecture": "linux/loong64",
-  "app_count": 113,
+  "app_count": 114,
   "sources": [
     "images/catalog.json",
     "docs/LOONG64-QUIRKS.md"
@@ -4414,6 +4414,45 @@
       "istore_description_html": {
         "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：复用 node-sharp；Next 在 x86 构建；默认不内置 Chromium。</p><p>缺失功能：搜索需外部 Meilisearch；截图/PDF/JS 页面需 LBrowser sidecar；monolith/视频/OCR/AI 尚未验证。</p><p>额外依赖：BROWSER_WEB_URL 接 LBrowser（挂载宿主 /opt/apps/lbrowser:ro）；/data；3000；UID 1116。</p><p>镜像说明：0.34.1 基础版；SQLite + Node 24 + Next 16 + better-sqlite3；默认不内置 Chromium，浏览器用 `BROWSER_WEB_URL` 接 LBrowser sidecar；搜索需 Meilisearch；`/data`；3000；UID 1116</p>",
         "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: Reuses node-sharp; the Next app is built on x86; no Chromium is bundled by default.</p><p>Missing features: Search needs external Meilisearch; screenshots/PDF/JS pages need an LBrowser sidecar; monolith, video, OCR and AI are unverified.</p><p>Extra dependencies: Point BROWSER_WEB_URL at an LBrowser sidecar (mount /opt/apps/lbrowser:ro); /data; port 3000; UID 1116.</p><p>Image notes: 0.34.1 基础版；SQLite + Node 24 + Next 16 + better-sqlite3；默认不内置 Chromium，浏览器用 `BROWSER_WEB_URL` 接 LBrowser sidecar；搜索需 Meilisearch；`/data`；3000；UID 1116</p>"
+      }
+    },
+    "linkwarden": {
+      "image": "yunixintel/linkwarden",
+      "title": {
+        "zh_cn": "linkwarden",
+        "en_us": "linkwarden"
+      },
+      "category": "Utilities",
+      "architecture": "linux/loong64",
+      "tagline": {
+        "zh_cn": "linkwarden 的 LoongArch64 镜像，详见龙芯版说明。",
+        "en_us": "linkwarden LoongArch64 image; see the LoongArch notes."
+      },
+      "quirk": {
+        "zh_cn": "Next 15 在 x86 构建；Prisma 7 WASM + adapter-pg；自写 99 个 SQL 迁移器；bcryptjs 替代 bcrypt。",
+        "en_us": "Next 15 is built on x86; Prisma 7 uses the WASM compiler with adapter-pg; a custom runner applies the 99 SQL migrations; bcryptjs replaces bcrypt."
+      },
+      "missing": {
+        "zh_cn": "无 Meilisearch 时仅 SQL contains 搜索；默认无浏览器；monolith/AI/导入/OAuth 尚未验证。",
+        "en_us": "Search falls back to SQL contains without Meilisearch; no browser by default; monolith, AI, import and OAuth are unverified."
+      },
+      "dependencies": {
+        "zh_cn": "需 PostgreSQL；PLAYWRIGHT_WS_URL 接 LBrowser sidecar；/data/data；3000；UID 1118。",
+        "en_us": "Requires PostgreSQL; point PLAYWRIGHT_WS_URL at an LBrowser sidecar; /data/data; port 3000; UID 1118."
+      },
+      "notes": "2.16.3；Next 15 x86 构建；Prisma 7 WASM + adapter-pg + 自写迁移器；bcryptjs；不装 sharp；`/data`；3000；UID 1118；搜索回退 SQL contains；不内置浏览器",
+      "verification": "99 个 Prisma 迁移且重启幂等、`/` 200、注册登录、集合/标签/书签、无浏览器降级、LBrowser 截图/PDF/Readability/preview、重启持久化",
+      "disclosure": {
+        "zh_cn": "架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：Next 15 在 x86 构建；Prisma 7 WASM + adapter-pg；自写 99 个 SQL 迁移器；bcryptjs 替代 bcrypt。\n缺失功能：无 Meilisearch 时仅 SQL contains 搜索；默认无浏览器；monolith/AI/导入/OAuth 尚未验证。\n额外依赖：需 PostgreSQL；PLAYWRIGHT_WS_URL 接 LBrowser sidecar；/data/data；3000；UID 1118。\n镜像说明：2.16.3；Next 15 x86 构建；Prisma 7 WASM + adapter-pg + 自写迁移器；bcryptjs；不装 sharp；`/data`；3000；UID 1118；搜索回退 SQL contains；不内置浏览器",
+        "en_us": "Architecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Next 15 is built on x86; Prisma 7 uses the WASM compiler with adapter-pg; a custom runner applies the 99 SQL migrations; bcryptjs replaces bcrypt.\nMissing features: Search falls back to SQL contains without Meilisearch; no browser by default; monolith, AI, import and OAuth are unverified.\nExtra dependencies: Requires PostgreSQL; point PLAYWRIGHT_WS_URL at an LBrowser sidecar; /data/data; port 3000; UID 1118.\nImage notes: 2.16.3；Next 15 x86 构建；Prisma 7 WASM + adapter-pg + 自写迁移器；bcryptjs；不装 sharp；`/data`；3000；UID 1118；搜索回退 SQL contains；不内置浏览器"
+      },
+      "casaos_description": {
+        "zh_cn": "**龙芯版说明**\n\n架构：linux/loong64（仅龙芯 3A5000/3A6000，x86/ARM 无法运行）\n龙芯版说明：Next 15 在 x86 构建；Prisma 7 WASM + adapter-pg；自写 99 个 SQL 迁移器；bcryptjs 替代 bcrypt。\n缺失功能：无 Meilisearch 时仅 SQL contains 搜索；默认无浏览器；monolith/AI/导入/OAuth 尚未验证。\n额外依赖：需 PostgreSQL；PLAYWRIGHT_WS_URL 接 LBrowser sidecar；/data/data；3000；UID 1118。\n镜像说明：2.16.3；Next 15 x86 构建；Prisma 7 WASM + adapter-pg + 自写迁移器；bcryptjs；不装 sharp；`/data`；3000；UID 1118；搜索回退 SQL contains；不内置浏览器",
+        "en_us": "**LoongArch notes**\n\nArchitecture: linux/loong64 only (Loongson 3A5000/3A6000; x86/ARM images will not run)\nLoongArch notes: Next 15 is built on x86; Prisma 7 uses the WASM compiler with adapter-pg; a custom runner applies the 99 SQL migrations; bcryptjs replaces bcrypt.\nMissing features: Search falls back to SQL contains without Meilisearch; no browser by default; monolith, AI, import and OAuth are unverified.\nExtra dependencies: Requires PostgreSQL; point PLAYWRIGHT_WS_URL at an LBrowser sidecar; /data/data; port 3000; UID 1118.\nImage notes: 2.16.3；Next 15 x86 构建；Prisma 7 WASM + adapter-pg + 自写迁移器；bcryptjs；不装 sharp；`/data`；3000；UID 1118；搜索回退 SQL contains；不内置浏览器"
+      },
+      "istore_description_html": {
+        "zh_cn": "<p><strong>龙芯版说明</strong></p><p>架构：linux/loong64（仅龙芯 3A5000/3A6000）</p><p>与上游差异：Next 15 在 x86 构建；Prisma 7 WASM + adapter-pg；自写 99 个 SQL 迁移器；bcryptjs 替代 bcrypt。</p><p>缺失功能：无 Meilisearch 时仅 SQL contains 搜索；默认无浏览器；monolith/AI/导入/OAuth 尚未验证。</p><p>额外依赖：需 PostgreSQL；PLAYWRIGHT_WS_URL 接 LBrowser sidecar；/data/data；3000；UID 1118。</p><p>镜像说明：2.16.3；Next 15 x86 构建；Prisma 7 WASM + adapter-pg + 自写迁移器；bcryptjs；不装 sharp；`/data`；3000；UID 1118；搜索回退 SQL contains；不内置浏览器</p>",
+        "en_us": "<p><strong>LoongArch notes</strong></p><p>Architecture: linux/loong64 only</p><p>Differences: Next 15 is built on x86; Prisma 7 uses the WASM compiler with adapter-pg; a custom runner applies the 99 SQL migrations; bcryptjs replaces bcrypt.</p><p>Missing features: Search falls back to SQL contains without Meilisearch; no browser by default; monolith, AI, import and OAuth are unverified.</p><p>Extra dependencies: Requires PostgreSQL; point PLAYWRIGHT_WS_URL at an LBrowser sidecar; /data/data; port 3000; UID 1118.</p><p>Image notes: 2.16.3；Next 15 x86 构建；Prisma 7 WASM + adapter-pg + 自写迁移器；bcryptjs；不装 sharp；`/data`；3000；UID 1118；搜索回退 SQL contains；不内置浏览器</p>"
       }
     }
   }

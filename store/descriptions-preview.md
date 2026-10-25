@@ -1,6 +1,6 @@
 # 商店卡片“龙芯版说明”预览
 
-共 113 个可安装应用（不含运行时基础镜像 node）。
+共 114 个可安装应用（不含运行时基础镜像 node）。
 
 | 应用 | 分类 | 龙芯版说明 | 缺失功能 | 额外依赖 |
 |---|---|---|---|---|
@@ -117,3 +117,4 @@
 | wg-easy (`wg-easy`) | Utilities | v15.4.0 在龙芯原生构建；libsql 使用龙芯 0.5.13 绑定，argon2 换成 hash-wasm。 | AmneziaWG 未启用；IPv6 关闭；真实客户端握手/隧道尚未验证。 | 需 NET_ADMIN，建议 SYS_MODULE + /lib/modules；sysctls；51820/udp、51821；/etc/wireguard 持久化。 |
 | komga (`komga`) | Utilities | 官方 jar 不重编；自编 loongarch64 sqlite-jdbc JNI，经 org.sqlite.lib.path 外挂。 | HEIF/JXL 封面不可用；Kobo 转换未支持；PDF/EPUB/RAR 扫描未验证。 | JDK 21；/config 与 /data（可只读）；25600；UID 1110。 |
 | karakeep (`karakeep`) | Utilities | 复用 node-sharp；Next 在 x86 构建；默认不内置 Chromium。 | 搜索需外部 Meilisearch；截图/PDF/JS 页面需 LBrowser sidecar；monolith/视频/OCR/AI 尚未验证。 | BROWSER_WEB_URL 接 LBrowser（挂载宿主 /opt/apps/lbrowser:ro）；/data；3000；UID 1116。 |
+| linkwarden (`linkwarden`) | Utilities | Next 15 在 x86 构建；Prisma 7 WASM + adapter-pg；自写 99 个 SQL 迁移器；bcryptjs 替代 bcrypt。 | 无 Meilisearch 时仅 SQL contains 搜索；默认无浏览器；monolith/AI/导入/OAuth 尚未验证。 | 需 PostgreSQL；PLAYWRIGHT_WS_URL 接 LBrowser sidecar；/data/data；3000；UID 1118。 |
