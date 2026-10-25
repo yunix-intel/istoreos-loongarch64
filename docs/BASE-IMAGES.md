@@ -72,6 +72,17 @@ docker run --rm --shm-size=1g \
 - Patchright 1.59.4：`launch/goto/content/screenshot` 通过；PDF 未测。
 - 跨 Docker NAT 的 `connectOverCDP`：两种引擎都通过。
 
+### 浏览器能力（2026-10-25 复验）
+
+- WebGL1/2 可用（ANGLE + SwiftShader，软件渲染）。
+- 视频：VP8/Vorbis、H.264/AAC 播放/seek/截图通过；HEVC/Theora/AC-3 不支持。
+- DRM：Widevine 不可用；ClearKey 可用。Netflix/Spotify 等不可用。
+- 非 root：uid 1000 + `--no-sandbox` 可运行，需可写 `/tmp` 与输出目录。
+- 稳定性：20 标签 × 60 轮、1200 次 goto+截图，0 失败，峰值 1.66 GiB。
+- 只读根：必须配可写 `/tmp`（tmpfs）或 TMPDIR/HOME。
+
+详见 [../docs/research/verify-lbrowser.md](research/verify-lbrowser.md)。
+
 ### Linkwarden 接入
 
 ```yaml

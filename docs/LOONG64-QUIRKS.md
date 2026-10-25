@@ -58,7 +58,7 @@
 | Pocket ID | SvelteKit 前端 x86 构建后 embed；Go 单二进制 | 未做邮件 SMTP/SCIM/Passkey 全链路；与 Authelia 二选一 | `/data` 必须持久化（含加密密钥）；`APP_URL` 必填为外部地址；1411；UID 1122 |
 | Readeck | gulp 前端 x86 构建；Go 用 CGO/mattn sqlite | CGO-free 的 modernc 旧版缺 loongarch64 定义；未做完整抓取联调 | `/data` 持久化；8000；UID 1117；与 Wallabag/Shiori 重叠 |
 | wg-easy | v15.4.0；Nuxt 在龙芯原生构建；libsql 用龙芯 0.5.13 绑定；argon2 换 hash-wasm | AmneziaWG 未启用；IPv6 关闭；真实握手已验证，外网转发/NAT 未验证 | 需 NET_ADMIN，建议 SYS_MODULE + `/lib/modules`；sysctls；51820/udp、51821；`/etc/wireguard` 持久化 |
-| Komga | 官方 jar；自编 loongarch64 sqlite-jdbc JNI，经 `org.sqlite.lib.path` 外挂 | HEIF/JXL 封面不可用；Kobo 转换未支持；PDF/EPUB/RAR 未验证 | JDK 21；`/config`、`/data`（可只读）；25600；UID 1110 |
+| Komga | 官方 jar；自编 loongarch64 sqlite-jdbc JNI，经 `org.sqlite.lib.path` 外挂 | HEIF/JXL 封面不可用（JDK 21 插件禁用）；Kobo 同步可用但 KEPUB 转换需 kepubify；RAR4 已验证，RAR5 未测 | JDK 21；`/config`、`/data`（可只读）；25600；UID 1110；首用户需 `/api/v1/claim` |
 | Karakeep | 复用 node-sharp；Next 在 x86 构建；默认不内置 Chromium | 搜索需外部 Meilisearch；截图需 LBrowser sidecar；PDF 默认关闭（`CRAWLER_STORE_PDF=true` 已验证）；monolith/视频/OCR/AI 未验证 | `BROWSER_WEB_URL` 接 LBrowser（挂载宿主 `/opt/apps/lbrowser:ro`）；`/data`；3000；UID 1116 |
 | Linkwarden | Next 15 x86 构建；Prisma 7 WASM + adapter-pg；自写 99 迁移器；bcryptjs | 无 Meilisearch 时仅 SQL contains；默认无浏览器；monolith/AI/导入/OAuth 未验证 | PostgreSQL；`PLAYWRIGHT_WS_URL` 接 LBrowser sidecar；`/data/data`；3000；UID 1118 |
 | Woodpecker server | 前端 x86 构建后内嵌；CGO SQLite | **不配置 forge（Gitea/GitHub 等）无法启动**；无内置账号体系，依赖 forge OAuth | `/var/lib/woodpecker` 持久化；`WOODPECKER_HOST` 必须是外部可访问 URL；agent/grpc secret 自动生成 |

@@ -112,6 +112,7 @@ export HTTPS_PROXY=http://127.0.0.1:17890
 
 ## 限制与未验证
 
+- **已补验（2026-10-25）**：CBZ/PDF/EPUB、RAR4（junrar）、只读 `/data`、首用户 `/api/v1/claim` 均通过；EPUB `/pages/1` 500 是设计行为，阅读走 `/manifest/epub`。
 - **HEIF/JXL 不可用**：JDK 21 下 nightmonkeys 插件日志为
   `only supports Java 22, plugin will be disabled`。WebP 仍由 TwelveMonkeys 纯 Java 支持。
 - **Kobo 转换不可用**：镜像没有 `kepubify`（无 loong64 官方二进制），启动时有 WARN；

@@ -316,14 +316,21 @@ services:
 且浏览器安全更新必须重建镜像；许可证不清晰，**不能推送/公开分发**。
 因此正式方案仍是宿主挂载或 sidecar 挂载。
 
-## 未验证
+## 未验证 / 已补验
 
-- Linkwarden / Karakeep 的完整业务链路（创建书签、实际归档、PDF 入库）。
-  本次验证到浏览器核心与 CDP 连接层。
-- 非 root 用户、只读根文件系统、SELinux/AppArmor 限制下的运行。
-- WebGL、视频、DRM、GPU 加速、大页面/长时间多标签稳定性。
+已补验（2026-10-25，`docs/research/verify-lbrowser.md`）：
+- WebGL1/2：PASS（ANGLE + SwiftShader，软件渲染）
+- 视频：VP8/Vorbis、H.264/AAC 播放/seek/截图 PASS；HEVC/Theora/AC-3 不支持
+- DRM：Widevine 不可用（符合预期），ClearKey 可用
+- 非 root：uid 1000 + `--no-sandbox` 可启动/截图/PDF；需可写 `/tmp` 与输出目录
+- 多标签：20 标签 × 60 轮、1200 次 goto + 1200 次截图，0 失败；峰值 1.66 GiB
+- 只读根：`--read-only` 必须配可写 `/tmp`（tmpfs 或 TMPDIR/HOME）
+
+仍未验证：
+- Linkwarden / Karakeep 的完整业务链路（由各应用报告验证）。
+- 非 root 去掉 `--no-sandbox` 的 setuid sandbox 路径。
+- WebGL 复杂页面帧率、4K/高码率视频、音频实际出声、GPU 加速。
 - `lbrowserdriver_3.4.2293.2` 包（未安装、未测试）。
-- Docker Hub 推送、Registry digest、跨架构 manifest；本次按许可证结论不推送。
 - Patchright 的 PDF 输出。
 
 ## 文件

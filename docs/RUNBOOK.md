@@ -776,7 +776,7 @@ docker run -d --name komga -p 25600:25600 \
 - Web：`http://<host>:25600/`；健康 `/actuator/health` 为 `{"status":"UP"}`。
 - `/config` 存 SQLite、Lucene、日志；`/data` 为漫画库，可只读挂载。
 - UID/GID 1110；首次启动完成 94+2+1 项迁移，之后在 UI 建库/扫描。
-- HEIF/JXL 封面不可用；Kobo 转换未支持；PDF/EPUB/RAR 未验证。
+- PDF/EPUB/RAR4 扫描已验证；HEIF/JXL 封面不可用；Kobo 同步可用但 KEPUB 转换需 kepubify。
 - 完整说明见 [../images/komga/BUILD.md](../images/komga/BUILD.md)。
 
 ### Karakeep（基础版）
