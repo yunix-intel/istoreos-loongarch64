@@ -22,7 +22,7 @@ Loongnix/Debian 类 systemd 宿主上，提供应用商店、容器管理、磁�
   local-storage 的磁盘白名单（仅 SATA/NVMe/SAS/SPI/virtio/mmc）。
 - 前缀路径与 message-bus HTTP 事件链路已修复；危险 helper 已移出包。
 - 首次管理员已限制为仅 loopback 注册（LAN 返回 403，含伪造 XFF/X-Real-IP）。
-- 应用商店定义仍在补齐，当前不是全部 111 个镜像都已上架。
+- 应用商店定义仍在补齐，当前不是全部 117 个镜像都已上架。
 
 额外依赖/注意：
 - 需要 systemd、udev、smartmontools、parted、ntfs-3g、mergerfs、udevil。
