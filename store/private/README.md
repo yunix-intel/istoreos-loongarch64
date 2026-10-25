@@ -30,8 +30,8 @@ cd images/lbrowser
 - [compose/linkwarden-public.yml](compose/linkwarden-public.yml)
 - [compose/karakeep-public.yml](compose/karakeep-public.yml)
 
-两个文件都用 `local/lbrowser-runtime:3.4.2293.2` + 宿主挂载，应用镜像保持
-`yunixintel/linkwarden:loong64` / `yunixintel/karakeep:loong64`。
+两个文件都用 `yunixintel/lbrowser-runtime:3.4.2293.2` + 宿主挂载，应用镜像保持
+`yunixintel/linkwarden:24.10-la5` / `yunixintel/karakeep:24.10-la5`。
 
 ## 注意
 
