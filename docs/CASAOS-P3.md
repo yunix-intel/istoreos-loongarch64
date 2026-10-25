@@ -44,7 +44,7 @@ casaos-p3-0.1.0/
   install.sh   uninstall.sh
 ```
 
-当前验证基线：`casaos-p3-loong64-0.1.2-appmgr410.tar.gz`，sha256 `688fed00…a9b14`（24h soak 正在使用该基线，不改动）。商店全量包：`casaos-p3-loong64-0.1.3-store115.tar.gz`，sha256 `0bb0dadb…59094`，只把 `appstore/loong64/Apps` 换成 115 个定义、补 5 个分类并把 `VERSION` 改为 `0.1.3-store115-p3`。旧 0.1.0 / 0.1.1 已移入 `deprecated/`，**不得再分发**。
+当前验证基线：`casaos-p3-loong64-0.1.2-appmgr410.tar.gz`，sha256 `688fed00…a9b14`（24h soak 正在使用该基线，不改动）。商店全量包：`casaos-p3-loong64-0.1.3-store115.tar.gz`，sha256 `7262d39c…50426`，把 `appstore/default` 与 `appstore/loong64-only` 都换成 115 个定义、补 5 个分类并把 `VERSION` 改为 `0.1.3-store115-p3`。旧 0.1.0 / 0.1.1 已移入 `deprecated/`，**不得再分发**。
 
 ## 4. 安装与运行
 

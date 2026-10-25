@@ -399,7 +399,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [x] S-C2 CasaOS 端口与 overrides（115 个端口；wg-easy 固定 51820/51821，多端口已覆盖）
 - [x] S-C3 CasaOS 分类/图标/描述（图标改用 selfh.st；115 个“龙芯版说明”）
 - [ ] S-C4 CasaOS 干净安装（115 个 dry-run 通过；joplin-server 单 compose + PG sidecar 已实测；其余按类别抽样）
-  - 2026-10-25：115 个定义已复制到 Host A `/opt/casaos-p3/appstore/loong64/Apps`（旧 18 个已备份）。AppManagement 内存缓存仍返回 18，需在 24h soak 结束后重启 `casaos-app-management` 才能在 UI 看到 115 个。
+  - 2026-10-25：115 个定义已复制到 Host A 的 `appstore/default/Apps`（实际读取路径）与 `appstore/loong64/Apps`（overlay），旧 18 个已备份。AppManagement 内存缓存仍返回 18，需在 24h soak 结束后重启 `casaos-app-management` 才能在 UI 看到 115 个。
 - [ ] S-C5 CasaOS 升级/卸载/数据保留
 - [x] S-C6 CasaOS 龙芯差异披露（115 个应用，过期结论已回写）
 - [x] S-I1 iStore app-meta 镜像覆盖（public/private 各 115 个）

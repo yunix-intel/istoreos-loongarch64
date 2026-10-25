@@ -65,10 +65,12 @@ python store/casaos/fix_healthchecks.py
 ## 未完成
 
 - S-C4 的“全新机器只点商店安装”：本轮是在已有 CasaOS P3 上验证，未重装系统。
-- 115 个定义已同步到 Host A 的 `/opt/casaos-p3/appstore/loong64/Apps`（旧 18 个备份为
-  `/opt/casaos-p3/appstore-Apps-backup-18-20261025.tar.gz`），但 AppManagement 的
-  `appStore.catalog` 是进程内缓存，当前 API 仍返回 18。为避免打断进行中的 24h soak，
-  重启 `casaos-app-management` 安排在 soak 结束后；届时复验商店 UI 显示 115 个。
+- 115 个定义已同步到 Host A 的 `/opt/casaos-p3/appstore/default/Apps`（AppManagement
+  实际读取路径）和 `appstore/loong64/Apps`（审计 overlay）；旧 18 个备份为
+  `/opt/casaos-p3/appstore-default-backup-18-20261025.tar.gz` 与
+  `appstore-Apps-backup-18-20261025.tar.gz`。但 AppManagement 的 `appStore.catalog`
+  是进程内缓存，当前 API 仍返回 18。为避免打断进行中的 24h soak，重启
+  `casaos-app-management` 安排在 soak 结束后；届时复验商店 UI 显示 115 个。
 - S-C5 升级/卸载/数据保留：已观察到 CasaOS 卸载会删除 `Apps/<id>` 元数据，数据目录
   保留策略仍需单独用例。
 - 115 个应用没有全部启动；设备类/外部依赖类应用的实机安装留给对应硬件环境。
