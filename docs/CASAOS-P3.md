@@ -44,13 +44,13 @@ casaos-p3-0.1.0/
   install.sh   uninstall.sh
 ```
 
-当前包：`casaos-p3-loong64-0.1.1-blockerfix.tar.gz`，sha256 `fdfbe2b8…eaa06a`。旧 0.1.0（`6efcbb60…7bea`）仍含危险 helper，**不得再分发**。
+当前包：`casaos-p3-loong64-0.1.2-appmgr410.tar.gz`，sha256 `688fed00…a9b14`。旧 0.1.0 / 0.1.1 已移入 `deprecated/`，**不得再分发**。
 
 ## 4. 安装与运行
 
 ```bash
-tar -xzf casaos-p3-loong64-0.1.1-blockerfix.tar.gz
-cd casaos-p3-0.1.1-blockerfix
+tar -xzf casaos-p3-loong64-0.1.2-appmgr410.tar.gz
+cd casaos-p3-0.1.2-appmgr410
 
 # 前缀安装（不启用 systemd）
 sudo ./install.sh --prefix /opt/casaos-p3 --store loong64
@@ -194,3 +194,21 @@ curl -X POST http://127.0.0.1:8081/v1/storage   -H "Authorization: $TOKEN" -H "C
 剩余风险：24h soak/真机重启自启未做；Docker Hub 在宿主优先 IPv6 导致首次拉取失败（需修 DNS/代理）；
 AppManagement 版本口径与 `format` 省略兼容行为需注意。详见
 [research/casaos-blocker-fix.md](research/casaos-blocker-fix.md)。
+
+## 11. 2026-10-25 运维风险修复
+
+- **Docker Hub 拉取**：移除失效的 USTC/163 mirror，给 dockerd 配置
+  `HTTP(S)_PROXY=http://127.0.0.1:17890`（mihomo，host 网络，`unless-stopped`），
+  `NO_PROXY` 覆盖内网；`docker pull hello-world` 能完成 manifest 查询。
+  配置：`/etc/systemd/system/docker.service.d/http-proxy.conf`，备份
+  `/etc/docker/daemon.json.bak-20261025`。
+- **systemd 自启**：7 个 unit 复制到 `/etc/systemd/system` 并 `enable casaos.target`；
+  当前仍运行前缀实例，未切换、未重启验证。target 会拉起 6 个服务。
+- **旧包隔离**：0.1.0、0.1.1 移入 `/build/archive/casaos-p3/deprecated/`；当前包 0.1.2。
+- **历史脏数据**：删除 `o_disk` 中 `/mnt/testdisk_nbd0p1` 行，仅保留 `/mnt/Data`。
+- **空间**：清理 `~/.cache/{yarn,pnpm,pip,node-gyp}` 约 4.5G；`/home` 非 root 可用
+  约 4.3G。
+- **24h soak**：最终 v0.4.10-alpha2 二进制上启动，60s × 1440，日志
+  `/tmp/casaos-soak-24h.{csv,log}`，预计 2026-10-26 21:06 结束；结果需后续读取。
+- **仍未完成**：真机重启自启验证；`format` 省略兼容、DELETE 白名单、
+  POST format=true 密码门（当前仅白名单保护）；24h 结论。

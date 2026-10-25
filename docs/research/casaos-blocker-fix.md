@@ -7,8 +7,9 @@
 
 源码/构建目录：`/build/casaos-fix/`
 补丁：`docs/research/casaos-patches/*.patch`
-修复包：`/build/archive/casaos-p3/casaos-p3-loong64-0.1.1-blockerfix.tar.gz`
-（sha256 `fdfbe2b81447d5bfd5f06918b2bff536a84914ea977afbd71dee89b4a5eaa06a`）
+修复包：`/build/archive/casaos-p3/casaos-p3-loong64-0.1.2-appmgr410.tar.gz`
+（sha256 `688fed00656f9ff8a25299989d4ddf28bb6e35b2b10a1964f7acce6efeaa9b14`；
+旧 `0.1.1-blockerfix` 已被本包取代）
 
 ## 0. 结论
 
@@ -16,9 +17,9 @@
 |---|---|---|---|
 | 1 | 设备白名单未下沉 | **PASS** | `/dev/loop0`、`/dev/dm-0`、`/dev/mapper/test`、`/dev/nbd0` 的 POST/PUT 均 403；`blkid` 无 ext4；`findmnt` 无 `/tmp/loopverify`；真实盘 UUID 未变 |
 | 2 | 首管理员 LAN 抢先 | **PASS** | 空库隔离实例 LAN status/register 403；loopback status 200 并注册成功；初始化后 LAN status 200、register 4xx |
-| 3 | 运行时 socket/前缀路径 | **PASS** | app-management 二进制/source 无 `/tmp/message-bus.sock`；安装 9/9、卸载 6/6 事件 HTTP 200；新日志 0 次发布失败；危险脚本已移出前缀与包 |
+| 3 | 运行时 socket/前缀路径 | **PASS** | app-management（v0.4.10-alpha2）二进制/source 无 `/tmp/message-bus.sock`；安装 9/9、卸载 6/6 事件 HTTP 200；新日志 0 次发布失败；危险脚本已移出前缀与包 |
 | — | 6 服务健康 | **PASS** | `healthcheck.sh` 200；soak 15/15 六进程存活（local-storage 401 为需 JWT 的预期） |
-| — | 15 分钟 soak | **PASS**（详见 §7） | 15/15 样本 6 服务存活；HTTP 200/401（local-storage 需 JWT，401 为预期） |
+| — | soak（最终 v0.4.10-alpha2 10min + 切换前 v0.4.5 15min） | **PASS**（详见 §7） | 六服务全部存活；HTTP 200/401；PID 稳定；RSS 无泄漏趋势 |
 | — | 24h 稳定性 | **BLOCKED** | 未连续运行 24h，**需后续** |
 
 **C-04 判定：三个 BLOCKER 已关闭，可以重开 C-04 复核；最终发布仍需补 24h soak/重启自启。**
@@ -29,28 +30,35 @@
 该问题存在于**旧二进制**：`go version -m` 显示旧 app-management 的模块元数据为
 `v0.4.10-alpha2+dirty`，其 `PublishEventWrapper` 先走 unix socket、失败后才走 HTTP。
 
-本次按任务要求改用 **AppManagement v0.4.5**（`-v` 打印 `v0.4.5`；注意上游 v0.4.5 与
-v0.4.10-alpha2 都把该版本号硬编码为 `0.4.5`）。v0.4.5 的 `PublishEventWrapper`
-**只调用** `MyService.MessageBus().PublishEventWithResponse`，直接使用
-`run/message-bus.url` 解析出的 `http://127.0.0.1:40157`，没有任何 socket 调用。
+**最终版本**：按要求恢复为 **AppManagement v0.4.10-alpha2**
+（tag `v0.4.10-alpha2`，commit `cc80b3313113d946f7216ff4b95c3c4b83381149`），
+并直接修改其 `service/service.go`：删除 `external.PublishEventInSocket` 首调，
+`PublishEventWrapper` 只调用
+`MyService.MessageBus().PublishEventWithResponse`，使用 `run/message-bus.url`
+解析出的 `http://127.0.0.1:40157`。
+
+说明：v0.4.10-alpha2 的 `-v` 仍硬编码打印 `v0.4.5`（上游常量），版本以 tag/commit
+和构建元数据为准。v0.4.5 曾作为中间修复版本验证通过，但**已被 v0.4.10-alpha2 取代**；
+`casaos-appmanagement-v0.4.5-blockers.patch` 作废，仅保留作历史对照。
 
 复核证据：
 
 ```bash
 grep -rn "PublishEventInSocket\|message-bus.sock\|http://unix" \
-  /build/casaos-fix/CasaOS-AppManagement --include="*.go"
+  /build/casaos-fix/CasaOS-AppManagement-v0410 --include="*.go"
 # -> none
 strings /opt/casaos-p3/bin/casaos-app-management | grep -c "/tmp/message-bus.sock"
 # -> 0
 strings /opt/casaos-p3/bin/casaos-app-management | grep -c "PublishEventInSocket"
 # -> 0
-awk '/2026-10-25T19:3[1-9]/' /opt/casaos-p3/log/app-management.stdout.log | grep -c "message-bus.sock"
+awk '/2026-10-25T20:5[4-9]/' /opt/casaos-p3/log/app-management.stdout.log | grep -c "message-bus.sock"
 # -> 0
-awk '/2026-10-25T19:3[1-9]/' /opt/casaos-p3/log/app-management.stdout.log | grep -c "failed to publish event"
+awk '/2026-10-25T20:5[4-9]/' /opt/casaos-p3/log/app-management.stdout.log | grep -c "failed to publish event"
 # -> 0
 ```
 
-最终二进制 sha256：`899d540ae0b7ae5d70e7a5e0f7f6cfc9e9706701c5486d6852ee348646d5f879`。
+最终二进制 sha256：`6ed86c879d11b9ea30e46f63ff536119446d9a9c4279a520c4272a6f62406c78`。
+中间 v0.4.5 二进制（已备份）：`899d540ae0b7ae5d70e7a5e0f7f6cfc9e9706701c5486d6852ee348646d5f879`。
 
 ## 1. 根因
 
@@ -77,7 +85,8 @@ awk '/2026-10-25T19:3[1-9]/' /opt/casaos-p3/log/app-management.stdout.log | grep
   `external.PublishEventInSocket`，固定 dial `/tmp/message-bus.sock`；
   该文件不存在，每次安装/卸载产生事件发布失败日志（旧证据 15 次）。
 - 同时 AppManagement 上游把 `/etc/casaos/env`、`/var/lib/casaos/docker_root`
-  写死；v0.4.5 还缺少 `run/app-management.url` 的写入。
+  写死；本次一并改为前缀内路径。v0.4.10-alpha2 本身已写
+  `run/app-management.url`（中间版本 v0.4.5 缺失，已回退，不再是最终版本）。
 - 随包 `delete-old-service.sh` 写 `/etc`、`/usr`、`/var/lib/casaos`，
   `helper.sh` 含 `systemctl stop docker`、`cp -r /var/lib/docker/*`，
   `update.sh` 直接 `curl | bash`；三者均未被 unit 引用。
@@ -111,21 +120,26 @@ UserService 的 `/v1/users/login` 校验请求体中的 `password`；UserService
 | `route/v1/user.go` | 新增 `isLoopbackHost`/`requestIsLoopback`：先查 `RemoteAddr` 必须 loopback，再查 `X-Forwarded-For`/`X-Real-IP` 首个地址也必须 loopback（防 gateway 代理把 LAN 请求伪装成 127.0.0.1）；`GET /v1/users/status` 与 `POST /v1/users/register` 仅在**未初始化**时强制 loopback，LAN 返回 403；初始化后行为不变 |
 | `go.mod` / `go.sum` | `modernc.org/sqlite v1.30.0`、`modernc.org/libc v1.50.9` |
 
-### 2.3 AppManagement v0.4.5（`casaos-appmanagement-v0.4.5-blockers.patch`）
+### 2.3 AppManagement v0.4.10-alpha2（`casaos-appmanagement-v0.4.10-alpha2-blockers.patch`）
+
+最终版本：tag `v0.4.10-alpha2`，commit `cc80b3313113d946f7216ff4b95c3c4b83381149`。
 
 | 文件 | 改动 |
 |---|---|
-| （未改 `service/service.go`） | v0.4.5 的 `PublishEventWrapper` 本身就是 HTTP-only，已满足“socket 直接移除”；source grep 与二进制 strings 均无 socket 引用 |
-| `main.go` | 启动时写 `run/app-management.url = http://127.0.0.1:<port>`（v0.4.5 原缺失，会留下旧端口死文件） |
+| `service/service.go` | 删除 `external.PublishEventInSocket` 首调及其 `else` 分支；`PublishEventWrapper` 直接调用 `MyService.MessageBus().PublishEventWithResponse`（URL 来自 `run/message-bus.url`），socket 路径彻底移除 |
 | `pkg/config/init.go` | 全局 env 文件从写死 `/etc/casaos/env` 改为 `ConfigFilePath` 同目录的 `env`（前缀内 `/opt/casaos-p3/conf/env`） |
 | `route/v1/docker.go` | docker-root 标记文件从 `/var/lib/casaos/docker_root` 改为 `$PREFIX/apps/docker_root` |
+| `main.go` | 无需改动：v0.4.10-alpha2 上游已写 `run/app-management.url = http://127.0.0.1:<port>`，本次验证该文件随监听端口更新 |
+
+v0.4.5 中间版本补丁 `casaos-appmanagement-v0.4.5-blockers.patch` **作废**，仅保留作
+历史对照；最终安装包与验收均使用 v0.4.10-alpha2。
 
 随包脚本处理：
 
 - 从 `/opt/casaos-p3/share/shell/` 移除 `delete-old-service.sh`、`helper.sh`、`update.sh`，
   备份到 `/opt/casaos-p3/.removed-20261025-192413/`（不随包、不被 unit 引用）。
 - 同步从 `/build/archive/casaos-p3/authored/share/shell/` 和 stage 移除；
-  新包 `casaos-p3-loong64-0.1.1-blockerfix.tar.gz` 中已无这三个脚本。
+  新包 `casaos-p3-loong64-0.1.2-appmgr410.tar.gz` 中已无这三个脚本。
 - 保留 `local-storage-helper.sh`（已加白名单）、`usb-mount.sh`/`usb-mount@.service`
   （USB 自动挂载，本次策略仍不纳入 local-storage 管理）。
 
@@ -140,7 +154,7 @@ Go：`/home/yunix/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-loong64/
 |---|---|---|
 | LocalStorage | v0.4.4 | `c78fcce41c1cbb1ec37fa14d71d39521ba3db3ca` |
 | UserService | v0.4.8 | `5cf4ed5424be4c62b97d67b51f6338c47285f47b` |
-| AppManagement | v0.4.5 | `5f73e129987fb6cc49f60051cb5073bec17a1af0` |
+| AppManagement | v0.4.10-alpha2 | `cc80b3313113d946f7216ff4b95c3c4b83381149` |
 
 oapi codegen（生成的 `codegen/` 不在 git 中，必须先生成；MessageBus spec 固定到运行中的
 v0.4.4-3-alpha2，避免 main 分支漂移）：
@@ -175,13 +189,15 @@ go get modernc.org/sqlite@v1.30.0
 go mod tidy
 go build -trimpath -buildvcs=false -ldflags="-s -w" -o /build/casaos-fix/out/casaos-user-service .
 
-cd /build/casaos-fix/CasaOS-AppManagement
+cd /build/casaos-fix/CasaOS-AppManagement-v0410
 go mod tidy
-go build -trimpath -buildvcs=false -ldflags="-s -w" -o /build/casaos-fix/out/casaos-app-management .
+go build -trimpath -buildvcs=false -ldflags="-s -w" -o /build/casaos-fix/out/casaos-app-management-v0410 .
+# 安装时重命名为 /opt/casaos-p3/bin/casaos-app-management
 ```
 
 产物均为 `ELF 64-bit LSB executable, LoongArch, statically linked, stripped`；
-`-v` 分别为 `v0.4.4` / `v0.4.8` / `v0.4.5`。
+`-v` 分别为 `v0.4.4` / `v0.4.8` / `v0.4.5`（AppManagement 的 `0.4.5` 是上游硬编码常量，
+实际源码为 tag `v0.4.10-alpha2`，以 commit `cc80b33…` 为准）。
 
 构建中遇到 `/home` 满（150G，100%）：清理了可再生 `~/.cache/go-build`，并把 `GOCACHE`
 指向 `/build/casaos-fix/.gocache`；未删除模块缓存/源码。
@@ -189,27 +205,35 @@ go build -trimpath -buildvcs=false -ldflags="-s -w" -o /build/casaos-fix/out/cas
 ## 4. 替换与重启
 
 ```bash
+# 第一轮（19:24）：LocalStorage / UserService / AppManagement
 TS=20261025-192413
 mkdir -p /opt/casaos-p3/bin/.bak-$TS
 cp -a /opt/casaos-p3/bin/{casaos-local-storage,casaos-user-service,casaos-app-management} /opt/casaos-p3/bin/.bak-$TS/
 install -m 0755 /build/casaos-fix/out/casaos-local-storage /opt/casaos-p3/bin/
 install -m 0755 /build/casaos-fix/out/casaos-user-service /opt/casaos-p3/bin/
-install -m 0755 /build/casaos-fix/out/casaos-app-management /opt/casaos-p3/bin/
 install -m 0755 .../local-storage-helper.sh /opt/casaos-p3/share/shell/
-# 只停/起对应服务（gateway/message-bus/casaos 未重启）
+
+# 第二轮（20:52）：AppManagement 回到 v0.4.10-alpha2（仅备份/替换 app-management）
+TS2=20261025-205258
+mkdir -p /opt/casaos-p3/bin/.bak-$TS2-v045
+cp -a /opt/casaos-p3/bin/casaos-app-management /opt/casaos-p3/bin/.bak-$TS2-v045/
+install -m 0755 /build/casaos-fix/out/casaos-app-management-v0410 /opt/casaos-p3/bin/casaos-app-management
+
+# 只停/起 app-management + casaos；gateway/message-bus/user-service/local-storage/Docker 未重启
 CASAOS_CONFIG_PATH=/opt/casaos-p3/conf /opt/casaos-p3/scripts/start.sh
 ```
 
 备份与最终哈希：
 
-| 文件 | 旧 sha256（`.bak-20261025-192413`） | 新 sha256 |
+| 文件 | 旧 sha256 | 新 sha256 |
 |---|---|---|
-| casaos-local-storage | `6af97e290c2d9bc87085cfbd3f1e7ce4bd3f2443990882ab6ca6314a34e6cfe7` | `c11c596d246c1bc1eb8e984ad29194d85a955696aae53cbbe64eba4595b38008` |
-| casaos-user-service | `72b70ee483b34b05faff0cbfa158e4f05b4d1d9cf792f4d9d0ef1a85800d3dbb` | `cafebdac273df450ab780b7671bf154dcefee0bc26e556318ca221323db77572` |
-| casaos-app-management | `5c6d5653f372638b864bef0c59a6bc8172edf79782ff2ee99d1213c36ff9251f` | `899d540ae0b7ae5d70e7a5e0f7f6cfc9e9706701c5486d6852ee348646d5f879` |
+| casaos-local-storage | `6af97e290c2d9bc87085cfbd3f1e7ce4bd3f2443990882ab6ca6314a34e6cfe7`（`.bak-20261025-192413`） | `c11c596d246c1bc1eb8e984ad29194d85a955696aae53cbbe64eba4595b38008` |
+| casaos-user-service | `72b70ee483b34b05faff0cbfa158e4f05b4d1d9cf792f4d9d0ef1a85800d3dbb`（`.bak-20261025-192413`） | `cafebdac273df450ab780b7671bf154dcefee0bc26e556318ca221323db77572` |
+| casaos-app-management | 原始 `5c6d5653…`（`.bak-20261025-192413`）；中间 v0.4.5 `899d540a…`（`.bak-20261025-205258-v045`） | **v0.4.10-alpha2 `6ed86c879d11b9ea30e46f63ff536119446d9a9c4279a520c4272a6f62406c78`** |
 
 运行中进程校验（`sha256sum /proc/<pid>/exe`）与上表新哈希一致：
-local-storage `c11c596…`、user-service `cafebdac…`、app-management `899d540…`。
+local-storage `c11c596…`、user-service `cafebdac…`、
+**app-management `6ed86c87…`（pid 435412）**。
 
 产物锚定：
 
@@ -218,8 +242,10 @@ local-storage `c11c596…`、user-service `cafebdac…`、app-management `899d54
 | `share/shell/local-storage-helper.sh`（已部署） | `63ba8b55082d16e54c53d94f76ea543a7027a940736beee1022138fea058b0fc` |
 | `casaos-localstorage-v0.4.4-blockers.patch` | `1e5083ef65931e88fa1e6dc3becc88b5e899b91ee639fa2db45edc7c18e51cb0` |
 | `casaos-userservice-v0.4.8-blockers.patch` | `9e1096018c08231356d419465ac1d4714170c4e94a8915fdf4ec210c9ec82c31` |
-| `casaos-appmanagement-v0.4.5-blockers.patch` | `d5543f4bd1815b67e8f7a6049fd5e5d32e0485c41eab025428397bb5b6130dac` |
-| `casaos-p3-loong64-0.1.1-blockerfix.tar.gz` | `fdfbe2b81447d5bfd5f06918b2bff536a84914ea977afbd71dee89b4a5eaa06a` |
+| `casaos-appmanagement-v0.4.10-alpha2-blockers.patch` | `bfd1713afddd767c285d0c9cca0174bdff558f7338b017f053614ca2e8ba42fb` |
+| `casaos-appmanagement-v0.4.5-blockers.patch`（作废/历史） | `d5543f4bd1815b67e8f7a6049fd5e5d32e0485c41eab025428397bb5b6130dac` |
+| `casaos-p3-loong64-0.1.2-appmgr410.tar.gz` | `688fed00656f9ff8a25299989d4ddf28bb6e35b2b10a1964f7acce6efeaa9b14` |
+| `casaos-p3-loong64-0.1.1-blockerfix.tar.gz`（已被取代） | `fdfbe2b81447d5bfd5f06918b2bff536a84914ea977afbd71dee89b4a5eaa06a` |
 
 ## 5. 验收
 
@@ -285,6 +311,7 @@ curl -X PUT .../v1/storage -d '{"path":"/dev/sda1","volume":"/mnt/Data","format"
 伪造头为何也会被拒绝：CasaOS gateway 的 `route/gateway_route.go:rewriteRequestSourceIP`
 会先 `Del("X-Forwarded-For")`/`Del("X-Real-IP")`，仅在 `RemoteAddr` 为 loopback 时把
 真实上游 hop 重新写回；因此 UserService 取 XFF 首个值即可，且已用上述伪造头实测确认。
+原始证据：`/tmp/casaos-us-test-forged.log`。
 
 生产库（已初始化）：LAN `192.168.8.8:8081/v1/users/status` = 200 `initialized:true`；
 LAN `POST /v1/users/register` = 400 `Key does not exist`，未新增用户。
@@ -292,7 +319,7 @@ LAN `POST /v1/users/register` = 400 `Key does not exist`，未新增用户。
 
 ### 5.3 应用安装/卸载与事件链路（memos）
 
-使用最终二进制（`899d540…`）重跑：
+使用最终 v0.4.10-alpha2 二进制（`6ed86c87…`）重跑（2026-10-25 20:54）：
 
 ```bash
 curl -H "Authorization: $TOK" -H "Accept: application/yaml" \
@@ -311,18 +338,22 @@ curl -X DELETE 'http://127.0.0.1:8081/v2/app_management/compose/memos?delete_con
   compose 列表为空，镜像也被移除；
 - **事件发布：安装 9/9、卸载 6/6，全部 HTTP 200**；
 - 新 app-management 日志 `failed to publish event` = **0**，`message-bus.sock` = **0**；
-- 旧二进制最后一次 socket 错误停在 `2026-10-25T18:21:39`，与本次无关。
+- 旧二进制最后一次 socket 错误停在 `2026-10-25T18:21:39`，与本次无关；
+- 本次安装日志中 `docker:image:pull-begin/progress/pull-end` 均正常，未出现
+  `docker:image:pull-error`（镜像已预置；Docker Hub 直连问题见 §8）。
+- 原始证据：`/tmp/casaos-app-test-v0410.log`。
 
-说明：`docker:image:pull-error` 事件仍会出现，因为 Docker daemon 优先解析 Docker Hub
-的 IPv6 并失败；本次用 `curl -4` 手动拉取镜像后 `docker load`，安装/启动/卸载链路正常。
-这是宿主 Docker DNS/IPv6 问题，不是事件通道问题。拉取尝试中曾临时在 `/etc/hosts`
-pin IPv4，命令结束立即恢复；恢复前后 sha256 均为 `b05c2f1a…`，一致。
+说明：宿主 Docker 仍优先解析 Docker Hub 的 IPv6，直接 `docker pull` 会失败；本次用
+`curl -4` 拉取后 `docker load` 预置镜像，安装时 `pull-begin/pull-end` 走本地缓存，
+未产生 `pull-error`。该宿主 DNS/IPv6 问题仍在 §8，不属于事件通道问题。
+拉取尝试中曾临时在 `/etc/hosts` pin IPv4，命令结束立即恢复；恢复前后 sha256 均为
+`b05c2f1a…`，一致。
 
 ### 5.4 前缀/宿主路径
 
 - `/etc/casaos`、`/var/lib/casaos`、`/usr/share/casaos`、`/etc/casaos.conf` 均**不存在**；
 - app-management 重启后日志为 `open /opt/casaos-p3/conf/env`（前缀内），不再访问 `/etc/casaos/env`；
-- `run/app-management.url` = `http://127.0.0.1:35105`（与实际监听一致，不再是旧 46523）；
+- `run/app-management.url` = `http://127.0.0.1:35499`（v0.4.10-alpha2 实际监听，随重启更新）；
 - `/opt/casaos-p3/share/shell` 仅保留 `assist.sh`、`local-storage-helper.sh`、
   `usb-mount.sh`、`usb-mount@.service`。
 
@@ -337,8 +368,9 @@ pin IPv4，命令结束立即恢复；恢复前后 sha256 均为 `b05c2f1a…`�
 /v2/app_management/categories : 200
 ```
 
-soak：2026-10-25 19:37:48 起，60s × 15 次（15 分钟），采样 6 服务 PID/RSS/HTTP。
-结果见 §7。
+soak：第一次 15 分钟（19:37:48–19:51:50）在中间版本 v0.4.5 上完成；
+20:52 切换回 v0.4.10-alpha2 并只重启 app-management+casaos 后，重跑 10 分钟
+（20:55:22–21:04:22）作为**最终版本**证据。结果见 §7；24h soak 作为后续/协调者侧继续。
 
 ### 5.6 user.db 备份/恢复
 
@@ -351,18 +383,18 @@ soak：2026-10-25 19:37:48 起，60s × 15 次（15 分钟），采样 6 服务 
 
 ### 5.7 新包安装自检
 
-`casaos-p3-loong64-0.1.1-blockerfix.tar.gz` 解包后安装到 `/tmp/casaos-pkg-test`：
+`casaos-p3-loong64-0.1.2-appmgr410.tar.gz` 解包后安装到 `/tmp/casaos-pkg-test2`：
 
 ```bash
-./install.sh --prefix /tmp/casaos-pkg-test --store loong64
+./install.sh --prefix /tmp/casaos-pkg-test2 --store loong64
 ```
 
 结果：
 
 - 安装退出码 0，未启动任何服务，未写 `/etc/systemd/system/casaos*`；
 - `share/shell` 仅含 `assist.sh`、`local-storage-helper.sh`、`usb-mount.sh`、`usb-mount@.service`；
-- 三个二进制 sha256 与生产一致（`c11c596…` / `cafebdac…` / `899d540…`）；
-- `VERSION` = `0.1.1-blockerfix-p3`；
+- 三个二进制 sha256 与生产一致（`c11c596…` / `cafebdac…` / `6ed86c87…`）；
+- `VERSION` = `0.1.2-appmgr410-p3`；
 - `uninstall.sh --purge` 后临时前缀删除。
 
 ## 6. 可复现补丁
@@ -372,60 +404,89 @@ cd <CasaOS-LocalStorage v0.4.4>
 git apply docs/research/casaos-patches/casaos-localstorage-v0.4.4-blockers.patch
 cd <CasaOS-UserService v0.4.8>
 git apply docs/research/casaos-patches/casaos-userservice-v0.4.8-blockers.patch
-cd <CasaOS-AppManagement v0.4.5>
-git apply docs/research/casaos-patches/casaos-appmanagement-v0.4.5-blockers.patch
+cd <CasaOS-AppManagement v0.4.10-alpha2>
+git apply docs/research/casaos-patches/casaos-appmanagement-v0.4.10-alpha2-blockers.patch
 ```
 
 补丁不含生成的 `codegen/`（见 §3 生成命令）。
 
-可复现性自检：把三个补丁分别 `git apply` 到干净的 tag 克隆
-（v0.4.4 / v0.4.8 / v0.4.5），执行 `diff -r --exclude=.git --exclude=codegen`
-与本次构建源码树比较，三者均 **IDENTICAL**；再按 §3 的固定 codegen + 构建命令
-从干净树重建，三个二进制 sha256 与部署值**逐字节一致**：
+可复现性自检：把补丁分别 `git apply` 到干净的 tag 克隆
+（v0.4.4 / v0.4.8 / v0.4.10-alpha2），执行
+`diff -r --exclude=.git --exclude=codegen` 与本次构建源码树比较，三者均 **IDENTICAL**。
+LocalStorage/UserService 另按 §3 从干净树重建，二进制 sha256 与部署值**逐字节一致**：
 
 ```
 c11c596d…  repro-out/casaos-local-storage
 cafebdac…  repro-out/casaos-user-service
-899d540a…  repro-out/casaos-app-management
+```
+
+AppManagement v0.4.10-alpha2 的干净树同样重建成功，二进制
+`6ed86c87…` 与部署值**逐字节一致**。
+
+```
+6ed86c87…  repro-out/casaos-app-management-v0410
 ```
 
 ## 7. soak 结果
 
-命令：`bash /tmp/soak-fix2.sh 15 60`；2026-10-25 19:37:48–19:51:50
-（60s × 15，跨度 14m02s），采样 6 服务 PID/RSS/HTTP。
+### 7.1 最终版本 AppManagement v0.4.10-alpha2（10 分钟）
+
+命令：`bash /tmp/soak-v0410.sh 10 60`；2026-10-25 20:55:22–21:04:24
+（60s × 10），采样 6 服务 PID/RSS/HTTP。
 
 | 服务 | 存活 | HTTP 码 | RSS 首→末 (KB) | RSS 峰值 (KB) | PID |
 |---|---|---|---|---|---|
-| gateway | 15/15 | 200 ×15 | 19552→17968 | 19552 | 86340 |
-| message-bus | 15/15 | 200 ×15 | 35280→31648 | 35280 | 86343 |
-| user-service | 15/15 | 200 ×15 | 27136→25040 | 27648 | 391180 |
-| app-management | 15/15 | 200 ×15 | 64976→63872 | 65952 | 394809 |
-| local-storage | 15/15 | 401 ×15 | 57344→63456 | 64512 | 401778 |
-| casaos | 15/15 | 200 ×15 | 35616→34400 | 36624 | 86430 |
+| gateway | 10/10 | 200 ×10 | 22016→17840 | 22528 | 86340 |
+| message-bus | 10/10 | 200 ×10 | 33584→35088 | 35088 | 86343 |
+| user-service | 10/10 | 200 ×10 | 23888→25424 | 25424 | 391180 |
+| app-management | 10/10 | 200 ×10 | 67520→63808 | 67520 | 435412 |
+| local-storage | 10/10 | 401 ×10 | 61360→64944 | 64944 | 401778 |
+| casaos | 10/10 | 200 ×10 | 34304→35280 | 35280 | 435511 |
 
-- 15/15 样本六服务全部存活；6 个 PID 全程不变；无崩溃/重启；
+- 10/10 样本六服务全部存活；PID 全程不变；无崩溃/重启；
 - gateway/message-bus/user-service/app-management/casaos 全 200；
   local-storage `/v1/storage` 全 401 是**未带 JWT 的预期**，且证明服务在响应；
-- RSS 无持续上升趋势（app-management 峰值 65,952 KB，均 <66 MB）；
+- RSS 无持续上升趋势；app-management 峰值 67,520 KB；
+- 原始证据：`/tmp/casaos-soak-v0410.csv`、`/tmp/casaos-soak-v0410.log`。
+
+### 7.2 切换前 v0.4.5（15 分钟，历史证据）
+
+命令：`bash /tmp/soak-fix2.sh 15 60`；2026-10-25 19:37:48–19:51:50（60s × 15）。
+
+| 服务 | 存活 | HTTP 码 | RSS 峰值 (KB) | PID（v0.4.5 时） |
+|---|---|---|---|---|
+| gateway | 15/15 | 200 ×15 | 19552 | 86340 |
+| message-bus | 15/15 | 200 ×15 | 35280 | 86343 |
+| user-service | 15/15 | 200 ×15 | 27648 | 391180 |
+| app-management | 15/15 | 200 ×15 | 65952 | 394809 |
+| local-storage | 15/15 | 401 ×15 | 64512 | 401778 |
+| casaos | 15/15 | 200 ×15 | 36624 | 86430 |
+
+- 15/15 样本六服务全部存活；PID 全程不变；无崩溃/重启；
+- 因 20:52 将 app-management 替换为 v0.4.10-alpha2 并重启 app-management+casaos，
+  该轮不作为最终版本证据；最终证据以 §7.1 为准；
 - 原始证据：`/tmp/casaos-soak-fix.csv`、`/tmp/casaos-soak-fix.log`、
   `/tmp/casaos-soak-analysis.txt`。
-- **24h 连续运行与真机重启自启未做，需后续；C-03 仍不能最终判通过。**
+- **24h 连续运行与真机重启自启未做/由协调者侧继续；C-03 仍不能最终判通过。**
 
 ## 8. 未解决/剩余风险
 
-1. **24h soak 与真机重启自启未做**：C-03 仍不能最终判通过，需后续补跑。
+1. **24h soak 与真机重启自启**：本轮完成最终版本 10 分钟 soak（另有一次切换前
+   v0.4.5 的 15 分钟）；24h soak 由协调者侧继续/需后续，真机重启自启未验证，
+   C-03 仍不能最终判通过。
 2. **Docker Hub 镜像拉取路径**：宿主 Docker 优先 IPv6，直连失败；本次用 IPv4 `curl` +
    `docker load` 预置镜像。需修 Docker DNS/代理或镜像源，否则新应用首次安装会失败。
    该问题不影响 CasaOS 事件链路。
-3. **AppManagement 版本口径**：旧二进制模块元数据为 v0.4.10-alpha2+dirty，但 `-v`
-   硬编码 `0.4.5`；本次按任务重建 v0.4.5。若必须保留 v0.4.10-alpha2，应把其
-   `PublishEventWrapper` 改成同样 HTTP-only（删除 `PublishEventInSocket` 首调）。
+3. **AppManagement 版本口径**：最终已恢复为 v0.4.10-alpha2
+   （commit `cc80b33…`），并删除其 `PublishEventInSocket` 首调；`-v` 仍显示上游硬编码的
+   `v0.4.5`，版本以 tag/commit/哈希为准。中间 v0.4.5 补丁已作废。
 4. **PUT `format` 省略的兼容行为**：仍默认格式化（历史行为），但现在必须通过密码
    二次确认；建议客户端始终显式传 bool。
 5. **密码二次确认依赖 UserService**：UserService 不可用时格式化会 fail-closed（401）；
    这是有意的安全取舍。
-6. **新包/旧包与文档锚点**：新包 `fdfbe2b8…` 已移除危险脚本并含最终二进制；
-   **旧 0.1.0 包 `6efcbb60…` 仍含这三个脚本，已被 0.1.1 取代，发布时不得再分发 0.1.0**。
+6. **新包/旧包与文档锚点**：新包 `casaos-p3-loong64-0.1.2-appmgr410.tar.gz`
+   （`688fed00…`）已移除危险脚本并含最终 v0.4.10-alpha2 二进制；0.1.1 已被取代，
+   旧 0.1.0 包 `6efcbb60…` 仍含危险脚本，发布时不得再分发 0.1.0/0.1.1。
    按任务要求未改 `docs/CASAOS-P3.md`（仍锚定 0.1.0），发布前需同步文档/sidecar。
 7. `o_disk` 仍有历史 NBD 行 `/mnt/testdisk_nbd0p1`（与本轮无关）。
 8. local-storage 的 `DELETE /v1/storage` 未加白名单（仅卸载、不格式化）；如需更严格
