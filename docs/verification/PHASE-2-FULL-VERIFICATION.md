@@ -40,12 +40,13 @@
 | **E2** | Host A 从 U 盘启动 iStoreOS **la5 公开版** | public feed 115 个 app-meta；public 镜像 | iStore 公开版真机 + 全量矩阵 |
 | **E3** | Host A 从 U 盘启动 iStoreOS **p1 私人版** | private feed 115 个 app-meta；Linkwarden/Karakeep 用 `local/*` | iStore 私人版真机 + 全量矩阵 |
 | **E4** | 独立浏览器主机（Windows 本机） | 访问 E0/E2/E3 的 Web UI | UI 截图、LuCI/CasaOS 商店点击回归 |
-| **E5** | B 机 `172.16.100.66` 的 `/dev/sdb`（476.9G）或 QEMU 干净 rootfs | CasaOS 0.1.3-store115 包 | S-C4 干净安装；sdb 上的 `rpool`/LoongNAS Gate 0 测试环境会被清除，sda 不动 |
+| **E5** | B 机 `172.16.100.66` 的 `/dev/sdb`（476.9G），**等龙芯 NAS 项目开发完再操作** | CasaOS 0.1.3-store115 包 | S-C4 干净安装；sdb 上的 `rpool`/LoongNAS Gate 0 测试环境届时才可清除，sda 不动 |
 
-> E5 的硬件已由用户指定为 B 机 sdb；但仍需 **Loongnix 25 安装 ISO**（A/B 当前都没有，
-> 计划从官方镜像下载并校验 SHA256）。sdb3 当前是 `rpool`/LoongNAS Gate 0 测试环境，
-> 使用前会再次确认可丢弃；sda 是 B 机系统盘，绝不触碰。若拿不到安装 ISO，S-C4 只能判
-> PARTIAL/NOT TESTED，不能拿 Host A 的“已装环境”冒充干净安装。
+> E5 的硬件由用户指定为 B 机 sdb，但**推迟到龙芯 NAS 项目开发完成后**；sdb3 当前是
+> `rpool`/LoongNAS Gate 0 测试环境，届时要先确认可丢弃，sda 是 B 机系统盘，绝不触碰。
+> **Loongnix 25 ISO 已找到**：A 机 58G U 盘的 `/dev/sdb1`（5.856GB，kernel 6.6.52-loong64），
+> 先保存为 `/mnt/Data/firmware/loongnix25-20260820.iso` 并校验，之后 U 盘可整盘写 iStoreOS。
+> E5 未完成前，G1 只能出“Host A 闸门通过、干净安装待 B sdb”的分项结论，不能整体 PASS。
 
 ## 2. 版本矩阵：先固化，再测试
 
@@ -362,8 +363,12 @@ curl -s http://127.0.0.1:8081/v2/app_management/apps \
 
 ### C0. 前置
 
-- 使用已授权的 58G `LOONGSONISO` U 盘；写前用 `lsblk -o NAME,SIZE,SERIAL,MODEL`
-  确认设备，记录原 ISO 文件名；写盘会清空该 U 盘。
+- 使用已授权的 58G `LOONGSONISO` U 盘。**先只读保存 ISO**：
+  `/dev/sdb1` 是 5.856GB 的 iso9660（`LOONGSONISO`，kernel 6.6.52-loong64），
+  用 `dd if=/dev/sdb1 of=/mnt/Data/firmware/loongnix25-20260820.iso bs=4M
+  status=progress conv=fsync` 保存并 `sha256sum`；挂载只读确认
+  `live/filesystem.squashfs` 存在后，再整盘写 iStoreOS。写盘会清空 U 盘，
+  但不影响已保存的 ISO。
 - 从 GitHub Release 下载 la5 `img.gz` 与 `sha256sums`，校验 SHA256。
 - 另一台机器（Windows）作为 HTTP feed 服务器与测试控制端。
 - Docker Hub 已实测可匿名拉取（`joplin-server`/`linkding`/`postgres` 等 manifest 200），
@@ -506,7 +511,7 @@ grep -R "dckr_pat\|password\|secret" store/istore/feed || true
 |---|---|---|
 | D0 | 计划批准；生成测试卡/版本脚本；备份 | 计划、卡片骨架、版本矩阵脚本 |
 | D1 21:06 后 | C-03 soak 分析；A2 商店 115；A3 重启 | C03 报告、G1 初步 |
-| D2 | A4/A5 干净安装、升级/卸载；CasaOS 批次 B0-B2 | G1 结论、批次报告 |
+| D2 | A5 升级/卸载；CasaOS 批次 B0-B2；保存 Loongnix ISO | G1a 结论、批次报告、ISO 校验 |
 | D3-D5 | CasaOS B3-B5 全量矩阵 | CasaOS 全量报告 |
 | D6 | 准备 la5 U 盘/feed；E2 启动 | iStore la5 基线 |
 | D7-D9 | la5 115 应用矩阵、重启/升级 | la5 报告 |
@@ -515,8 +520,29 @@ grep -R "dckr_pat\|password\|secret" store/istore/feed || true
 | D13-D14 | 汇总、复测失败项、最终报告 | G2/G3 结论 |
 | 并行 | OMV O-01~O-03 子代理 | OMV 报告 |
 
-实际日历取决于：USB 启动是否顺利、B 机 Loongnix 安装 ISO 是否可得、
+实际日历取决于：USB 启动是否顺利、B 机 sdb 何时从 NAS 项目释放、
 25 个 manual 应用的外部依赖是否可用。失败项按“阻塞证据”处理，不无限重试。
+
+### 11.1 会话拆分（用户要求）
+
+不同阶段用独立新会话执行，避免长测试日志把计划/判定上下文挤掉。
+
+| 会话 | 阶段 | 主要职责 | 结束条件 |
+|---|---|---|---|
+| **本会话** | 计划与审查 | 生成/审查执行规范；复核子代理产物；维护计划与最终判定 | Phase 0 规范全部通过审查 |
+| `casaos-gate-exec`（新） | 阶段 A + B | CasaOS C-03/C-04/C-05/C-06、S-C5、平台矩阵、115 应用矩阵 | G1a + CasaOS 全量报告 |
+| `istore-la5-exec`（新） | 阶段 C | 保存 ISO、写 U 盘、la5 真机、public feed、115 应用矩阵 | la5 报告 |
+| `istore-p1-exec`（新） | 阶段 D | p1 真机、private feed、local 镜像、115 应用矩阵、隔离审计 | p1 报告 |
+| `casaos-clean-exec`（新） | 阶段 A4 | **等 NAS 项目完成**后用 B sdb 做 CasaOS 0.1.3 干净安装 | G1b 结论 |
+| `omv-gate0`（子代理/会话） | 阶段 F | O-01~O-03 | OMV 报告 |
+
+每个执行会话必须：
+
+- 以本计划和对应执行规范为唯一入口；
+- 维护 `verify/state/<session>.yaml`（当前批次、最后完成项、失败项、待复测）；
+- 每完成一个批次写报告并 commit；
+- 不跨阶段修改其它会话的 evidence 目录；
+- 遇到需要重启/USB/写盘的步骤，先确认窗口。
 
 ## 12. 风险与回退
 
@@ -540,6 +566,29 @@ grep -R "dckr_pat\|password\|secret" store/istore/feed || true
 6. 全量功能矩阵报告（按分类/按应用/失败清单）。
 7. OMV O-01~O-03 报告。
 8. 更新 `NEXT-PLAN`、`GAPS`、`CASAOS-P3`、`verify-*`，最终 commit。
+
+## 13.5 Phase 0：子代理写规范、主会话审查
+
+用户要求“子代理写详细执行规范，主会话审查”。Phase 0 拆成四份规范，分别由子代理
+写入 `docs/verification/specs/`，主会话逐份审查后才允许执行会话开工。
+
+| 规范 | 负责子代理 | 必须包含 | 审查门槛 |
+|---|---|---|---|
+| `CASAOS-EXECUTION.md` | 子代理 C | C-03/C-04/S-C5/S-C6 步骤、平台 API/UI 用例、115 应用批次、失败处理、预计工时 | 命令可直接执行；每步有验收与证据路径；不把 B sdb 写进当前阶段 |
+| `ISTORE-EXECUTION.md` | 子代理 I | ISO 保存、58G U 盘写盘、la5/p1 启动、feed 部署、opkg/LuCI、公私隔离、115 应用批次、恢复 Host A | 设备名/回退/断电风险写清；public/private 分开 |
+| `HARNESS-VERSION-EVIDENCE.md` | 子代理 H | 版本矩阵字段与命令、115 卡 schema/生成、runner 架构、并发/清理、证据与报告模板、会话 state | 能回答“每个 PASS 的证据在哪”；无凭据进 Git |
+| `OMV-O01-O03.md` | 子代理 O | OMV 7/8 基线、依赖闭包、QEMU TCG spike、Go/No-Go 证据 | 只做 O-01~O-03；不碰 CasaOS/内部盘 |
+
+主会话审查清单：
+
+1. 是否与 `PHASE-2-FULL-VERIFICATION.md` 的环境矩阵、判定标准、红线一致；
+2. 是否把“计划”写成“可执行命令 + 预期输出 + 失败分支”；
+3. 是否覆盖平台功能，而不只是应用首页；
+4. 是否明确 115 应用的“全功能”口径与未覆盖项；
+5. 是否包含 private/public 隔离与 private 镜像预载；
+6. 是否包含 USB/重启/写盘的设备确认与回退；
+7. 是否有证据目录、报告模板、会话 state 文件；
+8. 是否避免把 B sdb 放进当前阶段。
 
 ## 14. 批准后第一批动作
 
