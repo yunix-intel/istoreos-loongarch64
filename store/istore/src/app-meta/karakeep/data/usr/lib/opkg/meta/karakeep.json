@@ -99,7 +99,7 @@
         "enabled_variants": [
           "public"
         ],
-        "preload": true,
+        "preload": false,
         "env": [],
         "volumes": [
           {
@@ -146,6 +146,6 @@
     "image_size": "",
     "title": "karakeep",
     "name": "karakeep",
-    "runtime": "APP_ID='karakeep'\nAPP_TITLE='karakeep'\nAPP_IMAGE='yunixintel/karakeep:24.10-la5'\nAPP_DEFAULT_VARIANT='public'\nAPP_VARIANTS='public|yunixintel/karakeep:24.10-la5|https://github.com/yunix-intel/istoreos-loongarch64\nprivate|local/karakeep-private:0.34.1-p1|https://github.com/yunix-intel/istore-la-private'\nAPP_PORTS='http|3000|18140|tcp|1'\nAPP_VOLUMES='data|/srv/karakeep/data|/data|rw||1|dir|'\nAPP_ENV='NEXTAUTH_URL|${PUBLIC_URL}|1|\nNEXTAUTH_SECRET|${SECRET:nextauth_secret}|1|\nBROWSER_WEB_URL|http://karakeep-lbrowser:9222|0|public\nCRAWLER_STORE_PDF|true|0|'\nAPP_SIDECARS='karakeep-lbrowser|yunixintel/lbrowser-runtime:3.4.2293.2|1g||public||||5|1'\nAPP_SIDECAR_COMMAND='karakeep-lbrowser^serve'\nAPP_SIDECAR_ENV=''\nAPP_SIDECAR_VOLUMES='karakeep-lbrowser|lbrowser|/opt/apps/lbrowser|/opt/apps/lbrowser|ro|'\nAPP_SIDECAR_PORTS=''\nAPP_DEVICES=''\nAPP_CAPS=''\nAPP_GROUPS=''\nAPP_SYSCTLS=''\nAPP_HOST_NETWORK='0'\nAPP_DOCKER_SOCK='0'\nAPP_DOCKER_SOCK_RO='1'\nAPP_SHM='1g'\nAPP_USER=''\nAPP_COMMAND=''\nAPP_RESTART='unless-stopped'\nAPP_NETWORK_GROUP=''\nAPP_REQUIRES_APP=''\nAPP_HEALTH_PATH=''\nAPP_HEALTH_PORT=''\nAPP_MANUAL=''\nAPP_REVIEW='SQLite；/data 持久化；public 变体使用 LBrowser sidecar，private 变体内置浏览器；搜索需 Meilisearch。; 安装器会先启动 sidecar：karakeep-lbrowser。; 未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。'\n"
+    "runtime": "APP_ID='karakeep'\nAPP_TITLE='karakeep'\nAPP_IMAGE='yunixintel/karakeep:24.10-la5'\nAPP_DEFAULT_VARIANT='public'\nAPP_VARIANTS='public|yunixintel/karakeep:24.10-la5|https://github.com/yunix-intel/istoreos-loongarch64\nprivate|local/karakeep-private:0.34.1-p1|https://github.com/yunix-intel/istore-la-private'\nAPP_PORTS='http|3000|18140|tcp|1'\nAPP_VOLUMES='data|/srv/karakeep/data|/data|rw||1|dir|'\nAPP_ENV='NEXTAUTH_URL|${PUBLIC_URL}|1|\nNEXTAUTH_SECRET|${SECRET:nextauth_secret}|1|\nBROWSER_WEB_URL|http://karakeep-lbrowser:9222|0|public\nCRAWLER_STORE_PDF|true|0|'\nAPP_SIDECARS='karakeep-lbrowser|yunixintel/lbrowser-runtime:3.4.2293.2|1g||public||||5|0'\nAPP_SIDECAR_COMMAND='karakeep-lbrowser^serve'\nAPP_SIDECAR_ENV=''\nAPP_SIDECAR_VOLUMES='karakeep-lbrowser|lbrowser|/opt/apps/lbrowser|/opt/apps/lbrowser|ro|'\nAPP_SIDECAR_PORTS=''\nAPP_DEVICES=''\nAPP_CAPS=''\nAPP_GROUPS=''\nAPP_SYSCTLS=''\nAPP_HOST_NETWORK='0'\nAPP_DOCKER_SOCK='0'\nAPP_DOCKER_SOCK_RO='1'\nAPP_SHM='1g'\nAPP_USER=''\nAPP_COMMAND=''\nAPP_RESTART='unless-stopped'\nAPP_NETWORK_GROUP=''\nAPP_REQUIRES_APP=''\nAPP_HEALTH_PATH=''\nAPP_HEALTH_PORT=''\nAPP_MANUAL=''\nAPP_REVIEW='SQLite；/data 持久化；public 变体使用 LBrowser sidecar，private 变体内置浏览器；搜索需 Meilisearch。; 安装器会先启动 sidecar：karakeep-lbrowser。; 未在 OpenWrt/iStoreOS 真机上执行安装回归；仅做 ipk 结构与 JSON schema 静态校验。'\n"
   }
 }

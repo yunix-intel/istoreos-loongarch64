@@ -237,9 +237,9 @@ docker image inspect local/linkwarden-private:2.16.3-p1
 
 - 安装器遇到 `local/*` 或标记 `preload: true` 的 sidecar 时只做
   `docker image inspect`，不会 `docker pull`。`local/*` 缺失时安装失败并提示预加载。
-- LBrowser 运行时（`yunixintel/lbrowser-runtime:3.4.2293.2`）因许可证原因也不随
-  feed 分发；public 变体的 Linkwarden/Karakeep 需要预先加载该镜像。private 变体
-  不需要 LBrowser sidecar。
+- LBrowser 运行时（`yunixintel/lbrowser-runtime:3.4.2293.2`）在 Docker Hub 公开，
+  安装器会自动 pull；但宿主 `/opt/apps/lbrowser` 的浏览器字节仍需预置，public 变体
+  的 Linkwarden/Karakeep 才能截图/PDF。private 变体不需要 LBrowser sidecar。
 - 私人源部署方式：把 `feed/private/` 放到私人 `FEED_BASE_URL` 下，设备使用私人
   `isfeeds.conf`；不要把 `local/*` 推到公开 registry。
 - 私人 feed 的 app-meta 版本为 `1.0.0-r20261025-p1`，public 为

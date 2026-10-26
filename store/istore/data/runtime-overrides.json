@@ -158,7 +158,7 @@
         "timeout": "",
         "retries": 5
       },
-      "preload": true
+      "preload": false
     }
   },
   "apps": {
