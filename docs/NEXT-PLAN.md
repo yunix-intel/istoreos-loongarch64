@@ -387,9 +387,9 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [ ] G1b B sdb 干净安装（等龙芯 NAS 项目完成后执行）
 - [ ] C-05 CasaOS 上游 PR/issue
 - [x] C-06 CasaOS 应用商店同步（115 个定义、dry-run 与安装包；app-management 重启后 API/UI 返回 115）
-- [ ] O-01 OMV 目标版本与基线审计
-- [ ] O-02 OMV 依赖闭包
-- [ ] O-03 OMV QEMU-TCG 安装 spike
+- [x] O-01 OMV 目标版本与基线审计（OMV 7 不可行；OMV 8 唯一候选，但证据不足；见 verification/specs/OMV-O01-O03.md）
+- [x] O-02 OMV 依赖闭包（OMV 8 as-is 不可行：php-pam、openmediavault-salt/Salt 3008、netplan.io 三组硬阻塞）
+- [ ] O-03 OMV QEMU-TCG 安装 spike（BLOCKED：缺 ≥16GiB scratch 与 loong64 OMV 依赖；QEMU/ISO 在位）
 - [ ] O-04 OMV SaltStack 试跑
 - [ ] O-05 OMV 插件评估
 - [ ] O-06 OMV Go/No-Go
