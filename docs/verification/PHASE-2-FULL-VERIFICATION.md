@@ -368,7 +368,10 @@ curl -s http://127.0.0.1:8081/v2/app_management/apps \
   用 `dd if=/dev/sdb1 of=/mnt/Data/firmware/loongnix25-20260820.iso bs=4M
   status=progress conv=fsync` 保存并 `sha256sum`；挂载只读确认
   `live/filesystem.squashfs` 存在后，再整盘写 iStoreOS。写盘会清空 U 盘，
-  但不影响已保存的 ISO。
+  但不影响已保存的 ISO。**2026-10-26 已执行**：文件
+  `/mnt/Data/firmware/loongnix25-20260820.iso`，5.5GB，sha256
+  `6f607035a8ea2c165eee52444fb465bf80015772084c4df58d87974666f483b9`，
+  只读挂载确认 `live/filesystem.squashfs` 存在。
 - 从 GitHub Release 下载 la5 `img.gz` 与 `sha256sums`，校验 SHA256。
 - 另一台机器（Windows）作为 HTTP feed 服务器与测试控制端。
 - Docker Hub 已实测可匿名拉取（`joplin-server`/`linkding`/`postgres` 等 manifest 200），
