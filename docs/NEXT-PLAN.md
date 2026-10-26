@@ -261,6 +261,9 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 
 ## 9.5 商店同步：CasaOS 与 iStore（最后阶段）
 
+> 执行计划、环境矩阵、平台/应用全量功能测试方案见
+> [verification/PHASE-2-FULL-VERIFICATION.md](verification/PHASE-2-FULL-VERIFICATION.md)。
+
 **启动条件：P1–P4 所有在研应用完成构建、测试、推送后，才启动本阶段。**
 范围包括 **CasaOS 私人商店、iStore 私人版（p1）、iStore 公开版（la5）**。
 在此之前不把“商店可直接安装”算作已完成；当前 CasaOS 私有商店已有 115 个定义，
