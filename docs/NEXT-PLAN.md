@@ -382,10 +382,10 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [ ] C-01 CasaOS SATA 盘验收（挂载/写读/卸载/服务重启自挂、SMART 通过；系统重启待做）
 - [x] C-01b CasaOS USB 只读验收（udevil ro 挂载/卸载通过；USB 不入 local-storage）
 - [x] C-02 CasaOS 真实盘格式化/重建（ext4 格式化+挂载+重挂通过）
-- [ ] C-03 CasaOS 24h 稳定性（24h soak 运行中，2026-10-26 21:06 结束）
-- [ ] C-04 CasaOS 发布闸门评审（3 个 BLOCKER 已修复；24h soak 运行中，重启待验）
+- [x] C-03 CasaOS 24h 稳定性（1440/1440 存活、6 服务 PID 不变、HTTP 200/401 符合预期；见 verification/reports/C03-SOAK.md）
+- [ ] C-04 CasaOS 发布闸门评审（3 个 BLOCKER、24h soak 已 PASS；真机重启/systemd 自启待验；B sdb 干净安装等 NAS 项目完成后做）
 - [ ] C-05 CasaOS 上游 PR/issue
-- [x] C-06 CasaOS 应用商店同步（115 个定义、dry-run 与安装包；UI 缓存待 soak 后重启）
+- [x] C-06 CasaOS 应用商店同步（115 个定义、dry-run 与安装包；app-management 重启后 API/UI 返回 115）
 - [ ] O-01 OMV 目标版本与基线审计
 - [ ] O-02 OMV 依赖闭包
 - [ ] O-03 OMV QEMU-TCG 安装 spike
@@ -402,7 +402,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [x] S-C2 CasaOS 端口与 overrides（115 个端口；wg-easy 固定 51820/51821，多端口已覆盖）
 - [x] S-C3 CasaOS 分类/图标/描述（图标改用 selfh.st；115 个“龙芯版说明”）
 - [ ] S-C4 CasaOS 干净安装（115 个 dry-run 通过；joplin-server 单 compose + PG sidecar 已实测；其余按类别抽样）
-  - 2026-10-25：115 个定义已复制到 Host A 的 `appstore/default/Apps`（实际读取路径）与 `appstore/loong64/Apps`（overlay），旧 18 个已备份。AppManagement 内存缓存仍返回 18，需在 24h soak 结束后重启 `casaos-app-management` 才能在 UI 看到 115 个。
+  - 2026-10-26：app-management 已重启，`/v2/app_management/apps` 返回 115；115 个定义在 `appstore/default/Apps` 与 `appstore/loong64/Apps`，旧 18 个已备份。B 机 sdb 干净安装等 NAS 项目完成后执行。
 - [ ] S-C5 CasaOS 升级/卸载/数据保留
 - [x] S-C6 CasaOS 龙芯差异披露（115 个应用，过期结论已回写）
 - [x] S-I1 iStore app-meta 镜像覆盖（public/private 各 115 个）

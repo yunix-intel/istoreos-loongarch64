@@ -44,7 +44,7 @@ casaos-p3-0.1.0/
   install.sh   uninstall.sh
 ```
 
-当前验证基线：`casaos-p3-loong64-0.1.2-appmgr410.tar.gz`，sha256 `688fed00…a9b14`（24h soak 正在使用该基线，不改动）。商店全量包：`casaos-p3-loong64-0.1.3-store115.tar.gz`，sha256 `7262d39c…50426`，把 `appstore/default` 与 `appstore/loong64-only` 都换成 115 个定义、补 5 个分类并把 `VERSION` 改为 `0.1.3-store115-p3`。旧 0.1.0 / 0.1.1 已移入 `deprecated/`，**不得再分发**。
+当前验证基线：`casaos-p3-loong64-0.1.2-appmgr410.tar.gz`，sha256 `688fed00…a9b14`（24h soak 已完成，1440/1440 存活）。商店全量包：`casaos-p3-loong64-0.1.3-store115.tar.gz`，sha256 `7262d39c…50426`，把 `appstore/default` 与 `appstore/loong64-only` 都换成 115 个定义、补 5 个分类并把 `VERSION` 改为 `0.1.3-store115-p3`。旧 0.1.0 / 0.1.1 已移入 `deprecated/`，**不得再分发**。
 
 ## 4. 安装与运行
 
@@ -176,7 +176,7 @@ curl -X POST http://127.0.0.1:8081/v1/storage   -H "Authorization: $TOKEN" -H "C
 
 ## 10. 2026-10-25 剩余闸门复核
 
-结论：**三个 BLOCKER 已关闭，C-04 可重开复核；最终发布仍待 C-03 的 24h soak 与真机重启自启。**
+结论：**三个 BLOCKER 已关闭，C-03 24h soak 已 PASS；C-04 只差真机重启自启与 B sdb 干净安装。**
 
 > 2026-10-25 已完成源码修复、重编、替换与复验，见 `research/casaos-blocker-fix.md`。
 
@@ -187,11 +187,11 @@ curl -X POST http://127.0.0.1:8081/v1/storage   -H "Authorization: $TOKEN" -H "C
 | 首管理员 LAN 抢先 | **PASS（已修复）** | 空库 LAN status/register 403（含伪造 XFF/X-Real-IP）；loopback 注册成功；初始化后 LAN 行为不变 |
 | 端口/前缀路径 | **PASS（已修复）** | 8081 冲突硬失败；app-management 改用 HTTP message-bus；安装 9/9、卸载 6/6 事件 200；危险 helper 已移出包 |
 | 15 分钟 soak（修复后） | PASS | 6 服务 15/15 存活，PID 不变，RSS 无泄漏；local-storage 401 为未带 JWT 的预期 |
-| 24h 稳定性 | BLOCKED | 未连续运行 24h，C-03 不能判通过 |
+| 24h 稳定性 | **PASS** | 1440/1440 采样存活，6 服务 PID 不变，5 服务 200、local-storage 401 预期；见 verification/reports/C03-SOAK.md |
 | systemd 静态检查 | PASS | 7 unit verify 0 错；未 enable/start，真机自启未验 |
 | 升级/卸载数据保留 | PASS | 重装保留 conf/data/apps；卸载默认保留 data/apps，`--purge` 全删 |
 
-剩余风险：24h soak/真机重启自启未做；Docker Hub 在宿主优先 IPv6 导致首次拉取失败（需修 DNS/代理）；
+剩余风险：真机重启自启未做；Docker Hub 在宿主优先 IPv6 导致首次拉取失败（需修 DNS/代理）；
 AppManagement 版本口径与 `format` 省略兼容行为需注意。详见
 [research/casaos-blocker-fix.md](research/casaos-blocker-fix.md)。
 
@@ -208,7 +208,7 @@ AppManagement 版本口径与 `format` 省略兼容行为需注意。详见
 - **历史脏数据**：删除 `o_disk` 中 `/mnt/testdisk_nbd0p1` 行，仅保留 `/mnt/Data`。
 - **空间**：清理 `~/.cache/{yarn,pnpm,pip,node-gyp}` 约 4.5G；`/home` 非 root 可用
   约 4.3G。
-- **24h soak**：最终 v0.4.10-alpha2 二进制上启动，60s × 1440，日志
-  `/tmp/casaos-soak-24h.{csv,log}`，预计 2026-10-26 21:06 结束；结果需后续读取。
+- **24h soak**：PASS。2026-10-25 21:06:37 → 2026-10-26 21:08:40，60s × 1440；
+  `/tmp/casaos-soak-24h.{csv,log}`；报告 `verification/reports/C03-SOAK.md`。
 - **仍未完成**：真机重启自启验证；`format` 省略兼容、DELETE 白名单、
-  POST format=true 密码门（当前仅白名单保护）；24h 结论。
+  POST format=true 密码门（当前仅白名单保护）；B sdb 干净安装（等 NAS 项目）。
