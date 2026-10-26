@@ -29,7 +29,7 @@
 - 不做 OMV O-04~O-09、不发布 OMV。
 - 不把 `local/*`、LBrowser 字节或真实凭据推送到公开 registry。
 - 不格式化 Host A 的 2TB SATA SSD（`/dev/sda`，已有约 525GB 用户数据）。
-- 不写 58G `LOONGSONISO` U 盘；iStoreOS 使用单独 U 盘。
+- 58G `LOONGSONISO` U 盘已获用户授权用于 iStoreOS 写盘；写前记录原 ISO 文件并在写后校验目标镜像。
 
 ## 1. 环境矩阵
 
@@ -40,11 +40,12 @@
 | **E2** | Host A 从 U 盘启动 iStoreOS **la5 公开版** | public feed 115 个 app-meta；public 镜像 | iStore 公开版真机 + 全量矩阵 |
 | **E3** | Host A 从 U 盘启动 iStoreOS **p1 私人版** | private feed 115 个 app-meta；Linkwarden/Karakeep 用 `local/*` | iStore 私人版真机 + 全量矩阵 |
 | **E4** | 独立浏览器主机（Windows 本机） | 访问 E0/E2/E3 的 Web UI | UI 截图、LuCI/CasaOS 商店点击回归 |
-| **E5** | 干净 Loongnix 25（空 USB SSD 或 QEMU） | CasaOS 0.1.3-store115 包 | S-C4 干净安装；若硬件不具备，明确标 NOT TESTED |
+| **E5** | B 机 `172.16.100.66` 的 `/dev/sdb`（476.9G）或 QEMU 干净 rootfs | CasaOS 0.1.3-store115 包 | S-C4 干净安装；sdb 上的 `rpool`/LoongNAS Gate 0 测试环境会被清除，sda 不动 |
 
-> E5 是唯一可能需要额外介质的项。优先用一块 ≥64GB 的空 USB SSD 安装
-> Loongnix 25；没有则用 QEMU TCG + 现有 rootfs，仍没有则 S-C4 只能判 PARTIAL，
-> 不能拿 Host A 的“已装环境”冒充干净安装。
+> E5 的硬件已由用户指定为 B 机 sdb；但仍需 **Loongnix 25 安装 ISO**（A/B 当前都没有，
+> 计划从官方镜像下载并校验 SHA256）。sdb3 当前是 `rpool`/LoongNAS Gate 0 测试环境，
+> 使用前会再次确认可丢弃；sda 是 B 机系统盘，绝不触碰。若拿不到安装 ISO，S-C4 只能判
+> PARTIAL/NOT TESTED，不能拿 Host A 的“已装环境”冒充干净安装。
 
 ## 2. 版本矩阵：先固化，再测试
 
@@ -307,12 +308,15 @@ curl -s http://127.0.0.1:8081/v2/app_management/apps \
 
 ### A4. S-C4 干净安装（E5）
 
-- 使用空 USB SSD 安装 Loongnix 25，或 QEMU TCG 干净 rootfs。
+- 在 B 机 `/dev/sdb` 安装 Loongnix 25（需官方 ISO，A/B 当前都没有；sda 不动），
+  或 QEMU TCG 干净 rootfs。
+- 安装前备份 B 机 sdb 上需要保留的 LoongNAS 产物；`rpool`/Gate 0 测试环境按用户
+  授权可清除。
 - 安装 `casaos-p3-loong64-0.1.3-store115.tar.gz`，sha256
   `7262d39c…50426`。
 - 验收：安装后 AppManagement 直接返回 115；无手工复制定义；商店可安装至少
   5 个不同类别应用；重启后仍 115。
-- 没有介质时标 PARTIAL/NOT TESTED，不能拿 Host A 冒充。
+- 没有安装 ISO 或介质时标 PARTIAL/NOT TESTED，不能拿 Host A 冒充。
 
 ### A5. S-C5 升级/卸载/数据保留
 
@@ -358,12 +362,13 @@ curl -s http://127.0.0.1:8081/v2/app_management/apps \
 
 ### C0. 前置
 
-- 单独 U 盘 ≥16GB；用 `lsblk -o NAME,SIZE,SERIAL,MODEL` 确认设备，
-  **不得**动 58G LOONGSONISO U 盘。
+- 使用已授权的 58G `LOONGSONISO` U 盘；写前用 `lsblk -o NAME,SIZE,SERIAL,MODEL`
+  确认设备，记录原 ISO 文件名；写盘会清空该 U 盘。
 - 从 GitHub Release 下载 la5 `img.gz` 与 `sha256sums`，校验 SHA256。
 - 另一台机器（Windows）作为 HTTP feed 服务器与测试控制端。
-- Docker Hub 仓库当前私有：测试机需临时只读 token 登录，或先把仓库改公开；
-  token 只交互输入，不写文件、不进 Git。
+- Docker Hub 已实测可匿名拉取（`joplin-server`/`linkding`/`postgres` 等 manifest 200），
+  无需登录。注意 `lbrowser-runtime` 只有 `loong64`/`3.4.2293.2`，没有 `24.10-la5`；
+  `node-sharp` 只有 `loong64`/`24.22.1`。
 
 ### C1. 写盘与启动
 
@@ -510,7 +515,7 @@ grep -R "dckr_pat\|password\|secret" store/istore/feed || true
 | D13-D14 | 汇总、复测失败项、最终报告 | G2/G3 结论 |
 | 并行 | OMV O-01~O-03 子代理 | OMV 报告 |
 
-实际日历取决于：USB 启动是否顺利、Docker Hub 私有仓库如何授权、
+实际日历取决于：USB 启动是否顺利、B 机 Loongnix 安装 ISO 是否可得、
 25 个 manual 应用的外部依赖是否可用。失败项按“阻塞证据”处理，不无限重试。
 
 ## 12. 风险与回退
@@ -518,7 +523,7 @@ grep -R "dckr_pat\|password\|secret" store/istore/feed || true
 | 风险 | 影响 | 处理 |
 |---|---|---|
 | Host A U 盘启动失败/无显示 | iStore 真机阻塞 | iKVM/显示器；改 QEMU 仅作补充，不冒充真机 |
-| Docker Hub 私有仓库无法拉取 | 公开版安装失败 | 临时只读 token；或按用户决定改公开；不写凭据 |
+| Docker Hub 镜像 tag 不全 | 基础层/浏览器镜像拉取失败 | 按 `lbrowser-runtime:3.4.2293.2`、`node-sharp:24.22.1` 使用；版本矩阵列出实际 tag |
 | `/var`、`/build` 空间不足 | 测试中断 | 每应用清理；申请 `/mnt/Data` 独立目录；不格式化 2TB 盘 |
 | 25 个 manual 应用缺外部服务 | 无法全通过 | 标 PARTIAL/BLOCKED，附前置条件与证据 |
 | 私人镜像误入公开 feed | 隐私/合规事故 | 每次 build 后跑隔离审计；发现即阻断发布 |

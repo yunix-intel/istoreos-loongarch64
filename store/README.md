@@ -52,9 +52,12 @@
 
 ## 发布前置条件
 
-- 当前 `yunixintel/*` 在 Docker Hub 上是**私有仓库**。公开 CasaOS/iStore 商店上架前，
-  必须把对应仓库改为公开，或给商店配置带凭据的镜像源；否则用户安装会卡在拉取镜像。
-- 私人版只引用 `local/*` 或私有仓库，不得把 `local/*` 推送到公开 registry。
+- `yunixintel/*` 应用镜像在 Docker Hub 上已实测可**匿名拉取**（`joplin-server`、
+  `linkding`、`postgres` 等 manifest 200），公开商店不需要配置凭据。
+- 基础层 tag 不统一：`lbrowser-runtime` 只有 `loong64` / `3.4.2293.2`，
+  `node-sharp` 只有 `loong64` / `24.22.1`，`node` 有 `loong64` / `24.10-la5` / `24.22.1`；
+  商店定义按实际 tag 引用，版本矩阵必须列出。
+- 私人版只引用 `local/*`，不得把 `local/*` 推送到公开 registry。
 - 所有卡片必须显示“龙芯版说明”；没有逐项回归的应用不能写“一键即用”。
 
 ## 更新规则
