@@ -6,13 +6,17 @@ import urllib.request
 from pathlib import Path
 
 CATALOG = Path(__file__).resolve().parent.parent / "images" / "catalog.json"
-TAGS = ("loong64", "24.10-la5")
+POLICY = Path(__file__).resolve().parent.parent / "images" / "tag-policy.json"
+policy = json.loads(POLICY.read_text(encoding="utf-8"))
+DEFAULT_TAGS = tuple(policy["default"])
+OVERRIDES = policy["overrides"]
 failures = []
 
 rows = json.loads(CATALOG.read_text(encoding="utf-8"))
 for row in rows:
     repo = row["image"].split("/", 1)[1]
-    for tag in TAGS:
+    tags = tuple(OVERRIDES.get(row["image"], DEFAULT_TAGS))
+    for tag in tags:
         url = f"https://hub.docker.com/v2/repositories/yunixintel/{repo}/tags/{tag}"
         try:
             data = json.load(urllib.request.urlopen(url, timeout=20))
@@ -28,4 +32,4 @@ if failures:
     print("\nFAILURES:", file=sys.stderr)
     print("\n".join(failures), file=sys.stderr)
     sys.exit(1)
-print(f"\nAll {len(rows)} images have loong64 + 24.10-la5 tags.")
+print(f"\nAll {len(rows)} images match images/tag-policy.json.")

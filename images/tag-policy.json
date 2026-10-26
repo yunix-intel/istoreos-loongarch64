@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "generated": "2026-10-26",
+  "note": "应用镜像固定 loong64 + 24.10-la5；基础层使用不可变版本 tag，允许没有 24.10-la5。校验/推送脚本必须按本表，不得假定所有镜像都有双 tag。",
+  "default": ["loong64", "24.10-la5"],
+  "overrides": {
+    "yunixintel/node": ["loong64", "24.10-la5", "24.22.1"],
+    "yunixintel/node-sharp": ["loong64", "24.22.1"],
+    "yunixintel/lbrowser-runtime": ["loong64", "3.4.2293.2"]
+  }
+}
