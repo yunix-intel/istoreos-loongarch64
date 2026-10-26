@@ -404,7 +404,7 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [x] S-C3 CasaOS 分类/图标/描述（图标改用 selfh.st；115 个“龙芯版说明”）
 - [ ] S-C4 CasaOS 干净安装（115 个 dry-run 通过；joplin-server 单 compose + PG sidecar 已实测；其余按类别抽样）
   - 2026-10-26：app-management 已重启，`/v2/app_management/apps` 返回 115；115 个定义在 `appstore/default/Apps` 与 `appstore/loong64/Apps`，旧 18 个已备份。B 机 sdb 干净安装等 NAS 项目完成后执行。
-- [ ] S-C5 CasaOS 升级/卸载/数据保留
+- [ ] S-C5 CasaOS 升级/卸载/数据保留（actual-budget：安装/重启/保留卸载/重装 PASS；**默认 DELETE 会删数据**；升级与其余 5 类待测；见 verification/reports/S-C5-DATA-RETENTION.md）
 - [x] S-C6 CasaOS 龙芯差异披露（115 个应用，过期结论已回写）
 - [x] S-I1 iStore app-meta 镜像覆盖（public/private 各 115 个）
 - [x] S-I2 iStore 自定义 feed（`store/istore/feed/{public,private}`，含 Packages 与部署占位 isfeeds.conf）
