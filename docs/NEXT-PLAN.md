@@ -383,7 +383,8 @@ OMV 尚未开工。ROADMAP 的现实判断是：SaltStack + PHP + 内核模块�
 - [x] C-01b CasaOS USB 只读验收（udevil ro 挂载/卸载通过；USB 不入 local-storage）
 - [x] C-02 CasaOS 真实盘格式化/重建（ext4 格式化+挂载+重挂通过）
 - [x] C-03 CasaOS 24h 稳定性（1440/1440 存活、6 服务 PID 不变、HTTP 200/401 符合预期；见 verification/reports/C03-SOAK.md）
-- [ ] C-04 CasaOS 发布闸门评审（3 个 BLOCKER、24h soak 已 PASS；真机重启/systemd 自启待验；B sdb 干净安装等 NAS 项目完成后做）
+- [x] C-04 CasaOS Host A 闸门（BLOCKER、24h soak、重启自启、商店 115、Gatus 装/卸均 PASS；见 verification/reports/C04-REBOOT.md）
+- [ ] G1b B sdb 干净安装（等龙芯 NAS 项目完成后执行）
 - [ ] C-05 CasaOS 上游 PR/issue
 - [x] C-06 CasaOS 应用商店同步（115 个定义、dry-run 与安装包；app-management 重启后 API/UI 返回 115）
 - [ ] O-01 OMV 目标版本与基线审计
