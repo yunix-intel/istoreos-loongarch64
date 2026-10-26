@@ -309,7 +309,7 @@ OMV 7 Salt 的 Python 依赖（`python3-apt`、`python3-dateutil`、`python3-loo
 | QEMU（系统包） | `/usr/bin/qemu-system-loongarch64`，QEMU 10.0.2 | 可用，但固件目录不完整；优先用 `/opt/qemu9` |
 | UEFI 固件 | `/opt/qemu9/share/qemu/edk2-loongarch64-code.fd`（16MiB） | 可用；15s 冒烟已进入 PEI 阶段 |
 | UEFI 变量模板 | `/opt/qemu9/share/qemu/edk2-loongarch64-vars.fd`（16MiB） | 可用（可选，持久化启动项时复制） |
-| 基础 OS 安装介质 | `/dev/sdb`，58.2G USB，`LABEL=LOONGSONISO`，ISO9660，卷 2,859,554 块（约 5.86GB） | **在位，只读**；Loongnix 25 安装 CD，含 `/LIVE/FILESYSTEM.SQUASHFS`、`/LIVE/VMLINUZ_6_6.52_LOONG64`、`/LIVE/INITRD_IMG_6_6.52_LOONG64`、`/EFI/BOOT/BOOTLOONGARCH64.EFI` |
+| 基础 OS 安装介质 | `/mnt/Data/firmware/loongnix25-20260820.iso`（5.5GB，sha256 `6f607035…83b9`），源自 `/dev/sdb1` | **在位，只读**；Loongnix 25 安装 CD，含 `live/filesystem.squashfs` |
 | OMV 官方 ISO | 无 | **不适用**；OMV 文档明确官方 ISO 仅 AMD64/BIOS，不能用于 loong64 |
 | 现成 loong64 rootfs | `/build/archive/personal-rootfs-new.tar.gz`、`/build/archive/istoreos-loongarch64-generic-generic-rootfs.tar.gz` | **不可用**；两者都是 iStoreOS/OpenWrt（busybox、`etc/openwrt_release`，personal 为 iStoreOS 24.10.8），无 systemd/apt |
 | 可写 scratch | `/build` 仅 4.8GiB 可用；`/tmp` 16GiB tmpfs（内存盘） | **不足/不安全**；完整安装需要 ≥16GiB qcow2 + 日志，建议 ≥20GiB 非数据盘空间 |
@@ -350,7 +350,7 @@ systemd-run --scope --unit=omv-spike \
   -device virtio-scsi-pci,id=scsi0 \
   -drive if=none,id=hd0,format=qcow2,file="$SCRATCH/omv-spike/omv-root.qcow2" \
   -device scsi-hd,drive=hd0,bus=scsi0.0 \
-  -drive if=none,id=cd0,format=raw,readonly=on,media=cdrom,file=/dev/sdb \
+  -drive if=none,id=cd0,format=raw,readonly=on,media=cdrom,file=/mnt/Data/firmware/loongnix25-20260820.iso \
   -device scsi-cd,drive=cd0,bus=scsi0.0 \
   -netdev user,id=net0,hostfwd=tcp:127.0.0.1:2222-:22,hostfwd=tcp:127.0.0.1:8080-:80,hostfwd=tcp:127.0.0.1:8443-:443 \
   -device virtio-net-pci,netdev=net0 \
@@ -365,7 +365,7 @@ systemd-run --scope --unit=omv-spike \
 
 - 显式 `-accel tcg,thread=multi`，**不要用 KVM**；Host 虽有 `/dev/kvm`，但本 spike 要求 TCG。
 - `-bios` 已用 512MiB/1vCPU 冒烟验证能启动 edk2；完整 ISO 启动未执行。
-- `-drive file=/dev/sdb,readonly=on` 保证不写 U 盘；不要改成可写。
+- `-drive file=/mnt/Data/firmware/loongnix25-20260820.iso,readonly=on` 使用已保存的 ISO，不再依赖 U 盘；不要改成可写。
 - 安装完成后可改为 `-boot order=c`，并移除/保留 CD 均可；若 UEFI 启动项不持久，
   用 `-bios` + `-boot order=c` 或复制 `edk2-vars.fd` 走 pflash。
 - 若 `-bios` 与 ISO 的 UEFI 启动不兼容，回退方案是：用 `isoinfo` 从 ISO 只读提取
@@ -481,7 +481,7 @@ ssh -L 5901:127.0.0.1:5901 -L 2222:127.0.0.1:2222 -L 8080:127.0.0.1:8080 loongso
 | `/build` | 4.8GiB 可用（87% 已用） |
 | `/tmp` | 16GiB tmpfs（重启后为空；内存盘，不适合放 qcow2） |
 | 常驻负载 | CasaOS P3、Docker（mihomo）、GitHub Actions Runner（listener 常驻） |
-| 重启事件 | 审计期间 22:19:10 发生一次干净 shutdown，22:19:46 恢复；本次审计此前只跑了 15s 无盘固件冒烟，未执行 shutdown/reboot；原因未查明 |
+| 重启事件 | 审计期间 22:19:10 的一次干净 shutdown 是主会话执行 C-04 systemd 自启验证的协调重启，22:19:46 恢复；不是异常，也不是 OMV 子代理触发 |
 
 ### 5.2 QEMU 运行窗口规则
 
@@ -600,6 +600,6 @@ OMV 7: VISITED 366; ARCH all=63, loong64=297; MISSING 14（人工核对后 3 组
 | OMV 8 闭包 | 374 节点；63 all + 306 loong64；3 组硬阻塞 |
 | OMV 7 闭包 | 366 节点；63 all + 297 loong64；3 组硬阻塞 |
 | QEMU / 固件 | `/opt/qemu9/bin/qemu-system-loongarch64` 9.2.0；`edk2-loongarch64-code.fd` 16MiB |
-| 基础 OS 介质 | `/dev/sdb`，`LOONGSONISO`，约 5.86GB，Loongnix 25 安装 CD，只读 |
+| 基础 OS 介质 | `/mnt/Data/firmware/loongnix25-20260820.iso`（5.5GB，sha256 `6f607035…83b9`），只读 |
 | 可写 scratch | `/build` 4.8GiB；`/tmp` 16GiB tmpfs；**不足** |
 | O-03 判定 | **BLOCKED**（未运行完整 spike） |

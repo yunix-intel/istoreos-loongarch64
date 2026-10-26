@@ -97,9 +97,13 @@ Host A，USB 启动 iStoreOS
 
 ---
 
-## 2. Step 0：保存 Loongnix ISO（只读，不写 U 盘）
+## 2. Step 0：保存 Loongnix ISO（只读，不写 U 盘）— 2026-10-26 已完成
 
 目的：58G U 盘当前 `/dev/sdb1` 是 5.856GB 的 `LOONGSONISO`（iso9660，kernel `6.6.52-loong64`）。写 iStoreOS 会清空 U 盘，所以先把 **sdb1** 保存到 Host A 的 `/mnt/Data/firmware/`。
+
+**已完成**：`/mnt/Data/firmware/loongnix25-20260820.iso`，5.5GB，sha256
+`6f607035a8ea2c165eee52444fb465bf80015772084c4df58d87974666f483b9`；只读挂载确认
+`live/filesystem.squashfs` 存在。执行会话只需复核哈希，不要重复 dd。
 
 ### 2.1 前置确认
 
@@ -265,7 +269,7 @@ gzip -t   /build/firmware/personal-p1-20261019.img.gz && echo P1_GZIP_OK
 基线记录（BUILDLOG/GAPS）：
 
 - 文件名 `personal-p1-20261019.img.gz`；
-- 大小约 **398.5MB**（计划文档另有 381MB 记录，存在文档差异；**以 `ls -l` + md5 为准**，不能只凭大小判断）；
+- 大小 **398,554,090 字节**（约 398.5MB 十进制 / 381MiB；`ls -lh` 显示 381M 是 MiB，不是矛盾）；
 - md5 基线 **`a4d58f827fcb882bb46b9012d185c91e`**。
 
 预期：`P1_GZIP_OK`；md5 与基线一致。若不一致：
@@ -1381,9 +1385,9 @@ jsonfilter -i /usr/lib/opkg/meta/linkwarden.json -e '@.loong64.default_variant' 
 | 批次 | 数量 | 应用 | 重点 | 预计 |
 |---|---:|---|---|---:|
 | **L-B0** 基础/数据 | 6 | `postgres` `redis` `mariadb` `minio` `memcached` `mosquitto` | 镜像/默认环境/端口/持久化；无 sidecar | 1.5h |
-| **L-B1** 单容器低风险 | 42 | `heimdall` `wizarr` `ntfy` `gotify` `apprise-api` `komga` `memos` `linkding` `shiori` `firefly-iii` `freshrss` `paperless-ngx` `actual-budget` `homebox` `mealie` `vikunja` `readeck` `syncthing` `filebrowser` `nextcloud` `kodexplorer` `sftpgo` `gogs` `it-tools` `one-api` `code-server` `openwebui` `gitea` `nocodb` `webvirtcloud` `hermes` `registry` `node-red` `uptimekuma` `changedetection` `grafana` `vaultwarden` `pocket-id` `homarr` `nginx-proxy-manager` `homer` `dashy` | 登录/首启、3 个核心功能、重启 | 8h |
+| **L-B1** 单容器低风险 | 40 | `heimdall` `wizarr` `ntfy` `gotify` `apprise-api` `komga` `memos` `linkding` `shiori` `firefly-iii` `freshrss` `actual-budget` `homebox` `mealie` `vikunja` `readeck` `syncthing` `filebrowser` `nextcloud` `kodexplorer` `sftpgo` `gogs` `it-tools` `one-api` `code-server` `openwebui` `gitea` `nocodb` `webvirtcloud` `hermes` `registry` `node-red` `uptimekuma` `changedetection` `grafana` `vaultwarden` `pocket-id` `nginx-proxy-manager` `homer` `dashy` | 登录/首启、3 个核心功能、重启 | 8h |
 | **L-B2** 媒体/下载 | 22 | `jellyfin` `navidrome` `excalidraw` `drawio` `xteve` `jellyseerr` `audiobookshelf` `calibre-web` `tautulli` `stirling-pdf` `chinesesubfinder` `lanraragi` `mymind` `qbittorrent-ee` `jackett` `sonarr` `radarr` `prowlarr` `bazarr` `autobrr` `metube` `sabnzbd` | 媒体路径/库扫描/播放或 API；*arr 连接 | 5h |
-| **L-B3** 多服务/sidecar | 12 | `joplin-server` `miniflux` `jellystat` `bookstack` `piwigo` `matomo` `ente-server` `ente-web` `penpot-backend` `penpot-frontend` `linkwarden` `karakeep` | sidecar 健康/启动顺序/secrets；LBrowser | 6h |
+| **L-B3** 多服务/sidecar | 14 | `joplin-server` `miniflux` `jellystat` `bookstack` `piwigo` `matomo` `ente-server` `ente-web` `penpot-backend` `penpot-frontend` `linkwarden` `karakeep` `paperless-ngx` `homarr` | sidecar 健康/启动顺序/secrets；LBrowser | 6h |
 | **L-B4** host 网络/特权/反代 | 17 | `mihomo` `easytier` `adguardhome` `homeassistant` `node-exporter` `pihole` `homebridge` `owntone` `dpanel` `portainer` `watchtower` `dozzle` `woodpecker-agent` `caddy` `headscale` `authelia` `wg-easy` | host 网络/端口冲突/docker.sock/设备/内核 | 5h |
 | **L-B5** manual/设备/备份/首启 | 16 | `go2rtc` `mediamtx` `phpmyadmin` `typecho` `wallabag` `unpackerr` `prometheus` `gatus` `alertmanager` `smartctl-exporter` `scrutiny` `kopia` `rest-server` `backrest` `zigbee2mqtt` `woodpecker-server` | 前置条件/设备/首启向导/已知限制 | 4h |
 
@@ -1392,9 +1396,9 @@ jsonfilter -i /usr/lib/opkg/meta/linkwarden.json -e '@.loong64.default_variant' 
 | 批次 | 数量 | 与 L-Bn 的差异 | 预计 |
 |---|---:|---|---:|
 | **P-B0** | 6 | 同一批应用；private feed；其余应用仍用公开镜像 | 1.5h |
-| **P-B1** | 42 | 同一批应用；private feed；验证 `store_url` 指向私人源但镜像仍是 `yunixintel/*:24.10-la5` | 8h |
+| **P-B1** | 40 | 同一批应用；private feed；验证 `store_url` 指向私人源但镜像仍是 `yunixintel/*:24.10-la5` | 8h |
 | **P-B2** | 22 | 同一批应用；同上 | 5h |
-| **P-B3** | 12 | **Linkwarden/Karakeep 默认 private、镜像 `local/*`、无 LBrowser sidecar、无需 `/opt/apps/lbrowser`**；其余 sidecar 同 public | 6h |
+| **P-B3** | 14 | **Linkwarden/Karakeep 默认 private、镜像 `local/*`、无 LBrowser sidecar、无需 `/opt/apps/lbrowser`**；其余 sidecar 同 public | 6h |
 | **P-B4** | 17 | 同一批应用；private preset 先隔离；host 网络/端口冲突同 public | 5h |
 | **P-B5** | 16 | 同一批应用；private feed | 4h |
 

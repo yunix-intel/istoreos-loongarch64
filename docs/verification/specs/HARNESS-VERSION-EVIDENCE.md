@@ -2,7 +2,7 @@
 
 版本：1.0（骨架，可直接实现）
 日期：2026-10-26
-状态：待主会话审查；审查通过前不得据此宣布任何 PASS
+状态：已由主会话逐行审查（2026-10-26）；审查通过，示例不构成实测结果
 入口：[PHASE-2-FULL-VERIFICATION](../PHASE-2-FULL-VERIFICATION.md)
 适用会话：`casaos-gate-exec`、`istore-la5-exec`、`istore-p1-exec`、`casaos-clean-exec`
 范围：版本矩阵、115 卡 schema/生成、runner、证据/结果/报告/state、质量门槛。
@@ -96,6 +96,11 @@
 负向检查必须显式 `polarity: negative`，例如期望 500/403/非零退出；不得把失败写成成功。每个 check 必须有 `evidence_required`。
 
 ### 2.3 示例卡 A：Joplin Server（自动 + PostgreSQL sidecar + 已知限制）
+
+> 示例用于说明 schema 与检查原语，不是 runner 可直接执行的最终脚本。Joplin 的
+> `/api/items/...`、`/api/shares` 路径和 share_id 需按实际 API 改写；BookStack 的
+> `POST /books`/`/pages`/`/images` 受 CSRF/session 保护，必须用 browser 或先取
+> token，不能把示例里的裸 POST 当可执行命令。
 
 ```yaml
 schema: 2

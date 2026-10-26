@@ -100,7 +100,7 @@ mkdir -p "$EV"/{a1,a2,a3,a5,platform,batches}
 | 主机 | `yunix-pc` | Host A，LoongArch64 3A6000 |
 | 系统 | Loongnix GNU/Linux 25 | 内核 `6.6.52-loong64`，systemd `257` |
 | Docker | `26.1.5+dfsg1`，API 1.45 | 容器运行时 |
-| CasaOS 前缀 | `/opt/casaos-p3`，网关 `:8081` | 当前是前缀实例，不是 systemd 实例 |
+| CasaOS 安装 | `/opt/casaos-p3`，网关 `:8081` | 2026-10-26 重启后由 systemd `casaos.target` 管理；前缀 `start.sh` 仅作回退 |
 | `/opt/casaos-p3/VERSION` | `0.1.2-appmgr410-p3+store115` | 2026-10-26 已修正；原 0.1.2 包内元数据为 0.1.0-p3，0.1.3 包会写 0.1.3-store115-p3 |
 | app-management 二进制 | `sha256 6ed86c87…6c78` | 已修复版 v0.4.10-alpha2 |
 | 6 个服务 | systemd `casaos.target` 拉起 | 2026-10-26 重启后 7 unit 全 active；前缀 `start.sh` 仅作回退 |
@@ -124,10 +124,10 @@ sudo chmod 600 /build/verify-secrets/casaos.env
 ```
 
 ```bash
-# 6 个进程必须都在（前缀模式）
-for f in "$P"/run/*.pid; do
-  n=$(basename "$f" .pid); p=$(cat "$f")
-  kill -0 "$p" 2>/dev/null && echo "$n pid=$p running" || echo "$n pid=$p DEAD"
+# 6 个 systemd 服务必须 active；run/*.pid 可能是旧前缀实例的陈旧文件
+for u in casaos-gateway casaos-message-bus casaos-user-service \n         casaos-app-management casaos-local-storage casaos; do
+  printf "%s %s pid=%s
+" "$u" "$(systemctl is-active "$u")" "$(systemctl show -p MainPID --value "$u")"
 done
 
 # 商店定义数量：两个目录都应为 115
@@ -304,7 +304,7 @@ curl -s "$B/v2/app_management/apps" | jq '.data.list | length' \
 - 记录 app-management 启动时间与 appstore 目录时间：
 
 ```bash
-ps -o pid,lstart,cmd -p "$(cat "$P/run/app-management.pid")" \
+systemctl show -p MainPID -p ActiveEnterTimestamp --value casaos-app-management \
   | tee "$EV/a2/pre-process.txt"
 stat -c '%y %n' "$P/appstore/default/Apps" "$P/appstore/default/category-list.json" \
   | tee -a "$EV/a2/pre-process.txt"
@@ -314,21 +314,28 @@ stat -c '%y %n' "$P/appstore/default/Apps" "$P/appstore/default/category-list.js
 若 `pre-count.txt` 已经是 115，说明 app-management 已被重启过：记录后跳过 3.2，
 直接执行 3.3。
 
-### 3.2 重启 app-management（前缀模式）
+### 3.2 重启 app-management（已完成；systemd 优先）
 
-A2 在 C-04 之前执行，当前是 `scripts/start.sh` 管理的前缀实例：
+A2 已在 C-04 之前执行；当前由 systemd 管理。若复测：
 
 ```bash
-PID=$(cat "$P/run/app-management.pid")
-kill "$PID"
-for i in $(seq 1 50); do kill -0 "$PID" 2>/dev/null || break; sleep 0.2; done
-kill -0 "$PID" 2>/dev/null && { echo "app-management did not stop"; exit 1; }
-"$P/scripts/start.sh"
+if systemctl is-active --quiet casaos-app-management; then
+  sudo systemctl restart casaos-app-management
+else
+  # 回退：前缀实例
+  PID=$(cat "$P/run/app-management.pid")
+  kill "$PID"
+  for i in $(seq 1 50); do kill -0 "$PID" 2>/dev/null || break; sleep 0.2; done
+  "$P/scripts/start.sh"
+fi
+for i in $(seq 1 30); do
+  systemctl is-active --quiet casaos-app-management && break
+  sleep 1
+done
+systemctl is-active casaos-app-management
 ```
 
-> `start.sh` 会跳过仍在运行的 gateway/message-bus/user-service/local-storage/casaos，
-> 只拉起刚被 kill 的 app-management。若 C-04 之后执行，改用
-> `sudo systemctl restart casaos-app-management`，不要再 kill PID 文件。
+> 不要 kill `run/*.pid`：C-04 之后这些文件可能是旧前缀实例的陈旧 PID。
 
 ### 3.3 API 验证
 
@@ -944,7 +951,8 @@ ssh -o ClearAllForwardings=yes loongson-lab 'BASE=http://127.0.0.1:8081/v2/app_m
 | STOR-02 | `GET /v1/storage` 带 token | 200；`/mnt/Data` 记录存在；只读检查，不卸载/不写 | 同上 |
 | STOR-03 | `GET /v1/disks` 中 sda 的 health/temperature；`smartctl -a /dev/sda` | SMART PASSED；温度/通电时间可读；只读 | `evidence/e0/platform/STOR-03/smart.txt` |
 | STOR-04 | `GET /v1/disks/usb`；`udevil info /dev/sdb1` | USB 列表为空（实现过滤 usb）；udevil 识别 removable/iso9660；不挂载/不写 | `evidence/e0/platform/STOR-04/` |
-| STOR-05 | `POST/PUT /v1/storage` 指向 `/dev/loop0`（若存在）带 token | 403；无挂载目录、无格式化 | `evidence/e0/platform/STOR-05/` || STOR-06 | 格式化的密码门 | 引用 2026-10-25 证据：`/dev/sda1` `format:true` 无/错密码 401，UUID 未变；**本轮不再对 2TB 发 PUT** | `evidence/e0/platform/STOR-06/README.md` |
+| STOR-05 | `POST/PUT /v1/storage` 指向 `/dev/loop0`（若存在）带 token | 403；无挂载目录、无格式化 | `evidence/e0/platform/STOR-05/` |
+| STOR-06 | 格式化的密码门 | 引用 2026-10-25 证据：`/dev/sda1` `format:true` 无/错密码 401，UUID 未变；**本轮不再对 2TB 发 PUT** | `evidence/e0/platform/STOR-06/README.md` |
 | STOR-07 | 正向格式化/挂载/卸载 | 无备用空盘，**NOT TESTED**；不得用 `/dev/sda` 或 `/dev/sdb` 代替 | `evidence/e0/platform/STOR-07/NOT-TESTED.md` |
 
 > `local-storage` 只接受 `sata/nvme/sas/spi/virtio/mmc`；USB 被过滤是当前实现。
@@ -1107,8 +1115,8 @@ NOT TESTED 计数、失败证据、未测原因；不要等全部 115 跑完再�
 
 | 应用 | 前置条件 | 可自动验证 | 必须人工/设备 |
 |---|---|---|---|
-| mihomo | `/srv/mihomo/config` 有可用 config.yaml；host 网络；宿主已有 mihomo 容器/TUN 时不要并发 | 安装、容器启动、配置目录存在 | 配置代理规则、验证出站 |
-| easytier | `/srv/easytier/config/network.toml`；host 网络 | 安装、容器启动 | 组网对端、路由验证 |
+| mihomo | `/DATA/AppData/mihomo/config` 有可用 config.yaml；host 网络；宿主已有 mihomo 容器/TUN 时不要并发 | 安装、容器启动、配置目录存在 | 配置代理规则、验证出站 |
+| easytier | `/DATA/AppData/easytier/config/network.toml`；host 网络 | 安装、容器启动 | 组网对端、路由验证 |
 | adguardhome | 宿主 53 未被 dnsmasq/systemd-resolved 占用；host 网络 | 安装、UI 302/200 | 首次向导、DNS 查询 |
 | pihole | 宿主 53 空闲；host 网络 | 安装、容器启动 | Web 密码、DNS 查询 |
 | wg-easy | `INIT_HOST` 改为客户端可达地址；UDP 51820 | 安装、UI 302、端口监听 | VPN 客户端握手 |
@@ -1359,10 +1367,10 @@ NOT TESTED 处理。
 
 ```text
 Host A: yunix-pc, Loongnix 25, 6.6.52-loong64, systemd 257, Docker 26.1.5+dfsg1
-Prefix: /opt/casaos-p3, gateway :8081, VERSION=0.1.0-p3（与运行基线不一致，记录）
-6 services (prefix): gateway 86340, message-bus 86343, user-service 391180,
-  local-storage 401778, app-management 435412, casaos 435511
-AppStore: default/Apps=115, loong64/Apps=115; API pre-A2=18
+Install: /opt/casaos-p3, gateway :8081, VERSION=0.1.2-appmgr410-p3+store115
+6 services (post-C-04 systemd): gateway 1768, message-bus 1771, user-service 1786,
+  local-storage 1781, app-management 1780, casaos 1796
+AppStore: default/Apps=115, loong64/Apps=115; API post-A2=115
 Soak: 8640 rows, 1440/service, first 2026-10-25T21:06:37+08:00,
   last 2026-10-26T21:08:40+08:00, max gap 63s
 HTTP: gateway/message-bus/user-service/app-management/casaos=200×1440;
