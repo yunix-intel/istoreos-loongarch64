@@ -1,7 +1,8 @@
 # 第二阶段完整计划：CasaOS 闸门、iStore 真机与全量功能验证
 
 日期：2026-10-26  
-状态：待批准执行  
+状态：执行中（2026-10-26：Phase 0 规范完成；C-03/A2/C-04 Host A 已 PASS；
+S-C5 首轮 PARTIAL；OMV O-01/O-02 完成、O-03 BLOCKED；iStore 真机与 115 矩阵待执行会话）  
 关联：[NEXT-PLAN](../NEXT-PLAN.md)、[CASAOS-P3](../CASAOS-P3.md)、
 [verify-casaos-store](../research/verify-casaos-store.md)、
 [verify-istore](../research/verify-istore.md)
